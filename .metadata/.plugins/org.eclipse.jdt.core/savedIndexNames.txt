@@ -1,0 +1,2 @@
+INDEX VERSION 1.127+/Users/novocaine/Documents/masterthesis/workspace/.metadata/.plugins/org.eclipse.jdt.core
+304911228.index
