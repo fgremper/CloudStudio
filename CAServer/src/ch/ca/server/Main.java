@@ -1,6 +1,10 @@
 package ch.ca.server;
 
 import java.net.InetSocketAddress;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.concurrent.Executors;
 
 import com.sun.net.httpserver.HttpServer;
@@ -16,6 +20,7 @@ public class Main {
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 
+		
 		System.out.println("Server up!");
 	}
 	

@@ -7,24 +7,40 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.LinkedList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class Main {
 
+	static LinkedList<String> files = new LinkedList<String>();
+	static String jsonString;
+	
 	String username = "username";
 	// my repo path
 	// repo name!
 	
 	public static void main(String[] args) throws Exception {
 		String gitRepository = "C:/gitrepos/test";
-		uploadRepository(gitRepository);
+		
+		files.clear();
+		files.add("/Users/novocaine/Documents/masterthesis/testrepos/test1.txt");
+		files.add("/Users/novocaine/Documents/masterthesis/testrepos/test2.txt");
+		//findChangedFiles(gitRepository);
+		createJsonString();
+		uploadChangesToCloudStudio();
 	}
 	
-	public static void uploadRepository(String repositoryPath) throws Exception {
-		uploadFilesFromConsoleOutput("git --git-dir=" + repositoryPath + "/.git" + " --work-tree=" + repositoryPath + " diff --name-only HEAD", repositoryPath);
-		uploadFilesFromConsoleOutput("git --git-dir=" + repositoryPath + "/.git" + " --work-tree=" + repositoryPath + " ls-files --others --exclude-standard", repositoryPath);
+	public static void findChangedFiles(String repositoryPath) throws Exception {
+		findChangedFilesFromConsoleInput("git --git-dir=" + repositoryPath + "/.git" + " --work-tree=" + repositoryPath + " diff --name-only HEAD", repositoryPath);
+		findChangedFilesFromConsoleInput("git --git-dir=" + repositoryPath + "/.git" + " --work-tree=" + repositoryPath + " ls-files --others --exclude-standard", repositoryPath);
 	}
 	
-	public static void uploadFilesFromConsoleOutput(String consoleInput, String repositoryPath) throws Exception {
+	public static void findChangedFilesFromConsoleInput(String consoleInput, String repositoryPath) throws Exception {
 		Process p = Runtime.getRuntime().exec(consoleInput);
 	    p.waitFor();
 
@@ -32,18 +48,30 @@ public class Main {
 
 	    String line;
 	    while ((line = reader.readLine()) != null) {
-	    	File file = new File(repositoryPath, line);
-	    	uploadFileIfModified(file);
+	    	String filename = new File(repositoryPath, line).getPath();
+	    	files.add(filename);
 	    }
 	}
-	
-	public static void uploadFileIfModified(File file) throws Exception {
-		// check for modified timestamp (local db!)
-    	System.out.println("Uploading: " + file.toString());
+
+	public static void createJsonString() throws Exception {
+		JSONArray fileArray = new JSONArray();
+		
+		while(!files.isEmpty()) {
+			String file = files.pop();
+			
+			JSONObject fileObject = new JSONObject();
+			byte[] encoded = Files.readAllBytes(Paths.get(file));
+			fileObject.put("filename", file);
+			fileObject.put("content", new String(encoded, StandardCharsets.UTF_8));
+			
+			fileArray.put(fileObject);
+		}
+		
+		jsonString = fileArray.toString();
 	}
 	
-	public static void uploadFile(File file) throws Exception {
-		String url = "http://127.0.0.1:8080/repo/path/file.txt";
+	public static void uploadChangesToCloudStudio() throws Exception {
+		String url = "http://127.0.0.1:8080/api/something";
 		
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
@@ -52,7 +80,7 @@ public class Main {
 		// con.setRequestProperty("User-Agent", "CALocalPlugin");
 		con.setDoOutput(true);
 		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
-		out.write("JSON content! :)");
+		out.write(jsonString);
 		out.close();
 		
 		int responseCode = con.getResponseCode();
