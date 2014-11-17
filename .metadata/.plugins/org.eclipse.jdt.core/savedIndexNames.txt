@@ -1,17 +1,4 @@
-INDEX VERSION 1.127+/Users/novocaine/Documents/masterthesis/workspace/.metadata/.plugins/org.eclipse.jdt.core
-2009980690.index
-304911228.index
-1572325224.index
-2535718965.index
-1271342938.index
-2835230672.index
-4112856711.index
-4238209716.index
-2754424148.index
-216496041.index
-1334622778.index
-2865898160.index
-639694709.index
-3914475439.index
-3676725848.index
-430844602.index
+INDEX VERSION 1.127+C:\GDev\newmtworkspace\mtcode\.metadata\.plugins\org.eclipse.jdt.core
+2519444425.index
+1114205471.index
+3252626012.index

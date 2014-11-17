@@ -1,0 +1,8 @@
+package ch.fgremper.rtca;
+
+public class Repository {
+
+	public String localPath;
+	public String alias;
+			
+}
