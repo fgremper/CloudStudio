@@ -7,7 +7,7 @@ import com.sun.net.httpserver.HttpServer;
 
 public class ServerMain {
 
-	static int port = 8080;
+	static int port = 7330;
 
 	public static void main(String[] args) throws Exception {
 		System.out.println("Starting HTTP server on port " + port + "...");
