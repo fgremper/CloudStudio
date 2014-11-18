@@ -54,7 +54,7 @@ public class RtcaHttpHandler implements HttpHandler {
 					System.out.println("Content: " + content);
 					System.out.println("SHA: " + sha);
 
-					FileUtils.writeStringToFile(new File("C:/GDev/newmtworkspace/mtcode/filestorage/" + sha), content);
+					FileUtils.writeStringToFile(new File("C:/GDev/newmtworkspace/filestorage/" + sha), content);
 
 					db.storeFile(repositoryAlias, username, filename, sha);
 				}
