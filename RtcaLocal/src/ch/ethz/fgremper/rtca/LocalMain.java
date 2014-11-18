@@ -3,16 +3,13 @@ package ch.ethz.fgremper.rtca;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.LinkedList;
 
+import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -27,18 +24,46 @@ public class LocalMain {
 	static LinkedList<Repository> repositories = new LinkedList<Repository>();
 
 	public static void main(String[] args) {
+		
+		try {
 
-		/* READ CONFIG */
-		// TODO: actually read this from a config file
-		serverUrl = "http://127.0.0.1:8080"; // no dash at the end
-		username = "fgremper";
-		repositories.add(new Repository("test", "C:/GDev/newmtworkspace/testrepo"));
+			/* READ CONFIG */
+			
+			XMLConfiguration config = new XMLConfiguration("config.xml");
+	
+			username = config.getString("username");
+			if (username == null) throw new Exception("No username in config!");
+			System.out.println("Config -- username: " + username);
+			
+			serverUrl = config.getString("serverUrl");
+			if (serverUrl == null) throw new Exception("No serverUrl in config!");
+			System.out.println("Config -- serverUrl: " + serverUrl);
+			
+			boolean atLeastOneRepository = false;
+			for (int i = 0; ; i++) {
+				String repositoryAlias = config.getString("repositories.repository(" + i + ").alias");
+				String repositoryLocalPath = config.getString("repositories.repository(" + i + ").localPath");
+				if (repositoryAlias == null) break;
+				if (repositoryLocalPath == null) break;
+				atLeastOneRepository = true;
+				System.out.println("Config -- repository(" + i + "): \"" + repositoryAlias + "\" (" + repositoryLocalPath + ")");
+				repositories.add(new Repository(repositoryAlias, repositoryLocalPath));
+			}
+			if (!atLeastOneRepository) throw new Exception("No repositories in config!");
 
+		}
+		catch (Exception e) {
+			System.err.println("Error while reading config.");
+			e.printStackTrace();
+			return;
+		}
+		
 		for (Repository repository : repositories) {
 
 			System.out.println("Active repository: \"" + repository.alias + "\" (" + repository.localPath + ")");
 
 			/* FIND CHANGED FILES */
+			
 			try {
 				modifiedFilesList.clear();
 				findChangedFiles(repository);
@@ -50,6 +75,7 @@ public class LocalMain {
 			}
 
 			/* CREATE JSON STRING */
+			
 			try {
 				createJsonOutputString();
 			}
@@ -60,6 +86,7 @@ public class LocalMain {
 			}
 
 			/* SEND CHANGES TO SERVER */
+			
 			try {
 				sendChangesToServer(repository);
 			}
@@ -106,6 +133,7 @@ public class LocalMain {
 			fileObject.put("filename", file);
 			fileObject.put("content", fileContent);
 			// TODO: send some sort of file history at some point, so 3-way merges work...
+			// TODO: send the branch we're working here or in the url. right now it's just master branch.
 
 			fileArray.put(fileObject);
 		}

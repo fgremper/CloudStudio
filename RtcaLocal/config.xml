@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <username>fgremper</username>
+    <serverUrl>http://127.0.0.1:8080</serverUrl> <!-- don't put a dash at the end for the moment -->
+    <repositories>
+        <repository>
+            <alias>test</alias>
+            <localPath>C:/GDev/newmtworkspace/testrepo</localPath>
+        </repository>
+    </repositories>
+</config>

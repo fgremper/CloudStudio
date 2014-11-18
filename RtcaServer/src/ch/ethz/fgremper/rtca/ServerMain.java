@@ -1,10 +1,6 @@
 package ch.ethz.fgremper.rtca;
 
 import java.net.InetSocketAddress;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.concurrent.Executors;
 
 import com.sun.net.httpserver.HttpServer;
