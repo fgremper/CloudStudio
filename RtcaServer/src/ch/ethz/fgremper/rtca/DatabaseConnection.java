@@ -38,7 +38,7 @@ public class DatabaseConnection {
 	}
 
 	public void deleteAllFilesFromRepositoryAndUser(String repositoryAlias, String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("DELTE FROM files WHERE repositoryalias = ? AND username = ?");
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM files WHERE repositoryalias = ? AND username = ?");
 
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);

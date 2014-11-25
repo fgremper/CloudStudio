@@ -13,7 +13,9 @@ public class ServerMain {
 		System.out.println("Starting HTTP server on port " + port + "...");
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-		server.createContext("/", new RtcaHttpHandler()); 
+		server.createContext("/webinterface", new WebInterfaceHttpHandler());
+		server.createContext("/push", new PushHttpHandler());
+		server.createContext("/pull", new PullHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 
