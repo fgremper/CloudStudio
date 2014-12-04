@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <username>fgremper</username>
-    <serverUrl>http://127.0.0.1:8080</serverUrl> <!-- don't put a dash at the end for the moment -->
+    <serverUrl>http://127.0.0.1:7330</serverUrl> <!-- don't put a dash at the end -->
     <repositories>
         <repository>
             <alias>test</alias>
-            <localPath>C:/GDev/newmtworkspace/testrepo</localPath>
+            <localPath>/Users/novocaine/Documents/masterthesis/testrepos/repo1</localPath>
         </repository>
     </repositories>
 </config>

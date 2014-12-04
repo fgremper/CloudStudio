@@ -11,6 +11,8 @@ import java.util.LinkedList;
 
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.io.IOUtils;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,7 +26,16 @@ public class LocalMain {
 	static LinkedList<Repository> repositories = new LinkedList<Repository>();
 
 	public static void main(String[] args) {
+
+		/* 
+	    Repository localRepo;
+	    Git git;
+	    
+        localRepo = new FileRepository("/Users/novocaine/Documents/masterthesis/testrepos/repo1");
+        git = new Git(localRepo);
 		
+		if (true) return;
+		*/
 		try {
 
 			/* READ CONFIG */
@@ -114,7 +125,7 @@ public class LocalMain {
 		String line;
 		while ((line = reader.readLine()) != null) {
 			String filename = new File(repository.localPath, line).getPath();
-			System.out.println("Added changed file: " + filename);
+			System.out.println("Adding changed file: " + filename);
 			modifiedFilesList.add(filename);
 		}
 	}
@@ -130,7 +141,8 @@ public class LocalMain {
 			String fileContent = IOUtils.toString(inputStream, "UTF-8");
 
 			JSONObject fileObject = new JSONObject();
-			fileObject.put("filename", file);
+			fileObject.put("filename", file); // TODO: send some sort of relative filename here
+			
 			fileObject.put("content", fileContent);
 			// TODO: send some sort of file history at some point, so 3-way merges work...
 			// TODO: send the branch we're working here or in the url. right now it's just master branch.
@@ -144,7 +156,7 @@ public class LocalMain {
 	}
 
 	public static void sendChangesToServer(Repository repository) throws Exception {
-		String url = serverUrl + "/" + repository.alias + "/" + username;
+		String url = serverUrl + "/push/" + repository.alias + "/" + username;
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();

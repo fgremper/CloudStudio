@@ -3,8 +3,13 @@ package ch.ethz.fgremper.rtca;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class DatabaseConnection {
 
@@ -13,7 +18,7 @@ public class DatabaseConnection {
 
 	//  Database credentials
 	static final String USER = "dbadmin";
-	static final String PASS = "1234";
+	static final String PASS = "";
 
 	Connection con = null;
 
@@ -56,4 +61,37 @@ public class DatabaseConnection {
 
 		int rowsAffected = stmt.executeUpdate();
 	}
+	
+	public JSONArray getRepositories() throws SQLException {
+		JSONArray repositories = new JSONArray();
+		
+		PreparedStatement stmt = con.prepareStatement("SELECT repositoryalias, repositoryurl FROM repositories");
+
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			JSONObject repository = new JSONObject();
+			String repositoryAlias = rs.getString("repositoryalias");
+			String repositoryUrl = rs.getString("repositoryurl");
+			try {
+				repository.put("repositoryAlias", repositoryAlias);
+				repository.put("repositoryUrl", repositoryUrl);
+			} catch (JSONException e) {
+				System.err.println("Error while creating JSON string.");
+				e.printStackTrace();
+			}
+			repositories.put(repository);
+		}
+		
+		return repositories;
+	}
+	
+	public void addRepository(String repositoryAlias, String repositoryUrl) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl) VALUES (?, ?)");
+
+		stmt.setString(1, repositoryAlias);
+		stmt.setString(2, repositoryUrl);
+		
+		int rowsAffected = stmt.executeUpdate();
+	}
+		
 }

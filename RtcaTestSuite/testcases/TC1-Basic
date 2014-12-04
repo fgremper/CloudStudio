@@ -1,0 +1,16 @@
+
+
+create_origin
+
+create_user john
+create_user david
+create_user simon
+clone_origin john
+clone_origin david
+clone_origin simon
+
+create_or_modify_file john john.txt
+commit john
+push john
+
+pull david

@@ -52,7 +52,7 @@ public class PushHttpHandler implements HttpHandler {
 					System.out.println("Content: " + content);
 					System.out.println("SHA: " + sha);
 
-					FileUtils.writeStringToFile(new File("C:/GDev/newmtworkspace/mtcode/filestorage/" + sha), content);
+					FileUtils.writeStringToFile(new File("/Users/novocaine/Documents/masterthesis/workspace/RtcaServer/filestorage/" + sha), content);
 
 					db.storeFile(repositoryAlias, username, filename, sha);
 				}
@@ -66,7 +66,7 @@ public class PushHttpHandler implements HttpHandler {
 
 			// TODO: send a good response!
 			String response = "Thanks mate!";
-			exchange.sendResponseHeaders(400, response.length());
+			exchange.sendResponseHeaders(200, response.length());
 			OutputStream os = exchange.getResponseBody();
 			os.write(response.getBytes());
 			os.close();
