@@ -51,13 +51,15 @@ public class DatabaseConnection {
 		int rowsAffected = stmt.executeUpdate();
 	}
 
-	public void storeFile(String repositoryAlias, String username, String filename, String sha) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha) VALUES (?, ?, ?, ?)");
+	public void storeFile(String repositoryAlias, String username, String filename, String sha, String branch) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha, branch) VALUES (?, ?, ?, ?, ?)");
 
+		System.out.println("FILE: " + filename);
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);
 		stmt.setString(3, filename);
 		stmt.setString(4, sha);
+		stmt.setString(5, branch);
 
 		int rowsAffected = stmt.executeUpdate();
 	}

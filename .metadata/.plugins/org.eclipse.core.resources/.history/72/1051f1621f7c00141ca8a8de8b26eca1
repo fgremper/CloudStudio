@@ -1,0 +1,210 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.io.IOUtils;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.internal.storage.file.FileRepository;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.Ref;
+import org.eclipse.jgit.lib.Repository;
+import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class LocalMain {
+
+	static LinkedList<String> modifiedFilesList = new LinkedList<String>();
+	static String jsonOutputString;
+
+	static String serverUrl;
+	static String username;
+	static LinkedList<RepositoryInfo> repositories = new LinkedList<RepositoryInfo>();
+
+	public static void main(String[] args) throws Exception {
+
+		String localPath = "/Users/novocaine/Documents/masterthesis/testrepos/repo1";
+		
+		/*
+	    Repository localRepo;
+	    Git git;
+	    
+        localRepo = new FileRepository(localPath + "/.git");
+        git = new Git(localRepo);
+        
+        List<Ref> branches = git.branchList().call();
+		for (Ref ref : branches) {
+			System.out.println("branch: " + ref.getName());
+		}
+		
+        // ObjectId head = localRepo.resolve(Constants.HEAD);
+        
+        Iterable<RevCommit> log = git.log().call();
+        for (RevCommit revCommit : log) {
+        	System.out.println(">> " + revCommit.toString());
+        }
+        */
+		
+		FileRepositoryBuilder repositoryBuilder = new FileRepositoryBuilder();
+		repositoryBuilder.setMustExist( true );
+		repositoryBuilder.setGitDir(new File(localPath + ""));
+		Repository gitRepository = repositoryBuilder.build();
+
+
+
+        System.out.println("Having repository: " + gitRepository.getDirectory());
+
+        // the Ref holds an ObjectId for any type of object (tree, commit, blob, tree)
+        Ref head = gitRepository.getRef("refs/heads/master");
+        System.out.println("Ref of refs/heads/master: " + head);
+        
+		if (true) return;
+		
+		try {
+
+			/* READ CONFIG */
+			
+			XMLConfiguration config = new XMLConfiguration("config.xml");
+	
+			username = config.getString("username");
+			if (username == null) throw new Exception("No username in config!");
+			System.out.println("Config -- username: " + username);
+			
+			serverUrl = config.getString("serverUrl");
+			if (serverUrl == null) throw new Exception("No serverUrl in config!");
+			System.out.println("Config -- serverUrl: " + serverUrl);
+			
+			boolean atLeastOneRepository = false;
+			for (int i = 0; ; i++) {
+				String repositoryAlias = config.getString("repositories.repository(" + i + ").alias");
+				String repositoryLocalPath = config.getString("repositories.repository(" + i + ").localPath");
+				if (repositoryAlias == null) break;
+				if (repositoryLocalPath == null) break;
+				atLeastOneRepository = true;
+				System.out.println("Config -- repository(" + i + "): \"" + repositoryAlias + "\" (" + repositoryLocalPath + ")");
+				repositories.add(new RepositoryInfo(repositoryAlias, repositoryLocalPath));
+			}
+			if (!atLeastOneRepository) throw new Exception("No repositories in config!");
+
+		}
+		catch (Exception e) {
+			System.err.println("Error while reading config.");
+			e.printStackTrace();
+			return;
+		}
+		
+		for (RepositoryInfo repository : repositories) {
+
+			System.out.println("Active repository: \"" + repository.alias + "\" (" + repository.localPath + ")");
+
+			/* FIND CHANGED FILES */
+			
+			try {
+				modifiedFilesList.clear();
+				findChangedFiles(repository);
+			}
+			catch (Exception e) {
+				System.err.println("Error while reading git changes.");
+				e.printStackTrace();
+				continue;
+			}
+
+			/* CREATE JSON STRING */
+			
+			try {
+				createJsonOutputString();
+			}
+			catch (Exception e) {
+				System.err.println("Error while creating JSON string.");
+				e.printStackTrace();
+				continue;
+			}
+
+			/* SEND CHANGES TO SERVER */
+			
+			try {
+				sendChangesToServer(repository);
+			}
+			catch (Exception e) {
+				System.err.println("Error while sending changes to server.");
+				e.printStackTrace();
+				continue;
+			}
+
+		}
+
+	}
+
+	public static void findChangedFiles(RepositoryInfo repository) throws Exception {
+		findChangedFilesFromConsoleInput("git --git-dir=" + repository.localPath + "/.git" + " --work-tree=" + repository.localPath + " diff --name-only HEAD", repository);
+		findChangedFilesFromConsoleInput("git --git-dir=" + repository.localPath + "/.git" + " --work-tree=" + repository.localPath + " ls-files --others --exclude-standard", repository);
+	}
+
+	public static void findChangedFilesFromConsoleInput(String consoleInput, RepositoryInfo repository) throws Exception {
+		Process p = Runtime.getRuntime().exec(consoleInput);
+		p.waitFor();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+		String line;
+		while ((line = reader.readLine()) != null) {
+			String filename = new File(repository.localPath, line).getPath();
+			System.out.println("Adding changed file: " + filename);
+			modifiedFilesList.add(filename);
+		}
+	}
+
+	public static void createJsonOutputString() throws Exception {
+		JSONArray fileArray = new JSONArray();
+
+		while(!modifiedFilesList.isEmpty()) {
+			String file = modifiedFilesList.pop();
+
+			// read file content
+			FileInputStream inputStream = new FileInputStream(file);
+			String fileContent = IOUtils.toString(inputStream, "UTF-8");
+
+			JSONObject fileObject = new JSONObject();
+			fileObject.put("filename", file); // TODO: send some sort of relative filename here
+			
+			fileObject.put("content", fileContent);
+			// TODO: send some sort of file history at some point, so 3-way merges work...
+			// TODO: send the branch we're working here or in the url. right now it's just master branch.
+
+			fileArray.put(fileObject);
+		}
+
+		jsonOutputString = fileArray.toString();
+
+		System.out.println("Created JSON string: " + jsonOutputString);
+	}
+
+	public static void sendChangesToServer(RepositoryInfo repository) throws Exception {
+		String url = serverUrl + "/push/" + repository.alias + "/" + username;
+
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("PUT");
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(jsonOutputString);
+		out.close();
+
+		int responseCode = con.getResponseCode();
+
+		System.out.println("Response code from server: " + responseCode);
+	}
+
+}

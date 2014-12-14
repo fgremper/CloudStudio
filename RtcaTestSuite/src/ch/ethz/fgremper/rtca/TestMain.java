@@ -124,7 +124,7 @@ public class TestMain {
 
 	public static void commit(String user) throws Exception {
 		System.out.println("Committing user " + user);
-		executeCommand("git --git-dir=" + sandpitDir + user + "/.git" + " --work-tree=" + sandpitDir + user + " commit -a -m commitmsg");
+		executeCommand("git --git-dir=" + sandpitDir + user + "/.git" + " --work-tree=" + sandpitDir + user + " commit -a -m " + user);
 	}
 
 	public static void pull(String user) throws Exception {
@@ -133,7 +133,7 @@ public class TestMain {
 	}
 	
 	public static void push(String user) throws Exception {
-		System.out.println("Pulling as user " + user);
+		System.out.println("Pushing as user " + user);
 		executeCommand("git --git-dir=" + sandpitDir + user + "/.git" + " --work-tree=" + sandpitDir + user + " push --all");
 	}
 	

@@ -14,3 +14,13 @@ commit john
 push john
 
 pull david
+create_or_modify_file david david.txt
+commit david
+push david
+
+pull simon
+create_or_modify_file simon simon.txt
+commit simon
+push simon
+
+pull john

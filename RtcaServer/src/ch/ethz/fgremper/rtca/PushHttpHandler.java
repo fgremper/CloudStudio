@@ -32,8 +32,13 @@ public class PushHttpHandler implements HttpHandler {
 			String jsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
 			System.out.println("JSON string: " + jsonString);
 
+			
+			
 			DatabaseConnection db;
 			try {
+				
+				
+				
 				JSONArray fileArray = new JSONArray(jsonString);
 
 				// TODO: use a pool of database connections
@@ -47,6 +52,7 @@ public class PushHttpHandler implements HttpHandler {
 					String filename = fileObject.getString("filename");
 					String content = fileObject.getString("content");
 					String sha = DigestUtils.sha1Hex(content).toString();
+					String branch = fileObject.getString("branch");
 
 					System.out.println("Filename: " + filename);
 					System.out.println("Content: " + content);
@@ -54,7 +60,7 @@ public class PushHttpHandler implements HttpHandler {
 
 					FileUtils.writeStringToFile(new File("/Users/novocaine/Documents/masterthesis/workspace/RtcaServer/filestorage/" + sha), content);
 
-					db.storeFile(repositoryAlias, username, filename, sha);
+					db.storeFile(repositoryAlias, username, filename, sha, branch);
 				}
 
 				db.commitTransaction();

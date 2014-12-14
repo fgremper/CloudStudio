@@ -5,7 +5,7 @@
     <repositories>
         <repository>
             <alias>test</alias>
-            <localPath>/Users/novocaine/Documents/masterthesis/testrepos/repo1</localPath>
+            <localPath>/Users/novocaine/Documents/masterthesis/testsandpit/john</localPath>
         </repository>
     </repositories>
 </config>
