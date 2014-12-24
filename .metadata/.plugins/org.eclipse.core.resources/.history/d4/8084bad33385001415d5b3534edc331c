@@ -54,7 +54,7 @@ public class PullHttpHandler implements HttpHandler {
 			try {
 				db = new DatabaseConnection();
 				db.startTransaction();
-				response = db.getFileConflicts().toString();
+				response = db.getRepositories().toString();
 				db.commitTransaction();
 			} catch (Exception e) {
 				//db.rollbackTransaction();

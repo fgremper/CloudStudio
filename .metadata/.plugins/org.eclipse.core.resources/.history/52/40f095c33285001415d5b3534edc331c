@@ -54,11 +54,11 @@ public class PullHttpHandler implements HttpHandler {
 			try {
 				db = new DatabaseConnection();
 				db.startTransaction();
-				response = db.getFileConflicts().toString();
+				response = db.getRepositories().toString();
 				db.commitTransaction();
 			} catch (Exception e) {
 				//db.rollbackTransaction();
-				System.err.println("Error while handling GET FILE CONFLICTS.");
+				System.err.println("Error while handling GET REPOSITORIES.");
 				e.printStackTrace();
 			}
 			

@@ -47,18 +47,18 @@ public class PullHttpHandler implements HttpHandler {
 		}
 		
 		
-		if (requestMethod.equalsIgnoreCase("GET") && uri.getPath().startsWith("/pull/getFileConflicts")) {
-			System.out.println("Incoming GET FILE CONFLICTS.");
+		if (requestMethod.equalsIgnoreCase("GET") && uri.getPath().equals("/pull/getFileConflicts")) {
+			System.out.println("Incoming GET REPOSITORIES.");
 			
 			DatabaseConnection db;
 			try {
 				db = new DatabaseConnection();
 				db.startTransaction();
-				response = db.getFileConflicts().toString();
+				response = db.getRepositories().toString();
 				db.commitTransaction();
 			} catch (Exception e) {
 				//db.rollbackTransaction();
-				System.err.println("Error while handling GET FILE CONFLICTS.");
+				System.err.println("Error while handling GET REPOSITORIES.");
 				e.printStackTrace();
 			}
 			

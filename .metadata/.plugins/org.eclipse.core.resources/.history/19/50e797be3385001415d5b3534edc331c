@@ -107,7 +107,6 @@ public class DatabaseConnection {
 			String username1 = rs.getString("username1");
 			String username2 = rs.getString("username2");
 			try {
-				System.out.println(filename);
 				repository.put("filename", filename);
 				repository.put("branch", branch);
 				repository.put("username1", username1);

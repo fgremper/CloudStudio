@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;repositories&apos; in &apos;ch.ethz.fgremper.rtca.DatabaseConnection.getFileConflicts()&apos; to &apos;fileConflicts&apos;&#x0A;- Original project: &apos;RtcaServer&apos;&#x0A;- Original element: &apos;ch.ethz.fgremper.rtca.DatabaseConnection.getFileConflicts().repositories&apos;&#x0A;- Renamed element: &apos;repositories&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;repositories&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;ch.ethz.fgremper.rtca{DatabaseConnection.java[DatabaseConnection~getFileConflicts@repositories!2747!2787!2757!2768!QJSONArray;!0!false" name="fileConflicts" references="true" stamp="1418741609589" version="1.0"/>
+</session>
