@@ -109,25 +109,22 @@ public class LocalMain {
 		            
 		            RevTree tree = commit.getTree();
 		            System.out.println("Tree: " + tree);
-		            
 		            System.out.println("Commit Id: " + commit.getName());
-
-		            //find upstream commits
+		            
 		            String commitId = commit.getName();
 		            List<String> upstreamCommits = new LinkedList<String>();
+		            //findUpstreamCommits(commit);
 		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
 		            
 		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
 		            while (!todoCommits.isEmpty()) {
 		            	RevCommit currentCommit = todoCommits.remove(0);
-		            	RevCommit currentCommitFoReal = walk.parseCommit(currentCommit.getId());
-		            	if (!upstreamCommits.contains(currentCommitFoReal.getName())) {
-			            	upstreamCommits.add(currentCommitFoReal.getName());
-				            if (currentCommitFoReal.getParents() != null) todoCommits.addAll(Arrays.asList(currentCommitFoReal.getParents()));
-		            	}
+		            	RevCommit currentCommitFoReal = walk.parseCommit(currentCommit.getParent(0).getId());
+		            	upstreamCommits.add(currentCommitFoReal.getName());
+			            if (currentCommitFoReal.getParents() != null) todoCommits.addAll(Arrays.asList(currentCommitFoReal.getParents()));
 		            }
-		            for (String u : upstreamCommits) {
-		            	System.out.println("HA -- "  + u);
+		            for (RevCommit parentCommit : commit.getParents()) {
+		            	
 		            }
 		            
 		            
@@ -162,8 +159,6 @@ public class LocalMain {
 
 						fileObject.put("content", fileContent);
 						fileObject.put("branch", ref.getName().substring("ref/heads/".length() + 1));
-						fileObject.put("commit", commitId);
-						fileObject.put("upstreamCommits", upstreamCommits);
 						
 						fileArray.put(fileObject);
 		            }

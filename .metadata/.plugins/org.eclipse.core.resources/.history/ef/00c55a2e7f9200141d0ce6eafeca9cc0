@@ -162,8 +162,6 @@ public class LocalMain {
 
 						fileObject.put("content", fileContent);
 						fileObject.put("branch", ref.getName().substring("ref/heads/".length() + 1));
-						fileObject.put("commit", commitId);
-						fileObject.put("upstreamCommits", upstreamCommits);
 						
 						fileArray.put(fileObject);
 		            }

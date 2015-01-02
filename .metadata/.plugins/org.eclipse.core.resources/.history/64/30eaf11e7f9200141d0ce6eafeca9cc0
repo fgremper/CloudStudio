@@ -109,12 +109,11 @@ public class LocalMain {
 		            
 		            RevTree tree = commit.getTree();
 		            System.out.println("Tree: " + tree);
-		            
 		            System.out.println("Commit Id: " + commit.getName());
-
-		            //find upstream commits
+		            
 		            String commitId = commit.getName();
 		            List<String> upstreamCommits = new LinkedList<String>();
+		            //findUpstreamCommits(commit);
 		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
 		            
 		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
@@ -162,8 +161,6 @@ public class LocalMain {
 
 						fileObject.put("content", fileContent);
 						fileObject.put("branch", ref.getName().substring("ref/heads/".length() + 1));
-						fileObject.put("commit", commitId);
-						fileObject.put("upstreamCommits", upstreamCommits);
 						
 						fileArray.put(fileObject);
 		            }

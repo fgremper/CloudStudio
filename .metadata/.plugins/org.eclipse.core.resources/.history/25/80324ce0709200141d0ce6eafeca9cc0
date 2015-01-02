@@ -8,7 +8,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -109,36 +108,14 @@ public class LocalMain {
 		            
 		            RevTree tree = commit.getTree();
 		            System.out.println("Tree: " + tree);
-		            
 		            System.out.println("Commit Id: " + commit.getName());
-
-		            //find upstream commits
+		            
 		            String commitId = commit.getName();
-		            List<String> upstreamCommits = new LinkedList<String>();
-		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
+		            List<String> upstreamCommits = findUpstreamCommits(commit, new LinkedList<String>());
 		            
-		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
-		            while (!todoCommits.isEmpty()) {
-		            	RevCommit currentCommit = todoCommits.remove(0);
-		            	RevCommit currentCommitFoReal = walk.parseCommit(currentCommit.getId());
-		            	if (!upstreamCommits.contains(currentCommitFoReal.getName())) {
-			            	upstreamCommits.add(currentCommitFoReal.getName());
-				            if (currentCommitFoReal.getParents() != null) todoCommits.addAll(Arrays.asList(currentCommitFoReal.getParents()));
-		            	}
-		            }
-		            for (String u : upstreamCommits) {
-		            	System.out.println("HA -- "  + u);
-		            }
-		            
-		            
-		            System.out.println("my commit: " + commit.getName());
-		            System.out.println("parent commit: " + walk.parseCommit(commit.getParent(0).getId()).getName());
-		            System.out.println("parent parent commit: " + walk.parseCommit(walk.parseCommit(commit.getParent(0).getId()).getParent(0).getId()).getName());
-		            
-		            
-		            //for (String upstreamCommit : upstreamCommits) {
+		            for (String upstreamCommit : upstreamCommits) {
 		            	//System.out.println("UPSTREAM: " + upstreamCommit);
-		            //}
+		            }
 		            // now use a TreeWalk to iterate over all files in the Tree recursively
 		            // you can set Filters to narrow down the results if needed
 		            TreeWalk treeWalk = new TreeWalk(repository);
@@ -162,8 +139,6 @@ public class LocalMain {
 
 						fileObject.put("content", fileContent);
 						fileObject.put("branch", ref.getName().substring("ref/heads/".length() + 1));
-						fileObject.put("commit", commitId);
-						fileObject.put("upstreamCommits", upstreamCommits);
 						
 						fileArray.put(fileObject);
 		            }
@@ -200,18 +175,15 @@ public class LocalMain {
 		}
 		
 	}
-	public static void findUpstreamCommits(RevCommit commit) {
-		//upstreamCommits.add(commit.getName());
+	public static List<String> findUpstreamCommits(RevCommit commit, List<String> upstreamCommits) {
+		upstreamCommits.add(commit.getName());
 		System.out.println("AHAHAHA: " + commit.getName());
-		
-		//ommit.getPa
-		System.out.println(commit.getParentCount());
 		if (commit.getParents() != null) {
 			for (RevCommit commitParent : commit.getParents()) {
-				findUpstreamCommits(commitParent);
+				upstreamCommits.addAll(findUpstreamCommits(commitParent, upstreamCommits));
 			}
 		}
-		//return upstreamCommits;
+		return upstreamCommits;
 	}
 
 }
