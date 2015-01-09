@@ -9,5 +9,6 @@
 	<classpathentry kind="lib" path="../jar/commons-logging-1.2.jar"/>
 	<classpathentry kind="lib" path="../jar/commons-collections-3.2.1.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/org.eclipse.jgit-3.5.2.201411120430-r.jar" sourcepath="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

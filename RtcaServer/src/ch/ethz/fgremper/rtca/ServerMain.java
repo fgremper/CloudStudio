@@ -10,16 +10,16 @@ public class ServerMain {
 	static int port = 7330;
 
 	public static void main(String[] args) throws Exception {
-		System.out.println("Starting HTTP server on port " + port + "...");
+		System.out.println("[Main] Starting HTTP server on port " + port + "...");
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 		server.createContext("/webinterface", new WebInterfaceHttpHandler());
-		server.createContext("/push", new PushHttpHandler());
-		server.createContext("/pull", new PullHttpHandler());
+		server.createContext("/update", new UpdateHttpHandler());
+		server.createContext("/request", new RequestHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 
-		System.out.println("Server up!");
+		System.out.println("[Main] Server up!");
 	}
 
 }

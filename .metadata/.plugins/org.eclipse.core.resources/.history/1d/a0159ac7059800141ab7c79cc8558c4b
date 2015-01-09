@@ -1,0 +1,30 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class HttpSender {
+	public HttpSender() {
+
+	}
+	
+	public send(String serverUrl, String repositoryAlias, String username, String jsonString) {
+
+		String url = serverUrl + "/push/" + repositoryAlias + "/" + username;
+
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("PUT");
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(jsonString);
+		out.close();
+
+		int responseCode = con.getResponseCode();
+
+		System.out.println("Response code from server: " + responseCode);
+        		
+	}
+}

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,9 +26,9 @@ public class DatabaseConnection {
 	public DatabaseConnection() throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
 
-		System.out.println("Connecting to database...");
+		System.out.println("[DatabaseConnection] Connecting to database...");
 		con = DriverManager.getConnection(DB_URL, USER,PASS);
-		System.out.println("Connected to database.");
+		System.out.println("[DatabaseConnection] Connected to database.");
 	}
 
 	public void startTransaction() throws SQLException {
@@ -51,8 +52,8 @@ public class DatabaseConnection {
 		int rowsAffected = stmt.executeUpdate();
 	}
 
-	public void storeFile(String repositoryAlias, String username, String filename, String sha, String branch) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha, branch) VALUES (?, ?, ?, ?, ?)");
+	public void storeFile(String repositoryAlias, String username, String filename, String sha, String branch, String commit, List<String> downstreamCommits) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha, branch, commit) VALUES (?, ?, ?, ?, ?, ?)");
 
 		System.out.println("FILE: " + filename);
 		stmt.setString(1, repositoryAlias);
@@ -60,8 +61,21 @@ public class DatabaseConnection {
 		stmt.setString(3, filename);
 		stmt.setString(4, sha);
 		stmt.setString(5, branch);
+		stmt.setString(6, commit);
 
 		int rowsAffected = stmt.executeUpdate();
+		
+		PreparedStatement downstreamCommitInsertStatement = con.prepareStatement("INSERT INTO downstreamcommits (repositoryalias, username, commit, downstreamcommit) VALUES (?, ?, ?, ?)");
+		
+		downstreamCommitInsertStatement.setString(1, repositoryAlias);
+		downstreamCommitInsertStatement.setString(2, username);
+		downstreamCommitInsertStatement.setString(3, commit);
+		
+		for (String downstreamCommit : downstreamCommits) {
+			downstreamCommitInsertStatement.setString(4, downstreamCommit);
+			downstreamCommitInsertStatement.executeUpdate();
+		}
+		
 	}
 	
 	public JSONArray getRepositories() throws SQLException {

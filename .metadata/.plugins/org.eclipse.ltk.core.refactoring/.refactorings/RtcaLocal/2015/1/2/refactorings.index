@@ -1,0 +1,13 @@
+1420807163835	Rename local variable 'values'
+1420807173275	Rename local variable 'refValues'
+1420807412509	Rename local variable 'head'
+1420807693128	Rename local variable 'currentCommit'
+1420807699552	Rename local variable 'currentCommitFoReal'
+1420808451243	Rename type 'ConfigReader'
+1420808695937	Rename local variable 'config'
+1420811268322	Delete element
+1420811384340	Move compilation units
+1420811397079	Move compilation units
+1420811434524	Delete element
+1420813870296	Rename type 'HttpSender'
+1420813878492	Rename local variable 'httpSender'

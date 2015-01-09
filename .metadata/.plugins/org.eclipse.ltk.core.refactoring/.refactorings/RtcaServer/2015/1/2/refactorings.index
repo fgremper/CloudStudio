@@ -1,0 +1,7 @@
+1420812287063	Rename type 'PushHttpHandler'
+1420815564940	Delete element
+1420816353494	Rename local variable 'deleteAllFilesFromRepositoryAndUserStatement'
+1420816363734	Rename local variable 'sqlStatement'
+1420816933876	Rename type 'PullHttpHandler'
+1420817302098	Rename local variable 'response'
+1420817311330	Rename local variable 'response'
