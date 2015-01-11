@@ -1,0 +1,62 @@
+package ch.ethz.fgremper.rtca;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CombinationTest {
+
+
+	@Test
+	public void test() throws Exception {
+
+		/*
+		 * 
+
+create_origin
+
+create_user john
+create_user david
+create_user simon
+clone_origin john
+clone_origin david
+clone_origin simon
+
+create_or_modify_file john john.txt
+commit john
+push john
+
+pull david
+create_or_modify_file david david.txt
+commit david
+push david
+
+pull simon
+create_or_modify_file simon simon.txt
+commit simon
+push simon
+
+pull john
+
+		 */
+		
+		TestGitHelper.clearSandpit();
+		
+		TestGitHelper.createOrigin();
+		
+		TestGitHelper.createUser("john");
+		
+		RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + "/john");
+		String jsonString = repositoryReader.getJsonString();
+		
+		System.out.println("[Test] JSON String: " + jsonString);
+			
+		UpdateHttpHandler updateHttpHandler = new UpdateHttpHandler();
+		
+		boolean success = updateHttpHandler.executeDataUpdate("testrepo", "realtestuser", jsonString);
+		
+		assertEquals(success, true);
+		
+	}
+
+}
