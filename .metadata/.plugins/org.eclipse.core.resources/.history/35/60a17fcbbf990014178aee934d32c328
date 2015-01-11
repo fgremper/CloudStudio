@@ -1,0 +1,36 @@
+package ch.ethz.fgremper.rtca;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CombinationTest {
+
+	@Test
+	public void test() throws Exception {
+		// fail("Not yet implemented");
+		
+		//ServerMain.main(new String[0]);
+		
+/*
+		Config config = new ConfigReader().getConfig();
+
+		for (RepositoryInfo repositoryInfo : config.repositoriesList) {	
+			
+			RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
+			String jsonString = repositoryReader.getJsonString();
+			
+			HttpClient httpClient = new HttpClient();
+			httpClient.send(config.serverUrl, repositoryInfo.alias, config.username, jsonString);
+			
+		}
+		*/
+		
+		UpdateHttpHandler updateHttpHandler = new UpdateHttpHandler();
+		
+		boolean success = updateHttpHandler.executeDataUpdate("testrepo", "realtestuser", "{\"files\":[{\"content\":\"this is not yet a random string.\",\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"branch\":\"branchone\",\"filename\":\"david.txt\"},{\"content\":\"default content\",\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"branch\":\"branchone\",\"filename\":\"default.txt\"},{\"content\":\"test\n\",\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"branch\":\"branchone\",\"filename\":\"file1.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"branch\":\"branchone\",\"filename\":\"john.txt\"},{\"content\":\"neew\n\",\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"branch\":\"branchone\",\"filename\":\"new.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"branch\":\"branchone\",\"filename\":\"simon.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"david.txt\"},{\"content\":\"default content\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"default.txt\"},{\"content\":\"test\n\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"file1.txt\"},{\"content\":\"test\n\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"file2.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"john.txt\"},{\"content\":\"neew\n\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"new.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"branch\":\"branchtwo\",\"filename\":\"simon.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"88d0469af1de665a60b09c0559e025817acf1103\",\"branch\":\"master\",\"filename\":\"david.txt\"},{\"content\":\"default content\",\"commit\":\"88d0469af1de665a60b09c0559e025817acf1103\",\"branch\":\"master\",\"filename\":\"default.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"88d0469af1de665a60b09c0559e025817acf1103\",\"branch\":\"master\",\"filename\":\"john.txt\"},{\"content\":\"neew\n\",\"commit\":\"88d0469af1de665a60b09c0559e025817acf1103\",\"branch\":\"master\",\"filename\":\"new.txt\"},{\"content\":\"this is not yet a random string.\",\"commit\":\"88d0469af1de665a60b09c0559e025817acf1103\",\"branch\":\"master\",\"filename\":\"simon.txt\"}],\"commitHistory\":[{\"commit\":\"34203461439fe3917785a0df2380045e480f88e7\",\"downstreamCommits\":[\"88d0469af1de665a60b09c0559e025817acf1103\",\"9c948b7c3b6f161f5a240100115319678b6d05ed\",\"f2faf2b9f645b3c1388d69c177276ac5622c745f\",\"1c739044948b1c5df603a310e2a282aa591024e7\",\"cbde35d712f4b1c9f6a7446a7ee66c6e1d1288d0\"]},{\"commit\":\"764803ea2b217e32422d34105a261f1f9eb05d21\",\"downstreamCommits\":[\"cedd067f5fed581cfe65e4bbf5da3672819ee88e\",\"34203461439fe3917785a0df2380045e480f88e7\",\"88d0469af1de665a60b09c0559e025817acf1103\",\"9c948b7c3b6f161f5a240100115319678b6d05ed\",\"f2faf2b9f645b3c1388d69c177276ac5622c745f\",\"1c739044948b1c5df603a310e2a282aa591024e7\",\"cbde35d712f4b1c9f6a7446a7ee66c6e1d1288d0\"]},{\"commit\":\"88d0469af1de665a60b09c0559e025817acf1103\",\"downstreamCommits\":[\"9c948b7c3b6f161f5a240100115319678b6d05ed\",\"f2faf2b9f645b3c1388d69c177276ac5622c745f\",\"1c739044948b1c5df603a310e2a282aa591024e7\",\"cbde35d712f4b1c9f6a7446a7ee66c6e1d1288d0\"]}]}");
+		
+		assertEquals(success, true);
+	}
+
+}

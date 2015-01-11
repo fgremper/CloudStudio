@@ -30,6 +30,8 @@ public class RepositoryReader {
 	
 	public RepositoryReader(String localPath) throws Exception {
 		JSONArray fileArray = new JSONArray();
+		JSONArray commitHistory = new JSONArray();
+		JSONObject updateObject = new JSONObject();
 		
 		System.out.println("[Repository] Reading: " + localPath);
 
@@ -48,6 +50,7 @@ public class RepositoryReader {
         
         // get all references
         Collection<Ref> refs = repository.getAllRefs().values();
+        List<String> usedCommitIds = new LinkedList<String>();
         
         for (Ref ref : refs) {
         	System.out.println("[Repository] Ref: " + ref.getName());
@@ -65,23 +68,36 @@ public class RepositoryReader {
 	            String commitId = commit.getName();
 	            System.out.println("[Repository] Commit: " + commit.getName());
 	            
-	            // find downstream commits
-	            
-	            List<String> downstreamCommits = new LinkedList<String>();
-	            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
-	            
-	            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
-	            while (!todoCommits.isEmpty()) {
-	            	RevCommit pop = todoCommits.remove(0);
-	            	RevCommit currentCommit = walk.parseCommit(pop.getId());
-	            	if (!downstreamCommits.contains(currentCommit.getName())) {
-		            	downstreamCommits.add(currentCommit.getName());
-			            if (currentCommit.getParents() != null) todoCommits.addAll(Arrays.asList(currentCommit.getParents()));
-	            	}
-	            }
-	            
-	            for (String u : downstreamCommits) {
-	            	System.out.println("[Repository] Downstream commit: "  + u);
+	            if (!usedCommitIds.contains(commitId)) {
+	            	
+	            	JSONObject commitObject = new JSONObject();
+	            	
+	            	usedCommitIds.add(commitId);
+	            	
+		            // find downstream commits
+		            
+		            List<String> downstreamCommits = new LinkedList<String>();
+		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
+		            
+		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
+		            while (!todoCommits.isEmpty()) {
+		            	RevCommit pop = todoCommits.remove(0);
+		            	RevCommit currentCommit = walk.parseCommit(pop.getId());
+		            	if (!downstreamCommits.contains(currentCommit.getName())) {
+			            	downstreamCommits.add(currentCommit.getName());
+				            if (currentCommit.getParents() != null) todoCommits.addAll(Arrays.asList(currentCommit.getParents()));
+		            	}
+		            }
+		            
+		            for (String u : downstreamCommits) {
+		            	System.out.println("[Repository] Downstream commit: "  + u);
+		            }
+		            
+		            commitObject.put("commit", commitId);
+		            commitObject.put("downstreamCommits", downstreamCommits);
+		            
+		            commitHistory.put(commitObject);
+					
 	            }
 	            
 	            // get file contents and append to json string
@@ -109,7 +125,6 @@ public class RepositoryReader {
 					fileObject.put("content", fileContent);
 					fileObject.put("branch", ref.getName().substring("ref/heads/".length() + 1));
 					fileObject.put("commit", commitId);
-					fileObject.put("downstreamCommits", downstreamCommits);
 					
 					fileArray.put(fileObject);
 					
@@ -121,10 +136,13 @@ public class RepositoryReader {
         	}
             
         }
-        
-        jsonString = fileArray.toString();
-		System.out.println("[Repository] JSON String: " + jsonString);
+     
+        updateObject.put("files", fileArray);
+        updateObject.put("commitHistory", commitHistory);
 
+        jsonString = updateObject.toString();
+        System.out.println("[Repository] JSON String: " + jsonString);
+        
 	}
 	
 	public String getJsonString() {

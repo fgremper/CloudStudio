@@ -36,7 +36,7 @@ public class LocalMain {
 
 	public static void main(String[] args) throws Exception {
 
-		Config config = new ConfigReader().getConfig();
+		Config config = new ConfigReader("config.xml").getConfig();
 
 		for (RepositoryInfo repositoryInfo : config.repositoriesList) {	
 			

@@ -15,7 +15,7 @@ public class ServerMain {
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 		server.createContext("/webinterface", new WebInterfaceHttpHandler());
 		server.createContext("/update", new UpdateHttpHandler());
-		server.createContext("/request", new RequestHttpHandler());
+		server.createContext("/pull", new RequestHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 

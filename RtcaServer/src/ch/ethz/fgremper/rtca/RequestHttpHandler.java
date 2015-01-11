@@ -28,7 +28,6 @@ public class RequestHttpHandler implements HttpHandler {
 		
 		String response = null;
 
-
 		if (requestMethod.equalsIgnoreCase("GET") && uri.getPath().equals("/pull/getRepositories")) {
 			System.out.println("Incoming GET REPOSITORIES.");
 			

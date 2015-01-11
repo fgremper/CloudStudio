@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
-<fullyQualifiedTypeName name="org.json.JSONArray"/>
 <fullyQualifiedTypeName name="org.json.JSONObject"/>
 <fullyQualifiedTypeName name="org.json.JSONException"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
-<fullyQualifiedTypeName name="java.io.File"/>
-<fullyQualifiedTypeName name="org.apache.commons.io.FileUtils"/>
 <fullyQualifiedTypeName name="java.io.FileReader"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.api.Git"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.internal.storage.file.FileRepository"/>
@@ -15,7 +12,6 @@
 <fullyQualifiedTypeName name="org.eclipse.jgit.lib.ObjectId"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.lib.Constants"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.lib.Ref"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.storage.file.FileRepositoryBuilder"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.revwalk.RevWalk"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.revwalk.RevTree"/>
@@ -27,4 +23,10 @@
 <fullyQualifiedTypeName name="java.util.Collection"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="junit.framework.Assert"/>
+<fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.LocalMain"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.apache.commons.io.FileUtils"/>
+<fullyQualifiedTypeName name="java.io.File"/>
 </qualifiedTypeNameHistroy>

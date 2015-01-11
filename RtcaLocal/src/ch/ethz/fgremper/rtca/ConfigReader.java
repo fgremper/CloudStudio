@@ -6,19 +6,19 @@ public class ConfigReader {
 
 	private Config config = new Config();
 	
-	public ConfigReader() throws Exception {
+	public ConfigReader(String configFilename) throws Exception {
 		
 		System.out.println("[Config] Reading config from xml");
 		
-		XMLConfiguration xmlConfig = new XMLConfiguration("config.xml");
+		XMLConfiguration xmlConfig = new XMLConfiguration(configFilename);
 
 		String username = xmlConfig.getString("username");
-		if (username == null) throw new Exception("No username in config");
+		if (username == null || username.equals("")) throw new Exception("No username in config");
 		config.username = username;
 		System.out.println("[Config] username: " + username);
 		
 		String serverUrl = xmlConfig.getString("serverUrl");
-		if (serverUrl == null) throw new Exception("No serverUrl in config");
+		if (serverUrl == null || serverUrl.equals("")) throw new Exception("No serverUrl in config");
 		config.serverUrl = serverUrl;
 		System.out.println("[Config] serverUrl: " + serverUrl);
 		
@@ -26,8 +26,8 @@ public class ConfigReader {
 		for (int i = 0; ; i++) {
 			String repositoryAlias = xmlConfig.getString("repositories.repository(" + i + ").alias");
 			String repositoryLocalPath = xmlConfig.getString("repositories.repository(" + i + ").localPath");
-			if (repositoryAlias == null) break;
-			if (repositoryLocalPath == null) break;
+			if (repositoryAlias == null || repositoryAlias.equals("")) break;
+			if (repositoryLocalPath == null || repositoryLocalPath.equals("")) break;
 			atLeastOneRepository = true;
 			config.repositoriesList.add(new RepositoryInfo(repositoryAlias, repositoryLocalPath));
 			System.out.println("[Config] repository(" + i + "): \"" + repositoryAlias + "\" (" + repositoryLocalPath + ")");

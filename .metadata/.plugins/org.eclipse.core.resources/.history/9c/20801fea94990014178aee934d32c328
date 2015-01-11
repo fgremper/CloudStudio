@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8"?><config><username>mark</username><serverUrl>http://my.server.com</serverUrl><repositories><repository><alias>foo</alias><localPath>/path/to/foo</localPath></repository><repository><alias>bar</alias><localPath>/path/to/bar</localPath></repository></repositories></config>

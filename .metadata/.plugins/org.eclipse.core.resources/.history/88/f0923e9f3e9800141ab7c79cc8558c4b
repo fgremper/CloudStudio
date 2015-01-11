@@ -1,0 +1,26 @@
+package ch.ethz.fgremper.rtca;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+
+import junit.framework.Assert;
+
+import org.apache.commons.io.FileUtils;
+import org.junit.Test;
+
+public class ConfigReaderTest {
+
+	@Test
+	public void testAllInfo() throws Exception {
+		FileUtils.writeStringToFile(new File("config.xml"), "");
+		Config config = new ConfigReader().getConfig();
+		
+		assertEquals(config.username, "mark");
+		assertEquals(config.serverUrl, "http://my.server.com");
+		assertEquals(config.repositoriesList.size(), 1);
+		assertEquals(config.repositoriesList.get(0).alias, "foo");
+		assertEquals(config.repositoriesList.get(0).localPath, "/path/to/foo");		
+	}
+
+}
