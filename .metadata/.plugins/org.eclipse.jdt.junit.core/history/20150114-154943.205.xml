@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ClientConfigReaderTest" project="RtcaClient" tests="11" started="11" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.166">
+    <testcase name="testEmptyUsername" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.118"/>
+    <testcase name="testAllInfo" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.006"/>
+    <testcase name="testNoRepositoryLocalPath" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.004"/>
+    <testcase name="testEmptyRepositoryLocalPath" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.004"/>
+    <testcase name="testNoRepository" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.004"/>
+    <testcase name="testEmptyRepositoryAlias" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.006"/>
+    <testcase name="testNoUsername" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.005"/>
+    <testcase name="testEmptyServerUrl" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.004"/>
+    <testcase name="testNoServerUrl" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.003"/>
+    <testcase name="testNoRepositoryAlias" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.003"/>
+    <testcase name="testAllInfoTwoRepositories" classname="ch.ethz.fgremper.rtca.testing.ClientConfigReaderTest" time="0.008"/>
+  </testsuite>
+</testrun>

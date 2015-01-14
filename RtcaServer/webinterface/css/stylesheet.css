@@ -1,9 +1,92 @@
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Helvetica, Arial, sans-serif;
 }
-h1 {
-    font-size: 18px;
+html, body {
+    margin: 0;
 }
+
+/* header */
+
+#header {
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #d0d0d0;
+    height: 36px;
+}
+#headerText {
+    height: 36px;
+    margin: 0 auto;
+    width: 1000px;
+    line-height: 36px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #a0a0a0;
+}
+
+/* title */
+
+#title {
+    border-bottom: 1px solid #d0d0d0;
+    height: 65px;
+    margin-bottom: 20px;
+}
+
+#titleText {
+    height: 65px;
+    margin: 0 auto;
+    width: 1000px;
+    line-height: 65px;
+    font-size: 20px;
+    color: #909090;
+}
+#titleText span.clickable {
+    color: #4C7CBA;
+    cursor: pointer;
+}
+#titleText strong {
+    color: #000000;
+}
+
+/* tab bar */
+
+.tab {
+    height: 36px;
+    border-bottom: 1px solid #d0d0d0;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+.tabBar {
+    height: 36px;
+    line-height: 36px;
+    background-color: #ffffff;
+    border: 1px solid #d0d0d0;
+    font-size: 16px;
+    padding: 0 20px;
+    float: left;
+    color: #888888;
+    margin-left: -1px;
+    border-radius: 5px 5px 0 0;
+    box-sizing: border-box;
+
+}
+.tabBarSelected {
+    color: #000000;
+    font-weight: bold;
+    border-bottom: 0;
+}
+.tabBar:first-child {
+    margin-left: 10px;
+}
+
+/* view */
+
+#view {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+/* table view */
+
 table {
     width: 100%;
     table-layout: fixed;
@@ -52,6 +135,9 @@ tr.descriptors th {
     color: #4C7CBA;
     font-weight: bold;
 }
+
+/* useless */
+
 span.yes {
     padding: 5px 10px;
     background-color: #F7887C;

@@ -1,12 +1,22 @@
-<h1>Repository Overview</h1>
-<table id="repositories">
-    <tr class="descriptors"><th>Alias</th><th>URL</th></tr>
-    <tr class="heading"><td colspan="2">Repositories (<%= repositories.length %>)</td></tr>
-<% for (var i = 0; i < repositories.length; i++) { %>
-    <tr class="repository clickable" data-alias="<%= repositories[i]['alias'] %>">
-        <td class="blue"><%= repositories[i]['repositoryAlias'] %></td>
-        <td><%= repositories[i]['repositoryUrl'] %></td>
-        <!--<td><span class="yes">file conflict</span> <span class="no">no line conflict</span></td>-->
-    </tr>
-<% } %>
-</table>
+<div id="header">
+	<div id="headerText">
+		RTCA Web Interface
+	</div>
+</div>
+<div id="title">
+    <div id="titleText">
+    	<strong>Repositories</strong>
+    </div>
+</div>
+<div id="view">
+	<table id="repositories">
+	    <tr class="descriptors"><th width="300">Alias</th><th>URL</th></tr>
+	    <tr class="heading"><td colspan="2">Repositories (<%= repositories.length %>)</td></tr>
+	<% for (var i = 0; i < repositories.length; i++) { %>
+	    <tr class="repository clickable" data-alias="<%= repositories[i]['repositoryAlias'] %>">
+	        <td class="blue"><%= repositories[i]['repositoryAlias'] %></td>
+	        <td><%= repositories[i]['repositoryUrl'] %></td>
+	    </tr>
+	<% } %>
+	</table>
+</div>

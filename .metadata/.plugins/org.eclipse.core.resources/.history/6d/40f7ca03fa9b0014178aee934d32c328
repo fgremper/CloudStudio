@@ -1,0 +1,14 @@
+package ch.ethz.fgremper.rtca.testing;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class RepositoryReaderTest {
+
+	@Test
+	public void testEmptyOrigin() {
+		fail("Not yet implemented");
+	}
+
+}

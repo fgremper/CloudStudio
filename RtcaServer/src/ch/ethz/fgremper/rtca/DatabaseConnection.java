@@ -165,5 +165,14 @@ public class DatabaseConnection {
 		
 		int rowsAffected = stmt.executeUpdate();
 	}
+	
+	public void resetDatabase() throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("TRUNCATE TABLE files");
+		stmt.executeUpdate();
+		stmt = con.prepareStatement("TRUNCATE TABLE repositories");
+		stmt.executeUpdate();
+		stmt = con.prepareStatement("TRUNCATE TABLE commithistory");
+		stmt.executeUpdate();
+	}
 		
 }

@@ -1,0 +1,14 @@
+package ch.ethz.fgremper.rtca.testing;
+
+import java.sql.SQLException;
+
+import ch.ethz.fgremper.rtca.DatabaseConnection;
+
+public class TestDBHelper {
+	public static void resetDatabase() throws Exception {
+		DatabaseConnection db = new DatabaseConnection();
+		db.startTransaction();
+		db.resetDatabase();
+		db.commitTransaction();
+	}
+}

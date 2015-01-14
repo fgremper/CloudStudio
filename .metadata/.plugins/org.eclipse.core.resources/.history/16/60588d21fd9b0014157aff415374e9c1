@@ -1,0 +1,14 @@
+package ch.ethz.fgremper.rtca.testing;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class SimpleBadTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}

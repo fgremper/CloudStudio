@@ -25,11 +25,12 @@ public class UpdateHttpHandler implements HttpHandler {
 		
 		URI uri = exchange.getRequestURI();
 		String requestMethod = exchange.getRequestMethod();
-		System.out.println("[UpdateHttpHandler] Incoming request: " + requestMethod + " " + uri.getPath());
 
 		// TODO: retrieve this from the uri
-		String username = "testuser";
-		String repositoryAlias = "testrepo";
+		String username = uri.getPath().split("\\/")[1];
+		String repositoryAlias = uri.getPath().split("\\/")[2];
+
+		System.out.println("[UpdateHttpHandler] Incoming request. Username: " + username + ". RepositoryAlias: " + repositoryAlias);
 
 		boolean success = false;
 		

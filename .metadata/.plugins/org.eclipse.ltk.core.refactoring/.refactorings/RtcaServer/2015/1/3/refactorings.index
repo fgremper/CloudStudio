@@ -1,3 +1,6 @@
 1421003066462	Rename type 'GitTestHelper'
 1421003842862	Rename package 'ch.ethz.fgremper.rtca.tests'
 1421003854929	Move compilation units
+1421245335143	Rename type 'CombinationTest'
+1421245466163	Move compilation units
+1421247103500	Move compilation unit
