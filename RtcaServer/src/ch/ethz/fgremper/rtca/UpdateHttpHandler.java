@@ -13,13 +13,15 @@ import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ch.ethz.fgremper.rtca.helper.JSONHelper;
+
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class UpdateHttpHandler implements HttpHandler {
 
-	static final String FILE_STORAGE_PATH = "/Users/novocaine/Documents/masterthesis/workspace/RtcaServer/filestorage/";
+	static final String FILE_STORAGE_PATH = "filestorage/";
 
 	public void handle(HttpExchange exchange) throws IOException {
 		
@@ -27,8 +29,8 @@ public class UpdateHttpHandler implements HttpHandler {
 		String requestMethod = exchange.getRequestMethod();
 
 		// TODO: retrieve this from the uri
-		String username = uri.getPath().split("\\/")[1];
-		String repositoryAlias = uri.getPath().split("\\/")[2];
+		String username = "john";
+		String repositoryAlias = "testrepo";
 
 		System.out.println("[UpdateHttpHandler] Incoming request. Username: " + username + ". RepositoryAlias: " + repositoryAlias);
 

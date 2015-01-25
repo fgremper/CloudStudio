@@ -24,21 +24,72 @@ public class RequestHttpHandler implements HttpHandler {
 		
 		URI uri = exchange.getRequestURI();
 		String requestMethod = exchange.getRequestMethod();
-		System.out.println("Incoming PULL request: " + requestMethod + " " + uri.getPath());
+		System.out.println("[RequestHttpHandler] Incoming request: " + requestMethod + " " + uri.getPath());
 		
 		String response = null;
+		String prefix = "/pull";
 
-		if (requestMethod.equalsIgnoreCase("GET") && uri.getPath().equals("/pull/getRepositories")) {
-			System.out.println("Incoming GET REPOSITORIES.");
+		// login request
+		if (requestMethod.equalsIgnoreCase("POST") && uri.getPath().equals(prefix + "/login")) {
+			System.out.println("[RequestHttpHandler] Incoming LOGIN.");
+			
+			DatabaseConnection db = null;
+			try {
+				// read parameters
+				String jsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
+				System.out.println("[RequestHttpHandler] JSON string: " + jsonString);
+				JSONObject loginObject = new JSONObject(jsonString);
+				String username = loginObject.getString("username");
+				String passwordHash = loginObject.getString("password");
+
+				// create database connection
+				db = new DatabaseConnection();
+				
+				// request new session ID from database
+				String sessionId = db.getNewSessionIdForCorrectLogin(username, passwordHash);
+
+				// initialize response object
+				JSONObject responseObject = new JSONObject();
+				
+				if (sessionId != null) {
+					// persist session ID
+					db.startTransaction();
+					db.persistSessionIdForUser(sessionId, username);
+					db.commitTransaction();
+
+					// create user object
+					responseObject.put("isAdmin", db.isUserAdmin(sessionId));
+					responseObject.put("sessionId", sessionId);
+					responseObject.put("username", username);
+				}
+				
+				response = responseObject.toString();
+			} catch (Exception e) {
+				// TODO: rollback transaction
+				System.err.println("[RequestHttpHandler] Error in LOGIN.");
+				e.printStackTrace();
+			}
+			
+		}
+		
+		if (requestMethod.equalsIgnoreCase("POST") && uri.getPath().equals(prefix + "/getRepositories")) {
+			System.out.println("[RequestHttpHandler] Incoming GET REPOSITORIES.");
 			
 			DatabaseConnection db;
 			try {
+				// read parameters
+				String jsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
+				System.out.println("[RequestHttpHandler] JSON string: " + jsonString);
+				JSONObject getRepositoriesObject = new JSONObject(jsonString);
+				String sessionId = getRepositoriesObject.getString("sessionId");
+				
+				// read repository information from database
 				db = new DatabaseConnection();
 				db.startTransaction();
-				response = db.getRepositories().toString();
+				response = db.getRepositories(sessionId).toString();
 				db.commitTransaction();
 			} catch (Exception e) {
-				//db.rollbackTransaction();
+				// TODO: rollback transaction
 				System.err.println("Error while handling GET REPOSITORIES.");
 				e.printStackTrace();
 			}
@@ -97,6 +148,7 @@ public class RequestHttpHandler implements HttpHandler {
 			response = "401 (Bad Request)";
 			exchange.sendResponseHeaders(401, response.length());
 		}
+		System.out.println("[RequestHttpHandler] Sending response: " + response);
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();

@@ -1,4 +1,4 @@
-package ch.ethz.fgremper.rtca;
+package ch.ethz.fgremper.rtca.helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,5 +18,18 @@ public class JSONHelper {
 			
 		}
 		return list;
+	}
+	
+	public static boolean contains(JSONArray jsonArray, String string) {
+		try {
+			int l = jsonArray.length();
+			for (int i = 0; i < l; i++) {
+				if (jsonArray.getString(i).equals(string)) return true;
+			}
+		}
+		catch (Exception e) {
+			
+		}
+		return false;
 	}
 }

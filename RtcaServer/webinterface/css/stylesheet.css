@@ -4,6 +4,8 @@
 html, body {
     margin: 0;
 }
+textarea, input { outline: none; }
+
 
 /* header */
 
@@ -21,6 +23,18 @@ html, body {
     text-transform: uppercase;
     font-weight: bold;
     color: #a0a0a0;
+}
+#login {
+    float: right;
+    font-weight: normal;
+    text-transform: none;
+}
+#manageUsers {
+    text-decoration: underline;
+    cursor: pointer;
+}
+#manageUsers:hover {
+    color: #4C7CBA;
 }
 
 /* title */
@@ -45,6 +59,27 @@ html, body {
 }
 #titleText strong {
     color: #000000;
+}
+#refresh {
+    float: right;
+    font-size: 25px;
+    color: #bbbbbb;
+    height: 40px;
+    line-height: 43px;
+    width: 40px;
+    text-align: center;
+    border-radius: 5px;
+    margin-top: 10px;
+    border: 2px solid #f0f0f0;
+    cursor: pointer;
+}
+#refresh:hover {
+    color: #4C7CBA;
+    border-color: #4C7CBA;
+}
+#logo:hover {
+    color: #4C7CBA;
+    cursor: pointer;
 }
 
 /* tab bar */
@@ -76,6 +111,33 @@ html, body {
 }
 .tabBar:first-child {
     margin-left: 10px;
+}
+
+/* login */
+
+#username, #password {
+    display: block;
+    width: 200px;
+    font-size: 16px;
+    padding: 6px 6px;
+    border: 1px solid #d0d0d0;
+    margin: 0 0 5px 0;
+}
+#username:focus, #password:focus {
+    border-color: #4C7CBA;
+}
+#submit {
+    width: 200px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+    padding: 6px 6px;
+    background-color: #4C7CBA;
+    border: 1px solid #4C7CBA;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 10px 0 0 0;
 }
 
 /* view */
@@ -135,21 +197,12 @@ tr.descriptors th {
     color: #4C7CBA;
     font-weight: bold;
 }
-
-/* useless */
-
-span.yes {
-    padding: 5px 10px;
-    background-color: #F7887C;
-    border-radius: 15px;
-    text-align: center;
-    color: #290804;
-    font-weight: bold;
-}
-
-span.no {
+span.involvedUser {
     padding: 5px 10px;
     background-color: #e4e4e4;
     border-radius: 15px;
     text-align: center;
 }
+
+/* useless */
+

@@ -13,15 +13,18 @@
 		<div class="tabBar tabBarSelected">Inter-branch conflicts</div>
 		<div class="tabBar">Branch merge conflicts</div>
 	</div>
-	<table id="repositories">
+	<table id="fileConflicts">
 	    <tr class="descriptors"><th>File</th><th>Branch</th><th>Involved Users</th></tr>
 	    <tr class="heading"><td colspan="3">Inter-branch conflicts (<%= fileConflicts.length %>)</td></tr>
 	<% for (var i = 0; i < fileConflicts.length; i++) { %>
-	    <tr class="repository clickable">
+	    <tr class="fileConflict clickable" data-filename="<%= fileConflicts[i]['filename'] %>">
 	        <td class="blue"><%= fileConflicts[i]['filename'] %></td>
 	        <td><%= fileConflicts[i]['branch'] %></td>
-	        <td><span class="no"><%= fileConflicts[i]['username1'] %></span> <span class="no"><%= fileConflicts[i]['username2'] %></span></td>
-	        <!--<td><span class="yes">file conflict</span> <span class="no">no line conflict</span></td>-->
+	        <td>
+	        <% for (var j = 0; j < fileConflicts[i]['involvedUsers'].length; j++) { %>
+	        	<span class="involvedUser"><%= fileConflicts[i]['involvedUsers'][j] %></span>
+	        <% } %>
+	        </td>
 	    </tr>
 	<% } %>
 	</table>

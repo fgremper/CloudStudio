@@ -4,3 +4,7 @@
 1421245335143	Rename type 'CombinationTest'
 1421245466163	Move compilation units
 1421247103500	Move compilation unit
+1421248196864	Move compilation unit
+1421248202150	Delete element
+1421274726714	Rename local variable 'repository'
+1421322837825	Rename local variable 'u'

@@ -1,8 +1,0 @@
-package ch.ethz.fgremper.rtca.testing;
-
-public class TestDBHelper {
-	public static void resetDatabase() {
-		DatabaseConnetion db = new DatabaseConnection();
-		
-	}
-}

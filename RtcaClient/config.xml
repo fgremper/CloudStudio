@@ -1,1 +1,11 @@
-<?xml version="1.0" encoding="UTF-8"?><config><username>mark</username><serverUrl>http://my.server.com</serverUrl><repositories><repository><alias>foo</alias><localPath>/path/to/foo</localPath></repository><repository><alias>bar</alias><localPath>/path/to/bar</localPath></repository></repositories></config>
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <username>john</username>
+    <serverUrl>http://127.0.0.1:7330</serverUrl> <!-- don't put a dash at the end -->
+    <repositories>
+        <repository>
+            <alias>test</alias>
+            <localPath>/Users/novocaine/Documents/masterthesis/testsandpit/john</localPath>
+        </repository>
+    </repositories>
+</config>
