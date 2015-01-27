@@ -72,7 +72,6 @@ public class RequestHttpHandler implements HttpHandler {
 			
 		}
 		
-
 		if (requestMethod.equalsIgnoreCase("POST") && uri.getPath().equals(prefix + "/getRepositories")) {
 			System.out.println("[RequestHttpHandler] Incoming GET REPOSITORIES.");
 			
@@ -89,32 +88,6 @@ public class RequestHttpHandler implements HttpHandler {
 				db.startTransaction();
 				response = db.getRepositories(sessionId).toString();
 				db.commitTransaction();
-			} catch (Exception e) {
-				// TODO: rollback transaction
-				System.err.println("Error while handling GET REPOSITORIES.");
-				e.printStackTrace();
-			}
-			
-		}
-
-		if (requestMethod.equalsIgnoreCase("POST") && uri.getPath().equals(prefix + "/getUsers")) {
-			System.out.println("[RequestHttpHandler] Incoming GET USERS.");
-			
-			DatabaseConnection db;
-			try {
-				// read parameters
-				String jsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
-				System.out.println("[RequestHttpHandler] JSON string: " + jsonString);
-				JSONObject getRepositoriesObject = new JSONObject(jsonString);
-				String sessionId = getRepositoriesObject.getString("sessionId");
-				
-				// create database connection
-				db = new DatabaseConnection();
-				
-				// are we admin? otherwise don't do this.
-				if (!db.isUserAdmin(sessionId)) return;
-				
-				response = db.getUsers().toString();
 			} catch (Exception e) {
 				// TODO: rollback transaction
 				System.err.println("Error while handling GET REPOSITORIES.");

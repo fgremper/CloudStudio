@@ -63,19 +63,18 @@ textarea, input { outline: none; }
 #refresh {
     float: right;
     font-size: 25px;
-    color: #bbbbbb;
-    height: 40px;
+    color: #ffffff;
+    height: 42px;
     line-height: 43px;
-    width: 40px;
+    background-color: #e4e4e4;
+    width: 42px;
     text-align: center;
     border-radius: 5px;
-    margin-top: 10px;
-    border: 2px solid #f0f0f0;
+    margin-top: 11px;
     cursor: pointer;
 }
 #refresh:hover {
-    color: #4C7CBA;
-    border-color: #4C7CBA;
+    background-color: #4C7CBA;
 }
 #logo:hover {
     color: #4C7CBA;
@@ -156,6 +155,11 @@ table {
     border: 1px solid #d0d0d0;
     border-radius: 5px;
 }
+tr.static {
+    height: 36px;
+    background-color: #f8f8f8;
+    border-bottom: 1px solid #e4e4e4;
+}
 tr.clickable {
     height: 36px;
     background-color: #f8f8f8;
@@ -193,15 +197,28 @@ tr.descriptors th {
     font-size: 11px;
     text-transform: uppercase;
 }
+td:first-child, th:first-child {
+    padding-left: 8px;
+}
 .blue {
     color: #4C7CBA;
     font-weight: bold;
 }
-span.involvedUser {
+span.user {
     padding: 5px 10px;
     background-color: #e4e4e4;
     border-radius: 15px;
     text-align: center;
+}
+span.add, span.delete {
+    color: #aaaaaa;
+    cursor: pointer;
+    font-weight: normal;
+    letter-spacing: 1px;
+    padding-left: 3px;
+}
+span.add:hover, span.delete:hover {
+    color: #4C7CBA;
 }
 
 /* useless */

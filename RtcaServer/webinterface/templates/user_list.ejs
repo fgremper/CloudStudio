@@ -1,0 +1,27 @@
+<div id="header">
+	<div id="headerText">
+		<div id="login">
+			Logged in as: <strong><%= login.username %></strong>
+			<% if (login.isAdmin) { %>(Administrator) &nbsp;|&nbsp; <span id="manageUsers">Manage users</span><% } %>
+		</div>
+		<span id="logo">RTCA Web Interface</span>
+	</div>
+</div>
+<div id="title">
+    <div id="titleText">
+    	<span id="refresh">&#8635;</span>
+    	<strong>User management</strong>
+    </div>
+</div>
+<div id="view">
+	<table id="users">
+	    <tr class="descriptors"><th>Username</th><th>Privileges</th></tr>
+	    <tr class="heading"><td colspan="2">Users (<%= users.length %>)</td></tr>
+		<% for (var i = 0; i < users.length; i++) { %>
+		    <tr class="user static" data-alias="<%= users[i]['username'] %>">
+		        <td><span class="user"><%= users[i]['username'] %> <span class="delete">(&#8722;)</span></span></td>
+		        <td><% if (users[i]['isAdmin']) { %>Administrator<% } else { %>User<% } %></td>
+		    </tr>
+		<% } %>
+	</table>
+</div>

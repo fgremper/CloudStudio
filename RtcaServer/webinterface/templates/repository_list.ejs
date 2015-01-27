@@ -19,12 +19,13 @@
 	    <tr class="heading"><td colspan="3">Repositories (<%= repositories.length %>)</td></tr>
 	<% for (var i = 0; i < repositories.length; i++) { %>
 	    <tr class="repository clickable" data-alias="<%= repositories[i]['repositoryAlias'] %>">
-	        <td class="blue"><%= repositories[i]['repositoryAlias'] %></td>
+	        <td class="blue"><%= repositories[i]['repositoryAlias'] %><% if (login.isAdmin) { %> <span class="delete">(&#8722;)</span><% } %></td>
 	        <td><%= repositories[i]['repositoryUrl'] %></td>
 	        <td>
 		        <% for (var j = 0; j < repositories[i]['users'].length; j++) { %>
-		        	<span class="involvedUser"><%= repositories[i]['users'][j] %></span>
+		        	<span class="user"><%= repositories[i]['users'][j] %><% if (login.isAdmin) { %> <span class="delete">(&#8722;)</span><% } %></span>
 		        <% } %>
+	        	<% if (login.isAdmin) { %><span class="add">(+)</span><% } %>
 	        </td>
 	    </tr>
 	<% } %>

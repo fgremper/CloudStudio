@@ -102,7 +102,7 @@ function loadUserList() {
 }
 
 function renderUserList(data) {
-    $('body').html(new EJS({url: 'templates/repository_list.ejs'}).render(data));
+    $('body').html(new EJS({url: 'templates/user_list.ejs'}).render(data));
     $('#logo').click(loadRepositoryList);
     $('#refresh').click(loadRepositoryList);
     $('#manageUsers').click(loadUserList);
