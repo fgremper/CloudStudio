@@ -38,6 +38,10 @@
 
 * prepare for the meeting with things that I want to show and discuss
 
+#### Saturday
+
+* plan line conflict stuff and start implementing
+
 ### Week of 02.02.2015
 
 * line conflict support
