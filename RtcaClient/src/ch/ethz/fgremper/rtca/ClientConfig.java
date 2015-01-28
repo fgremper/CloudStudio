@@ -7,6 +7,7 @@ import org.apache.commons.configuration.XMLConfiguration;
 
 public class ClientConfig {
 	public String username;
+	public String password;
 	public String serverUrl;
 	public LinkedList<RepositoryInfo> repositoriesList = new LinkedList<RepositoryInfo>();
 }

@@ -2,3 +2,4 @@
 1422200979968	Rename method 'getNewSessionId'
 1422214511653	Rename local variable 'repositories'
 1422214517231	Rename local variable 'repositoriesObject'
+1422380343116	Rename local variable 'passwordHash'

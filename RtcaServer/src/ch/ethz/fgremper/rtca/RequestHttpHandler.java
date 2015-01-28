@@ -40,13 +40,58 @@ public class RequestHttpHandler implements HttpHandler {
 				System.out.println("[RequestHttpHandler] JSON string: " + jsonString);
 				JSONObject loginObject = new JSONObject(jsonString);
 				String username = loginObject.getString("username");
-				String passwordHash = loginObject.getString("password");
+				String password = loginObject.getString("password");
 
 				// create database connection
 				db = new DatabaseConnection();
 				
 				// request new session ID from database
-				String sessionId = db.getNewSessionIdForCorrectLogin(username, passwordHash);
+				String sessionId = db.getNewSessionIdForCorrectLogin(username, password);
+
+				// initialize response object
+				JSONObject responseObject = new JSONObject();
+				
+				if (sessionId != null) {
+					// persist session ID
+					db.startTransaction();
+					db.persistSessionIdForUser(sessionId, username);
+					db.commitTransaction();
+
+					// create user object
+					responseObject.put("isAdmin", db.isUserAdmin(sessionId));
+					responseObject.put("sessionId", sessionId);
+					responseObject.put("username", username);
+				}
+				
+				response = responseObject.toString();
+			} catch (Exception e) {
+				// TODO: rollback transaction
+				System.err.println("[RequestHttpHandler] Error in LOGIN.");
+				e.printStackTrace();
+			}
+			
+		}
+		
+
+		if (requestMethod.equalsIgnoreCase("POST") && uri.getPath().equals(prefix + "/createUserAndLogin")) {
+			System.out.println("[RequestHttpHandler] Incoming LOGIN.");
+			
+			DatabaseConnection db = null;
+			try {
+				// read parameters
+				String jsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
+				System.out.println("[RequestHttpHandler] JSON string: " + jsonString);
+				JSONObject loginObject = new JSONObject(jsonString);
+				String username = loginObject.getString("username");
+				String password = loginObject.getString("password");
+
+				// create database connection
+				db = new DatabaseConnection();
+				
+				db.addUser(username, password);
+				
+				// request new session ID from database
+				String sessionId = db.getNewSessionIdForCorrectLogin(username, password);
 
 				// initialize response object
 				JSONObject responseObject = new JSONObject();

@@ -36,15 +36,25 @@ public class ClientMain {
 
 	public static void main(String[] args) throws Exception {
 
+		// Read the config
 		ClientConfig config = new ClientConfigReader("config.xml").getConfig();
 
+		// Get our HTTP client
+		HttpClient httpClient = new HttpClient();
+
+		// Login and get a session ID
+		String sessionId = httpClient.login(config.serverUrl, config.username, config.password);
+		System.out.println("[Main] sessionId: " + sessionId);
+		
+		// For all repositories we're going to read the local data and send some of it to the server
 		for (RepositoryInfo repositoryInfo : config.repositoriesList) {	
 			
-			RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
+			// Read repository info
+			RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo, config, sessionId);
 			String jsonString = repositoryReader.getJsonString();
 			
-			HttpClient httpClient = new HttpClient();
-			httpClient.send(config.serverUrl, repositoryInfo.alias, config.username, jsonString);
+			// Send it to to the server
+			httpClient.sendGitState(config.serverUrl, jsonString);
 			
 		}
 		

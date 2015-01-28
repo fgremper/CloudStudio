@@ -10,6 +10,11 @@ public class ServerMain {
 	static int port = 7330;
 
 	public static void main(String[] args) throws Exception {
+		DatabaseConnection db = new DatabaseConnection();
+		db.startTransaction();
+		db.addUser("newadmin", "1234");
+		db.commitTransaction();
+		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);

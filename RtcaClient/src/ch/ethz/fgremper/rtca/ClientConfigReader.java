@@ -16,7 +16,12 @@ public class ClientConfigReader {
 		if (username == null || username.equals("")) throw new Exception("No username in config");
 		config.username = username;
 		System.out.println("[Config] username: " + username);
-		
+
+		String password = xmlConfig.getString("password");
+		if (password == null || password.equals("")) throw new Exception("No password in config");
+		config.password = password;
+		System.out.println("[Config] password: " + password);
+
 		String serverUrl = xmlConfig.getString("serverUrl");
 		if (serverUrl == null || serverUrl.equals("")) throw new Exception("No serverUrl in config");
 		config.serverUrl = serverUrl;

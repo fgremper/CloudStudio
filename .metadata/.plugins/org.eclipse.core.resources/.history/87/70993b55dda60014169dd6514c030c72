@@ -1,0 +1,57 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import org.json.JSONObject;
+
+public class HttpClient {
+
+	public void login(String serverUrl, String username, String password) throws Exception {
+
+		String url = serverUrl + "/update/login" + username;
+		JSONObject loginObject = new JSONObject();
+		loginObject.put("username", username);
+		loginObject.put("password", password);
+		String jsonString = loginObject.toString();
+		
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("POST");
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(jsonString);
+		out.close();
+
+		int responseCode = con.getResponseCode();
+
+		System.out.println("[Http] Response code: " + responseCode);
+		
+		if (responseCode == 200) {
+			System.out.println(con)
+		}
+
+	}
+	
+	public void send(String serverUrl, String repositoryAlias, String username, String jsonString) throws Exception {
+
+		String url = serverUrl + "/update/updateLocalState" + username;
+
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		con.setRequestMethod("PUT");
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(jsonString);
+		out.close();
+
+		int responseCode = con.getResponseCode();
+
+		System.out.println("[Http] Response code: " + responseCode);
+
+	}
+	
+}

@@ -62,9 +62,13 @@ public class UpdateHttpHandler implements HttpHandler {
 			JSONObject updateObject = new JSONObject(jsonString);
 			JSONArray fileArray = updateObject.getJSONArray("files");
 			JSONArray commitHistory = updateObject.getJSONArray("commitHistory");
+			String sessionId = updateObject.getString("sessionId");
 
 			// TODO: use a pool of database connections
 			db = new DatabaseConnection();
+			
+			// login check: TODO better error handling, not just yes or no
+			if (!db.isUserAdmin(sessionId) && !db.isUserAuthorized(sessionId, repositoryAlias)) return false;
 			
 			db.startTransaction();
 			db.deleteAllFilesFromRepositoryAndUser(repositoryAlias, username);

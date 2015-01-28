@@ -19,7 +19,7 @@ $(function () {
 
 function renderLogin() {
     $('body').html(new EJS({url: 'templates/login.ejs'}).render());
-    $('#submit').click(function () {
+    $('#submitLogin').click(function () {
         $.ajax({
             url: apiPrefix + '/login',
             type: 'POST',
@@ -42,9 +42,37 @@ function renderLogin() {
             }
         });
     });
+    $('#submitNewUser').click(function () {
+        $.ajax({
+            url: apiPrefix + '/createUserAndLogin',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ username: $('#newUsername').val(), password: $('#newPassword').val() }),
+            success: function(data) {
+                console.log("Got login response: " + JSON.stringify(data));
+                login = data;
+
+                if (login.sessionId != undefined) {
+                    loadRepositoryList();
+                }
+                else {
+                    alert('User create error. Maybe the user already exists or something.');
+                }
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+    });
     $('#username, #password').keypress(function(e) {
         if (e.which == 13) {
-            $('#submit').click();
+            $('#submitLogin').click();
+        }
+    });
+    $('#newUsername, #newPassword').keypress(function(e) {
+        if (e.which == 13) {
+            $('#submitNewUser').click();
         }
     });
     $('#username').focus();
