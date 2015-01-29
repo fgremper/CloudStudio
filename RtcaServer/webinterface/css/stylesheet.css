@@ -145,6 +145,34 @@ textarea, input { outline: none; }
     border-color: #e4e4e4;
 }
 
+/* create repository */
+
+
+#repositoryalias, #repositoryurl {
+    display: block;
+    width: 200px;
+    font-size: 16px;
+    padding: 6px 6px;
+    border: 1px solid #d0d0d0;
+    margin: 0 0 5px 0;
+}
+#repositoryalias:focus, #repositoryurl:focus {
+    border-color: #4C7CBA;
+}
+#submitCreateRepository {
+    width: 200px;
+    font-weight: bold;
+    color: #ffffff;
+    text-align: center;
+    font-size: 16px;
+    padding: 6px 6px;
+    background-color: #4C7CBA;
+    border: 1px solid #4C7CBA;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 10px 0 20px 0;
+}
+
 /* view */
 
 #view {

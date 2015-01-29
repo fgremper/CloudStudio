@@ -37,9 +37,7 @@ public class ClientMain {
 	public static void main(String[] args) throws Exception {
 
 		// Read the config
-		String configFileName = "config.xml";
-		if (args.length >= 1) configFileName = args[0];
-		ClientConfig config = new ClientConfigReader(configFileName).getConfig();
+		ClientConfig config = new ClientConfigReader("config.xml").getConfig();
 
 		// Get our HTTP client
 		HttpClient httpClient = new HttpClient();

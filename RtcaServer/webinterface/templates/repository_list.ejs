@@ -30,6 +30,6 @@
 	    </tr>
 	<% } %>
 	</table>
-	<% if (login.isAdmin || login.canCreateRepositories) %>
+	<% if (login.isAdmin || login.isCreator) %>
 	<div id="createRepository">Create repository</div>
 </div>

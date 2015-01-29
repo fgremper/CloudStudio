@@ -243,18 +243,16 @@ public class DatabaseConnection {
 	public JSONArray getUsers() throws SQLException {
 		JSONArray usersArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator FROM users");
+		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin FROM users");
 		
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
 			String username = rs.getString("username");
 			String isAdmin = rs.getString("isadmin");
-			String isCreator = rs.getString("iscreator");
 			try {
 				JSONObject userObject = new JSONObject();
 				userObject.put("username", username);
 				userObject.put("isAdmin", isAdmin.equals("true"));
-				userObject.put("isCreator", isCreator.equals("true"));
 				usersArray.put(userObject);
 			} catch (JSONException e) {
 				System.err.println("Error while creating JSON string.");
@@ -265,8 +263,8 @@ public class DatabaseConnection {
 		return usersArray;
 	}
 	
-	public void addUser(String username, String password) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator) VALUES (?, ?, 'false', 'false')");
+	public String addUser(String username, String password) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, cancreate) VALUES (?, ?, 'false', 'false')");
 
 		String passwordHash = DigestUtils.sha1Hex(salt + password).toString();
 		
@@ -274,6 +272,8 @@ public class DatabaseConnection {
 		stmt.setString(2, passwordHash);
 		
 		stmt.executeUpdate();
+		
+		return password;
 	}
 	
 	public void deleteUser(String username) throws SQLException {
@@ -283,41 +283,6 @@ public class DatabaseConnection {
 		
 		stmt.executeUpdate();
 	}
-
-	public void makeUserAdmin(String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("UPDATE users SET isadmin = 'true' WHERE username = ?");
-
-		stmt.setString(1, username);
-		
-		stmt.executeUpdate();
-	}
-	
-
-	public void revokeUserAdmin(String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("UPDATE users SET isadmin = 'false' WHERE username = ?");
-
-		stmt.setString(1, username);
-		
-		stmt.executeUpdate();
-	}
-
-	public void makeUserCreator(String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("UPDATE users SET iscreator = 'true' WHERE username = ?");
-
-		stmt.setString(1, username);
-		
-		stmt.executeUpdate();
-	}
-
-	public void revokeUserCreator(String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("UPDATE users SET iscreator = 'false' WHERE username = ?");
-
-		stmt.setString(1, username);
-		
-		stmt.executeUpdate();
-	}
-	
-	
 		
 	public String getNewSessionIdForCorrectLogin(String username, String password) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? AND passwordhash = ?");

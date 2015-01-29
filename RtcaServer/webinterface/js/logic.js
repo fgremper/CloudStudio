@@ -79,7 +79,6 @@ function renderLogin() {
 }
 
 
-
 /* load repository view */
 
 function loadRepositoryList() {
@@ -104,8 +103,43 @@ function renderRepositoryList(data) {
     $('#logo').click(loadRepositoryList);
     $('#refresh').click(loadRepositoryList);
     $('#manageUsers').click(loadUserList);
+    $('#createRepository').click(loadCreateRepository);
     $('.repository').click(function () {
         loadFileConflicts($(this).data('alias'));
+    });
+}
+
+
+/* create repository view */
+
+function loadCreateRepository() {
+    renderCreateRepository({ login: login });
+}
+
+function renderCreateRepository(data) {
+    $('body').html(new EJS({url: 'templates/create_repository.ejs'}).render(data));
+    $('#logo').click(loadRepositoryList);
+    $('#manageUsers').click(loadUserList);
+    $('.repositoryViewButton').click(loadRepositoryList);
+    $('#submitCreateRepository').click(function () {
+        $.ajax({
+            url: apiPrefix + '/addRepository',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify({ repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId }),
+            success: function(data) {
+                console.log("Got create repository response: " + JSON.stringify(data));
+
+                loadRepositoryList();
+                else {
+                    alert('Repository create error. Maybe the repository already exists or something.');
+                }
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
     });
 }
 

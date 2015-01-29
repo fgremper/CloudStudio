@@ -13,12 +13,11 @@ public class ServerMain {
 		try {
 			DatabaseConnection db = new DatabaseConnection();
 			db.startTransaction();
-			db.addUser("admin", "1234");
-			db.makeUserAdmin("admin");
+			db.addUser("newadmin", "1234");
 			db.commitTransaction();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");

@@ -18,7 +18,7 @@ public class ServerMain {
 			db.commitTransaction();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			
 		}
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
