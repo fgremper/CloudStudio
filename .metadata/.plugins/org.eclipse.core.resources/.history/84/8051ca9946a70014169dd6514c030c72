@@ -141,8 +141,6 @@ public class RepositoryReader {
 					fileObject.put("content", fileContent);
 					fileObject.put("branch", branchName);
 					fileObject.put("commit", commitId);
-					
-					// If we're in the active branch, there's separate info for uncommitted
 					fileObject.put("committed", isActiveBranch ? "committed" : "both");
 					
 					// Store the file object in the file array

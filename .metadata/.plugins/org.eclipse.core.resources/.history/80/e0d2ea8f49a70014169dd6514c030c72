@@ -70,8 +70,8 @@ public class DatabaseConnection {
 		rowsAffected = stmt.executeUpdate();
 	}
 
-	public void storeFile(String repositoryAlias, String username, String filename, String sha, String branch, String commit, String committed) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha, branch, commit, committed) VALUES (?, ?, ?, ?, ?, ?, ?)");
+	public void storeFile(String repositoryAlias, String username, String filename, String sha, String branch, String commit) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha, branch, commit) VALUES (?, ?, ?, ?, ?, ?)");
 
 		System.out.println("FILE: " + filename);
 		stmt.setString(1, repositoryAlias);
@@ -80,7 +80,6 @@ public class DatabaseConnection {
 		stmt.setString(4, sha);
 		stmt.setString(5, branch);
 		stmt.setString(6, commit);
-		stmt.setString(7, committed);
 
 		int rowsAffected = stmt.executeUpdate();
 	}

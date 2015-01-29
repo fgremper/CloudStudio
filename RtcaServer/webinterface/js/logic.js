@@ -132,7 +132,7 @@ function loadUserList() {
 function renderUserList(data) {
     $('body').html(new EJS({url: 'templates/user_list.ejs'}).render(data));
     $('#logo').click(loadRepositoryList);
-    $('#refresh').click(loadRepositoryList);
+    $('#refresh').click(loadUserList);
     $('#manageUsers').click(loadUserList);
     $('.repository').click(function () {
         loadFileConflicts($(this).data('alias'));

@@ -96,6 +96,7 @@ public class RepositoryReader {
 		            // Find downstream commits iteratively
 		            List<String> downstreamCommits = new LinkedList<String>();
 		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
+		            
 		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
 		            while (!todoCommits.isEmpty()) {
 		            	RevCommit pop = todoCommits.remove(0);
@@ -111,9 +112,9 @@ public class RepositoryReader {
 		            	System.out.println("[Repository] Downstream commit: "  + u);
 		            }
 		            
-		            // Add objects to objects
 		            commitObject.put("commit", commitId);
 		            commitObject.put("downstreamCommits", downstreamCommits);
+		            
 		            commitHistory.put(commitObject);
 					
 	            }
@@ -141,8 +142,6 @@ public class RepositoryReader {
 					fileObject.put("content", fileContent);
 					fileObject.put("branch", branchName);
 					fileObject.put("commit", commitId);
-					
-					// If we're in the active branch, there's separate info for uncommitted
 					fileObject.put("committed", isActiveBranch ? "committed" : "both");
 					
 					// Store the file object in the file array

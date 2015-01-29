@@ -81,13 +81,12 @@ public class UpdateHttpHandler implements HttpHandler {
 				String sha = DigestUtils.sha1Hex(content).toString();
 				String branch = fileObject.getString("branch");
 				String commit = fileObject.getString("commit");
-				String committed = fileObject.getString("committed");
 				
 				System.out.println("[UpdateHttpHandler] File: " + filename + " (sha: " + sha + ")");
 
 				FileUtils.writeStringToFile(new File(FILE_STORAGE_PATH + sha), content);
 
-				db.storeFile(repositoryAlias, username, filename, sha, branch, commit, committed);
+				db.storeFile(repositoryAlias, username, filename, sha, branch, commit);
 			}
 
 			for (int i = 0; i < commitHistory.length(); i++) {

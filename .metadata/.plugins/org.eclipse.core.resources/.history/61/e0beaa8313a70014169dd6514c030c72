@@ -62,8 +62,6 @@ public class RepositoryReader {
         
         // Get all references we have in this git repository
         Collection<Ref> refs = repository.getAllRefs().values();
-        
-        // List of all commits we came along
         List<String> usedCommitIds = new LinkedList<String>();
         
         // Loop through all references
@@ -88,14 +86,15 @@ public class RepositoryReader {
 	            // If we didn't already, add the current commit to the commit history
 	            if (!usedCommitIds.contains(commitId)) {
 	            	
-	            	usedCommitIds.add(commitId);
-	            	
-	            	// New commit object
 	            	JSONObject commitObject = new JSONObject();
 	            	
-		            // Find downstream commits iteratively
+	            	usedCommitIds.add(commitId);
+	            	
+		            // find downstream commits
+		            
 		            List<String> downstreamCommits = new LinkedList<String>();
 		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
+		            
 		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
 		            while (!todoCommits.isEmpty()) {
 		            	RevCommit pop = todoCommits.remove(0);
@@ -106,14 +105,13 @@ public class RepositoryReader {
 		            	}
 		            }
 		            
-		            // Log all the downstream commits
 		            for (String u : downstreamCommits) {
 		            	System.out.println("[Repository] Downstream commit: "  + u);
 		            }
 		            
-		            // Add objects to objects
 		            commitObject.put("commit", commitId);
 		            commitObject.put("downstreamCommits", downstreamCommits);
+		            
 		            commitHistory.put(commitObject);
 					
 	            }
@@ -141,8 +139,6 @@ public class RepositoryReader {
 					fileObject.put("content", fileContent);
 					fileObject.put("branch", branchName);
 					fileObject.put("commit", commitId);
-					
-					// If we're in the active branch, there's separate info for uncommitted
 					fileObject.put("committed", isActiveBranch ? "committed" : "both");
 					
 					// Store the file object in the file array
