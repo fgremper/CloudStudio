@@ -10,6 +10,7 @@ public class ServerMain {
 	static int port = 7330;
 
 	public static void main(String[] args) throws Exception {
+		/*
 		try {
 			DatabaseConnection db = new DatabaseConnection();
 			db.startTransaction();
@@ -18,15 +19,15 @@ public class ServerMain {
 			db.commitTransaction();
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
+		*/
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 		server.createContext("/webinterface", new WebInterfaceHttpHandler());
-		server.createContext("/update", new UpdateHttpHandler());
-		server.createContext("/pull", new RequestHttpHandler());
+		server.createContext("/request", new RequestHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 

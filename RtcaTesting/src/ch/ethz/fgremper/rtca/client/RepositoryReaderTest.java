@@ -12,7 +12,7 @@ import ch.ethz.fgremper.rtca.test.helper.TestGitHelper;
 import ch.ethz.fgremper.rtca.test.helper.TestSettings;
 
 public class RepositoryReaderTest {
-
+	/*
 	@Test
 	public void testEmptyRepository() throws Exception {
 
@@ -37,5 +37,5 @@ public class RepositoryReaderTest {
 		System.out.println("[Test] JSON String: " + jsonString);
 
 	}
-
+	*/
 }

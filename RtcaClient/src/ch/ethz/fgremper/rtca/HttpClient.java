@@ -11,7 +11,7 @@ public class HttpClient {
 
 	public String login(String serverUrl, String username, String password) throws Exception {
 
-		String url = serverUrl + "/pull/login";
+		String url = serverUrl + "/request/login";
 		JSONObject loginObject = new JSONObject();
 		loginObject.put("username", username);
 		loginObject.put("password", password);
@@ -45,12 +45,12 @@ public class HttpClient {
 	
 	public void sendGitState(String serverUrl, String jsonString) throws Exception {
 
-		String url = serverUrl + "/update/updateLocalGitState";
+		String url = serverUrl + "/request/setLocalGitState";
 
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-		con.setRequestMethod("PUT");
+		con.setRequestMethod("POST");
 		con.setDoOutput(true);
 		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
 		out.write(jsonString);

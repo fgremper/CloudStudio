@@ -102,18 +102,98 @@ public class DatabaseConnection {
 
 	public void resetDatabase() throws SQLException {
 		PreparedStatement stmt;
-		stmt = con.prepareStatement("TRUNCATE TABLE files");
+		stmt = con.prepareStatement("DELETE FROM usersessions");
 		stmt.executeUpdate();
-		stmt = con.prepareStatement("TRUNCATE TABLE repositories");
+		stmt = con.prepareStatement("DELETE FROM useraccess");
 		stmt.executeUpdate();
-		stmt = con.prepareStatement("TRUNCATE TABLE commithistory");
+		stmt = con.prepareStatement("DELETE FROM files");
 		stmt.executeUpdate();
+		stmt = con.prepareStatement("DELETE FROM commithistory");
+		stmt.executeUpdate();
+		stmt = con.prepareStatement("DELETE FROM repositories");
+		stmt.executeUpdate();
+		stmt = con.prepareStatement("DELETE FROM users");
+		stmt.executeUpdate();
+		
 	}
 	
 
-	public JSONArray getFileConflicts() throws SQLException {
+	public String getConflicts(JSONObject getConflictsObject, String username) throws Exception {
+		//String repositoryAlias = getConflictsObject.getString("repositoryAlias");
+		//String branch = getConflictsObject.getString("branch");
+		//boolean viewUncommitted = getConflictsObject.getBoolean("viewUncommitted");
+		//boolean filterUsers = getConflictsObject.getBoolean("filterUsers");
+		//JSONArray filteredUsers = getConflictsObject.getJSONArray("filteredUsers");
+		//JSONArray compareAdditionalBranches = getConflictsObject.getJSONArray("compareAdditionalBranches");
 		
-		return null;
+		JSONObject responseObject = new JSONObject();
+		
+		PreparedStatement stmt = con.prepareStatement(
+			"SELECT myfilename, mysha, theirusername, theirfilename, theirsha FROM (\n" + 
+			"\n" + 
+			"	# all possible files of me X (all possible files X all others)\n" + 
+			"	SELECT me.filename AS myfilename, me.sha AS mysha, them.username AS theirusername, them.filename AS theirfilename, them.sha AS theirsha FROM (\n" + 
+			"\n" + 
+			"		# all the files X me\n" + 
+			"		SELECT filelist.filename AS filename, f.sha AS sha FROM filelist\n" + 
+			"		LEFT OUTER JOIN (\n" + 
+			"			SELECT * FROM files\n" + 
+			"			WHERE files.username = 'john' # my user\n" + 
+			"			AND (committed = 'uncommitted' OR committed = 'both') # committed or uncommitted\n" + 
+			"			AND branch = 'master' # my branch\n" + 
+			"			AND repositoryalias = 'test' # repository\n" + 
+			"		) AS f ON filelist.filename = f.filename\n" + 
+			"\n" + 
+			"	) AS me\n" + 
+			"\n" + 
+			"	CROSS JOIN\n" + 
+			"\n" + 
+			"	(\n" + 
+			"\n" + 
+			"		# all the files of all the other people\n" + 
+			"		SELECT filelistxusers.username, filelistxusers.filename, f.sha FROM (\n" + 
+			"\n" + 
+			"			# all the filenames X all the users\n" + 
+			"			SELECT u.username AS username, filelist.filename AS filename FROM filelist\n" + 
+			"			CROSS JOIN (SELECT DISTINCT username FROM useraccess WHERE repositoryalias = 'test') AS u # repository\n" + 
+			"			WHERE filelist.repositoryalias = 'test' AND filelist.branch = 'master' # repository, compare to branch\n" + 
+			"\n" + 
+			"		) as filelistxusers\n" + 
+			"		LEFT OUTER JOIN (\n" + 
+			"\n" + 
+			"			# the actual files\n" + 
+			"			SELECT * FROM files\n" + 
+			"			WHERE (committed = 'uncommitted' OR committed = 'both') # committed or uncommitted\n" + 
+			"			AND branch = 'master' # compare to branch\n" + 
+			"			AND repositoryalias = 'test' # repository\n" + 
+			"\n" + 
+			"		) AS f ON filelistxusers.filename = f.filename AND filelistxusers.username = f.username\n" + 
+			"\n" + 
+			"	) AS them\n" + 
+			"	WHERE me.filename = them.filename\n" + 
+			"\n" + 
+			") AS t\n" + 
+			"\n" + 
+			"WHERE (t.mysha IS NULL AND t.theirsha IS NOT NULL) OR (t.mysha IS NOT NULL AND t.theirsha IS NULL) OR (t.mysha IS NOT NULL AND t.theirsha IS NOT NULL AND t.mysha <> t.theirsha) # complicated cause comparison with null always returns null\n" + 
+			"ORDER BY t.myfilename, t.theirusername;\n"
+		);
+
+		ResultSet rs = stmt.executeQuery();
+		while (rs.next()) {
+			//JSONObject fileConflict = new JSONObject();
+			String filename = rs.getString("mysha");
+			String mysha = rs.getString("theirsha");
+			String theirusername = rs.getString("theirusername");
+			String theirsha = rs.getString("theirsha");
+			
+			System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);
+			
+		}
+		//stmt.setString(1, repositoryAlias);
+		//stmt.setString(2, username);
+		//stmt.setString(2, branch);
+		
+		return responseObject.toString();
 	}
 	
 	/* old method
@@ -186,10 +266,40 @@ public class DatabaseConnection {
 	
 	/* REPOSITORY MANAGEMENT */
 	
+	public String getRepositoryInformation(String repositoryAlias) throws Exception {
+
+		JSONArray repositoryUsers = new JSONArray();
+		ResultSet rs;
+		
+		PreparedStatement getRepositoryUsersStmt = con.prepareStatement(
+			"SELECT username FROM useraccess WHERE repositoryalias = ?"
+		);
+		rs = getRepositoryUsersStmt.executeQuery();
+		while (rs.next()) {
+			repositoryUsers.put(rs.getString("username"));
+		}
+
+		JSONArray repositoryBranches = new JSONArray();
+		PreparedStatement getRepositoryBranchesStmt = con.prepareStatement(
+			"SELECT branch FROM files WHERE repositoryalias = ?"
+		);
+		rs = getRepositoryBranchesStmt.executeQuery();
+		while (rs.next()) {
+			repositoryBranches.put(rs.getString("branch"));
+		}
+		
+		JSONObject responseObject = new JSONObject();
+		
+		responseObject.put("repositoryUsers", repositoryUsers);
+		responseObject.put("repositoryBranches", repositoryBranches);
+		
+		return responseObject.toString();
+	}
+	
 	public JSONArray getRepositories(String sessionId) throws SQLException {
 		JSONArray repositoriesArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users JOIN usersessions AS us1 ON users.username = us1.username WHERE users.isadmin = 'true' AND us1.sessionid = ?) OR EXISTS (SELECT useraccess.username FROM useraccess JOIN usersessions AS us2 ON useraccess.username = us2.username WHERE us2.sessionid = ? AND useraccess.repositoryalias = repositories.repositoryalias)");
+		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users JOIN usersessions AS us1 ON users.username = us1.username WHERE users.isadmin = 'true' AND us1.sessionid = ?) OR EXISTS (SELECT useraccess.username FROM useraccess JOIN usersessions AS us2 ON useraccess.username = us2.username WHERE us2.sessionid = ? AND useraccess.repositoryalias = repositories.repositoryalias)");
 
 		stmt.setString(1, sessionId);
 		stmt.setString(2, sessionId);
@@ -199,6 +309,7 @@ public class DatabaseConnection {
 		while (rs.next()) {
 			String repositoryAlias = rs.getString("repositoryalias");
 			String repositoryUrl = rs.getString("repositoryurl");
+			String repositoryOwner = rs.getString("repositoryowner");
 			String username = rs.getString("username");
 			try {
 				if (!index.containsKey(repositoryAlias)) {
@@ -206,6 +317,7 @@ public class DatabaseConnection {
 					index.put(repositoryAlias, repositoryObject);
 					repositoryObject.put("repositoryAlias", repositoryAlias);
 					repositoryObject.put("repositoryUrl", repositoryUrl);
+					repositoryObject.put("repositoryOwner", repositoryOwner);
 					repositoryObject.put("users", new JSONArray());
 					repositoriesArray.put(repositoryObject);
 				}
@@ -221,11 +333,12 @@ public class DatabaseConnection {
 		return repositoriesArray;
 	}
 	
-	public void addRepository(String repositoryAlias, String repositoryUrl) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl) VALUES (?, ?)");
+	public void addRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner) VALUES (?, ?, ?)");
 
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
+		stmt.setString(3, repositoryOwner);
 		
 		stmt.executeUpdate();
 	}
@@ -316,8 +429,24 @@ public class DatabaseConnection {
 		
 		stmt.executeUpdate();
 	}
-	
-	
+
+	public void addUserToRepository(String username, String repositoryAlias) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO useraccess (username, repositoryalias) VALUES (?, ?)");
+
+		stmt.setString(1, username);
+		stmt.setString(2, repositoryAlias);
+		
+		stmt.executeUpdate();
+	}
+
+	public void deleteUserFromRepository(String username, String repositoryAlias) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM useraccess WHERE username = ? AND repositoryalias = ?");
+
+		stmt.setString(1, username);
+		stmt.setString(2, repositoryAlias);
+		
+		stmt.executeUpdate();
+	}
 		
 	public String getNewSessionIdForCorrectLogin(String username, String password) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? AND passwordhash = ?");
@@ -350,8 +479,8 @@ public class DatabaseConnection {
 	
 	/* AUTHORIZATION CHECKS */
 	
-	public boolean isUserAuthorized(String sessionId, String repositoryAlias) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT username FROM usersessions JOIN useraccess ON usersessions.username = useraccess.username WHERE usersessions.sessionid = ? AND useraccess.repositoryalias = ?");
+	public boolean doesUserHaveRepositoryAccess(String sessionId, String repositoryAlias) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT useraccess.username FROM usersessions JOIN useraccess ON usersessions.username = useraccess.username WHERE usersessions.sessionid = ? AND useraccess.repositoryalias = ?");
 
 		stmt.setString(1, sessionId);
 		stmt.setString(2, repositoryAlias);
@@ -371,11 +500,39 @@ public class DatabaseConnection {
 		stmt.setString(1, sessionId);
 		
 		ResultSet rs = stmt.executeQuery();
+		return rs.next();
+	}
+
+	public boolean isUserCreator(String sessionId) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT users.username FROM usersessions JOIN users ON usersessions.username = users.username WHERE usersessions.sessionid = ? and users.iscreator = 'true'");
+
+		stmt.setString(1, sessionId);
+		
+		ResultSet rs = stmt.executeQuery();
+		return rs.next();
+	}
+
+	public boolean isUserRepositoryOwner(String sessionId, String repositoryAlias) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT repositories.username FROM usersessions JOIN repositories ON usersessions.username = repositories.username WHERE usersessions.sessionid = ? AND repositories.repositoryalias = ? AND repositories.repositoryowner = usersessions.username");
+
+		stmt.setString(1, sessionId);
+		stmt.setString(2, repositoryAlias);
+		
+		ResultSet rs = stmt.executeQuery();
+		return rs.next();
+	}
+
+	public String getUsername(String sessionId) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT username FROM usersessions WHERE sessionid = ?");
+
+		stmt.setString(1, sessionId);
+		
+		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
-			return true;
+			return rs.getString("username");
 		}
 		else {
-			return false;
+			return null;
 		}
 	}
 

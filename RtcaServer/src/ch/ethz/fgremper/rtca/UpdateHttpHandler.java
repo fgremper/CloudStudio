@@ -21,6 +21,10 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class UpdateHttpHandler implements HttpHandler {
 
+	public void handle(HttpExchange exchange) throws IOException {
+	
+	}
+    /*
 	static final String FILE_STORAGE_PATH = "filestorage/";
 
 	public void handle(HttpExchange exchange) throws IOException {
@@ -28,15 +32,11 @@ public class UpdateHttpHandler implements HttpHandler {
 		URI uri = exchange.getRequestURI();
 		String requestMethod = exchange.getRequestMethod();
 
-		// TODO: retrieve this from the uri
-		String username = "john";
-		String repositoryAlias = "testrepo";
-
 		System.out.println("[UpdateHttpHandler] Incoming request. Username: " + username + ". RepositoryAlias: " + repositoryAlias);
 
 		boolean success = false;
 		
-		if (requestMethod.equalsIgnoreCase("PUT")) {
+		if (requestMethod.equalsIgnoreCase("POST")) {
 
 			String jsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
 			System.out.println("[UpdateHttpHandler] JSON string: " + jsonString);
@@ -68,7 +68,7 @@ public class UpdateHttpHandler implements HttpHandler {
 			db = new DatabaseConnection();
 			
 			// login check: TODO better error handling, not just yes or no
-			if (!db.isUserAdmin(sessionId) && !db.isUserAuthorized(sessionId, repositoryAlias)) return false;
+			if (!db.isUserAdmin(sessionId) && !db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) return false;
 			
 			db.startTransaction();
 			db.deleteAllFilesFromRepositoryAndUser(repositoryAlias, username);
@@ -114,4 +114,5 @@ public class UpdateHttpHandler implements HttpHandler {
 		}
 	
 	}
+		*/
 }

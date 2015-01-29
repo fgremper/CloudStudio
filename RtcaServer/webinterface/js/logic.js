@@ -6,7 +6,7 @@ var conflictType;
 
 var login = undefined;
 
-var apiPrefix = '/pull'
+var apiPrefix = '/request'
 
 
 
@@ -15,18 +15,30 @@ $(function () {
 });
 
 
+/* request */
+
+function sendRequest(requestObject) {
+    $.ajax({
+        url: apiPrefix + '/' + requestObject.name,
+        type: 'POST',
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify(requestObject.data),
+        success: requestObject.success,
+        error: requestObject.error
+    });
+}
+
+
 /* load login view */
 
 function renderLogin() {
     $('body').html(new EJS({url: 'templates/login.ejs'}).render());
     $('#submitLogin').click(function () {
-        $.ajax({
-            url: apiPrefix + '/login',
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({ username: $('#username').val(), password: $('#password').val() }),
-            success: function(data) {
+        sendRequest({
+            name: 'login',
+            data: { username: $('#username').val(), password: $('#password').val() },
+            success: function(data) { // request success
                 console.log("Got login response: " + JSON.stringify(data));
                 login = data;
 
@@ -42,14 +54,11 @@ function renderLogin() {
             }
         });
     });
-    $('#submitNewUser').click(function () {
-        $.ajax({
-            url: apiPrefix + '/createUserAndLogin',
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({ username: $('#newUsername').val(), password: $('#newPassword').val() }),
-            success: function(data) {
+    $('#submitCreateUserAndLogin').click(function () {
+        sendRequest({
+            name: 'createUserAndLogin',
+            data: { username: $('#newUsername').val(), password: $('#newPassword').val() },
+            success: function(data) { // request success
                 console.log("Got login response: " + JSON.stringify(data));
                 login = data;
 
@@ -57,7 +66,7 @@ function renderLogin() {
                     loadRepositoryList();
                 }
                 else {
-                    alert('User create error. Maybe the user already exists or something.');
+                    alert('Login error. Wrong username/password probably.');
                 }
             },
             error: function () {
@@ -72,7 +81,7 @@ function renderLogin() {
     });
     $('#newUsername, #newPassword').keypress(function(e) {
         if (e.which == 13) {
-            $('#submitNewUser').click();
+            $('#submitCreateUserAndLogin').click();
         }
     });
     $('#username').focus();
@@ -82,12 +91,9 @@ function renderLogin() {
 /* load repository view */
 
 function loadRepositoryList() {
-    $.ajax({
-        url: apiPrefix + '/getRepositories',
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({ sessionId: login.sessionId }),
+    sendRequest({
+        name: 'getRepositories',
+        data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Get repositories. Got response: " + JSON.stringify(data));
             renderRepositoryList({ repositories: data, login: login });
@@ -105,7 +111,7 @@ function renderRepositoryList(data) {
     $('#manageUsers').click(loadUserList);
     $('#createRepository').click(loadCreateRepository);
     $('.repository').click(function () {
-        loadFileConflicts($(this).data('alias'));
+        loadConflicts($(this).data('alias'));
     });
 }
 
@@ -122,19 +128,13 @@ function renderCreateRepository(data) {
     $('#manageUsers').click(loadUserList);
     $('.repositoryViewButton').click(loadRepositoryList);
     $('#submitCreateRepository').click(function () {
-        $.ajax({
-            url: apiPrefix + '/addRepository',
-            type: 'POST',
-            dataType: 'json',
-            contentType: 'application/json',
-            data: JSON.stringify({ repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId }),
+        sendRequest({
+            name: 'addRepository',
+            data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId },
             success: function(data) {
                 console.log("Got create repository response: " + JSON.stringify(data));
 
                 loadRepositoryList();
-                else {
-                    alert('Repository create error. Maybe the repository already exists or something.');
-                }
             },
             error: function () {
                 alert('Something went wrong when logging in.');
@@ -147,12 +147,9 @@ function renderCreateRepository(data) {
 /* load users view */
 
 function loadUserList() {
-    $.ajax({
-        url: apiPrefix + '/getUsers',
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({ sessionId: login.sessionId }),
+    sendRequest({
+        name: 'getUsers',
+        data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Get repositories. Got response: " + JSON.stringify(data));
             renderUserList({ users: data, login: login });
@@ -164,30 +161,35 @@ function loadUserList() {
 }
 
 function renderUserList(data) {
-    $('body').html(new EJS({url: 'templates/user_list.ejs'}).render(data));
+    $('body').html(new EJS({url: 'templates/user_view.ejs'}).render(data));
     $('#logo').click(loadRepositoryList);
     $('#refresh').click(loadUserList);
     $('#manageUsers').click(loadUserList);
     $('.repository').click(function () {
-        loadFileConflicts($(this).data('alias'));
+        loadConflicts($(this).data('alias'));
     });
 }
 
 
 /* load conflict view */
 
-function loadFileConflicts(repositoryAlias) {
-    $.getJSON(apiPrefix + '/getFileConflicts/' + repositoryAlias).done(function(data) {
-        console.log("Get file conflicts. Got response: " + JSON.stringify(data));
-        activeRepository = repositoryAlias;
-		renderFileConflicts({ fileConflicts: data, repositoryAlias: repositoryAlias });
-    }).fail(function () {
-        console.log("Get file conflicts. Error.");
+function loadConflicts(repositoryAlias) {
+    sendRequest({
+        name: 'getConflicts',
+        data: { sessionId: login.sessionId, repositoryAlias: 'test' },
+        success: function(data) {
+            console.log("Get file conflicts. Got response: " + JSON.stringify(data));
+            activeRepository = repositoryAlias;
+    		renderConflicts({ Conflicts: data, repositoryAlias: repositoryAlias });
+        },
+        error: function () {
+            console.log("Get file conflicts. Error.");
+        }
     });
 }
 
-function renderFileConflicts(data) {
-    $('body').html(new EJS({url: 'templates/file_conflicts.ejs'}).render(data));
+function renderConflicts(data) {
+    $('body').html(new EJS({url: 'templates/conflicts_view.ejs'}).render(data));
     $('.fileConflict').click(function () {
         loadFileView($(this).data('filename'));
     });
@@ -207,8 +209,8 @@ function renderFileView(data) {
     $('.repositoryViewButton').click(function () {
         loadRepositoryList();
     });
-    $('.fileConflictsViewButton').click(function () {
-        loadFileConflicts(activeRepository);
+    $('.ConflictsViewButton').click(function () {
+        loadConflicts(activeRepository);
     });
 }
 

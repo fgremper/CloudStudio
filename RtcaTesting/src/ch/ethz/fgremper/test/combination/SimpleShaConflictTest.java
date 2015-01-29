@@ -15,7 +15,7 @@ import ch.ethz.fgremper.rtca.test.helper.TestGitHelper;
 import ch.ethz.fgremper.rtca.test.helper.TestSettings;
 
 public class SimpleShaConflictTest {
-
+	/*
 	@Test
 	public void testSimpleShaConflictNoFastForward() throws Exception {
 
@@ -202,5 +202,5 @@ public class SimpleShaConflictTest {
 		}
 		
 	}
-
+	*/
 }

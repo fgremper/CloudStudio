@@ -1,11 +1,12 @@
 # /usr/local/mysql/bin/mysql -u dbadmin cloudstudio < /Users/novocaine/Documents/masterthesis/workspace/SQLInit.sql
 
-DROP TABLE usersessions;
-DROP TABLE useraccess;
-DROP TABLE files;
-DROP TABLE commithistory;
-DROP TABLE repositories;
-DROP TABLE users;
+DROP VIEW IF EXISTS filelist ;
+DROP TABLE IF EXISTS usersessions;
+DROP TABLE IF EXISTS useraccess;
+DROP TABLE IF EXISTS files;
+DROP TABLE IF EXISTS commithistory;
+DROP TABLE IF EXISTS repositories;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE users
 (
@@ -51,7 +52,7 @@ sha VARCHAR(255),
 branch VARCHAR(255),
 commit VARCHAR(255),
 committed VARCHAR(11),
-PRIMARY KEY (repositoryalias, username, filename),
+PRIMARY KEY (repositoryalias, username, filename, committed),
 FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );
@@ -67,3 +68,5 @@ FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );
 
+CREATE VIEW filelist AS
+SELECT DISTINCT repositoryalias, filename, branch FROM files;

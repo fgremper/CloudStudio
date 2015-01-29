@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import ch.ethz.fgremper.rtca.DatabaseConnection;
 
 public class TestDBHelper {
+	/*
 	public static void resetDatabase() throws Exception {
 		DatabaseConnection db = new DatabaseConnection();
 		db.startTransaction();
@@ -24,4 +25,5 @@ public class TestDBHelper {
 		return db.getFileConflicts();
 		
 	}
+	*/
 }

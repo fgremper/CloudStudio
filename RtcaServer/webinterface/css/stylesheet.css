@@ -121,11 +121,12 @@ textarea, input { outline: none; }
     padding: 6px 6px;
     border: 1px solid #d0d0d0;
     margin: 0 0 5px 0;
+    font-size: 14px;
 }
 #username:focus, #password:focus, #newUsername:focus, #newPassword:focus {
     border-color: #4C7CBA;
 }
-#submitLogin, #submitNewUser {
+#submitLogin, #submitCreateUserAndLogin {
     width: 200px;
     font-weight: bold;
     color: #ffffff;
@@ -137,8 +138,9 @@ textarea, input { outline: none; }
     cursor: pointer;
     border-radius: 4px;
     margin: 10px 0 20px 0;
+    font-size: 14px;
 }
-#submitNewUser {
+#submitCreateUserAndLogin {
     font-weight: normal;
     color: #444444;
     background-color: #e4e4e4;
@@ -190,12 +192,10 @@ table {
     border-radius: 5px;
 }
 tr.static {
-    height: 36px;
     background-color: #f8f8f8;
     border-bottom: 1px solid #e4e4e4;
 }
 tr.clickable {
-    height: 36px;
     background-color: #f8f8f8;
     border-bottom: 1px solid #e4e4e4;
     cursor: pointer;
@@ -216,9 +216,11 @@ tr:last-child {
 }
 td, th {
     font-size: 13px;
-    padding: 0px 6px;
+    padding: 4px 6px;
     color: #666666;
     text-align: left;
+    line-height: 28px;
+    vertical-align: top;
 }
 tr.heading td {
     font-size: 12px;
@@ -243,6 +245,7 @@ span.user {
     background-color: #e4e4e4;
     border-radius: 15px;
     text-align: center;
+    white-space: nowrap;
 }
 span.add, span.delete {
     color: #aaaaaa;
