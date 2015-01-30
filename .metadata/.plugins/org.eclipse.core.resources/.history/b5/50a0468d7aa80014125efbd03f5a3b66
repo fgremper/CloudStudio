@@ -230,87 +230,20 @@ public class RequestHttpHandler implements HttpHandler {
 						response = "{}";
 					}
 				}
-
+				
 				// Delete user
-				if (uri.getPath().equals(prefix + "/deleteUser")) {
+				if (uri.getPath().equals(prefix + "/modifyRepositoryOwner")) {
 					System.out.println("Incoming DELETE USER.");
 
 					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String repositoryAlias = modifyRepositoryOwner.getString("repositoryAlias");
 					String username = modifyRepositoryOwner.getString("username");
 					String sessionId = modifyRepositoryOwner.getString("sessionId");
 	
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
-						db.deleteUser(username);
-						db.commitTransaction();
-						response = "{}";
-					}
-				}
-
-				// Make user admin
-				if (uri.getPath().equals(prefix + "/makeUserAdmin")) {
-					System.out.println("Incoming MAKE USER ADMIN.");
-
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
-	
-					if (db.isUserAdmin(sessionId)) {
-						db = new DatabaseConnection();
-						db.startTransaction();
-						db.makeUserAdmin(username);
-						db.commitTransaction();
-						response = "{}";
-					}
-				}
-
-				// Revoke user admin
-				if (uri.getPath().equals(prefix + "/revokeUserAdmin")) {
-					System.out.println("Incoming REVOKE USER ADMIN.");
-
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
-	
-					if (db.isUserAdmin(sessionId)) {
-						db = new DatabaseConnection();
-						db.startTransaction();
-						db.revokeUserAdmin(username);
-						db.commitTransaction();
-						response = "{}";
-					}
-				}
-
-				// Make user creator
-				if (uri.getPath().equals(prefix + "/makeUserCreator")) {
-					System.out.println("Incoming MAKE USER CREATOR.");
-
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
-	
-					if (db.isUserAdmin(sessionId)) {
-						db = new DatabaseConnection();
-						db.startTransaction();
-						db.makeUserCreator(username);
-						db.commitTransaction();
-						response = "{}";
-					}
-				}
-
-				// Revoke user creator
-				if (uri.getPath().equals(prefix + "/revokeUserCreator")) {
-					System.out.println("Incoming REVOKE USER CREATOR.");
-
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
-	
-					if (db.isUserAdmin(sessionId)) {
-						db = new DatabaseConnection();
-						db.startTransaction();
-						db.revokeUserCreator(username);
+						db.modifyRepositoryOwner(repositoryAlias, username);
 						db.commitTransaction();
 						response = "{}";
 					}

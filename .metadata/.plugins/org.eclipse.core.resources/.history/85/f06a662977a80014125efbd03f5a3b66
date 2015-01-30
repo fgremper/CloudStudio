@@ -359,12 +359,10 @@ public class DatabaseConnection {
 	public JSONArray getRepositories(String sessionId) throws SQLException {
 		JSONArray repositoriesArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement(
-				"SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users JOIN usersessions AS us1 ON users.username = us1.username WHERE users.isadmin = 'true' AND us1.sessionid = ?) OR EXISTS (SELECT useraccess.username FROM useraccess JOIN usersessions AS us2 ON useraccess.username = us2.username WHERE us2.sessionid = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = (SELECT username FROM usersessions WHERE sessionid = ?)");
+		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users JOIN usersessions AS us1 ON users.username = us1.username WHERE users.isadmin = 'true' AND us1.sessionid = ?) OR EXISTS (SELECT useraccess.username FROM useraccess JOIN usersessions AS us2 ON useraccess.username = us2.username WHERE us2.sessionid = ? AND useraccess.repositoryalias = repositories.repositoryalias)");
 
 		stmt.setString(1, sessionId);
 		stmt.setString(2, sessionId);
-		stmt.setString(3, sessionId);
 		
 		ResultSet rs = stmt.executeQuery();
 		HashMap<String, JSONObject> index = new HashMap<String, JSONObject>();
@@ -488,15 +486,6 @@ public class DatabaseConnection {
 		PreparedStatement stmt = con.prepareStatement("UPDATE users SET iscreator = 'false' WHERE username = ?");
 
 		stmt.setString(1, username);
-		
-		stmt.executeUpdate();
-	}
-	
-	public void modifyRepositoryOwner(String repositoryAlias, String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("UPDATE repositories SET repositoryowner = ? WHERE repositoryalias = ?");
-
-		stmt.setString(1, username);
-		stmt.setString(2, repositoryAlias);
 		
 		stmt.executeUpdate();
 	}

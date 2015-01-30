@@ -15,12 +15,29 @@
 </div>
 <div id="view">
 	<table id="users">
-	    <tr class="descriptors"><th>Username</th><th>Privileges</th></tr>
-	    <tr class="heading"><td colspan="2">Users (<%= users.length %>)</td></tr>
+	    <tr class="descriptors"><th>Username</th><th>Administrator</th><th>Can create repositories</th></tr>
+	    <tr class="heading"><td colspan="3">Users (<%= users.length %>)</td></tr>
 		<% for (var i = 0; i < users.length; i++) { %>
 		    <tr class="user static" data-alias="<%= users[i]['username'] %>">
-		        <td><span class="user"><%= users[i]['username'] %> <span class="delete">(&#8722;)</span></span></td>
-		        <td><% if (users[i]['isAdmin']) { %>Administrator<% } else { %>User<% } %></td>
+		        <td><span class="user"><%= users[i]['username'] %> <span class="delete deleteUser" data-username="<%= users[i]['username'] %>">(&#8722;)</span></span></td>
+		        <td>
+		        	<% if (users[i]['isAdmin']) { %>
+	        			<strong>Yes</strong>
+	        			<span class="modify revokeUserAdmin" data-username="<%= users[i]['username'] %>">(toggle)</span>
+        			<% } else { %>
+        				No
+	        			<span class="modify makeUserAdmin" data-username="<%= users[i]['username'] %>">(toggle)</span>
+    				<% } %>
+				</td>
+		        <td>
+		        	<% if (users[i]['isCreator']) { %>
+	        			<strong>Yes</strong>
+	        			<span class="modify revokeUserCreator" data-username="<%= users[i]['username'] %>">(toggle)</span>
+        			<% } else { %>
+        				No
+	        			<span class="modify makeUserCreator" data-username="<%= users[i]['username'] %>">(toggle)</span>
+    				<% } %>
+				</td>
 		    </tr>
 		<% } %>
 	</table>

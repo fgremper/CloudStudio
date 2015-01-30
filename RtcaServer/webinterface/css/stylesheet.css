@@ -150,7 +150,7 @@ textarea, input { outline: none; }
 /* create repository */
 
 
-#repositoryalias, #repositoryurl {
+#repositoryAlias, #repositoryUrl {
     display: block;
     width: 200px;
     font-size: 16px;
@@ -158,7 +158,7 @@ textarea, input { outline: none; }
     border: 1px solid #d0d0d0;
     margin: 0 0 5px 0;
 }
-#repositoryalias:focus, #repositoryurl:focus {
+#repositoryAlias:focus, #repositoryUrl:focus {
     border-color: #4C7CBA;
 }
 #submitCreateRepository {
@@ -247,14 +247,17 @@ span.user {
     text-align: center;
     white-space: nowrap;
 }
-span.add, span.delete {
+span.add, span.delete, span.modify {
     color: #aaaaaa;
     cursor: pointer;
     font-weight: normal;
     letter-spacing: 1px;
     padding-left: 3px;
 }
-span.add:hover, span.delete:hover {
+span.modify {
+    letter-spacing: 0;
+}
+span.add:hover, span.delete:hover, span.modify:hover {
     color: #4C7CBA;
 }
 

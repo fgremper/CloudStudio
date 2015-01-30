@@ -19,14 +19,17 @@
 	    <tr class="heading"><td colspan="4">Repositories (<%= repositories.length %>)</td></tr>
 	<% for (var i = 0; i < repositories.length; i++) { %>
 	    <tr class="repository clickable" data-alias="<%= repositories[i]['repositoryAlias'] %>">
-	        <td class="blue"><%= repositories[i]['repositoryAlias'] %><% if (login.isAdmin) { %> <span class="delete">(&#8722;)</span><% } %></td>
+	        <td class="blue"><%= repositories[i]['repositoryAlias'] %><% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %> <span class="delete deleteRepository" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>">(&#8722;)</span><% } %></td>
 	        <td><%= repositories[i]['repositoryUrl'] %></td>
-	        <td><span class="user"><%= repositories[i]['repositoryOwner'] %></span></td>
+	        <td>
+	        	<span class="user"><%= repositories[i]['repositoryOwner'] %></span>
+	        	<% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %> <span class="modify modifyRepositoryOwner" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>">(change)</span><% } %>
+        	</td>
 	        <td>
 		        <% for (var j = 0; j < repositories[i]['users'].length; j++) { %>
-		        	<span class="user"><%= repositories[i]['users'][j] %><% if (login.isAdmin) { %> <span class="delete">(&#8722;)</span><% } %></span>
+		        	<span class="user"><%= repositories[i]['users'][j] %><% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %> <span class="delete deleteUserFromRepository" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>" data-username="<%= repositories[i]['users'][j] %>">(&#8722;)</span><% } %></span>
 		        <% } %>
-	        	<% if (login.isAdmin) { %><span class="add">(+)</span><% } %>
+	        	<% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %><span class="add addUserToRepository" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>">(+)</span><% } %>
 	        </td>
 	    </tr>
 	<% } %>

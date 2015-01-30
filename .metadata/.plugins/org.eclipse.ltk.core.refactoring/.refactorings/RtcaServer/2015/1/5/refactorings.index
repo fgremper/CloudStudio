@@ -15,3 +15,4 @@
 1422609020632	Rename local variable 'fileConflict'
 1422609026195	Rename local variable 'fileConflictUsers'
 1422609105543	Rename local variable 'conflictUser'
+1422619128269	Rename local variable 'deleteRepositoryObject'

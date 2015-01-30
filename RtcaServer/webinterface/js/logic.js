@@ -116,6 +116,67 @@ function renderOverviewView(data) {
     $('.repository').click(function () {
         loadRepositoryView($(this).data('alias'));
     });
+    
+    $('.addUserToRepository').click(function (e) {
+        var usernameToAdd = prompt('Enter user to add to repository "' + $(this).data('repositoryalias') + '":');
+        if (usernameToAdd == null) return;
+        sendRequest({
+            name: 'addUserToRepository',
+            data: { repositoryAlias: $(this).data('repositoryalias'), username: usernameToAdd, sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadOverviewView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.deleteUserFromRepository').click(function (e) {
+        sendRequest({
+            name: 'deleteUserFromRepository',
+            data: { repositoryAlias: $(this).data('repositoryalias'), username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadOverviewView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.deleteRepository').click(function (e) {
+        sendRequest({
+            name: 'deleteRepository',
+            data: { repositoryAlias: $(this).data('repositoryalias'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadOverviewView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.modifyRepositoryOwner').click(function (e) {
+        var newRepositoryOwner = prompt('Enter new owner for repository "' + $(this).data('repositoryalias') + '":');
+        if (newRepositoryOwner == null) return;
+        sendRequest({
+            name: 'modifyRepositoryOwner',
+            data: { repositoryAlias: $(this).data('repositoryalias'), username: newRepositoryOwner, sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadOverviewView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
 }
 
 
@@ -170,6 +231,77 @@ function renderUsersView(data) {
     $('#manageUsers').click(loadUsersView);
     $('.repository').click(function () {
         loadRepositoryView($(this).data('alias'));
+    });
+
+    $('.deleteUser').click(function (e) {
+        sendRequest({
+            name: 'deleteUser',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.makeUserAdmin').click(function (e) {
+        sendRequest({
+            name: 'makeUserAdmin',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.revokeUserAdmin').click(function (e) {
+        sendRequest({
+            name: 'revokeUserAdmin',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.makeUserCreator').click(function (e) {
+        sendRequest({
+            name: 'makeUserCreator',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.revokeUserCreator').click(function (e) {
+        sendRequest({
+            name: 'revokeUserCreator',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Got add user to repository response: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when logging in.');
+            }
+        });
+        e.stopPropagation();
     });
 }
 
@@ -243,6 +375,7 @@ function renderFileView(data) {
 
 /* add repository */
 
+/*
 function addRepository(repositoryAlias, repositoryUrl) {
     $.ajax({
     	url: "/pull/addRepository",
@@ -257,3 +390,5 @@ function addRepository(repositoryAlias, repositoryUrl) {
     	}
     });
 }
+
+*/
