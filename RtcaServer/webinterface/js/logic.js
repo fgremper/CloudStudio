@@ -46,7 +46,7 @@ function renderLogin() {
                 login = data;
 
                 if (login.sessionId != undefined) {
-                    loadRepositoryList();
+                    loadOverviewView();
                 }
                 else {
                     alert('Login error. Wrong username/password probably.');
@@ -66,7 +66,7 @@ function renderLogin() {
                 login = data;
 
                 if (login.sessionId != undefined) {
-                    loadRepositoryList();
+                    loadOverviewView();
                 }
                 else {
                     alert('Login error. Wrong username/password probably.');
@@ -93,13 +93,13 @@ function renderLogin() {
 
 /* load repository view */
 
-function loadRepositoryList() {
+function loadOverviewView() {
     sendRequest({
         name: 'getRepositories',
         data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Get repositories. Got response: " + JSON.stringify(data));
-            renderRepositoryList({ repositories: data, login: login });
+            renderOverviewView({ repositories: data, login: login });
         },
         error: function () {
             alert('Something went wrong when loading repository list.');
@@ -107,14 +107,14 @@ function loadRepositoryList() {
     });
 }
 
-function renderRepositoryList(data) {
-    $('body').html(new EJS({url: 'templates/repository_list.ejs'}).render(data));
-    $('#logo').click(loadRepositoryList);
-    $('#refresh').click(loadRepositoryList);
-    $('#manageUsers').click(loadUserList);
+function renderOverviewView(data) {
+    $('body').html(new EJS({url: 'templates/overview.ejs'}).render(data));
+    $('#logo').click(loadOverviewView);
+    $('#refresh').click(loadOverviewView);
+    $('#manageUsers').click(loadUsersView);
     $('#createRepository').click(loadCreateRepository);
     $('.repository').click(function () {
-        loadRepository($(this).data('alias'));
+        loadRepositoryView($(this).data('alias'));
     });
 }
 
@@ -127,9 +127,9 @@ function loadCreateRepository() {
 
 function renderCreateRepository(data) {
     $('body').html(new EJS({url: 'templates/create_repository.ejs'}).render(data));
-    $('#logo').click(loadRepositoryList);
-    $('#manageUsers').click(loadUserList);
-    $('.repositoryViewButton').click(loadRepositoryList);
+    $('#logo').click(loadOverviewView);
+    $('#manageUsers').click(loadUsersView);
+    $('.repositoryViewButton').click(loadOverviewView);
     $('#submitCreateRepository').click(function () {
         sendRequest({
             name: 'addRepository',
@@ -137,7 +137,7 @@ function renderCreateRepository(data) {
             success: function(data) {
                 console.log("Got create repository response: " + JSON.stringify(data));
 
-                loadRepositoryList();
+                loadOverviewView();
             },
             error: function () {
                 alert('Something went wrong when logging in.');
@@ -149,13 +149,13 @@ function renderCreateRepository(data) {
 
 /* load users view */
 
-function loadUserList() {
+function loadUsersView() {
     sendRequest({
         name: 'getUsers',
         data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Get repositories. Got response: " + JSON.stringify(data));
-            renderUserList({ users: data, login: login });
+            renderUsersView({ users: data, login: login });
         },
         error: function () {
             alert('Something went wrong when loading repository list.');
@@ -163,27 +163,27 @@ function loadUserList() {
     });
 }
 
-function renderUserList(data) {
-    $('body').html(new EJS({url: 'templates/user_view.ejs'}).render(data));
-    $('#logo').click(loadRepositoryList);
-    $('#refresh').click(loadUserList);
-    $('#manageUsers').click(loadUserList);
+function renderUsersView(data) {
+    $('body').html(new EJS({url: 'templates/users.ejs'}).render(data));
+    $('#logo').click(loadOverviewView);
+    $('#refresh').click(loadUsersView);
+    $('#manageUsers').click(loadUsersView);
     $('.repository').click(function () {
-        loadRepository($(this).data('alias'));
+        loadRepositoryView($(this).data('alias'));
     });
 }
 
 
 /* load conflict view */
 
-function loadRepository(repositoryAlias) {
+function loadRepositoryView(repositoryAlias) {
     sendRequest({
         name: 'getRepositoryInformation',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get repository information. Got response: " + JSON.stringify(data));
             activeRepository = repositoryAlias;
-            renderRepository({ repositoryInformation: data, repositoryAlias: repositoryAlias });
+            renderRepositoryView({ repositoryInformation: data, repositoryAlias: repositoryAlias });
         },
         error: function () {
             console.log("Get file conflicts. Error.");
@@ -192,24 +192,24 @@ function loadRepository(repositoryAlias) {
 
 }
 
-function renderRepository(data) {
-    $('body').html(new EJS({url: 'templates/repository_view.ejs'}).render(data));
+function renderRepositoryView(data) {
+    $('body').html(new EJS({url: 'templates/repository.ejs'}).render(data));
     $('.fileConflict').click(function () {
         loadFileView($(this).data('filename'));
     });
     $('.repositoryViewButton').click(function () {
-        loadRepositoryList();
+        loadOverviewView();
     });
-    $('#submitFilter').click(loadConflicts);
+    $('#submitFilter').click(loadConflictsView);
 }
 
-function loadConflicts() {
+function loadConflictsView() {
     sendRequest({
         name: 'getConflicts',
-        data: { sessionId: login.sessionId, repositoryAlias: activeRepository, branch: $('#filterBranch').val(), viewUncommitted: $('#filterViewUncommitted').prop('checked') },
+        data: { sessionId: login.sessionId, repositoryAlias: activeRepository, branch: $('#filterBranch').val(), viewUncommitted: $('#filterViewUncommitted').prop('checked'), users: $('#filterUsers option:selected').map(function() {return this.value;}).get(), filterUsers: $('#filterUsersBool').prop('checked') },
         success: function(data) {
             console.log("Get file conflicts. Got response: " + JSON.stringify(data));
-            renderConflicts({ conflicts: data.conflicts });
+            renderConflictsView({ conflicts: data.conflicts });
         },
         error: function () {
             console.log("Get file conflicts. Error.");
@@ -218,25 +218,27 @@ function loadConflicts() {
 }
 
 
-function renderConflicts(data) {
-    $('#conflicts').html(new EJS({url: 'templates/conflicts_view.ejs'}).render(data));
+function renderConflictsView(data) {
+    $('#conflicts').html(new EJS({url: 'templates/conflicts.ejs'}).render(data));
 }
 
 
 /* load file view */
 
 function loadFileView(filename) {
-    renderFileView({ filename: filename, repositoryAlias: activeRepository });
+    //renderFileView({ filename: filename, repositoryAlias: activeRepository });
 }
 
 function renderFileView(data) {
+    /*
     $('body').html(new EJS({url: 'templates/file_view.ejs'}).render(data));
     $('.repositoryViewButton').click(function () {
-        loadRepositoryList();
+        loadOverviewView();
     });
     $('.ConflictsViewButton').click(function () {
-        loadConflicts(activeRepository);
+        loadConflictsView(activeRepository);
     });
+    */
 }
 
 /* add repository */

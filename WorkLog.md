@@ -9,6 +9,7 @@
 * user mgmt.: change repository owner
 * line conflict (gonna be a lot of subtasks)
 * think about file rename heuristics
+* make sure binary files don't get submitted
 
 #### Done
 
