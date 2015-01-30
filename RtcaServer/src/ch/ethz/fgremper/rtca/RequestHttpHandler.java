@@ -112,10 +112,10 @@ public class RequestHttpHandler implements HttpHandler {
 						response = db.getUsers().toString();
 					}
 				}
-				
+
 				// Get file conflicts requests
 				if (uri.getPath().equals(prefix + "/getConflicts")) {
-					System.out.println("Incoming GET FILE CONFLICTS.");
+					System.out.println("Incoming GET CONFLICTS.");
 
 					JSONObject getConflictsObject = new JSONObject(inputJsonString);
 					String sessionId = getConflictsObject.getString("sessionId");
@@ -124,6 +124,20 @@ public class RequestHttpHandler implements HttpHandler {
 					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
 						String username = db.getUsername(sessionId);
 						response = db.getConflicts(getConflictsObject, username);
+					}
+				}
+
+				// Get repository information
+				if (uri.getPath().equals(prefix + "/getRepositoryInformation")) {
+					System.out.println("Incoming GET REPOSITORY INFORMATION.");
+
+					JSONObject getConflictsObject = new JSONObject(inputJsonString);
+					String sessionId = getConflictsObject.getString("sessionId");
+					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
+					
+					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
+						String username = db.getUsername(sessionId);
+						response = db.getRepositoryInformation(repositoryAlias);
 					}
 				}
 			

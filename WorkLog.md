@@ -34,5 +34,5 @@ Will do tomorrow: Refine search/filter for file conflicts.
 
 Did today: Search/filter for file conflicts, some automated test sandpit setup. A lot of SQL writing. Encountered problems with SQL outer joins.
 
-Will do tomorrow: Prepare for meeting, code clean-up.
+Will do tomorrow: More search/filter, prepare for meeting, code clean-up.
 

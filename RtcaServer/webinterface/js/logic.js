@@ -10,6 +10,9 @@ var apiPrefix = '/request'
 
 
 
+
+
+
 $(function () {
     renderLogin();
 });
@@ -111,7 +114,7 @@ function renderRepositoryList(data) {
     $('#manageUsers').click(loadUserList);
     $('#createRepository').click(loadCreateRepository);
     $('.repository').click(function () {
-        loadConflicts($(this).data('alias'));
+        loadRepository($(this).data('alias'));
     });
 }
 
@@ -166,21 +169,47 @@ function renderUserList(data) {
     $('#refresh').click(loadUserList);
     $('#manageUsers').click(loadUserList);
     $('.repository').click(function () {
-        loadConflicts($(this).data('alias'));
+        loadRepository($(this).data('alias'));
     });
 }
 
 
 /* load conflict view */
 
-function loadConflicts(repositoryAlias) {
+function loadRepository(repositoryAlias) {
+    sendRequest({
+        name: 'getRepositoryInformation',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
+        success: function(data) {
+            console.log("Get repository information. Got response: " + JSON.stringify(data));
+            activeRepository = repositoryAlias;
+            renderRepository({ repositoryInformation: data, repositoryAlias: repositoryAlias });
+        },
+        error: function () {
+            console.log("Get file conflicts. Error.");
+        }
+    });
+
+}
+
+function renderRepository(data) {
+    $('body').html(new EJS({url: 'templates/repository_view.ejs'}).render(data));
+    $('.fileConflict').click(function () {
+        loadFileView($(this).data('filename'));
+    });
+    $('.repositoryViewButton').click(function () {
+        loadRepositoryList();
+    });
+    $('#submitFilter').click(loadConflicts);
+}
+
+function loadConflicts() {
     sendRequest({
         name: 'getConflicts',
-        data: { sessionId: login.sessionId, repositoryAlias: 'test' },
+        data: { sessionId: login.sessionId, repositoryAlias: activeRepository, branch: $('#filterBranch').val(), viewUncommitted: $('#filterViewUncommitted').prop('checked') },
         success: function(data) {
             console.log("Get file conflicts. Got response: " + JSON.stringify(data));
-            activeRepository = repositoryAlias;
-    		renderConflicts({ Conflicts: data, repositoryAlias: repositoryAlias });
+            renderConflicts({ conflicts: data.conflicts });
         },
         error: function () {
             console.log("Get file conflicts. Error.");
@@ -188,15 +217,11 @@ function loadConflicts(repositoryAlias) {
     });
 }
 
+
 function renderConflicts(data) {
-    $('body').html(new EJS({url: 'templates/conflicts_view.ejs'}).render(data));
-    $('.fileConflict').click(function () {
-        loadFileView($(this).data('filename'));
-    });
-    $('.repositoryViewButton').click(function () {
-        loadRepositoryList();
-    });
+    $('#conflicts').html(new EJS({url: 'templates/conflicts_view.ejs'}).render(data));
 }
+
 
 /* load file view */
 

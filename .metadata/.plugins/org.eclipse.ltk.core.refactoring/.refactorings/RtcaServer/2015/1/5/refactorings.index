@@ -10,3 +10,8 @@
 1422539392034	Rename method 'getFileConflicts'
 1422540548244	Rename local variable 'stmt'
 1422551840926	Rename local variable 'updateObject'
+1422608508698	Rename local variable 'fileConflict'
+1422609004512	Rename local variable 'user'
+1422609020632	Rename local variable 'fileConflict'
+1422609026195	Rename local variable 'fileConflictUsers'
+1422609105543	Rename local variable 'conflictUser'

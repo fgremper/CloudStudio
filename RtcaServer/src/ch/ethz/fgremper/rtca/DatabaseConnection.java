@@ -119,9 +119,10 @@ public class DatabaseConnection {
 	
 
 	public String getConflicts(JSONObject getConflictsObject, String username) throws Exception {
-		//String repositoryAlias = getConflictsObject.getString("repositoryAlias");
-		//String branch = getConflictsObject.getString("branch");
-		//boolean viewUncommitted = getConflictsObject.getBoolean("viewUncommitted");
+		String repositoryAlias = getConflictsObject.getString("repositoryAlias");
+		String branch = getConflictsObject.getString("branch");
+		boolean viewUncommitted = getConflictsObject.getBoolean("viewUncommitted");
+		String committedView = viewUncommitted ? "uncommitted" : "committed";
 		//boolean filterUsers = getConflictsObject.getBoolean("filterUsers");
 		//JSONArray filteredUsers = getConflictsObject.getJSONArray("filteredUsers");
 		//JSONArray compareAdditionalBranches = getConflictsObject.getJSONArray("compareAdditionalBranches");
@@ -129,19 +130,19 @@ public class DatabaseConnection {
 		JSONObject responseObject = new JSONObject();
 		
 		PreparedStatement stmt = con.prepareStatement(
-			"SELECT myfilename, mysha, theirusername, theirfilename, theirsha FROM (\n" + 
+			"SELECT filename, mysha, theirusername, theirfilename, theirsha FROM (\n" + 
 			"\n" + 
 			"	# all possible files of me X (all possible files X all others)\n" + 
-			"	SELECT me.filename AS myfilename, me.sha AS mysha, them.username AS theirusername, them.filename AS theirfilename, them.sha AS theirsha FROM (\n" + 
+			"	SELECT me.filename AS filename, me.sha AS mysha, them.username AS theirusername, them.filename AS theirfilename, them.sha AS theirsha FROM (\n" + 
 			"\n" + 
 			"		# all the files X me\n" + 
 			"		SELECT filelist.filename AS filename, f.sha AS sha FROM filelist\n" + 
 			"		LEFT OUTER JOIN (\n" + 
 			"			SELECT * FROM files\n" + 
-			"			WHERE files.username = 'john' # my user\n" + 
-			"			AND (committed = 'uncommitted' OR committed = 'both') # committed or uncommitted\n" + 
-			"			AND branch = 'master' # my branch\n" + 
-			"			AND repositoryalias = 'test' # repository\n" + 
+			"			WHERE files.username = ? # my user\n" + 
+			"			AND (committed = ? OR committed = 'both') # committed or uncommitted\n" + 
+			"			AND branch = ? # my branch\n" + 
+			"			AND repositoryalias = ? # repository\n" + 
 			"		) AS f ON filelist.filename = f.filename\n" + 
 			"\n" + 
 			"	) AS me\n" + 
@@ -155,17 +156,17 @@ public class DatabaseConnection {
 			"\n" + 
 			"			# all the filenames X all the users\n" + 
 			"			SELECT u.username AS username, filelist.filename AS filename FROM filelist\n" + 
-			"			CROSS JOIN (SELECT DISTINCT username FROM useraccess WHERE repositoryalias = 'test') AS u # repository\n" + 
-			"			WHERE filelist.repositoryalias = 'test' AND filelist.branch = 'master' # repository, compare to branch\n" + 
+			"			CROSS JOIN (SELECT DISTINCT username FROM useraccess WHERE repositoryalias = ?) AS u # repository\n" + 
+			"			WHERE filelist.repositoryalias = ? AND filelist.branch = ? # repository, compare to branch\n" + 
 			"\n" + 
 			"		) as filelistxusers\n" + 
 			"		LEFT OUTER JOIN (\n" + 
 			"\n" + 
 			"			# the actual files\n" + 
 			"			SELECT * FROM files\n" + 
-			"			WHERE (committed = 'uncommitted' OR committed = 'both') # committed or uncommitted\n" + 
-			"			AND branch = 'master' # compare to branch\n" + 
-			"			AND repositoryalias = 'test' # repository\n" + 
+			"			WHERE (committed = ? OR committed = 'both') # committed or uncommitted\n" + 
+			"			AND branch = ? # compare to branch\n" + 
+			"			AND repositoryalias = ? # repository\n" + 
 			"\n" + 
 			"		) AS f ON filelistxusers.filename = f.filename AND filelistxusers.username = f.username\n" + 
 			"\n" + 
@@ -175,24 +176,77 @@ public class DatabaseConnection {
 			") AS t\n" + 
 			"\n" + 
 			"WHERE (t.mysha IS NULL AND t.theirsha IS NOT NULL) OR (t.mysha IS NOT NULL AND t.theirsha IS NULL) OR (t.mysha IS NOT NULL AND t.theirsha IS NOT NULL AND t.mysha <> t.theirsha) # complicated cause comparison with null always returns null\n" + 
-			"ORDER BY t.myfilename, t.theirusername;\n"
+			"ORDER BY t.filename, t.theirusername"
 		);
+		
+		/* 
+1 my user
+2 committed
+3 branch
+4 repositoryalias
+5 repositoryalias
+6 repository alias
+7 their branch
+8 committed
+9 branch
+10 repository
+*/
+		
+		stmt.setString(1, username);
+		stmt.setString(2, committedView);
+		stmt.setString(3, branch);
+		stmt.setString(4, repositoryAlias);
+		stmt.setString(5, repositoryAlias);
+		stmt.setString(6, repositoryAlias);
+		stmt.setString(7, branch);
+		stmt.setString(8, committedView);
+		stmt.setString(9, branch);
+		stmt.setString(10, repositoryAlias);
+		
+		System.out.println("LISTING NOW AND STUFF!");
 
 		ResultSet rs = stmt.executeQuery();
+		HashMap<String, JSONObject> fileMap = new HashMap<String, JSONObject>();
+		JSONArray conflictList = new JSONArray();
 		while (rs.next()) {
-			//JSONObject fileConflict = new JSONObject();
-			String filename = rs.getString("mysha");
-			String mysha = rs.getString("theirsha");
-			String theirusername = rs.getString("theirusername");
-			String theirsha = rs.getString("theirsha");
+			String filename = rs.getString("filename");
+			String mySha = rs.getString("mysha");
+			String theirUsername = rs.getString("theirusername");
+			String theirSha = rs.getString("theirsha");
 			
-			System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);
+			JSONObject conflict;
+			if (!fileMap.containsKey(filename)) {
+				conflict = new JSONObject();
+				fileMap.put(filename, conflict);
+				conflictList.put(conflict);
+				conflict.put("filename", filename);
+				conflict.put("users", new JSONArray());
+			}
+			else {
+				conflict = fileMap.get(filename);
+			}
+			
+			JSONArray conflictUsers = conflict.getJSONArray("users");
+			JSONObject user = new JSONObject();
+			conflictUsers.put(user);
+			
+			user.put("username", theirUsername);
+			
+			String conflictType;
+			if (mySha == null && theirSha != null) conflictType = "add";
+			else if (mySha != null && theirSha == null) conflictType = "remove";
+			else conflictType = "modify";
+
+			user.put("conflictType", conflictType);
+			
+			//System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);
 			
 		}
 		//stmt.setString(1, repositoryAlias);
 		//stmt.setString(2, username);
 		//stmt.setString(2, branch);
 		
+		responseObject.put("conflicts", conflictList);
 		return responseObject.toString();
 	}
 	
@@ -272,8 +326,11 @@ public class DatabaseConnection {
 		ResultSet rs;
 		
 		PreparedStatement getRepositoryUsersStmt = con.prepareStatement(
-			"SELECT username FROM useraccess WHERE repositoryalias = ?"
+			"SELECT DISTINCT username FROM useraccess WHERE repositoryalias = ?"
 		);
+		
+		getRepositoryUsersStmt.setString(1, repositoryAlias);
+		
 		rs = getRepositoryUsersStmt.executeQuery();
 		while (rs.next()) {
 			repositoryUsers.put(rs.getString("username"));
@@ -281,8 +338,11 @@ public class DatabaseConnection {
 
 		JSONArray repositoryBranches = new JSONArray();
 		PreparedStatement getRepositoryBranchesStmt = con.prepareStatement(
-			"SELECT branch FROM files WHERE repositoryalias = ?"
+			"SELECT DISTINCT branch FROM files WHERE repositoryalias = ?"
 		);
+		
+		getRepositoryBranchesStmt.setString(1, repositoryAlias);
+		
 		rs = getRepositoryBranchesStmt.executeQuery();
 		while (rs.next()) {
 			repositoryBranches.put(rs.getString("branch"));
