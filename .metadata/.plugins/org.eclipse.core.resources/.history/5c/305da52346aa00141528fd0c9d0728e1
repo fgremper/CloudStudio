@@ -383,9 +383,9 @@ public class RequestHttpHandler implements HttpHandler {
 		}
 		
 		try {
-			if (db != null) {
+			if (db != null)
 				db.closeConnection();
-			}
+
 		}
 		catch (SQLException e) {
 			e.printStackTrace();

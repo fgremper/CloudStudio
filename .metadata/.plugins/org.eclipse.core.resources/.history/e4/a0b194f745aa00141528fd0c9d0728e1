@@ -39,9 +39,9 @@ public class RequestHttpHandler implements HttpHandler {
 		String response = null;
 		String prefix = "/request";
 
-		DatabaseConnection db = null;
 		try {
 			// Get database connection
+			DatabaseConnection db = null;
 			db = new DatabaseConnection();
 			
 			// POST request?
@@ -376,20 +376,14 @@ public class RequestHttpHandler implements HttpHandler {
 
 			}
 			
+			db.closeConnection();
 			
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		try {
-			if (db != null) {
-				db.closeConnection();
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
+		
 		
 		if (response != null) {
 			exchange.sendResponseHeaders(200, response.length());

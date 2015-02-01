@@ -43,7 +43,9 @@ public class DatabaseConnection {
 	}
 	
 	public void closeConnection() throws SQLException {
-		con.close();
+		if (con != null) {
+			con.close();
+		}
 	}
 
 	/* UPDATE FROM CLIENT CYCLE */
