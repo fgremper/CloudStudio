@@ -1,0 +1,23 @@
+package ch.ethz.fgremper.rtca;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+public class ServerConfig {
+	private static ServerConfig serverConfig;
+
+	public String dbDriverClass;
+	public String dbJdbcUrl;
+	public String dbUser;
+	public String dbPassword;
+
+	public String dbMinPoolSize;
+	public String dbsetAcquireIncrement;
+	public String dbMaxPoolSize;
+	public String dbMaxStatements;
+	
+	private static ServerConfig getInstance() {
+		if (serverConfig == null) serverConfig = new ServerConfigReader();
+		return serverConfig;
+	}
+}
+

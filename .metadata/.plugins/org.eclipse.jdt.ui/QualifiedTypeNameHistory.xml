@@ -24,18 +24,18 @@
 <fullyQualifiedTypeName name="org.apache.commons.io.FileUtils"/>
 <fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
-<fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
 <fullyQualifiedTypeName name="org.json.JSONArray"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.testing.TestGitHelper"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.helper.JSONHelper"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
-<fullyQualifiedTypeName name="org.json.JSONObject"/>
 <fullyQualifiedTypeName name="org.apache.commons.io.IOUtils"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.treewalk.FileTreeIterator"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.DatabaseConnection"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.ClientMain"/>
+<fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.helper.JSONHelper"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
 </qualifiedTypeNameHistroy>

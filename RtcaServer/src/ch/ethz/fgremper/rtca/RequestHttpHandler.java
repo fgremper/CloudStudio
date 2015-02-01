@@ -376,6 +376,8 @@ public class RequestHttpHandler implements HttpHandler {
 
 			}
 			
+			db.closeConnection();
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -1,0 +1,9 @@
+package ch.ethz.fgremper.rtca;
+
+public class ServerConfig {
+	private static ServerConfig serverConfig;
+	
+	private static ServerConfig getInstance() {
+		if (serverConfig == null) serverConfig = new ServerConfigReader();
+	}
+}

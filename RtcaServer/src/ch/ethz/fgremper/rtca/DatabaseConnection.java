@@ -20,21 +20,12 @@ import ch.ethz.fgremper.rtca.helper.JSONHelper;
 
 public class DatabaseConnection {
 
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";  
-	static final String DB_URL = "jdbc:mysql://localhost/cloudstudio";
-	static final String USER = "dbadmin";
-	static final String PASS = "";
-
 	static final String salt = "heyoiamthesaltwhatisupwithyou";
 	
 	Connection con = null;
 
 	public DatabaseConnection() throws Exception {
-		Class.forName("com.mysql.jdbc.Driver");
-
-		System.out.println("[DatabaseConnection] Connecting to database...");
-		con = DriverManager.getConnection(DB_URL, USER,PASS);
-		System.out.println("[DatabaseConnection] Connected to database.");
+		con = DatabaseConnectionPool.getInstance().getConnection();
 	}
 
 	/* UTILITY */
@@ -49,6 +40,10 @@ public class DatabaseConnection {
 
 	public void rollbackTransaction() throws SQLException {
 		con.rollback();
+	}
+	
+	public void closeConnection() throws SQLException {
+		con.close();
 	}
 
 	/* UPDATE FROM CLIENT CYCLE */

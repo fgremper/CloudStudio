@@ -1,0 +1,10 @@
+package ch.ethz.fgremper.rtca;
+
+import org.apache.commons.configuration.XMLConfiguration;
+
+public class ServerConfigReader {
+
+	public ServerConfigReader() {
+	}
+	
+}

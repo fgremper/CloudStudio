@@ -1,0 +1,37 @@
+package ch.ethz.fgremper.rtca;
+
+import org.apache.commons.configuration.XMLConfiguration;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+public class ServerConfig {
+	private static ServerConfig serverConfig;
+
+	public String dbDriverClass;
+	public String dbJdbcUrl;
+	public String dbUser;
+	public String dbPassword;
+
+	public String dbMinPoolSize;
+	public String dbsetAcquireIncrement;
+	public String dbMaxPoolSize;
+	public String dbMaxStatements;
+	
+	private static ServerConfig getInstance() {
+		if (serverConfig == null) {
+			// Read the config
+			
+			XMLConfiguration xmlConfig = new XMLConfiguration("serverConfig.xml");
+		
+			// Read username
+			String username = xmlConfig.getString("username");
+			if (username == null || username.equals("")) throw new Exception("No username in config");
+			config.username = username;
+			System.out.println("[Config] username: " + username);
+			
+
+		}
+		return serverConfig;
+	}
+}
+
