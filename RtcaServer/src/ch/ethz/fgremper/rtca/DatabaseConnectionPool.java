@@ -22,13 +22,11 @@ public class DatabaseConnectionPool {
         cpds.setUser(serverConfig.dbUser);
         cpds.setPassword(serverConfig.dbPassword);
     	
-        // the settings below are optional -- c3p0 can work with defaults
-        cpds.setMinPoolSize(Integer.parseInt(serverConfig.dbMinPoolSize));
-        cpds.setAcquireIncrement(Integer.parseInt(serverConfig.dbAcquireIncrement));
-        cpds.setMaxPoolSize(Integer.parseInt(serverConfig.dbMaxPoolSize));
-        cpds.setMaxStatements(Integer.parseInt(serverConfig.dbMaxStatements));
+        cpds.setMinPoolSize(serverConfig.dbMinPoolSize);
+        cpds.setAcquireIncrement(serverConfig.dbAcquireIncrement);
+        cpds.setMaxPoolSize(serverConfig.dbMaxPoolSize);
+        cpds.setMaxStatements(serverConfig.dbMaxStatements);
 
-    	
     }
 
     public static DatabaseConnectionPool getInstance() throws IOException, SQLException, PropertyVetoException {

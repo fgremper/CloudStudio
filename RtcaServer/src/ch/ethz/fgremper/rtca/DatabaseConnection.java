@@ -82,16 +82,20 @@ public class DatabaseConnection {
 		int rowsAffected = stmt.executeUpdate();
 	}
 	
-	public void storeCommitHistory(String repositoryAlias, String username, String commit, List<String> downstreamCommits) throws SQLException {
+	public void storeCommitHistory(String repositoryAlias, String username, String commit, JSONArray downstreamCommits) throws Exception {
 
-		PreparedStatement downstreamCommitInsertStatement = con.prepareStatement("INSERT INTO commithistory (repositoryalias, username, commit, downstreamcommit) VALUES (?, ?, ?, ?)");
+		PreparedStatement downstreamCommitInsertStatement = con.prepareStatement("INSERT INTO commithistory (repositoryalias, username, commit, downstreamcommit, distance) VALUES (?, ?, ?, ?, ?)");
 		
 		downstreamCommitInsertStatement.setString(1, repositoryAlias);
 		downstreamCommitInsertStatement.setString(2, username);
 		downstreamCommitInsertStatement.setString(3, commit);
 		
-		for (String downstreamCommit : downstreamCommits) {
-			downstreamCommitInsertStatement.setString(4, downstreamCommit);
+		
+		for (int i = 0; i < downstreamCommits.length(); i++) {
+			System.out.println("IN THE FUCKING LOOP");
+			JSONObject downstreamCommit = downstreamCommits.getJSONObject(i);
+			downstreamCommitInsertStatement.setString(4, downstreamCommit.getString("commit"));
+			downstreamCommitInsertStatement.setInt(5, downstreamCommit.getInt("distance"));
 			downstreamCommitInsertStatement.executeUpdate();
 		}
 		

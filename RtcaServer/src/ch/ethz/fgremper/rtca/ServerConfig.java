@@ -12,10 +12,12 @@ public class ServerConfig {
 	public String dbUser;
 	public String dbPassword;
 
-	public String dbMinPoolSize;
-	public String dbAcquireIncrement;
-	public String dbMaxPoolSize;
-	public String dbMaxStatements;
+	public int dbMinPoolSize;
+	public int dbAcquireIncrement;
+	public int dbMaxPoolSize;
+	public int dbMaxStatements;
+	
+	public int serverPort;
 	
 	public ServerConfig() {
 		try {
@@ -26,10 +28,13 @@ public class ServerConfig {
 			dbUser = xmlConfig.getString("dbUser");
 			dbPassword = xmlConfig.getString("dbPassword");
 
-			dbMinPoolSize = xmlConfig.getString("dbMinPoolSize");
-			dbAcquireIncrement = xmlConfig.getString("dbAcquireIncrement");
-			dbMaxPoolSize = xmlConfig.getString("dbMaxPoolSize");
-			dbMaxStatements = xmlConfig.getString("dbMaxStatements");
+			dbMinPoolSize = Integer.parseInt(xmlConfig.getString("dbMinPoolSize"));
+			dbAcquireIncrement = Integer.parseInt(xmlConfig.getString("dbAcquireIncrement"));
+			dbMaxPoolSize = Integer.parseInt(xmlConfig.getString("dbMaxPoolSize"));
+			dbMaxStatements = Integer.parseInt(xmlConfig.getString("dbMaxStatements"));
+
+			serverPort = Integer.parseInt(xmlConfig.getString("serverPort"));
+			
 		}
 		catch (Exception e) {
 			e.printStackTrace();

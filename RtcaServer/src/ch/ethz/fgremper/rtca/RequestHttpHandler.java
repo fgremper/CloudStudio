@@ -358,7 +358,7 @@ public class RequestHttpHandler implements HttpHandler {
 							JSONObject commitObject = commitHistory.getJSONObject(i);
 	
 							String commit = commitObject.getString("commit");
-							List<String> downstreamCommits = JSONHelper.jsonArrayToArray(commitObject.getJSONArray("downstreamCommits"));
+							JSONArray downstreamCommits = commitObject.getJSONArray("downstreamCommits");
 							
 							System.out.println("[UpdateHttpHandler] Commit: " + commit);
 							

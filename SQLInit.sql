@@ -63,7 +63,8 @@ repositoryalias VARCHAR(255),
 username VARCHAR(255),
 commit VARCHAR(255),
 downstreamcommit VARCHAR(255),
-PRIMARY KEY (repositoryalias, username, commit),
+distance INTEGER,
+PRIMARY KEY (repositoryalias, username, commit, downstreamcommit),
 FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );

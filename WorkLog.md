@@ -9,11 +9,10 @@
 * think about file rename heuristics
 * make sure binary files don't get submitted
 * make sure session expiration works properly
-* explicitly send branch: commitid in {} and active branch and modify timestamp from client for "branch view"
-* send depth of parent history (for branch view)
 * find out how to find the best merge-base-file commit
 * make the server fetch origin (either directly by including client features or using "standalone" plugin [make user origin?!])
-* get familiar with java diff library
+* API documentation
+* last fetch (stat -c %Y .git/FETCH_HEAD, http://stackoverflow.com/questions/2993902/how-do-i-check-the-date-and-time-of-the-latest-git-pull-that-was-executed)
 
 #### Done
 
@@ -25,6 +24,9 @@
 * upload non-committed files from plugin
 * store uncommitted/committed views in db
 * new and better query for class awareness view
+* send depth of parent history (for branch view)
+* get familiar with java diff library
+* explicitly send branch: commitid in {} and active branch and modify timestamp from client for "branch view"
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
@@ -56,7 +58,27 @@ Will do tomorrow: Environment stuff.
 
 #### Sunday 01.02.2015
 
-Did today: DB connection pool, added API documentation, made paths relative, added a server config, planned new features.
+Did today: DB connection pool, made paths relative, added a server config, planned new features.
 
 Will do tomrrow: Distribute tasks until presentation over work days and start working.
 
+#### Monday 02.02.2015
+
+Did today: Distance to parent commits, explicit branch info, play around with diff algorithms.
+
+#### Tueday:
+
+Fetch the origin
+Branch view
+
+#### Wednesday
+
+Find merge base for commit
+
+#### Thursday
+
+View diff between files
+
+#### Friday
+
+Diff3

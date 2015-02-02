@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +38,11 @@ public class RepositoryReader {
 		// Add the file array and commit history to the object
 		JSONArray fileArray = new JSONArray();
 		JSONArray commitHistory = new JSONArray();
+		JSONArray branches = new JSONArray();
         updateObject.put("files", fileArray);
         updateObject.put("commitHistory", commitHistory);
-
+        updateObject.put("branches", branches);
+        
         // Store user information
 		updateObject.put("username", config.username);
 		updateObject.put("sessionId", sessionId);
@@ -85,6 +88,10 @@ public class RepositoryReader {
 	            String commitId = commit.getName();
 	            System.out.println("[Repository] Commit: " + commit.getName());
 	            
+	            JSONObject branchObject = new JSONObject();
+	            branchObject.put("branch", branchName);
+	            branchObject.put("commit", commitId);
+	            
 	            // If we didn't already, add the current commit to the commit history
 	            if (!usedCommitIds.contains(commitId)) {
 	            	
@@ -92,10 +99,53 @@ public class RepositoryReader {
 	            	
 	            	// New commit object
 	            	JSONObject commitObject = new JSONObject();
+	            	JSONArray downstreamCommitsObject = new JSONArray();
 	            	
+
+		            commitObject.put("commit", commitId);
+		            commitObject.put("downstreamCommits", downstreamCommitsObject);
+		            commitHistory.put(commitObject);
+	            	
+
+		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
+		            List<String> downstreamCommits = new LinkedList<String>();
+		            HashMap<RevCommit, Integer> distance = new HashMap<RevCommit, Integer>();
+		            if (commit.getParents() != null) { 
+		            	todoCommits.addAll(Arrays.asList(commit.getParents()));
+		            	for (RevCommit c : Arrays.asList(commit.getParents())) {
+		            		distance.put(c, 1);
+		            		//System.out.println("Adding commit to todo: " + c.getName());
+		            	}
+		            }
+		            while (!todoCommits.isEmpty()) {
+		            	RevCommit pop = todoCommits.remove(0);
+		            	RevCommit currentCommit = walk.parseCommit(pop.getId());
+
+	            		//System.out.println("Looking for commit: " + pop.getName());
+		            	Integer distanceToCurrentCommit = distance.get(pop);
+	            		//System.out.println("Distance: " + distanceToCurrentCommit);
+	            		
+		            	if (!downstreamCommits.contains(currentCommit.getName())) {
+			            	downstreamCommits.add(currentCommit.getName());
+			            	JSONObject dc = new JSONObject();
+			            	dc.put("commit", currentCommit.getName());
+			            	dc.put("distance", distanceToCurrentCommit);
+			            	downstreamCommitsObject.put(dc);
+				            if (currentCommit.getParents() != null) {
+				            	todoCommits.addAll(Arrays.asList(currentCommit.getParents()));
+				            	for (RevCommit c : Arrays.asList(currentCommit.getParents())) {
+				            		distance.put(c, distanceToCurrentCommit + 1);
+				            		//System.out.println("SECOND Adding commit to todo: " + c.getName());
+				            	}
+				            }
+		            	}
+		            }
+		            
+		            System.out.println("COMMIT HISTORY: " + commitObject.toString());
+		            
+	            	/*
 		            // Find downstream commits iteratively
 		            List<String> downstreamCommits = new LinkedList<String>();
-		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
 		            if (commit.getParents() != null) todoCommits.addAll(Arrays.asList(commit.getParents()));
 		            while (!todoCommits.isEmpty()) {
 		            	RevCommit pop = todoCommits.remove(0);
@@ -109,12 +159,9 @@ public class RepositoryReader {
 		            // Log all the downstream commits
 		            for (String u : downstreamCommits) {
 		            	System.out.println("[Repository] Downstream commit: "  + u);
-		            }
+		            }*/
 		            
 		            // Add objects to objects
-		            commitObject.put("commit", commitId);
-		            commitObject.put("downstreamCommits", downstreamCommits);
-		            commitHistory.put(commitObject);
 					
 	            }
 	            
