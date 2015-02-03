@@ -30,7 +30,7 @@ public class RepositoryReader {
 	
 	private JSONObject updateObject;
 	
-	public RepositoryReader(String localPath) throws Exception {
+	public RepositoryReader(RepositoryInfo repositoryInfo, ClientConfig config, String sessionId) throws Exception {
 		
 		// Create the object that we're going to send to the server
 		updateObject = new JSONObject();
@@ -45,9 +45,9 @@ public class RepositoryReader {
         
 		
 		// Open the repository in JGit
-		System.out.println("[Repository] Reading: " + localPath);
+		System.out.println("[Repository] Reading: " + repositoryInfo.localPath);
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
-		builder.setGitDir(new File(localPath + "/.git"));
+		builder.setGitDir(new File(repositoryInfo.localPath + "/.git"));
 		builder.setMustExist(true);
 		builder.readEnvironment(); // scan environment GIT_* variables
 		builder.findGitDir(); // scan up the file system tree
@@ -55,7 +55,7 @@ public class RepositoryReader {
 		
 		// Check, is this an actual git repository?
 		if (repository.getDirectory() == null) {
-			throw new Exception("Not a git repository: " + localPath);
+			throw new Exception("Not a git repository: " + repositoryInfo.localPath);
 		}
         System.out.println("[Repository] Opened in jgit: " + repository.getDirectory());
         

@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="org.json.JSONException"/>
-<fullyQualifiedTypeName name="java.io.FileReader"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.api.Git"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.internal.storage.file.FileRepository"/>
 <fullyQualifiedTypeName name="org.eclipse.jgit.lib.Repository"/>
@@ -22,12 +21,10 @@
 <fullyQualifiedTypeName name="junit.framework.Assert"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.LocalMain"/>
 <fullyQualifiedTypeName name="org.apache.commons.io.FileUtils"/>
-<fullyQualifiedTypeName name="java.io.File"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
 <fullyQualifiedTypeName name="org.json.JSONArray"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.testing.TestGitHelper"/>
-<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="java.util.Arrays"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.Random"/>
@@ -37,5 +34,14 @@
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.ClientMain"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.rtca.helper.JSONHelper"/>
 <fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="jlibdiff.Diff3"/>
+<fullyQualifiedTypeName name="java.io.File"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="java.io.FileReader"/>
+<fullyQualifiedTypeName name="java.util.Vector"/>
+<fullyQualifiedTypeName name="jlibdiff.Hunk3"/>
+<fullyQualifiedTypeName name="jlibdiff.Diff"/>
+<fullyQualifiedTypeName name="jlibdiff.Hunk"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="org.json.JSONObject"/>
 </qualifiedTypeNameHistroy>

@@ -28,12 +28,12 @@ import org.json.JSONObject;
 
 public class RepositoryReader {
 	
-	private JSONObject updateObject;
+	private String jsonString;
 	
-	public RepositoryReader(String localPath) throws Exception {
+	public RepositoryReader(RepositoryInfo repositoryInfo, ClientConfig config, String sessionId) throws Exception {
 		
 		// Create the object that we're going to send to the server
-		updateObject = new JSONObject();
+		JSONObject updateObject = new JSONObject();
 		
 		// Add the file array and commit history to the object
 		JSONArray fileArray = new JSONArray();
@@ -43,11 +43,15 @@ public class RepositoryReader {
         updateObject.put("commitHistory", commitHistory);
         updateObject.put("branches", branches);
         
+        // Store user information
+		updateObject.put("username", config.username);
+		updateObject.put("sessionId", sessionId);
+		updateObject.put("repositoryAlias", repositoryInfo.alias);
 		
 		// Open the repository in JGit
-		System.out.println("[Repository] Reading: " + localPath);
+		System.out.println("[Repository] Reading: " + repositoryInfo.localPath);
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
-		builder.setGitDir(new File(localPath + "/.git"));
+		builder.setGitDir(new File(repositoryInfo.localPath + "/.git"));
 		builder.setMustExist(true);
 		builder.readEnvironment(); // scan environment GIT_* variables
 		builder.findGitDir(); // scan up the file system tree
@@ -55,7 +59,7 @@ public class RepositoryReader {
 		
 		// Check, is this an actual git repository?
 		if (repository.getDirectory() == null) {
-			throw new Exception("Not a git repository: " + localPath);
+			throw new Exception("Not a git repository: " + repositoryInfo.localPath);
 		}
         System.out.println("[Repository] Opened in jgit: " + repository.getDirectory());
         
@@ -228,11 +232,13 @@ public class RepositoryReader {
             
         }
 
-        System.out.println("[Repository] JSON String: " + updateObject.toString());
+        // Create JSON string from object
+        jsonString = updateObject.toString();
+        System.out.println("[Repository] JSON String: " + jsonString);
         
 	}
 	
-	public JSONObject getUpdateObject() {
-		return updateObject;
+	public String getJsonString() {
+		return jsonString;
 	}
 }

@@ -53,15 +53,15 @@ public class ClientMain {
 			
 			// Read repository info
 			RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
-			JSONObject updateObject = repositoryReader.getUpdateObject();
-			
+
 	        // Store user information
 			updateObject.put("username", config.username);
 			updateObject.put("sessionId", sessionId);
 			updateObject.put("repositoryAlias", repositoryInfo.alias);
 			
+			String jsonString = repositoryReader.getJsonString();
+			
 			// Send it to to the server
-			String jsonString = updateObject.toString();
 			httpClient.sendGitState(config.serverUrl, jsonString);
 			
 		}

@@ -1,0 +1,20 @@
+package ch.ethz.fgremper.rtca;
+
+public class OriginUpdater {
+	private String repositoryAlias;
+	private String repositoryUrl;
+	
+	public OriginUpdater(String repositoryAlias, String repositoryUrl) {
+		this.repositoryAlias = repositoryAlias;
+		this.repositoryUrl = repositoryUrl;
+	}
+	
+	public void update() {
+
+		// Read repository info
+		RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo, config, sessionId);
+		String jsonString = repositoryReader.getJsonString();
+		
+		
+	}
+}
