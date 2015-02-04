@@ -1,0 +1,18 @@
+package ch.ethz.fgremper.rtca;
+
+public class OriginUpdaterInterval {
+	public OriginUpdaterInterval() {
+		
+	}
+	
+	public void updateAll() {
+		try {
+			DatabaseConnection db = new DatabaseConnection();
+			db.getRepositories(sessionId);
+			
+		}
+		catch (Exception e) {
+			
+		}
+	}
+}

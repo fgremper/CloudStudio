@@ -1,0 +1,142 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+public class OriginUpdater implements Runnable {
+	private String repositoryAlias;
+	private String repositoryUrl;
+	
+	public OriginUpdater(String repositoryAlias, String repositoryUrl) {
+		this.repositoryAlias = repositoryAlias;
+		this.repositoryUrl = repositoryUrl;
+	}
+	
+	public void update() throws Exception {
+
+		
+		// first clone the repository to local
+		
+		/*
+		// Read repository info
+		RepositoryReader repositoryReader = new RepositoryReader(repositoryUrl);
+		JSONObject updateObject = repositoryReader.getUpdateObject();
+		updateObject.put("username", "origin");
+		updateObject.put("repositoryAlias", repositoryAlias);
+		String jsonString = updateObject.toString();
+		
+		// TODO: outsource the thing that parses the json string on the server and we're done here
+		
+		// TODO: this should all happen in a separate thread!
+		*/
+	}
+
+	public void run() {
+		try {
+
+			cloneOrigin();
+			
+
+			RepositoryReader repositoryReader = new RepositoryReader("origins/" + repositoryAlias);
+			JSONObject updateObject = repositoryReader.getUpdateObject();
+			updateObject.put("username", "origin");
+			updateObject.put("repositoryAlias", repositoryAlias);
+			String inputJsonString = updateObject.toString();
+			
+			System.out.println("HEREWEGO: " + inputJsonString);
+			
+			DatabaseConnection db = new DatabaseConnection();
+			
+			db.addUser("origin", "...");
+			db.addUserToRepository("origin", repositoryAlias);
+			
+			
+			
+
+			JSONObject setLocalGitStateObject = new JSONObject(inputJsonString);
+			JSONArray fileArray = setLocalGitStateObject.getJSONArray("files");
+			JSONArray commitHistory = setLocalGitStateObject.getJSONArray("commitHistory");
+			String repositoryAlias = setLocalGitStateObject.getString("repositoryAlias");
+		
+					String username = "origin";
+			
+				// Start transaction
+				db.startTransaction();
+				
+				// We're replacing all we know about what we know about this users git state, so delete every thing first
+				db.deleteAllFilesFromRepositoryAndUser(repositoryAlias, username);
+
+				// Read information in and store files to database and filesystem
+				for (int i = 0; i < fileArray.length(); i++) {
+					JSONObject fileObject = fileArray.getJSONObject(i);
+
+					String filename = fileObject.getString("filename");
+					String content = fileObject.getString("content");
+					String sha = DigestUtils.sha1Hex(content).toString();
+					String branch = fileObject.getString("branch");
+					String commit = fileObject.getString("commit");
+					String committed = fileObject.getString("committed");
+					
+					System.out.println("[RequestHttpHandler] File: " + filename + " (sha: " + sha + ")");
+
+					FileUtils.writeStringToFile(new File("filestorage/" + sha), content);
+
+					db.storeFile(repositoryAlias, username, filename, sha, branch, commit, committed);
+				}
+
+				// Read in commit history and store it to database
+				for (int i = 0; i < commitHistory.length(); i++) {
+					JSONObject commitObject = commitHistory.getJSONObject(i);
+
+					String commit = commitObject.getString("commit");
+					JSONArray downstreamCommits = commitObject.getJSONArray("downstreamCommits");
+					
+					System.out.println("[UpdateHttpHandler] Commit: " + commit);
+					
+					db.storeCommitHistory(repositoryAlias, username, commit, downstreamCommits);
+				}
+				
+				// Commit
+				db.commitTransaction();
+				
+			
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void cloneOrigin() throws Exception {
+		System.out.println("[TestGitHelper] Clone from origin for user ");
+
+		File userDir = new File("origins/" + repositoryAlias);
+		userDir.mkdir();
+		
+
+			FileUtils.cleanDirectory(userDir); 
+		
+		executeCommand("git clone " + repositoryUrl + " " + "origins/" + repositoryAlias);
+	}
+	
+	public void executeCommand(String consoleInput) throws Exception {
+		System.out.println("[OriginUpdater] Executing: " + consoleInput);
+		Process p = Runtime.getRuntime().exec(consoleInput);
+		p.waitFor();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+		String line;
+		while ((line = reader.readLine()) != null) {
+			System.out.println("[OriginUpdater] Console: " + line);
+		}
+	}
+}

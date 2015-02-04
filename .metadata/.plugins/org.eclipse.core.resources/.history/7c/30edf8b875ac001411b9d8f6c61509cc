@@ -1,0 +1,83 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+
+import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
+
+public class OriginUpdater implements Runnable {
+	private String repositoryAlias;
+	private String repositoryUrl;
+	
+	public OriginUpdater(String repositoryAlias, String repositoryUrl) {
+		this.repositoryAlias = repositoryAlias;
+		this.repositoryUrl = repositoryUrl;
+	}
+	
+	public void update() throws Exception {
+
+		
+		// first clone the repository to local
+		
+		/*
+		// Read repository info
+		RepositoryReader repositoryReader = new RepositoryReader(repositoryUrl);
+		JSONObject updateObject = repositoryReader.getUpdateObject();
+		updateObject.put("username", "origin");
+		updateObject.put("repositoryAlias", repositoryAlias);
+		String jsonString = updateObject.toString();
+		
+		// TODO: outsource the thing that parses the json string on the server and we're done here
+		
+		// TODO: this should all happen in a separate thread!
+		*/
+	}
+
+	public void run() {
+		try {
+
+			cloneOrigin();
+			
+
+			RepositoryReader repositoryReader = new RepositoryReader("origins/" + repositoryAlias);
+			JSONObject updateObject = repositoryReader.getUpdateObject();
+			updateObject.put("username", "origin");
+			updateObject.put("repositoryAlias", repositoryAlias);
+			String jsonString = updateObject.toString();
+			
+			System.out.println("HEREWEGO: " + jsonString);
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void cloneOrigin() throws Exception {
+		System.out.println("[TestGitHelper] Clone from origin for user ");
+
+		File userDir = new File("origins/" + repositoryAlias);
+		userDir.mkdir();
+		
+
+			FileUtils.cleanDirectory(userDir); 
+		
+		executeCommand("git clone " + repositoryUrl + " " + "origins/" + repositoryAlias);
+	}
+	
+	public void executeCommand(String consoleInput) throws Exception {
+		System.out.println("[OriginUpdater] Executing: " + consoleInput);
+		Process p = Runtime.getRuntime().exec(consoleInput);
+		p.waitFor();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+		String line;
+		while ((line = reader.readLine()) != null) {
+			System.out.println("[OriginUpdater] Console: " + line);
+		}
+	}
+}

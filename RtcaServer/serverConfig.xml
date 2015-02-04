@@ -9,4 +9,6 @@
     <dbAcquireIncrement>5</dbAcquireIncrement>
     <dbMaxPoolSize>20</dbMaxPoolSize>
     <dbMaxStatements>180</dbMaxStatements>
+    <fileStorageDirectory>../../filestorage</fileStorageDirectory>
+    <originStorageDirectory>../../origins</originStorageDirectory>
 </config>

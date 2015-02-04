@@ -60,6 +60,16 @@ public class ServerMain {
 		}
 		*/
 		
+		/*
+		OriginUpdater originUpdater = new OriginUpdater("test", "/Users/novocaine/Documents/masterthesis/testsandpit/origin");
+		new Thread(originUpdater).start();
+		*/
+		
+		OriginUpdaterInterval originUpdaterInterval = new OriginUpdaterInterval();
+		originUpdaterInterval.updateAll();
+		
+		/*
+		
 		int port = ServerConfig.getInstance().serverPort;
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
@@ -71,7 +81,7 @@ public class ServerMain {
 		server.start();
 
 		System.out.println("[Main] Server up!");
-		
+		*/
 		
 	}
 

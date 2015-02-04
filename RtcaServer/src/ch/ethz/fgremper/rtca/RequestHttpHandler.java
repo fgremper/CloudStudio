@@ -22,9 +22,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 public class RequestHttpHandler implements HttpHandler {
-
-
-	static final String FILE_STORAGE_PATH = "filestorage/";
 	
 	public void handle(HttpExchange exchange) throws IOException {
 		
@@ -319,57 +316,17 @@ public class RequestHttpHandler implements HttpHandler {
 				// Set local git state request
 				if (uri.getPath().equals(prefix + "/setLocalGitState")) {
 					System.out.println("Incoming SET LOCAL GIT STATE.");
-					
+
 					JSONObject setLocalGitStateObject = new JSONObject(inputJsonString);
-					JSONArray fileArray = setLocalGitStateObject.getJSONArray("files");
-					JSONArray commitHistory = setLocalGitStateObject.getJSONArray("commitHistory");
 					String sessionId = setLocalGitStateObject.getString("sessionId");
 					String repositoryAlias = setLocalGitStateObject.getString("repositoryAlias");
-
+					
 					if (db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
 						String username = db.getUsername(sessionId);
-					
-						// Start transaction
 						db.startTransaction();
-						
-						// We're replacing all we know about what we know about this users git state, so delete every thing first
-						db.deleteAllFilesFromRepositoryAndUser(repositoryAlias, username);
-	
-						// Read information in and store files to database and filesystem
-						for (int i = 0; i < fileArray.length(); i++) {
-							JSONObject fileObject = fileArray.getJSONObject(i);
-	
-							String filename = fileObject.getString("filename");
-							String content = fileObject.getString("content");
-							String sha = DigestUtils.sha1Hex(content).toString();
-							String branch = fileObject.getString("branch");
-							String commit = fileObject.getString("commit");
-							String committed = fileObject.getString("committed");
-							
-							System.out.println("[RequestHttpHandler] File: " + filename + " (sha: " + sha + ")");
-	
-							FileUtils.writeStringToFile(new File(FILE_STORAGE_PATH + sha), content);
-	
-							db.storeFile(repositoryAlias, username, filename, sha, branch, commit, committed);
-						}
-	
-						// Read in commit history and store it to database
-						for (int i = 0; i < commitHistory.length(); i++) {
-							JSONObject commitObject = commitHistory.getJSONObject(i);
-	
-							String commit = commitObject.getString("commit");
-							JSONArray downstreamCommits = commitObject.getJSONArray("downstreamCommits");
-							
-							System.out.println("[UpdateHttpHandler] Commit: " + commit);
-							
-							db.storeCommitHistory(repositoryAlias, username, commit, downstreamCommits);
-						}
-						
-						// Commit
+						db.setEntireUserGitState(inputJsonString, username);
 						db.commitTransaction();
-						
 						response = "{}";
-
 					}
 					
 				}
@@ -382,6 +339,7 @@ public class RequestHttpHandler implements HttpHandler {
 			e.printStackTrace();
 		}
 		
+		// Close database connection
 		try {
 			if (db != null) {
 				db.closeConnection();
@@ -395,8 +353,8 @@ public class RequestHttpHandler implements HttpHandler {
 			exchange.sendResponseHeaders(200, response.length());
 		}
 		else {
-			response = "401 (Bad Request)";
-			exchange.sendResponseHeaders(401, response.length());
+			response = "500 (Error)";
+			exchange.sendResponseHeaders(500, response.length());
 		}
 		System.out.println("[RequestHttpHandler] Sending response: " + response);
 		OutputStream os = exchange.getResponseBody();

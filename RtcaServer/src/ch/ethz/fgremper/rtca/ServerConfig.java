@@ -18,6 +18,9 @@ public class ServerConfig {
 	public int dbMaxStatements;
 	
 	public int serverPort;
+
+	public String fileStorageDirectory;
+	public String originStorageDirectory;
 	
 	public ServerConfig() {
 		try {
@@ -35,6 +38,8 @@ public class ServerConfig {
 
 			serverPort = Integer.parseInt(xmlConfig.getString("serverPort"));
 			
+			fileStorageDirectory = xmlConfig.getString("fileStorageDirectory");
+			originStorageDirectory = xmlConfig.getString("originStorageDirectory");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -48,4 +53,3 @@ public class ServerConfig {
 		return serverConfig;
 	}
 }
-
