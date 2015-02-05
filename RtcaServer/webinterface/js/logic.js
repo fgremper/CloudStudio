@@ -1,4 +1,5 @@
 var activeRepository = undefined;
+var activeBranch = undefined;
 
 var conflictType = "INTER_BRANCH_CONFLICTS"
 
@@ -114,7 +115,7 @@ function renderOverviewView(data) {
     $('#manageUsers').click(loadUsersView);
     $('#createRepository').click(loadCreateRepository);
     $('.repository').click(function () {
-        loadRepositoryView($(this).data('alias'));
+        loadBranchLevelAwarenessView($(this).data('alias'));
     });
     
     $('.addUserToRepository').click(function (e) {
@@ -308,13 +309,13 @@ function renderUsersView(data) {
 
 /* load conflict view */
 
-function loadRepositoryView(repositoryAlias) {
+function loadRepositoryView(repositoryAlias, branch) {
     sendRequest({
         name: 'getRepositoryInformation',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get repository information. Got response: " + JSON.stringify(data));
-            activeRepository = repositoryAlias;
+            activeBranch = branch;
             renderRepositoryView({ repositoryInformation: data, repositoryAlias: repositoryAlias });
         },
         error: function () {
@@ -333,6 +334,29 @@ function renderRepositoryView(data) {
         loadOverviewView();
     });
     $('#submitFilter').click(loadConflictsView);
+}
+
+function loadBranchLevelAwarenessView(repositoryAlias) {
+    sendRequest({
+        name: 'getBranchLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
+        success: function(data) {
+            console.log("Get branch awareness. Got response: " + JSON.stringify(data));
+            activeRepository = repositoryAlias;
+            renderBranchLevelAwarenessView({ branches: data.branches, repositoryAlias: repositoryAlias });
+        },
+        error: function () {
+            console.log("Get file conflicts. Error.");
+        }
+    });
+}
+
+
+function renderBranchLevelAwarenessView(data) {
+    $('body').html(new EJS({url: 'templates/branchawareness.ejs'}).render(data));
+    $('.branch').click(function () {
+        loadRepositoryView(activeRepository, $(this).data('branch'));
+    });
 }
 
 function loadConflictsView() {
@@ -378,16 +402,16 @@ function renderFileView(data) {
 /*
 function addRepository(repositoryAlias, repositoryUrl) {
     $.ajax({
-    	url: "/pull/addRepository",
-    	type: "POST",
-    	contentType: "application/json",
-    	data: {repositoryAlias: repositoryAlias, repositoryUrl: repositoryUrl},
-    	success: function(data) {
-        	console.log("Got response: " + data);
-    	},
-    	error: function () {
-        	console.log("Well, this didn't work! :O");
-    	}
+        url: "/pull/addRepository",
+        type: "POST",
+        contentType: "application/json",
+        data: {repositoryAlias: repositoryAlias, repositoryUrl: repositoryUrl},
+        success: function(data) {
+            console.log("Got response: " + data);
+        },
+        error: function () {
+            console.log("Well, this didn't work! :O");
+        }
     });
 }
 

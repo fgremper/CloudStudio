@@ -10,7 +10,6 @@
 * make sure binary files don't get submitted
 * make sure session expiration works properly
 * find out how to find the best merge-base-file commit
-* make the server fetch origin (either directly by including client features or using "standalone" plugin [make user origin?!])
 * API documentation
 * last fetch (stat -c %Y .git/FETCH_HEAD, http://stackoverflow.com/questions/2993902/how-do-i-check-the-date-and-time-of-the-latest-git-pull-that-was-executed)
 
@@ -27,6 +26,9 @@
 * send depth of parent history (for branch view)
 * get familiar with java diff library
 * explicitly send branch: commitid in {} and active branch and modify timestamp from client for "branch view"
+* make the server fetch origin (either directly by including client features or using "standalone" plugin [make user origin?!])
+* send more branch level information
+* find out where all users in a branch stand in relation to the origin
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
@@ -74,6 +76,8 @@ Branch view
 #### Wednesday
 
 Find merge base for commit
+
+TODO nicely display the branch info
 
 #### Thursday
 

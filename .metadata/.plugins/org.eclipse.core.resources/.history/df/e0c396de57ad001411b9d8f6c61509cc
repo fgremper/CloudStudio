@@ -313,9 +313,11 @@ public class DatabaseConnection {
 			branchObject.getJSONArray("users").put(branchUserObject);
 			branchUserObject.put("username", username);
 			branchUserObject.put("relationWithOrigin", relation);
+			
+			
 		}
 		
-		responseObject.put("branches", branchesArray);
+		
 		
 		return responseObject;
 	}

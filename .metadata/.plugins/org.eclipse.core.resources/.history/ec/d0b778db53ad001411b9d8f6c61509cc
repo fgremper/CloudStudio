@@ -190,8 +190,6 @@ public class DatabaseConnection {
 	public void resetDatabase() throws SQLException {
 		// Remove all columns from all tables
 		PreparedStatement stmt;
-		stmt = con.prepareStatement("DELETE FROM branches");
-		stmt.executeUpdate();
 		stmt = con.prepareStatement("DELETE FROM activebranch");
 		stmt.executeUpdate();
 		stmt = con.prepareStatement("DELETE FROM usersessions");
@@ -211,7 +209,7 @@ public class DatabaseConnection {
 	public JSONObject getBranchLevelAwareness(String repositoryAlias) throws Exception {
 		JSONObject responseObject = new JSONObject();
 		
-		JSONArray branchesArray = new JSONArray();
+		JSONArray branchArray = new JSONArray();
 		
 		PreparedStatement stmt = con.prepareStatement("SELECT main.branch AS branch, main.username AS username, main.commit AS commit, origin.commit AS origincommit FROM\n" + 
 				"\n" + 
@@ -267,21 +265,14 @@ public class DatabaseConnection {
 		
 		ResultSet rs = stmt.executeQuery();
 		
-		HashMap<String, JSONObject> index = new HashMap<String, JSONObject>();
 		while (rs.next()) {
-			String branch = rs.getString("branch");
 			String username = rs.getString("username");
+			String branch = rs.getString("branch");
 			String commit = rs.getString("commit");
 			String origincommit = rs.getString("origincommit");
 			
 			String relation;
-			if (commit == null) {
-				relation = "donthaveit";
-			}
-			else if (origincommit == null) {
-				relation = "origindonthaveit";
-			}
-			else if (commit.equals(origincommit)) {
+			if (commit.equals(origincommit)) {
 				relation = "equal";
 			}
 			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit)) {
@@ -297,25 +288,10 @@ public class DatabaseConnection {
 				relation = "dontseeeachother";
 			}
 			
-			JSONObject branchObject;
-			if (!index.containsKey(branch)) {
-				branchObject = new JSONObject();
-				branchesArray.put(branchObject);
-				index.put(branch, branchObject);
-				branchObject.put("branch", branch);
-				branchObject.put("users", new JSONArray());
-			}
-			else {
-				branchObject = index.get(branch);
-			}
 			
-			JSONObject branchUserObject = new JSONObject();
-			branchObject.getJSONArray("users").put(branchUserObject);
-			branchUserObject.put("username", username);
-			branchUserObject.put("relationWithOrigin", relation);
 		}
 		
-		responseObject.put("branches", branchesArray);
+		
 		
 		return responseObject;
 	}

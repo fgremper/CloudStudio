@@ -305,17 +305,15 @@ public class DatabaseConnection {
 				branchObject.put("branch", branch);
 				branchObject.put("users", new JSONArray());
 			}
-			else {
-				branchObject = index.get(branch);
-			}
 			
 			JSONObject branchUserObject = new JSONObject();
-			branchObject.getJSONArray("users").put(branchUserObject);
-			branchUserObject.put("username", username);
-			branchUserObject.put("relationWithOrigin", relation);
+			branchObject.getJSONArray("users")
+			
+			
+			
 		}
 		
-		responseObject.put("branches", branchesArray);
+		
 		
 		return responseObject;
 	}

@@ -110,19 +110,6 @@ public class RequestHttpHandler implements HttpHandler {
 					}
 				}
 
-				// Get branch level awareness
-				if (uri.getPath().equals(prefix + "/getBranchLevelAwareness")) {
-					System.out.println("Incoming GET BRANCH LEVEL AWARENESS.");
-
-					JSONObject getConflictsObject = new JSONObject(inputJsonString);
-					String sessionId = getConflictsObject.getString("sessionId");
-					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
-					
-					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						response = db.getBranchLevelAwareness(repositoryAlias).toString();
-					}
-				}
-
 				// Get file conflicts requests
 				if (uri.getPath().equals(prefix + "/getConflicts")) {
 					System.out.println("Incoming GET CONFLICTS.");
@@ -136,7 +123,7 @@ public class RequestHttpHandler implements HttpHandler {
 						response = db.getFileLevelAwareness(getConflictsObject, username);
 					}
 				}
-				
+
 				// Get repository information
 				if (uri.getPath().equals(prefix + "/getRepositoryInformation")) {
 					System.out.println("Incoming GET REPOSITORY INFORMATION.");

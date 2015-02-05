@@ -119,6 +119,7 @@ public class RequestHttpHandler implements HttpHandler {
 					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
 					
 					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
+						String username = db.getUsername(sessionId);
 						response = db.getBranchLevelAwareness(repositoryAlias).toString();
 					}
 				}
