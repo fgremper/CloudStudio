@@ -20,7 +20,7 @@ public class ServerMain {
 
 	public static void main(String[] args) throws Exception {
 		
-		// Periodically origin updater
+		// Periodically origin udpater
 		System.out.println("[Main] Starting periodical origin updater");
 		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();

@@ -6,3 +6,6 @@
 1423078214189	Rename local variable 'downstreamCommitInsertStatement'
 1423079505302	Delete element
 1423085781522	Rename method 'deleteAllFilesFromRepositoryAndUser'
+1423092958630	Rename type 'OriginUpdaterInterval'
+1423102417334	Rename method 'getConflicts'
+1423103075937	Rename method 'getFileConflicts'

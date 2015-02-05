@@ -120,7 +120,7 @@ public class RequestHttpHandler implements HttpHandler {
 					
 					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
 						String username = db.getUsername(sessionId);
-						response = db.getFileLevelAwareness(getConflictsObject, username);
+						response = db.getConflicts(getConflictsObject, username);
 					}
 				}
 

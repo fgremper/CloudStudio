@@ -211,60 +211,12 @@ public class DatabaseConnection {
 		
 		JSONArray branchArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT main.branch AS branch, main.username AS username, main.commit AS commit, origin.commit AS origincommit FROM\n" + 
-				"\n" + 
-				"(\n" + 
-				"\n" + 
-				"	SELECT branchxuser.branch AS branch, branchxuser.username AS username, branches.commit AS commit FROM \n" + 
-				"\n" + 
-				"	(\n" + 
-				"		SELECT allbranches.branch AS branch, allusers.username FROM\n" + 
-				"\n" + 
-				"		(\n" + 
-				"			SELECT DISTINCT branch FROM branches\n" + 
-				"			WHERE repositoryalias = ?\n" + 
-				"		) AS allbranches\n" + 
-				"\n" + 
-				"		CROSS JOIN\n" + 
-				"\n" + 
-				"		(\n" + 
-				"			SELECT DISTINCT username FROM useraccess\n" + 
-				"			WHERE repositoryalias = ?\n" + 
-				"			AND username <> \"origin\"\n" + 
-				"		) AS allusers\n" + 
-				"\n" + 
-				"	) AS branchxuser\n" + 
-				"\n" + 
-				"	LEFT OUTER JOIN \n" + 
-				"\n" + 
-				"	(\n" + 
-				"		SELECT branch, username, commit FROM branches\n" + 
-				"		WHERE repositoryalias = ?\n" + 
-				"	) AS branches\n" + 
-				"\n" + 
-				"	ON branchxuser.branch = branches.branch\n" + 
-				"	AND branchxuser.username = branches.username\n" + 
-				"\n" + 
-				") AS main\n" + 
-				"\n" + 
-				"LEFT OUTER JOIN\n" + 
-				"\n" + 
-				"(\n" + 
-				"	SELECT branch, commit FROM branches\n" + 
-				"	WHERE repositoryalias = ?\n" + 
-				"	AND username = \"origin\"\n" + 
-				") AS origin\n" + 
-				"\n" + 
-				"ON origin.branch = main.branch\n" + 
-				"");
+		PreparedStatement stmt = con.prepareStatement("SELECT b1.username, b1.branch, b1.commit AS commit, b2.commit AS origincommit FROM (SELECT username, branch, commit FROM branches WHERE username <> \"origin\" AND repositoryalias = ?) AS b1 CROSS JOIN (SELECT commit FROM branches WHERE username = \"origin\" AND repositoryalias = ?) AS b2 WHERE b1.branch = b2.branch");
 
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryAlias);
-		stmt.setString(3, repositoryAlias);
-		stmt.setString(4, repositoryAlias);
 		
 		ResultSet rs = stmt.executeQuery();
-		
 		while (rs.next()) {
 			String username = rs.getString("username");
 			String branch = rs.getString("branch");
@@ -287,8 +239,6 @@ public class DatabaseConnection {
 			else {
 				relation = "dontseeeachother";
 			}
-			
-			
 		}
 		
 		
