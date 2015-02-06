@@ -14,11 +14,11 @@
     </div>
 </div>
 <div id="view">
-	<table id="users">
+	<table>
 	    <tr class="descriptors"><th>Username</th><th>Administrator</th><th>Can create repositories</th></tr>
 	    <tr class="heading"><td colspan="3">Users (<%= users.length %>)</td></tr>
 		<% for (var i = 0; i < users.length; i++) { %>
-		    <tr class="user static" data-alias="<%= users[i]['username'] %>">
+		    <tr class="static" data-alias="<%= users[i]['username'] %>">
 		        <td><span class="user"><%= users[i]['username'] %> <span class="delete deleteUser" data-username="<%= users[i]['username'] %>">(&#8722;)</span></span></td>
 		        <td>
 		        	<% if (users[i]['isAdmin']) { %>

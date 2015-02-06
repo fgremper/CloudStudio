@@ -9,34 +9,28 @@
     </div>
 </div>
 <div id="view">
-	Branch:
-	<select id="filterBranch">
-	<% for (var i = 0; i < repositoryInformation.repositoryBranches.length; i++) { %>
-		<option value="<%= repositoryInformation.repositoryBranches[i] %>"><%= repositoryInformation.repositoryBranches[i] %></option>
-	<% } %>
-	</select>
-	<br><br>
-	Filter users:
-	<select id="filterUsers" multiple>
-	<% for (var i = 0; i < repositoryInformation.repositoryUsers.length; i++) { %>
-		<option value="<%= repositoryInformation.repositoryUsers[i] %>" selected><%= repositoryInformation.repositoryUsers[i] %></option>
-	<% } %>
-
-	</select>
-	<br><br>
 	View uncommitted:
 	<input type="checkbox" id="filterViewUncommitted">
-	<br><br>
-	Compare additional branches:
-	<select id="filterAdditionalBranches" multiple>
-	<% for (var i = 0; i < repositoryInformation.repositoryBranches.length; i++) { %>
-		<option value="<%= repositoryInformation.repositoryBranches[i] %>"><%= repositoryInformation.repositoryBranches[i] %></option>
-	<% } %>
-	</select>
-	<br><br>
 	<div id="submitFilter"><strong>Go!</strong></div>
 
 	<div id="conflicts">
 
 	</div>
+
+
+	<table>
+	    <tr class="descriptors"><th>Filename</th><th>Users</th></tr>
+	    <tr class="heading"><td colspan="2">Branches (<%= branches.length %>)</td></tr>
+		<% for (var i = 0; i < branches.length; i++) { %>
+		    <tr class="branch clickable" data-branch="<%= branches[i]['branch'] %>">
+		        <td><span class="blue"><%= branches[i]['branch'] %></span></td>
+		        <td>
+		 			<% for (var j = 0; j < branches[i].users.length; j++) { %>
+		 				<span class="user"><%= branches[i].users[j].username %></span> <%= branches[i].users[j].relationWithOrigin %><br>
+		 			<% } %>
+				</td>
+		    </tr>
+		<% } %>
+	</table>
+
 </div>

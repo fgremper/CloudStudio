@@ -19,7 +19,7 @@ $(function () {
 });
 
 
-/* request */
+/* UTILITY FUNCTIONS */
 
 function sendRequest(requestObject) {
     $.ajax({
@@ -43,7 +43,7 @@ function renderLogin() {
             name: 'login',
             data: { username: $('#username').val(), password: $('#password').val() },
             success: function(data) { // request success
-                console.log("Got login response: " + JSON.stringify(data));
+                console.log("Login. Success: " + JSON.stringify(data));
                 login = data;
 
                 if (login.sessionId != undefined) {
@@ -63,7 +63,7 @@ function renderLogin() {
             name: 'createUserAndLogin',
             data: { username: $('#newUsername').val(), password: $('#newPassword').val() },
             success: function(data) { // request success
-                console.log("Got login response: " + JSON.stringify(data));
+                console.log("Login. Success: " + JSON.stringify(data));
                 login = data;
 
                 if (login.sessionId != undefined) {
@@ -99,11 +99,11 @@ function loadOverviewView() {
         name: 'getRepositories',
         data: { sessionId: login.sessionId },
         success: function(data) {
-            console.log("Get repositories. Got response: " + JSON.stringify(data));
+            console.log("Load overview. Success: " + JSON.stringify(data));
             renderOverviewView({ repositories: data, login: login });
         },
         error: function () {
-            alert('Something went wrong when loading repository list.');
+            alert('Error loading list of repositories.');
         }
     });
 }
@@ -125,11 +125,11 @@ function renderOverviewView(data) {
             name: 'addUserToRepository',
             data: { repositoryAlias: $(this).data('repositoryalias'), username: usernameToAdd, sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Add repository. Success: " + JSON.stringify(data));
                 loadOverviewView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to add a user to the repository.');
             }
         });
         e.stopPropagation();
@@ -139,11 +139,11 @@ function renderOverviewView(data) {
             name: 'deleteUserFromRepository',
             data: { repositoryAlias: $(this).data('repositoryalias'), username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Delete user from repository. Success: " + JSON.stringify(data));
                 loadOverviewView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to delete a user from the repository.');
             }
         });
         e.stopPropagation();
@@ -153,11 +153,11 @@ function renderOverviewView(data) {
             name: 'deleteRepository',
             data: { repositoryAlias: $(this).data('repositoryalias'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Delete repository. Success: " + JSON.stringify(data));
                 loadOverviewView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to delete a repository.');
             }
         });
         e.stopPropagation();
@@ -169,11 +169,11 @@ function renderOverviewView(data) {
             name: 'modifyRepositoryOwner',
             data: { repositoryAlias: $(this).data('repositoryalias'), username: newRepositoryOwner, sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Modify repository owner. Success: " + JSON.stringify(data));
                 loadOverviewView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to modify the repository owner.');
             }
         });
         e.stopPropagation();
@@ -197,12 +197,12 @@ function renderCreateRepository(data) {
             name: 'addRepository',
             data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got create repository response: " + JSON.stringify(data));
+                console.log("Create repository. Success: " + JSON.stringify(data));
 
                 loadOverviewView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to create a repository.');
             }
         });
     });
@@ -216,11 +216,11 @@ function loadUsersView() {
         name: 'getUsers',
         data: { sessionId: login.sessionId },
         success: function(data) {
-            console.log("Get repositories. Got response: " + JSON.stringify(data));
+            console.log("Load users. Success: " + JSON.stringify(data));
             renderUsersView({ users: data, login: login });
         },
         error: function () {
-            alert('Something went wrong when loading repository list.');
+            alert('Something went wrong when trying to load the list of users.');
         }
     });
 }
@@ -239,11 +239,11 @@ function renderUsersView(data) {
             name: 'deleteUser',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Delete user. Success: " + JSON.stringify(data));
                 loadUsersView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to delete a user.');
             }
         });
         e.stopPropagation();
@@ -253,11 +253,11 @@ function renderUsersView(data) {
             name: 'makeUserAdmin',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Make user admin. Success: " + JSON.stringify(data));
                 loadUsersView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to make a user admin.');
             }
         });
         e.stopPropagation();
@@ -267,11 +267,11 @@ function renderUsersView(data) {
             name: 'revokeUserAdmin',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Revoke user admin. Success: " + JSON.stringify(data));
                 loadUsersView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to revoke a users admin privileges.');
             }
         });
         e.stopPropagation();
@@ -281,11 +281,11 @@ function renderUsersView(data) {
             name: 'makeUserCreator',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Make user creator. Success: " + JSON.stringify(data));
                 loadUsersView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to give a user repository creator privileges.');
             }
         });
         e.stopPropagation();
@@ -295,11 +295,11 @@ function renderUsersView(data) {
             name: 'revokeUserCreator',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Got add user to repository response: " + JSON.stringify(data));
+                console.log("Revoke user creator. Success: " + JSON.stringify(data));
                 loadUsersView();
             },
             error: function () {
-                alert('Something went wrong when logging in.');
+                alert('Something went wrong when trying to remove a users creator privileges.');
             }
         });
         e.stopPropagation();
@@ -313,12 +313,12 @@ function loadBranchLevelAwarenessView(repositoryAlias) {
         name: 'getBranchLevelAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
-            console.log("Get branch awareness. Got response: " + JSON.stringify(data));
+            console.log("Get branch awareness. Success: " + JSON.stringify(data));
             activeRepository = repositoryAlias;
             renderBranchLevelAwarenessView({ branches: data.branches, repositoryAlias: repositoryAlias });
         },
         error: function () {
-            console.log("Get file conflicts. Error.");
+            alert('Something went wrong when trying to load branch level awareness data.');
         }
     });
 }
@@ -339,15 +339,15 @@ function renderBranchLevelAwarenessView(data) {
 
 function loadFileLevelAwarenessView(repositoryAlias, branch) {
     sendRequest({
-        name: 'getRepositoryInformation',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
+        name: 'getFileLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch },
         success: function(data) {
-            console.log("Get repository information. Got response: " + JSON.stringify(data));
+            console.log("Get file awareness. Success: " + JSON.stringify(data));
             activeBranch = branch;
-            renderFileLevelAwarenessView({ repositoryInformation: data, repositoryAlias: repositoryAlias, branch: branch });
+            renderFileLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch });
         },
         error: function () {
-            console.log("Get file conflicts. Error.");
+            alert('Something went wrong when trying to load file level awareness data.');
         }
     });
 
@@ -355,7 +355,7 @@ function loadFileLevelAwarenessView(repositoryAlias, branch) {
 
 function renderFileLevelAwarenessView(data) {
     $('body').html(new EJS({url: 'templates/fileawareness.ejs'}).render(data));
-    $('.fileConflict').click(function () {
+    $('.file').click(function () {
         loadFileView($(this).data('filename'));
     });
     $('.repositoryViewButton').click(function () {
@@ -365,9 +365,38 @@ function renderFileLevelAwarenessView(data) {
         loadBranchLevelAwarenessView(activeRepository);
     });
     $('#submitFilter').click(loadConflictsView);
+    $('.file').click(function () {
+        loadLineLevelAwareness(activeRepository, activeBranch, $(this).data('filename'), undefined);
+    });
+    $('.fileAndUser').click(function () {
+        loadLineLevelAwareness(activeRepository, activeBranch, $(this).parent().data('filename'), $(this).data('username'));
+    });
 }
 
 
+/* LEVEL 3: LOAD LINE LEVEL AWARENESS */
+
+function loadLineLevelAwareness(repositoryAlias, branch, filename, username) {
+
+    sendRequest({
+        name: 'getLineLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch },
+        success: function(data) {
+            console.log("Get file awareness. Success: " + JSON.stringify(data));
+            activeBranch = branch;
+            renderLineLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch });
+        },
+        error: function () {
+            alert('Something went wrong when trying to load line level awareness data.');
+        }
+    });
+}
+
+function renderLineLevelAwarenessView(data) {
+    
+}
+
+/*
 function loadConflictsView() {
     sendRequest({
         name: 'getConflicts',
@@ -386,10 +415,11 @@ function loadConflictsView() {
 function renderConflictsView(data) {
     $('#conflicts').html(new EJS({url: 'templates/conflicts.ejs'}).render(data));
 }
-
+*/
 
 /* load file view */
 
+/*
 function loadFileView(filename) {
     //renderFileView({ filename: filename, repositoryAlias: activeRepository });
 }
@@ -404,7 +434,8 @@ function renderFileView(data) {
         loadConflictsView(activeRepository);
     });
     */
-}
+//}
+
 
 /* add repository */
 

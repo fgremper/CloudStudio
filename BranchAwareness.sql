@@ -1,31 +1,46 @@
-ALL BRANCHES X ALL USERS and now left join the results
-
-
-
-
-SELECT branchxuser.branch, branchxuser.username, branch.commit FROM 
+SELECT main.branch AS branch, main.username AS username, main.commit AS commit, origin.commit AS origincommit FROM
 
 (
-	SELECT allbranches.branch AS branch, allusers.username FROM
+
+	SELECT branchxuser.branch AS branch, branchxuser.username AS username, branches.commit AS commit FROM 
 
 	(
-		SELECT DISTINCT branch FROM branches
-		WHERE repositoryalias = 'test'
-	) AS allbranches
+		SELECT allbranches.branch AS branch, allusers.username FROM
 
-	CROSS JOIN
+		(
+			SELECT DISTINCT branch FROM branches
+			WHERE repositoryalias = 'test'
+		) AS allbranches
+
+		CROSS JOIN
+
+		(
+			SELECT DISTINCT username FROM useraccess
+			WHERE repositoryalias = 'test'
+			AND username <> "origin"
+		) AS allusers
+
+	) AS branchxuser
+
+	LEFT OUTER JOIN 
 
 	(
-		SELECT DISTINCT username FROM useraccess
+		SELECT branch, username, commit FROM branches
 		WHERE repositoryalias = 'test'
-	) AS allusers
-	
-) AS branchxuser
+	) AS branches
 
-LEFT OUTER JOIN 
+	ON branchxuser.branch = branches.branch
+	AND branchxuser.username = branches.username
 
-(SELECT branch, username FROM branches
-WHERE repositoryalias = 'test') AS branch
+) AS main
 
-ON branchxuser.branch = branches.branch
-AND branchxuser.username = branches.username
+LEFT OUTER JOIN
+
+(
+	SELECT branch, commit FROM branches
+	WHERE repositoryalias = 'test'
+	AND username = "origin"
+) AS origin
+
+ON origin.branch = main.branch
+
