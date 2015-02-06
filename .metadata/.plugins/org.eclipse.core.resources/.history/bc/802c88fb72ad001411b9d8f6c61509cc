@@ -276,25 +276,25 @@ public class DatabaseConnection {
 			
 			String relation;
 			if (commit == null) {
-				relation = "doesn't have this branch";
+				relation = "donthaveit";
 			}
 			else if (origincommit == null) {
-				relation = "has this as a local branch";
+				relation = "origindonthaveit";
 			}
 			else if (commit.equals(origincommit)) {
-				relation = "is equal to origin";
+				relation = "equal";
 			}
 			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit)) {
-				relation = "is directly behind origin";
+				relation = "behindOrigin";
 			}
 			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit)) {
-				relation ="is directly in front of origin";
+				relation ="inFrontOfOrigin";
 			}
 			else if (distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit) != null) {
-				relation = "is " + distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit) + " steps away";
+				relation = "distance:" + distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit);
 			}
 			else {
-				relation = "don't see each other";
+				relation = "dontseeeachother";
 			}
 			
 			JSONObject branchObject;
@@ -349,23 +349,7 @@ public class DatabaseConnection {
 		}
 	}
 	
-
-	public String getFileSha(String repositoryAlias, String username, String branch, String filename) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT sha FROM files WHERE repositoryalias = ? AND username = ? AND branch = ? AND filename = ?");
-
-		stmt.setString(1, repositoryAlias);
-		stmt.setString(2, username);
-		stmt.setString(3, branch);
-		stmt.setString(4, filename);
-
-		ResultSet rs = stmt.executeQuery();
-		if (rs.next()) {
-			return rs.getString("sha");
-		}
-		else {
-			return null;
-		}
-	}
+	
 
 	public String getFileLevelAwareness(JSONObject getConflictsObject, String username) throws Exception {
 		String repositoryAlias = getConflictsObject.getString("repositoryAlias");

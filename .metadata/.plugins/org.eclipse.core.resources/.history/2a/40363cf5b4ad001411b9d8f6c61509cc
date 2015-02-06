@@ -136,16 +136,10 @@ public class RequestHttpHandler implements HttpHandler {
 					String filename = getFileLevelAwareness.getString("filename");
 					
 					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						String mySha = db.getFileSha(repositoryAlias, myUsername, branch, filename);
-						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename);
+						String mySha = db.getFileSha(repositoryAlias, username, branch, filename);
+						String originSha = db.getFileSha(repositoryAlias, "origin", branch, filename);
 						
 						// TODO: check they are not null and stuff
-
-						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
-						File myFile = new File(fileStorageDirectory + "/" + mySha);
-						File theirFile = new File(fileStorageDirectory + "/" + theirSha);
-						
-						// TODO: do a diff! :D
 						
 					}
 				}

@@ -140,13 +140,7 @@ public class RequestHttpHandler implements HttpHandler {
 						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename);
 						
 						// TODO: check they are not null and stuff
-
-						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
-						File myFile = new File(fileStorageDirectory + "/" + mySha);
-						File theirFile = new File(fileStorageDirectory + "/" + theirSha);
-						
 						// TODO: do a diff! :D
-						
 					}
 				}
 

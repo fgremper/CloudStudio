@@ -5,9 +5,10 @@
 #### TODO
 
 * user mgmt.: change password
+* mgmt: change repository url
 * line conflict (gonna be a lot of subtasks) (edit: started adding subtasks below)
-* think about file rename heuristics
-* make sure binary files don't get submitted
+* think about file rename heuristics?
+* binary files don't get submitted?
 * make sure session expiration works properly
 * find out how to find the best merge-base-file commit
 * API documentation
@@ -68,21 +69,21 @@ Will do tomrrow: Distribute tasks until presentation over work days and start wo
 
 Did today: Distance to parent commits, explicit branch info, play around with diff algorithms.
 
-#### Tueday:
+#### Tueday
 
-Fetch the origin
-Branch view
+Did today: Automated fetching of origin, work on branch view.
 
 #### Wednesday
 
-Find merge base for commit
-
-TODO nicely display the branch info
+Did today: Work on branch view.
 
 #### Thursday
 
-View diff between files
+Did today: Begin work on line awareness view, diff between files/lines.
 
 #### Friday
 
-Diff3
+File line view.
+
+
+* fix server/db instability over time issues

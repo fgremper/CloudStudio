@@ -351,20 +351,16 @@ public class DatabaseConnection {
 	
 
 	public String getFileSha(String repositoryAlias, String username, String branch, String filename) throws Exception {
+		JSONObject responseObject = new JSONObject();
+		
 		PreparedStatement stmt = con.prepareStatement("SELECT sha FROM files WHERE repositoryalias = ? AND username = ? AND branch = ? AND filename = ?");
 
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);
 		stmt.setString(3, branch);
 		stmt.setString(4, filename);
-
-		ResultSet rs = stmt.executeQuery();
-		if (rs.next()) {
-			return rs.getString("sha");
-		}
-		else {
-			return null;
-		}
+		
+		return responseObject;
 	}
 
 	public String getFileLevelAwareness(JSONObject getConflictsObject, String username) throws Exception {

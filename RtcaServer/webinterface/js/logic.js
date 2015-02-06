@@ -34,7 +34,7 @@ function sendRequest(requestObject) {
 }
 
 
-/* load login view */
+/* LOGIN */
 
 function renderLogin() {
     $('body').html(new EJS({url: 'templates/login.ejs'}).render());
@@ -92,7 +92,7 @@ function renderLogin() {
 }
 
 
-/* load repository view */
+/* OVERVIEW: LIST OF ALL REPOSITORIES */
 
 function loadOverviewView() {
     sendRequest({
@@ -181,7 +181,7 @@ function renderOverviewView(data) {
 }
 
 
-/* create repository view */
+/* CREATE REPOSITORY VIEW */
 
 function loadCreateRepository() {
     renderCreateRepository({ login: login });
@@ -209,7 +209,7 @@ function renderCreateRepository(data) {
 }
 
 
-/* load users view */
+/* USER MANAGEMENT VIEW */
 
 function loadUsersView() {
     sendRequest({
@@ -306,35 +306,7 @@ function renderUsersView(data) {
     });
 }
 
-
-/* load conflict view */
-
-function loadRepositoryView(repositoryAlias, branch) {
-    sendRequest({
-        name: 'getRepositoryInformation',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
-        success: function(data) {
-            console.log("Get repository information. Got response: " + JSON.stringify(data));
-            activeBranch = branch;
-            renderRepositoryView({ repositoryInformation: data, repositoryAlias: repositoryAlias });
-        },
-        error: function () {
-            console.log("Get file conflicts. Error.");
-        }
-    });
-
-}
-
-function renderRepositoryView(data) {
-    $('body').html(new EJS({url: 'templates/repository.ejs'}).render(data));
-    $('.fileConflict').click(function () {
-        loadFileView($(this).data('filename'));
-    });
-    $('.repositoryViewButton').click(function () {
-        loadOverviewView();
-    });
-    $('#submitFilter').click(loadConflictsView);
-}
+/* LEVEL 1: BRANCH AWARENESS */
 
 function loadBranchLevelAwarenessView(repositoryAlias) {
     sendRequest({
@@ -355,9 +327,46 @@ function loadBranchLevelAwarenessView(repositoryAlias) {
 function renderBranchLevelAwarenessView(data) {
     $('body').html(new EJS({url: 'templates/branchawareness.ejs'}).render(data));
     $('.branch').click(function () {
-        loadRepositoryView(activeRepository, $(this).data('branch'));
+        loadFileLevelAwarenessView(activeRepository, $(this).data('branch'));
+    });
+    $('.repositoryViewButton').click(function () {
+        loadOverviewView();
     });
 }
+
+
+/* LEVEL 2: FILE AWARENESS */
+
+function loadFileLevelAwarenessView(repositoryAlias, branch) {
+    sendRequest({
+        name: 'getRepositoryInformation',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
+        success: function(data) {
+            console.log("Get repository information. Got response: " + JSON.stringify(data));
+            activeBranch = branch;
+            renderFileLevelAwarenessView({ repositoryInformation: data, repositoryAlias: repositoryAlias, branch: branch });
+        },
+        error: function () {
+            console.log("Get file conflicts. Error.");
+        }
+    });
+
+}
+
+function renderFileLevelAwarenessView(data) {
+    $('body').html(new EJS({url: 'templates/fileawareness.ejs'}).render(data));
+    $('.fileConflict').click(function () {
+        loadFileView($(this).data('filename'));
+    });
+    $('.repositoryViewButton').click(function () {
+        loadOverviewView();
+    });
+    $('.branchViewButton').click(function () {
+        loadBranchLevelAwarenessView(activeRepository);
+    });
+    $('#submitFilter').click(loadConflictsView);
+}
+
 
 function loadConflictsView() {
     sendRequest({

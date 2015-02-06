@@ -127,26 +127,12 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/getFileLevelAwareness")) {
 					System.out.println("Incoming GET BRANCH LEVEL AWARENESS.");
 
-					JSONObject getFileLevelAwareness = new JSONObject(inputJsonString);
-					String sessionId = getFileLevelAwareness.getString("sessionId");
-					String repositoryAlias = getFileLevelAwareness.getString("repositoryAlias");
-					String theirUsername = getFileLevelAwareness.getString("username");
-					String myUsername = db.getUsername(sessionId);
-					String branch = getFileLevelAwareness.getString("branch");
-					String filename = getFileLevelAwareness.getString("filename");
+					JSONObject getConflictsObject = new JSONObject(inputJsonString);
+					String sessionId = getConflictsObject.getString("sessionId");
+					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
 					
 					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						String mySha = db.getFileSha(repositoryAlias, myUsername, branch, filename);
-						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename);
-						
-						// TODO: check they are not null and stuff
-
-						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
-						File myFile = new File(fileStorageDirectory + "/" + mySha);
-						File theirFile = new File(fileStorageDirectory + "/" + theirSha);
-						
-						// TODO: do a diff! :D
-						
+						response = db.getBranchLevelAwareness(repositoryAlias).toString();
 					}
 				}
 
