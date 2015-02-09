@@ -9,4 +9,5 @@
             <localPath>/Users/novocaine/Documents/masterthesis/testsandpit/david</localPath>
         </repository>
     </repositories>
+    <resubmitInterval>0</resubmitInterval> <!-- in seconds; if 0 it only submits once -->
 </config>

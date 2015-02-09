@@ -21,6 +21,8 @@ public class ServerConfig {
 
 	public String fileStorageDirectory;
 	public String originStorageDirectory;
+
+	public String passwordSalt;
 	
 	public ServerConfig() {
 		try {
@@ -40,6 +42,8 @@ public class ServerConfig {
 			
 			fileStorageDirectory = xmlConfig.getString("fileStorageDirectory");
 			originStorageDirectory = xmlConfig.getString("originStorageDirectory");
+
+			passwordSalt = xmlConfig.getString("passwordSalt");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

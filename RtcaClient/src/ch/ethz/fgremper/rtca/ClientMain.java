@@ -48,22 +48,39 @@ public class ClientMain {
 		String sessionId = httpClient.login(config.serverUrl, config.username, config.password);
 		System.out.println("[Main] sessionId: " + sessionId);
 		
-		// For all repositories we're going to read the local data and send some of it to the server
-		for (RepositoryInfo repositoryInfo : config.repositoriesList) {	
+		// Keep updating the RTCA server
+		while (true) {
+
+			// For all repositories we're going to read the local data and send some of it to the server
+			for (RepositoryInfo repositoryInfo : config.repositoriesList) {	
+				
+				// Read repository info
+				RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
+				JSONObject updateObject = repositoryReader.getUpdateObject();
+				
+		        // Store user information
+				updateObject.put("sessionId", sessionId);
+				updateObject.put("repositoryAlias", repositoryInfo.alias);
+				
+				// Send it to to the server
+				String jsonString = updateObject.toString();
+				httpClient.sendGitState(config.serverUrl, jsonString);
+				
+			}
 			
-			// Read repository info
-			RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
-			JSONObject updateObject = repositoryReader.getUpdateObject();
-			
-	        // Store user information
-			updateObject.put("sessionId", sessionId);
-			updateObject.put("repositoryAlias", repositoryInfo.alias);
-			
-			// Send it to to the server
-			String jsonString = updateObject.toString();
-			httpClient.sendGitState(config.serverUrl, jsonString);
-			
+			// If interval is 0, we only submit once, otherwise wait and repeat periodically
+			if (config.resubmitInterval == 0) {
+				break;
+			}
+			else {
+				try {
+				    Thread.sleep(config.resubmitInterval * 1000);
+				} catch (InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+			}
 		}
+		
 		
 	}
 

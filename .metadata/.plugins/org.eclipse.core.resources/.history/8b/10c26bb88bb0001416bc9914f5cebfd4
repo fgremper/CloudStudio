@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <username>isabelle</username>
+    <password>isabellepw</password>
+    <serverUrl>http://127.0.0.1:7330</serverUrl> <!-- don't put a dash at the end -->
+    <repositories>
+        <repository>
+            <alias>test</alias>
+            <localPath>/Users/novocaine/Documents/masterthesis/testsandpit/isabelle</localPath>
+        </repository>
+    </repositories>
+    <resubmitInterval>20</resubmitInterval> <!-- in seconds; if 0 it only submits once -->
+</config>

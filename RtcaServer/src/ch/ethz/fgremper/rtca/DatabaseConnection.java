@@ -22,8 +22,6 @@ import ch.ethz.fgremper.rtca.helper.JSONHelper;
 
 public class DatabaseConnection {
 
-	static final String salt = "heyoiamthesaltwhatisupwithyou";
-	
 	Connection con = null;
 
 	public DatabaseConnection() throws Exception {
@@ -205,7 +203,10 @@ public class DatabaseConnection {
 		stmt = con.prepareStatement("DELETE FROM repositories");
 		stmt.executeUpdate();
 		stmt = con.prepareStatement("DELETE FROM users");
-		stmt.executeUpdate();	
+		stmt.executeUpdate();
+		// Add origin user
+		stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator) VALUES ('origin', 'origin', 'false', 'false')");
+		stmt.executeUpdate();
 	}
 	
 	public JSONObject getBranchLevelAwareness(String repositoryAlias) throws Exception {
@@ -333,7 +334,7 @@ public class DatabaseConnection {
 	
 
 	public Integer distanceForCommitsToSeeEachOther(String repositoryAlias, String commit1, String commit2) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT MIN(distance) AS mindistance FROM branch AS b1 CROSS JOIN branch AS b2 WHERE b1.branch = ? AND b2.branch = ? AND b1.downstreamcommit = b2.downstreamcommit AND b1.repositoryalias = ? AND b2.repositoryalias = ?");
+		PreparedStatement stmt = con.prepareStatement("SELECT MIN(b1.distance + b2.distance) AS mindistance FROM commithistory AS b1 CROSS JOIN commithistory AS b2 WHERE b1.commit = ? AND b2.commit = ? AND b1.downstreamcommit = b2.downstreamcommit AND b1.repositoryalias = ? AND b2.repositoryalias = ?");
 
 		stmt.setString(1, commit2);
 		stmt.setString(2, commit1);
@@ -692,7 +693,7 @@ public class DatabaseConnection {
 	
 	public void addUser(String username, String password) throws SQLException {
 		// Hash the password
-		String passwordHash = DigestUtils.sha1Hex(salt + password).toString();
+		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();
 
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator) VALUES (?, ?, 'false', 'false')");
 		stmt.setString(1, username);
@@ -752,7 +753,7 @@ public class DatabaseConnection {
 	}
 		
 	public String getNewSessionIdForCorrectLogin(String username, String password) throws SQLException {
-		String passwordHash = DigestUtils.sha1Hex(salt + password).toString();
+		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();
 
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? AND passwordhash = ?");		
 		stmt.setString(1, username);

@@ -29,6 +29,12 @@ public class ClientConfigReader {
 		if (serverUrl == null || serverUrl.equals("")) throw new Exception("No serverUrl in config");
 		config.serverUrl = serverUrl;
 		System.out.println("[Config] serverUrl: " + serverUrl);
+
+		// Raad server URL
+		String resubmitInterval = xmlConfig.getString("resubmitInterval");
+		if (resubmitInterval == null || resubmitInterval.equals("")) throw new Exception("No resubmitInterval in config");
+		config.resubmitInterval = Integer.parseInt(resubmitInterval);
+		System.out.println("[Config] resubmitInterval: " + resubmitInterval);
 		
 		// Read repository and their alias and local path
 		boolean atLeastOneRepository = false;
