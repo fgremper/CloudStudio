@@ -1,0 +1,20 @@
+package ch.ethz.fgremper.rtca;
+
+import org.apache.commons.configuration.XMLConfiguration;
+
+public class SqlQueryReader {
+	private static SqlQueryReader sqlQueryReader;
+	private HashMap<String, String> map = new HashMap<String, String>();
+	
+	public SqlQueryReader() {
+
+	}
+	
+	public static SqlQueryReader getInstance() {
+		if (sqlQueryReader == null) {
+			sqlQueryReader = new SqlQueryReader();
+		}
+		return sqlQueryReader;
+	}
+
+}

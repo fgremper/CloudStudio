@@ -1,6 +1,9 @@
 var activeRepository = undefined;
 var activeBranch = undefined;
 
+
+var showUncommitted = false;
+
 var conflictType = "INTER_BRANCH_CONFLICTS"
 
 var conflictType;
@@ -326,11 +329,16 @@ function loadBranchLevelAwarenessView(repositoryAlias) {
 
 function renderBranchLevelAwarenessView(data) {
     $('body').html(new EJS({url: 'templates/branchawareness.ejs'}).render(data));
+    $('#logo').click(loadOverviewView);
     $('.branch').click(function () {
+        showUncommitted = false;
         loadFileLevelAwarenessView(activeRepository, $(this).data('branch'));
     });
     $('.repositoryViewButton').click(function () {
         loadOverviewView();
+    });
+    $('#refresh').click(function () {
+        loadBranchLevelAwarenessView(activeRepository);
     });
 }
 
@@ -340,11 +348,11 @@ function renderBranchLevelAwarenessView(data) {
 function loadFileLevelAwarenessView(repositoryAlias, branch) {
     sendRequest({
         name: 'getFileLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch },
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted },
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
             activeBranch = branch;
-            renderFileLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch });
+            renderFileLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted });
         },
         error: function () {
             alert('Something went wrong when trying to load file level awareness data.');
@@ -355,36 +363,49 @@ function loadFileLevelAwarenessView(repositoryAlias, branch) {
 
 function renderFileLevelAwarenessView(data) {
     $('body').html(new EJS({url: 'templates/fileawareness.ejs'}).render(data));
-    $('.file').click(function () {
-        loadFileView($(this).data('filename'));
-    });
+
+
+    $('#logo').click(loadOverviewView);
     $('.repositoryViewButton').click(function () {
         loadOverviewView();
     });
     $('.branchViewButton').click(function () {
         loadBranchLevelAwarenessView(activeRepository);
     });
+    $('#submitFilter').click(function () {
+        showUncommitted = $('#filterShowUncommitted').prop('checked');
+        loadFileLevelAwarenessView(activeRepository, activeBranch);
+    });
+    $('#refresh').click(function () {
+        loadFileLevelAwarenessView(activeRepository, activeBranch);
+    });
+
+    $('.fileAndUser').click(function () {
+        loadContentLevelAwareness(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'));
+    });
+
+    /*
+    $('.file').click(function () {
+        loadFileView($(this).data('filename'));
+    });
     $('#submitFilter').click(loadConflictsView);
     $('.file').click(function () {
         loadLineLevelAwareness(activeRepository, activeBranch, $(this).data('filename'), undefined);
     });
-    $('.fileAndUser').click(function () {
-        loadLineLevelAwareness(activeRepository, activeBranch, $(this).parent().data('filename'), $(this).data('username'));
-    });
+    */
 }
 
 
-/* LEVEL 3: LOAD LINE LEVEL AWARENESS */
+/* LEVEL 3: LOAD CONTENT LEVEL AWARENESS */
 
-function loadLineLevelAwareness(repositoryAlias, branch, filename, username) {
-
+function loadContentLevelAwareness(repositoryAlias, branch, filename, username) {
+console.log({ sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username });
     sendRequest({
-        name: 'getLineLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch },
+        name: 'getContentLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username },
         success: function(data) {
-            console.log("Get file awareness. Success: " + JSON.stringify(data));
-            activeBranch = branch;
-            renderLineLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch });
+            console.log("Get content awareness. Success: " + JSON.stringify(data));
+            // renderLineLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch });
         },
         error: function () {
             alert('Something went wrong when trying to load line level awareness data.');

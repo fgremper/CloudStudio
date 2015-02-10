@@ -1,32 +1,34 @@
 <div id="header">
 	<div id="headerText">
-		RTCA Web Interface
+		<div id="login">
+			Logged in as: <strong><%= login.username %></strong>
+			<% if (login.isAdmin) { %>(Administrator) &nbsp;|&nbsp; <span id="manageUsers">Manage users</span><% } %>
+		</div>
+		<span id="logo">RTCA Web Interface</span>
 	</div>
 </div>
 <div id="title">
     <div id="titleText">
+    	<span id="refresh">&#8635;</span>
     	<span class="repositoryViewButton clickable">Repositories</span> / <span class="branchViewButton clickable"><%= repositoryAlias %></span> / <strong><%= branch %></strong>
     </div>
 </div>
 <div id="view">
 	View uncommitted:
-	<input type="checkbox" id="filterViewUncommitted">
+	<input type="checkbox" id="filterShowUncommitted"<% if (showUncommitted) { %> checked <% } %>>
 	<div id="submitFilter"><strong>Go!</strong></div>
 
-	<div id="conflicts">
-
-	</div>
-
+	<br>
 
 	<table>
 	    <tr class="descriptors"><th>Filename</th><th>Users</th></tr>
-	    <tr class="heading"><td colspan="2">Branches (<%= branches.length %>)</td></tr>
-		<% for (var i = 0; i < branches.length; i++) { %>
-		    <tr class="branch clickable" data-branch="<%= branches[i]['branch'] %>">
-		        <td><span class="blue"><%= branches[i]['branch'] %></span></td>
+	    <tr class="heading"><td colspan="2">Files (<%= files.length %>)</td></tr>
+		<% for (var i = 0; i < files.length; i++) { %>
+		    <tr class="static">
+		        <td><span class="blue"><%= files[i]['filename'] %></span></td>
 		        <td>
-		 			<% for (var j = 0; j < branches[i].users.length; j++) { %>
-		 				<span class="user"><%= branches[i].users[j].username %></span> <%= branches[i].users[j].relationWithOrigin %><br>
+		 			<% for (var j = 0; j < files[i].users.length; j++) { %>
+		 				<span class="fileAndUser user" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].username %></span> <%= files[i].users[j].type %><br>
 		 			<% } %>
 				</td>
 		    </tr>

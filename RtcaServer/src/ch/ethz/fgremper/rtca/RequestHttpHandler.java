@@ -123,9 +123,9 @@ public class RequestHttpHandler implements HttpHandler {
 					}
 				}
 
-				// Get branch level awareness
-				if (uri.getPath().equals(prefix + "/getFileLevelAwareness")) {
-					System.out.println("Incoming GET BRANCH LEVEL AWARENESS.");
+				// Get content level awareness
+				if (uri.getPath().equals(prefix + "/getContentLevelAwareness")) {
+					System.out.println("Incoming GET CONTENT LEVEL AWARENESS.");
 
 					JSONObject getFileLevelAwareness = new JSONObject(inputJsonString);
 					String sessionId = getFileLevelAwareness.getString("sessionId");
@@ -142,17 +142,32 @@ public class RequestHttpHandler implements HttpHandler {
 						// TODO: check they are not null and stuff
 
 						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
-						File myFile = new File(fileStorageDirectory + "/" + mySha);
-						File theirFile = new File(fileStorageDirectory + "/" + theirSha);
+
+						JSONObject responseObject = new JSONObject();
+						
+						if (mySha != null) {
+							File myFile = new File(fileStorageDirectory + "/" + mySha);
+							responseObject.put("mine", FileUtils.readFileToString(myFile, "UTF-8"));
+						}
+
+						if (theirSha != null) {
+							File theirFile = new File(fileStorageDirectory + "/" + theirSha);
+							responseObject.put("theirs", FileUtils.readFileToString(theirFile, "UTF-8"));
+						}
+						
 						
 						// TODO: do a diff! :D
+						
+						
+						
+						response = responseObject.toString();
 						
 					}
 				}
 
-				// Get file conflicts requests
-				if (uri.getPath().equals(prefix + "/getConflicts")) {
-					System.out.println("Incoming GET CONFLICTS.");
+				// Get file awareness requests
+				if (uri.getPath().equals(prefix + "/getFileLevelAwareness")) {
+					System.out.println("Incoming GET FILE LEVEL CONFLICTS.");
 
 					JSONObject getConflictsObject = new JSONObject(inputJsonString);
 					String sessionId = getConflictsObject.getString("sessionId");

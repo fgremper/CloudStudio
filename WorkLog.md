@@ -13,6 +13,8 @@
 * find out how to find the best merge-base-file commit
 * API documentation
 * last fetch (stat -c %Y .git/FETCH_HEAD, http://stackoverflow.com/questions/2993902/how-do-i-check-the-date-and-time-of-the-latest-git-pull-that-was-executed)
+* see if the instability thing over long runtime still exists since changes to the db connection pool etc.
+* comment the code more
 
 #### Done
 
@@ -69,21 +71,41 @@ Will do tomrrow: Distribute tasks until presentation over work days and start wo
 
 Did today: Distance to parent commits, explicit branch info, play around with diff algorithms.
 
-#### Tueday
+#### Tuesday 03.02.2015
 
 Did today: Automated fetching of origin, work on branch view.
 
-#### Wednesday
+#### Wednesday 04.02.2015
 
 Did today: Work on branch view.
 
-#### Thursday
+#### Thursday 05.02.2015
 
 Did today: Begin work on line awareness view, diff between files/lines.
 
+#### Friday 06.02.2015
+
+Did today: Work on file line view.
+
+#### Monday 09.02.2015
+
+Did today: Make sure everthing works in branch/file view.
+
+#### Tuesday
+
+Clean up / document / comment
+
+#### Wednesday
+
+Clean up / document / comment, nice GUI
+
+#### Thursday
+
+Get an Eiffel project. Start working on a workflow for the demo.
+
 #### Friday
 
-File line view.
+Test for presentation and write presentation
 
 
-* fix server/db instability over time issues
+
