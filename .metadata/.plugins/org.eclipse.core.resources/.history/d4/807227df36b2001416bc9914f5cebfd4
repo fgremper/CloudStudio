@@ -19,6 +19,7 @@ public class TestThreeUsersInitialize {
 		db.startTransaction();
 		db.resetDatabase();
 		db.addUser("admin", "1234");
+		db.addUser("origin", "origin");
 		db.makeUserAdmin("admin");
 		db.addUser("john", "johnpw");
 		db.addUser("david", "davidpw");

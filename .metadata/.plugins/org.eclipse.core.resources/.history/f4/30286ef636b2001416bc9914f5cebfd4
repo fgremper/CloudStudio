@@ -39,8 +39,8 @@ public class ServerMain {
 		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		new Thread(originUpdaterInterval).start();
-		*/
 		
+		*/
 		
 		// HTTP server
 		

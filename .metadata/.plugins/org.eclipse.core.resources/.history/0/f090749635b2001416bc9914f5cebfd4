@@ -150,24 +150,32 @@ public class RequestHttpHandler implements HttpHandler {
 
 						JSONObject responseObject = new JSONObject();
 						
-						List<String> myContent;
-						List<String> theirContent;
+						List<String> original;
+						List<String> revised;
 						
 						if (mySha != null) {
-					        myContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + mySha);
+					        original = fileToLines(fileStorageDirectory + "/" + mySha);
 						}
 						else {
-							myContent = new LinkedList<String>();
+							original = new LinkedList<String>();
 						}
 
 						if (theirSha != null) {
-					        theirContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + theirSha);
+					        revised = fileToLines(fileStorageDirectory + "/" + theirSha);
 						}
 						else {
-							theirContent = new LinkedList<String>();
+							revised = new LinkedList<String>();
 						}
 						
-						responseObject.put("content", SideBySideDiff.diff(myContent, theirContent));
+				        Patch patch = DiffUtils.diff(original, revised);
+				        
+				        String output = "";
+				        
+				        for (String line: DiffUtils.generateUnifiedDiff(null, null, original, patch, 10)) {
+				            output += line + "\n";
+				        }
+						
+						responseObject.put("diff", SideBySideDiff.diff(original, revised));
 						
 						response = responseObject.toString();
 						

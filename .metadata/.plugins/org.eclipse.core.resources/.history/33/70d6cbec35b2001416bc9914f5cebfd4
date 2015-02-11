@@ -167,7 +167,7 @@ public class RequestHttpHandler implements HttpHandler {
 							theirContent = new LinkedList<String>();
 						}
 						
-						responseObject.put("content", SideBySideDiff.diff(myContent, theirContent));
+						responseObject.put("diff", SideBySideDiff.diff(myContent, theirContent));
 						
 						response = responseObject.toString();
 						

@@ -30,8 +30,33 @@ public class ServerMain {
 
 	static int port = 7330;
 	
+	public static List<String> fileToLines(String filename) {
+        List<String> lines = new LinkedList<String>();
+        String line = "";
+        BufferedReader in = null;
+        try {
+                in = new BufferedReader(new FileReader(filename));
+                while ((line = in.readLine()) != null) {
+                        lines.add(line);
+                }
+        } catch (IOException e) {
+                e.printStackTrace();
+        } finally {
+                if (in != null) {
+                        try {
+                                in.close();
+                        } catch (IOException e) {
+                                // ignore ... any errors should already have been
+                                // reported via an IOException from the final flush.
+                        }
+                }
+        }
+        return lines;
+}
 	public static void main(String[] args) throws Exception {
 		
+
+        
         
 		/*
 		// Periodically origin updater
@@ -39,11 +64,11 @@ public class ServerMain {
 		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		new Thread(originUpdaterInterval).start();
+		
 		*/
 		
-		
 		// HTTP server
-		
+		/*
 		int port = ServerConfig.getInstance().serverPort;
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
@@ -55,7 +80,7 @@ public class ServerMain {
 		server.start();
 
 		System.out.println("[Main] Server up!");
-		
+		*/
 	}
 
 }

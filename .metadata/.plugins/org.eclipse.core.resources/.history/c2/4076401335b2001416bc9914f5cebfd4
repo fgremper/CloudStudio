@@ -32,6 +32,8 @@ public class ServerMain {
 	
 	public static void main(String[] args) throws Exception {
 		
+
+        
         
 		/*
 		// Periodically origin updater
@@ -39,11 +41,11 @@ public class ServerMain {
 		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		new Thread(originUpdaterInterval).start();
+		
 		*/
 		
-		
 		// HTTP server
-		
+		/*
 		int port = ServerConfig.getInstance().serverPort;
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
@@ -55,7 +57,7 @@ public class ServerMain {
 		server.start();
 
 		System.out.println("[Main] Server up!");
-		
+		*/
 	}
 
 }
