@@ -1,4 +1,10 @@
-This is
-the
-original
-file
+fixpoint one
+first
+second
+fixpoint two
+fixpoint three
+sixth
+seventh
+nineth
+tenth
+fixpoint four

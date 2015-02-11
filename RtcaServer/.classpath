@@ -15,5 +15,6 @@
 	<classpathentry kind="lib" path="../jar/mchange-commons-java-0.2.9.jar"/>
 	<classpathentry kind="lib" path="../jar/jlibdiff.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RtcaClient"/>
+	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/diffutils-1.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

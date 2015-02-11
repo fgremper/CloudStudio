@@ -1,11 +1,15 @@
 package ch.ethz.fgremper.rtca;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -20,6 +24,9 @@ import ch.ethz.fgremper.rtca.helper.JSONHelper;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
+import difflib.DiffUtils;
+import difflib.Patch;
 
 public class RequestHttpHandler implements HttpHandler {
 	
@@ -139,26 +146,36 @@ public class RequestHttpHandler implements HttpHandler {
 						String mySha = db.getFileSha(repositoryAlias, myUsername, branch, filename);
 						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename);
 						
-						// TODO: check they are not null and stuff
-
 						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 
 						JSONObject responseObject = new JSONObject();
 						
+						List<String> original;
+						List<String> revised;
+						
 						if (mySha != null) {
-							File myFile = new File(fileStorageDirectory + "/" + mySha);
-							responseObject.put("mine", FileUtils.readFileToString(myFile, "UTF-8"));
+					        original = fileToLines(fileStorageDirectory + "/" + mySha);
+						}
+						else {
+							original = new LinkedList<String>();
 						}
 
 						if (theirSha != null) {
-							File theirFile = new File(fileStorageDirectory + "/" + theirSha);
-							responseObject.put("theirs", FileUtils.readFileToString(theirFile, "UTF-8"));
+					        revised = fileToLines(fileStorageDirectory + "/" + theirSha);
+						}
+						else {
+							revised = new LinkedList<String>();
 						}
 						
+				        Patch patch = DiffUtils.diff(original, revised);
+				        
+				        String output = "";
+				        
+				        for (String line: DiffUtils.generateUnifiedDiff(null, null, original, patch, 10)) {
+				            output += line + "\n";
+				        }
 						
-						// TODO: do a diff! :D
-						
-						
+						responseObject.put("diff",  output);
 						
 						response = responseObject.toString();
 						
@@ -416,5 +433,29 @@ public class RequestHttpHandler implements HttpHandler {
 		os.write(response.getBytes());
 		os.close();
 		
+	}
+
+	public static List<String> fileToLines(String filename) {
+        List<String> lines = new LinkedList<String>();
+        String line = "";
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8"));
+            while ((line = in.readLine()) != null) {
+                    lines.add(line);
+            }
+        } catch (IOException e) {
+                e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // ignore ... any errors should already have been
+                    // reported via an IOException from the final flush.
+                }
+            }
+        }
+        return lines;
 	}
 }
