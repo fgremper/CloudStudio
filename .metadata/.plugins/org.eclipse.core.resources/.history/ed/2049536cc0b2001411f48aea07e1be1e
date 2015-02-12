@@ -231,30 +231,28 @@ public class DatabaseConnection {
 			String username = rs.getString("username");
 			String commit = rs.getString("commit");
 			String origincommit = rs.getString("origincommit");
+			
 			String relation;
-			
-			Integer d = null;
-			
 			if (commit == null) {
-				relation = "not checked out";
+				relation = "doesn't have this branch";
 			}
 			else if (origincommit == null) {
-				relation = "local branch";
+				relation = "has this as a local branch";
 			}
 			else if (commit.equals(origincommit)) {
-				relation = "equal";
+				relation = "is equal to origin";
 			}
-			else if ((d = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit)) != null) {
-				relation = d + " behind";
+			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit)) {
+				relation = "is directly behind origin";
 			}
-			else if ((d = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit)) != null) {
-				relation = d + " in front";
+			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit)) {
+				relation ="is directly in front of origin";
 			}
-			else if ((d = distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit)) != null) {
-				relation = d + " away";
+			else if (distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit) != null) {
+				relation = "is " + distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit) + " steps away";
 			}
 			else {
-				relation = "unknown";
+				relation = "don't see each other";
 			}
 			
 			JSONObject branchObject;
@@ -280,20 +278,15 @@ public class DatabaseConnection {
 		return responseObject;
 	}
 	
-	public Integer branchCommitIsInHistoryOfBranchCommit(String repositoryAlias, String commit1, String commit2) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT distance FROM commithistory WHERE commit = ? AND downstreamcommit = ? AND repositoryalias = ?");
+	public boolean branchCommitIsInHistoryOfBranchCommit(String repositoryAlias, String commit1, String commit2) throws Exception {
+		PreparedStatement stmt = con.prepareStatement("SELECT commit FROM commithistory WHERE commit = ? AND downstreamcommit = ? AND repositoryalias = ?");
 
 		stmt.setString(1, commit2);
 		stmt.setString(2, commit1);
 		stmt.setString(3, repositoryAlias);
 
 		ResultSet rs = stmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("distance");
-		}
-		else {
-			return null;
-		}
+		return rs.next();
 	}
 	
 
@@ -397,11 +390,10 @@ public class DatabaseConnection {
 			user.put("username", theirUsername);
 			
 			String conflictType;
-			if (mySha == null && theirSha != null) conflictType = "new";
-			else if (mySha != null && theirSha == null) conflictType = "delete";
-			else if (mySha.equals(theirSha)) conflictType = "equal";
-			else conflictType = "conflict";
-			
+			if (mySha == null && theirSha != null) conflictType = "add";
+			else if (mySha != null && theirSha == null) conflictType = "remove";
+			else conflictType = "modify";
+
 			user.put("type", conflictType);
 			
 			//System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);

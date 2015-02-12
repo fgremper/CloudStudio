@@ -231,10 +231,8 @@ public class DatabaseConnection {
 			String username = rs.getString("username");
 			String commit = rs.getString("commit");
 			String origincommit = rs.getString("origincommit");
+			
 			String relation;
-			
-			Integer d = null;
-			
 			if (commit == null) {
 				relation = "not checked out";
 			}
@@ -242,16 +240,16 @@ public class DatabaseConnection {
 				relation = "local branch";
 			}
 			else if (commit.equals(origincommit)) {
-				relation = "equal";
+				relation = "equal to origin";
 			}
-			else if ((d = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit)) != null) {
-				relation = d + " behind";
+			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit) != null) {
+				relation = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit) + " behind origin";
 			}
-			else if ((d = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit)) != null) {
-				relation = d + " in front";
+			else if (branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit) != null) {
+				relation = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit) + " in front of origin";
 			}
-			else if ((d = distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit)) != null) {
-				relation = d + " away";
+			else if (distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit) != null) {
+				relation = distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit) + " steps away";
 			}
 			else {
 				relation = "unknown";
@@ -397,11 +395,10 @@ public class DatabaseConnection {
 			user.put("username", theirUsername);
 			
 			String conflictType;
-			if (mySha == null && theirSha != null) conflictType = "new";
-			else if (mySha != null && theirSha == null) conflictType = "delete";
-			else if (mySha.equals(theirSha)) conflictType = "equal";
-			else conflictType = "conflict";
-			
+			if (mySha == null && theirSha != null) conflictType = "add";
+			else if (mySha != null && theirSha == null) conflictType = "remove";
+			else conflictType = "modify";
+
 			user.put("type", conflictType);
 			
 			//System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);

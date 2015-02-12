@@ -1,17 +1,13 @@
 <div id="header">
-	<div id="headerText">
-		<div id="login">
-			Logged in as: <strong><%= login.username %></strong>
-			<% if (login.isAdmin) { %>(Administrator) &nbsp;|&nbsp; <span id="manageUsers">Manage users</span><% } %>
-		</div>
-		<span id="logo">RTCA Web Interface</span>
+	<div id="headerLogin">
+		Logged in as <strong><%= login.username %></strong>
+		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
 	</div>
+	<span id="headerLogo">RTCA Web Interface</span>
 </div>
-<div id="title">
-    <div id="titleText">
-    	<span id="refresh">&#8635;</span>
-    	<span class="repositoryViewButton clickable">Repositories</span> / <span class="branchViewButton clickable"><%= repositoryAlias %></span> / <strong><%= branch %></strong>
-    </div>
+<div id="navigationBar">
+	<span id="refresh">Refresh</span>
+	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <strong><%= branch %></strong></span>
 </div>
 <div id="view">
 	View uncommitted:
@@ -20,17 +16,29 @@
 
 	<br>
 
-	<table>
-	    <tr class="descriptors"><th>Filename</th><th>Users</th></tr>
-	    <tr class="heading"><td colspan="2">Files (<%= files.length %>)</td></tr>
+	<table id="fileTable">
+	    <tr>
+	    	<th>Filename</th>
+	    	<% if (files.length > 0) { %>
+	 			<% for (var j = 0; j < files[0].users.length; j++) { %>
+	 				<th><span class="user"><%= files[0].users[j].username %></span></th>
+	 			<% } %>
+	    	<% } %>
+	    	<th></th>
+    	</tr>
 		<% for (var i = 0; i < files.length; i++) { %>
 		    <tr class="static">
 		        <td><span class="blue"><%= files[i]['filename'] %></span></td>
-		        <td>
-		 			<% for (var j = 0; j < files[i].users.length; j++) { %>
-		 				<span class="fileAndUser user" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].username %></span> <%= files[i].users[j].type %><br>
-		 			<% } %>
-				</td>
+	 			<% for (var j = 0; j < files[i].users.length; j++) { %>
+	 				<% if (files[i].users[j].type == 'equal') { %>
+	 					<td class="clickable fileAndUser fileEqual" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].type %></td>
+	 				<% } else if (files[i].users[j].type == 'conflict' || files[i].users[j].type == 'delete') { %>
+	 					<td class="clickable fileAndUser fileConflict" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].type %></td>
+	 				<% } else { %>
+	 					<td class="clickable fileAndUser" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].type %></td>
+	 				<% } %>
+	 			<% } %>
+				<td></td>
 		    </tr>
 		<% } %>
 	</table>

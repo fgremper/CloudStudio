@@ -71,108 +71,9 @@ textarea, input { outline: none; }
     margin: 10px 0 20px 0;
 }
 
-/* table view */
 
-/*
-table {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d0d0d0;
-    border-radius: 5px;
-}
-tr.static {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #e4e4e4;
-}
-tr.clickable {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #e4e4e4;
-    cursor: pointer;
-}
-tr.clickable:hover {
-    background-color: #ffffff;
-}
-tr.heading {
-    border-bottom: 1px solid #d0d0d0;
-    height: 27px;
-}
-tr.descriptors {
-    height: 35px;
-    border-bottom: 1px solid #d0d0d0;
-}
-tr:last-child {
-    border-bottom: 1px solid #d0d0d0;
-}
-td, th {
-    font-size: 13px;
-    padding: 4px 6px;
-    color: #666666;
-    text-align: left;
-    line-height: 28px;
-    vertical-align: top;
-}
-tr.heading td {
-    font-size: 12px;
-    color: #444444;
-    font-weight: bold;
-}
-tr.descriptors th {
-    font-weight: normal;
-    color: #aaaaaa;
-    font-size: 11px;
-    text-transform: uppercase;
-}
-td:first-child, th:first-child {
-    padding-left: 8px;
-}
-.blue {
-    color: #4C7CBA;
-    font-weight: bold;
-}
-span.user {
-    padding: 5px 10px;
-    background-color: #e4e4e4;
-    border-radius: 15px;
-    text-align: center;
-    white-space: nowrap;
-}
-span.add, span.delete, span.modify {
-    color: #aaaaaa;
-    cursor: pointer;
-    font-weight: normal;
-    letter-spacing: 1px;
-    padding-left: 3px;
-}
-span.modify {
-    letter-spacing: 0;
-}
-span.add:hover, span.delete:hover, span.modify:hover {
-    color: #4C7CBA;
-}
-*/
 
-/* repository view */
 
-#createRepository {
-    width: 200px;
-    text-align: center;
-    font-size: 16px;
-    padding: 6px 6px;
-    background-color: #e4e4e4;
-    border: 1px solid #e4e4e4;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 20px 0 0 0;
-    color: #808080;
-    font-size: 14px;
-}
-
-#createRepository:hover {
-    background-color: #4C7CBA;
-    color: #ffffff;
-    border: 1px solid #4C7CBA;
-}
 
 
 
@@ -184,7 +85,6 @@ span.add:hover, span.delete:hover, span.modify:hover {
 
 
 /* header */
-
 
 #header {
     background-color: #f6f6f6;
@@ -257,6 +157,7 @@ span.add:hover, span.delete:hover, span.modify:hover {
 #navigationBar strong {
     color: #404040;
     font-weight: normal;
+    padding: 2px 3px;
 }
 
 #refresh {
@@ -294,8 +195,6 @@ span.add:hover, span.delete:hover, span.modify:hover {
 }
 
 #diffTable .diffHeader {
-    position: relative;
-    margin: 0;
     line-height: 40px;
     height: 40px;
     border-bottom: 1px solid #d0d0d0;
@@ -336,6 +235,7 @@ span.add:hover, span.delete:hover, span.modify:hover {
     font-size: 14px;
     line-height: 14px;
     padding: 2px 4px;
+    color: #202020;
 }
 
 #diffTable .diffAdd {
@@ -349,3 +249,260 @@ span.add:hover, span.delete:hover, span.modify:hover {
 #diffTable .diffModify {
     background-color: #ddedff;
 }
+
+
+/* repository table */
+
+
+#repositoryTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #d0d0d0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#repositoryTable tr.clickable {
+    cursor: pointer;
+    background-color: #fdfdfd;
+}
+
+#repositoryTable tr.clickable:hover {
+    background-color: #ffffff;
+}
+
+#repositoryTable td {
+    border-bottom: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 90px;
+    padding: 5px 10px;
+    color: #202020;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+#repositoryTable th {
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 40px;
+    color: #808080;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#repositoryTable td, #repositoryTable th {
+    width: 250px;
+}
+#repositoryTable td:last-child, #repositoryTable th:last-child {
+    width: 100%;
+}
+
+#createRepository {
+    float: right;
+    margin-top: 20px;
+    padding: 8px 12px;
+    border: 1px solid #c0c0c0;
+    color: #c0c0c0;
+    line-height: 14px;
+    font-size: 14px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#createRepository:hover {
+    border: 1px solid #386fcf;
+    background-color: #386fcf;
+    color: #fdfdfd;
+}
+
+
+
+
+/* branch */
+
+#branchTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #d0d0d0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#branchTable tr.clickable {
+    cursor: pointer;
+    background-color: #fdfdfd;
+}
+
+#branchTable tr.clickable:hover {
+    background-color: #ffffff;
+}
+
+#branchTable td {
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 60px;
+    padding: 5px 10px;
+    color: #202020;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+#branchTable th {
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 40px;
+    color: #808080;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#branchTable td, #branchTable th {
+    width: 150px;
+}
+#branchTable td:last-child, #branchTable th:last-child {
+    width: 100%;
+}
+#branchTable td, #branchTable th {
+    text-align: center;
+}
+#branchTable td:first-child, #branchTable th:first-child {
+    text-align: left;
+    width: 200px;
+}
+#branchTable .branchEqual {
+    background-color: #e0ffdd;
+}
+#branchTable .branchInFront {
+    background-color: #ffffdd;
+}
+#branchTable .branchBehind {
+    background-color: #ffe0dd;
+}
+
+
+/* file */
+
+
+#fileTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #d0d0d0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#fileTable tr.static {
+    background-color: #ffffff;
+}
+
+#fileTable td {
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 30px;
+    padding: 5px 10px;
+    color: #202020;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+#fileTable th {
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 40px;
+    color: #808080;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+#fileTable td, #fileTable th {
+    width: 150px;
+}
+#fileTable td:last-child, #fileTable th:last-child {
+    width: 100%;
+}
+#fileTable td, #fileTable th {
+    text-align: center;
+}
+#fileTable td:first-child, #fileTable th:first-child {
+    text-align: left;
+    width: 300px;
+}
+#fileTable .fileAndUser {
+    cursor: pointer;
+    background-color: #fdfdfd;
+}
+#fileTable .fileAndUser:hover {
+    background-color: #ffffff;
+}
+#fileTable .fileEqual {
+    background-color: #e0ffdd;
+}
+#fileTable .fileConflict {
+    background-color: #ffffdd;
+}
+
+/* utility */
+
+span.ellipsis {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: block;
+}
+
+span.blue {
+    color: #386fcf;
+    font-size: 16px;
+    padding: 2px 3px;
+    border-radius: 3px;
+}
+
+span.blue:hover {
+    color: #ffffff;
+    background-color: #386fcf;
+}
+
+span.modify {
+    padding: 0px 3px;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    color: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 20px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: inline-block;
+    margin-left: 3px;
+}
+
+span.modify:hover {
+    background-color: #386fcf;
+    border: 1px solid #386fcf;
+    color: #ffffff;
+}
+
+span.user {
+    padding: 5px 10px;
+    background-color: rgba(0, 0, 0, 0.08);
+    color: #202020;
+    border-radius: 50px;
+    display: inline-block;
+    margin: 4px 4px 4px 0;
+}
+

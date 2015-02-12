@@ -397,11 +397,10 @@ public class DatabaseConnection {
 			user.put("username", theirUsername);
 			
 			String conflictType;
-			if (mySha == null && theirSha != null) conflictType = "new";
-			else if (mySha != null && theirSha == null) conflictType = "delete";
-			else if (mySha.equals(theirSha)) conflictType = "equal";
-			else conflictType = "conflict";
-			
+			if (mySha == null && theirSha != null) conflictType = "add";
+			else if (mySha != null && theirSha == null) conflictType = "remove";
+			else conflictType = "modify";
+
 			user.put("type", conflictType);
 			
 			//System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);
