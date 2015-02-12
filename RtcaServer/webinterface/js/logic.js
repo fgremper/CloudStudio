@@ -1,6 +1,6 @@
 var activeRepository = undefined;
 var activeBranch = undefined;
-
+var activeFile = undefined;
 
 var showUncommitted = false;
 
@@ -18,7 +18,7 @@ var apiPrefix = '/request'
 
 
 $(function () {
-    renderLogin();
+    renderLoginView();
 });
 
 
@@ -39,8 +39,8 @@ function sendRequest(requestObject) {
 
 /* LOGIN */
 
-function renderLogin() {
-    $('body').html(new EJS({url: 'templates/login.ejs'}).render());
+function renderLoginView() {
+    $('body').html(new EJS({url: 'templates/login_view.ejs'}).render());
     $('#submitLogin').click(function () {
         sendRequest({
             name: 'login',
@@ -50,7 +50,7 @@ function renderLogin() {
                 login = data;
 
                 if (login.sessionId != undefined) {
-                    loadOverviewView();
+                    loadRepositoryView();
                 }
                 else {
                     alert('Login error. Wrong username/password probably.');
@@ -70,7 +70,7 @@ function renderLogin() {
                 login = data;
 
                 if (login.sessionId != undefined) {
-                    loadOverviewView();
+                    loadRepositoryView();
                 }
                 else {
                     alert('Login error. Wrong username/password probably.');
@@ -97,13 +97,13 @@ function renderLogin() {
 
 /* OVERVIEW: LIST OF ALL REPOSITORIES */
 
-function loadOverviewView() {
+function loadRepositoryView() {
     sendRequest({
         name: 'getRepositories',
         data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Load overview. Success: " + JSON.stringify(data));
-            renderOverviewView({ repositories: data, login: login });
+            renderRepositoryView({ repositories: data, login: login });
         },
         error: function () {
             alert('Error loading list of repositories.');
@@ -111,14 +111,14 @@ function loadOverviewView() {
     });
 }
 
-function renderOverviewView(data) {
-    $('body').html(new EJS({url: 'templates/overview.ejs'}).render(data));
-    $('#logo').click(loadOverviewView);
-    $('#refresh').click(loadOverviewView);
+function renderRepositoryView(data) {
+    $('body').html(new EJS({url: 'templates/repository_view.ejs'}).render(data));
+    $('#logo').click(loadRepositoryView);
+    $('#refresh').click(loadRepositoryView);
     $('#manageUsers').click(loadUsersView);
-    $('#createRepository').click(loadCreateRepository);
+    $('#createRepository').click(loadCreateRepositoryView);
     $('.repository').click(function () {
-        loadBranchLevelAwarenessView($(this).data('alias'));
+        loadBranchView($(this).data('alias'));
     });
     
     $('.addUserToRepository').click(function (e) {
@@ -129,7 +129,7 @@ function renderOverviewView(data) {
             data: { repositoryAlias: $(this).data('repositoryalias'), username: usernameToAdd, sessionId: login.sessionId },
             success: function(data) {
                 console.log("Add repository. Success: " + JSON.stringify(data));
-                loadOverviewView();
+                loadRepositoryView();
             },
             error: function () {
                 alert('Something went wrong when trying to add a user to the repository.');
@@ -143,7 +143,7 @@ function renderOverviewView(data) {
             data: { repositoryAlias: $(this).data('repositoryalias'), username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
                 console.log("Delete user from repository. Success: " + JSON.stringify(data));
-                loadOverviewView();
+                loadRepositoryView();
             },
             error: function () {
                 alert('Something went wrong when trying to delete a user from the repository.');
@@ -157,7 +157,7 @@ function renderOverviewView(data) {
             data: { repositoryAlias: $(this).data('repositoryalias'), sessionId: login.sessionId },
             success: function(data) {
                 console.log("Delete repository. Success: " + JSON.stringify(data));
-                loadOverviewView();
+                loadRepositoryView();
             },
             error: function () {
                 alert('Something went wrong when trying to delete a repository.');
@@ -173,7 +173,7 @@ function renderOverviewView(data) {
             data: { repositoryAlias: $(this).data('repositoryalias'), username: newRepositoryOwner, sessionId: login.sessionId },
             success: function(data) {
                 console.log("Modify repository owner. Success: " + JSON.stringify(data));
-                loadOverviewView();
+                loadRepositoryView();
             },
             error: function () {
                 alert('Something went wrong when trying to modify the repository owner.');
@@ -186,15 +186,15 @@ function renderOverviewView(data) {
 
 /* CREATE REPOSITORY VIEW */
 
-function loadCreateRepository() {
-    renderCreateRepository({ login: login });
+function loadCreateRepositoryView() {
+    renderCreateRepositoryView({ login: login });
 }
 
-function renderCreateRepository(data) {
-    $('body').html(new EJS({url: 'templates/create_repository.ejs'}).render(data));
-    $('#logo').click(loadOverviewView);
+function renderCreateRepositoryView(data) {
+    $('body').html(new EJS({url: 'templates/create_repository_view.ejs'}).render(data));
+    $('#logo').click(loadRepositoryView);
     $('#manageUsers').click(loadUsersView);
-    $('.repositoryViewButton').click(loadOverviewView);
+    $('.repositoryViewButton').click(loadRepositoryView);
     $('#submitCreateRepository').click(function () {
         sendRequest({
             name: 'addRepository',
@@ -202,7 +202,7 @@ function renderCreateRepository(data) {
             success: function(data) {
                 console.log("Create repository. Success: " + JSON.stringify(data));
 
-                loadOverviewView();
+                loadRepositoryView();
             },
             error: function () {
                 alert('Something went wrong when trying to create a repository.');
@@ -229,8 +229,8 @@ function loadUsersView() {
 }
 
 function renderUsersView(data) {
-    $('body').html(new EJS({url: 'templates/users.ejs'}).render(data));
-    $('#logo').click(loadOverviewView);
+    $('body').html(new EJS({url: 'templates/users_view.ejs'}).render(data));
+    $('#logo').click(loadRepositoryView);
     $('#refresh').click(loadUsersView);
     $('#manageUsers').click(loadUsersView);
     $('.repository').click(function () {
@@ -311,14 +311,14 @@ function renderUsersView(data) {
 
 /* LEVEL 1: BRANCH AWARENESS */
 
-function loadBranchLevelAwarenessView(repositoryAlias) {
+function loadBranchView(repositoryAlias) {
     sendRequest({
         name: 'getBranchLevelAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get branch awareness. Success: " + JSON.stringify(data));
             activeRepository = repositoryAlias;
-            renderBranchLevelAwarenessView({ branches: data.branches, repositoryAlias: repositoryAlias });
+            renderBranchView({ branches: data.branches, repositoryAlias: repositoryAlias });
         },
         error: function () {
             alert('Something went wrong when trying to load branch level awareness data.');
@@ -327,32 +327,32 @@ function loadBranchLevelAwarenessView(repositoryAlias) {
 }
 
 
-function renderBranchLevelAwarenessView(data) {
-    $('body').html(new EJS({url: 'templates/branchawareness.ejs'}).render(data));
-    $('#logo').click(loadOverviewView);
+function renderBranchView(data) {
+    $('body').html(new EJS({url: 'templates/branch_view.ejs'}).render(data));
+    $('#logo').click(loadRepositoryView);
     $('.branch').click(function () {
         showUncommitted = false;
-        loadFileLevelAwarenessView(activeRepository, $(this).data('branch'));
+        loadFileView(activeRepository, $(this).data('branch'));
     });
     $('.repositoryViewButton').click(function () {
-        loadOverviewView();
+        loadRepositoryView();
     });
     $('#refresh').click(function () {
-        loadBranchLevelAwarenessView(activeRepository);
+        loadBranchView(activeRepository);
     });
 }
 
 
 /* LEVEL 2: FILE AWARENESS */
 
-function loadFileLevelAwarenessView(repositoryAlias, branch) {
+function loadFileView(repositoryAlias, branch) {
     sendRequest({
         name: 'getFileLevelAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted },
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
             activeBranch = branch;
-            renderFileLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted });
+            renderFileView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted });
         },
         error: function () {
             alert('Something went wrong when trying to load file level awareness data.');
@@ -361,27 +361,27 @@ function loadFileLevelAwarenessView(repositoryAlias, branch) {
 
 }
 
-function renderFileLevelAwarenessView(data) {
-    $('body').html(new EJS({url: 'templates/fileawareness.ejs'}).render(data));
+function renderFileView(data) {
+    $('body').html(new EJS({url: 'templates/file_view.ejs'}).render(data));
 
 
-    $('#logo').click(loadOverviewView);
+    $('#logo').click(loadRepositoryView);
     $('.repositoryViewButton').click(function () {
-        loadOverviewView();
+        loadRepositoryView();
     });
     $('.branchViewButton').click(function () {
-        loadBranchLevelAwarenessView(activeRepository);
+        loadBranchView(activeRepository);
     });
     $('#submitFilter').click(function () {
         showUncommitted = $('#filterShowUncommitted').prop('checked');
-        loadFileLevelAwarenessView(activeRepository, activeBranch);
+        loadFileView(activeRepository, activeBranch);
     });
     $('#refresh').click(function () {
-        loadFileLevelAwarenessView(activeRepository, activeBranch);
+        loadFileView(activeRepository, activeBranch);
     });
 
     $('.fileAndUser').click(function () {
-        loadContentLevelAwareness(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'));
+        loadContentView(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'));
     });
 
     /*
@@ -398,14 +398,15 @@ function renderFileLevelAwarenessView(data) {
 
 /* LEVEL 3: LOAD CONTENT LEVEL AWARENESS */
 
-function loadContentLevelAwareness(repositoryAlias, branch, filename, username) {
+function loadContentView(repositoryAlias, branch, filename, username) {
 console.log({ sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username });
     sendRequest({
         name: 'getContentLevelAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));
-            // renderLineLevelAwarenessView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch });
+            activeFile = filename;
+            renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username });
         },
         error: function () {
             alert('Something went wrong when trying to load line level awareness data.');
@@ -413,8 +414,21 @@ console.log({ sessionId: login.sessionId, repositoryAlias: repositoryAlias, bran
     });
 }
 
-function renderLineLevelAwarenessView(data) {
+function renderContentView(data) {
     
+    $('body').html(new EJS({url: 'templates/content_view.ejs'}).render(data));
+
+    // header
+    $('#headerLogo').click(loadRepositoryView);
+    $('#manageUsers').click(loadUsersView);
+
+    // navigation bar
+    $('.loadRepositoryView').click(loadRepositoryView);
+    $('.loadBranchView').click(function () { loadBranchView(activeRepository); });
+    $('.loadFileView').click(function () { loadFileView(activeRepository, activeBranch); });
+    $('.loadContentView').click(function () { loadFileView(activeRepository, activeBranch); });
+    $('#refresh').click(function () { loadFileView(activeRepository, activeBranch, activeFile); });
+
 }
 
 /*
@@ -449,7 +463,7 @@ function renderFileView(data) {
     /*
     $('body').html(new EJS({url: 'templates/file_view.ejs'}).render(data));
     $('.repositoryViewButton').click(function () {
-        loadOverviewView();
+        loadRepositoryView();
     });
     $('.ConflictsViewButton').click(function () {
         loadConflictsView(activeRepository);

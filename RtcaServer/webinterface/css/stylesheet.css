@@ -7,110 +7,6 @@ html, body {
 textarea, input { outline: none; }
 
 
-/* header */
-
-#header {
-    background-color: #f8f8f8;
-    border-bottom: 1px solid #d0d0d0;
-    height: 36px;
-}
-#headerText {
-    height: 36px;
-    margin: 0 auto;
-    width: 1000px;
-    line-height: 36px;
-    font-size: 12px;
-    text-transform: uppercase;
-    font-weight: bold;
-    color: #a0a0a0;
-}
-#login {
-    float: right;
-    font-weight: normal;
-    text-transform: none;
-}
-#manageUsers {
-    text-decoration: underline;
-    cursor: pointer;
-}
-#manageUsers:hover {
-    color: #4C7CBA;
-}
-
-/* title */
-
-#title {
-    border-bottom: 1px solid #d0d0d0;
-    height: 65px;
-    margin-bottom: 20px;
-}
-
-#titleText {
-    height: 65px;
-    margin: 0 auto;
-    width: 1000px;
-    line-height: 65px;
-    font-size: 20px;
-    color: #909090;
-}
-#titleText span.clickable {
-    color: #4C7CBA;
-    cursor: pointer;
-}
-#titleText strong {
-    color: #000000;
-}
-#refresh {
-    float: right;
-    font-size: 25px;
-    color: #ffffff;
-    height: 42px;
-    line-height: 43px;
-    background-color: #e4e4e4;
-    width: 42px;
-    text-align: center;
-    border-radius: 5px;
-    margin-top: 11px;
-    cursor: pointer;
-}
-#refresh:hover {
-    background-color: #4C7CBA;
-}
-#logo:hover {
-    color: #4C7CBA;
-    cursor: pointer;
-}
-
-/* tab bar */
-
-.tab {
-    height: 36px;
-    border-bottom: 1px solid #d0d0d0;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
-.tabBar {
-    height: 36px;
-    line-height: 36px;
-    background-color: #ffffff;
-    border: 1px solid #d0d0d0;
-    font-size: 16px;
-    padding: 0 20px;
-    float: left;
-    color: #888888;
-    margin-left: -1px;
-    border-radius: 5px 5px 0 0;
-    box-sizing: border-box;
-
-}
-.tabBarSelected {
-    color: #000000;
-    font-weight: bold;
-    border-bottom: 0;
-}
-.tabBar:first-child {
-    margin-left: 10px;
-}
 
 /* login */
 
@@ -175,15 +71,9 @@ textarea, input { outline: none; }
     margin: 10px 0 20px 0;
 }
 
-/* view */
-
-#view {
-    width: 1000px;
-    margin: 0 auto;
-}
-
 /* table view */
 
+/*
 table {
     width: 100%;
     table-layout: fixed;
@@ -260,6 +150,7 @@ span.modify {
 span.add:hover, span.delete:hover, span.modify:hover {
     color: #4C7CBA;
 }
+*/
 
 /* repository view */
 
@@ -281,7 +172,180 @@ span.add:hover, span.delete:hover, span.modify:hover {
     background-color: #4C7CBA;
     color: #ffffff;
     border: 1px solid #4C7CBA;
-
-
 }
 
+
+
+/* view */
+
+#view {
+    margin: 0 20px;
+}
+
+
+/* header */
+
+
+#header {
+    background-color: #f6f6f6;
+    border-bottom: 1px solid #b0b0b0;
+    height: 40px;
+    line-height: 40px;
+    padding: 0 20px;
+    font-size: 16px;
+    color: #9c9c9c;
+}
+#headerLogin {
+    float: right;
+    font-weight: normal;
+    text-transform: none;
+    font-size: 14px;
+}
+#headerLogin strong {
+    color: #707070;
+    font-weight: normal;
+}
+
+#manageUsers {
+    padding: 2px 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#manageUsers:hover {
+    background-color: #9c9c9c;
+    color: #f6f6f6;
+}
+
+#headerLogo {
+    padding: 2px 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#headerLogo:hover {
+    background-color: #9c9c9c;
+    color: #f6f6f6;
+}
+
+
+/* nagivation bar */
+
+#navigationBar {
+    border-bottom: 1px solid #d0d0d0;
+    line-height: 70px;
+    height: 70px;
+    padding: 0 20px;
+    background-color: #fdfdfd;
+    color: #a0a0a0;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+#navigationBar .clickable {
+    color: #386fcf;
+    padding: 2px 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#navigationBar .clickable:hover {
+    color: #fdfdfd;
+    padding: 2px 3px;
+    background-color: #386fcf;
+}
+
+#navigationBar strong {
+    color: #404040;
+    font-weight: normal;
+}
+
+#refresh {
+    float: right;
+    margin-top: 19px;
+    padding: 8px 12px;
+    border: 1px solid #c0c0c0;
+    color: #c0c0c0;
+    line-height: 14px;
+    font-size: 14px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#refresh:hover {
+    border: 1px solid #386fcf;
+    background-color: #386fcf;
+    color: #fdfdfd;
+}
+
+/* diff */
+
+#diffTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #d0d0d0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#diffTable td {
+    padding: 0;
+    border-left: 1px solid #d0d0d0;
+}
+
+#diffTable .diffHeader {
+    position: relative;
+    margin: 0;
+    line-height: 40px;
+    height: 40px;
+    border-bottom: 1px solid #d0d0d0;
+    padding: 2px;
+    color: #808080;
+    font-size: 16px;
+    text-align: center;
+    border-left: 0;
+}
+
+
+#diffTable .diffHeader.diffNumberColumn {
+    border-left: 1px solid #d0d0d0;
+}
+
+#diffTable .diffNumberColumn {
+    width: 26px;
+}
+
+#diffTable .diffNumber {
+    width: 26px;
+    text-align: right;
+    font-family: "Courier New";
+    font-size: 14px;
+    line-height: 14px;
+    padding: 2px 2px;
+    color: #a0a0a0;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+#diffTable .diffBox {
+    overflow-x: scroll;
+}
+
+#diffTable .diffLine {
+    font-family: "Courier New";
+    font-size: 14px;
+    line-height: 14px;
+    padding: 2px 4px;
+}
+
+#diffTable .diffAdd {
+    background-color: #e0ffdd;
+}
+
+#diffTable .diffPad {
+    background-color: #fbfbfb;
+}
+
+#diffTable .diffModify {
+    background-color: #ddedff;
+}

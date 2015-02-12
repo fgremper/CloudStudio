@@ -57,7 +57,7 @@ public class SideBySideDiff {
 	    			}
 	    			// they have more lines than me, we need to add new empty lines for me and their lines
 	    			else {
-		    			myType.add(pos, "modifiedpad");
+		    			myType.add(pos, "modified");
 		    			myContent.add(pos, "");
 		    			theirType.add(pos, "modified");
 		    			theirContent.add(pos, theirLines.get(i));
