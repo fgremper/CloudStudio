@@ -360,7 +360,7 @@ public class DatabaseConnection {
 		6 repository alias
 		7 their branch
 		8 committed
-		9 their branch
+		9 branch
 		10 repository
 		*/
 		
@@ -418,10 +418,6 @@ public class DatabaseConnection {
 		
 		for (int i = 0; i < selectedAdditionalBranches.length(); i++) {
 			String additionalBranch = selectedAdditionalBranches.getString(i);
-
-			branchObject = new JSONObject();
-			branchesArray.put(branchObject);
-			branchObject.put("branch", additionalBranch);
 			
 			stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwarenessAdditionalBranch"));
 			
@@ -434,7 +430,7 @@ public class DatabaseConnection {
 			6 repository alias
 			7 their branch
 			8 committed
-			9 their branch
+			9 branch
 			10 repository
 			*/
 			
@@ -444,14 +440,14 @@ public class DatabaseConnection {
 			stmt.setString(4, repositoryAlias);
 			stmt.setString(5, repositoryAlias);
 			stmt.setString(6, repositoryAlias);
-			stmt.setString(7, additionalBranch);
+			stmt.setString(7, branch);
 			stmt.setString(8, showUncommittedString);
-			stmt.setString(9, additionalBranch);
+			stmt.setString(9, branch);
 			stmt.setString(10, repositoryAlias);
 			
-			rs = stmt.executeQuery();
-			fileMap = new HashMap<String, JSONObject>();
-			conflictList = new JSONArray();
+			ResultSet rs = stmt.executeQuery();
+			HashMap<String, JSONObject> fileMap = new HashMap<String, JSONObject>();
+			JSONArray conflictList = new JSONArray();
 			while (rs.next()) {
 				String filename = rs.getString("filename");
 				String mySha = rs.getString("mysha");

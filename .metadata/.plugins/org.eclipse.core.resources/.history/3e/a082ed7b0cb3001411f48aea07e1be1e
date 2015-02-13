@@ -337,19 +337,11 @@ public class DatabaseConnection {
 		String branch = getConflictsObject.getString("branch");
 		boolean showUncommitted = getConflictsObject.getBoolean("showUncommitted");
 		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
-		JSONArray selectedAdditionalBranches = getConflictsObject.getJSONArray("selectedAdditionalBranches");
+		// JSONArray additionalCompareBranches = getConflictsObject.getJSONArray("additionalCompareBranches");
 		
 		JSONObject responseObject = new JSONObject();
-		JSONArray branchesArray = new JSONArray();
-		responseObject.put("branches", branchesArray);
 		
-		PreparedStatement stmt;
-		
-		JSONObject branchObject = new JSONObject();
-		branchesArray.put(branchObject);
-		branchObject.put("branch", branch);
-		
-		stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
+		PreparedStatement stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
 		
 		/* 
 		1 my user
@@ -360,7 +352,7 @@ public class DatabaseConnection {
 		6 repository alias
 		7 their branch
 		8 committed
-		9 their branch
+		9 branch
 		10 repository
 		*/
 		
@@ -375,6 +367,8 @@ public class DatabaseConnection {
 		stmt.setString(9, branch);
 		stmt.setString(10, repositoryAlias);
 		
+		System.out.println("LISTING NOW AND STUFF!");
+
 		ResultSet rs = stmt.executeQuery();
 		HashMap<String, JSONObject> fileMap = new HashMap<String, JSONObject>();
 		JSONArray conflictList = new JSONArray();
@@ -411,84 +405,14 @@ public class DatabaseConnection {
 			
 			user.put("type", conflictType);
 			
+			//System.out.println(filename + "  -  " + mysha + "  -  " + theirusername + "  -  " + theirsha);
+			
 		}
-		branchObject.put("files", conflictList);
+		//stmt.setString(1, repositoryAlias);
+		//stmt.setString(2, username);
+		//stmt.setString(2, branch);
 		
-		
-		
-		for (int i = 0; i < selectedAdditionalBranches.length(); i++) {
-			String additionalBranch = selectedAdditionalBranches.getString(i);
-
-			branchObject = new JSONObject();
-			branchesArray.put(branchObject);
-			branchObject.put("branch", additionalBranch);
-			
-			stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwarenessAdditionalBranch"));
-			
-			/* 
-			1 my user
-			2 committed
-			3 branch
-			4 repositoryalias
-			5 repositoryalias
-			6 repository alias
-			7 their branch
-			8 committed
-			9 their branch
-			10 repository
-			*/
-			
-			stmt.setString(1, username);
-			stmt.setString(2, showUncommittedString);
-			stmt.setString(3, branch);
-			stmt.setString(4, repositoryAlias);
-			stmt.setString(5, repositoryAlias);
-			stmt.setString(6, repositoryAlias);
-			stmt.setString(7, additionalBranch);
-			stmt.setString(8, showUncommittedString);
-			stmt.setString(9, additionalBranch);
-			stmt.setString(10, repositoryAlias);
-			
-			rs = stmt.executeQuery();
-			fileMap = new HashMap<String, JSONObject>();
-			conflictList = new JSONArray();
-			while (rs.next()) {
-				String filename = rs.getString("filename");
-				String mySha = rs.getString("mysha");
-				String theirUsername = rs.getString("theirusername");
-				String theirSha = rs.getString("theirsha");
-				
-				JSONObject conflict;
-				if (!fileMap.containsKey(filename)) {
-					conflict = new JSONObject();
-					fileMap.put(filename, conflict);
-					conflictList.put(conflict);
-					conflict.put("filename", filename);
-					conflict.put("users", new JSONArray());
-				}
-				else {
-					conflict = fileMap.get(filename);
-				}
-				
-				JSONArray conflictUsers = conflict.getJSONArray("users");
-				JSONObject user = new JSONObject();
-				conflictUsers.put(user);
-				
-				user.put("username", theirUsername);
-				
-				String conflictType;
-				if (mySha == null && theirSha != null) conflictType = "new";
-				else if (mySha != null && theirSha == null) conflictType = "delete";
-				else if (mySha == null && theirSha == null) conflictType = "inexistent";
-				else if (mySha.equals(theirSha)) conflictType = "equal";
-				else conflictType = "file conflict";
-				
-				user.put("type", conflictType);
-				
-			}
-			branchObject.put("files", conflictList);
-		}
-		
+		responseObject.put("files", conflictList);
 		return responseObject.toString();
 	}
 	

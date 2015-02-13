@@ -1,0 +1,24 @@
+	    <tr>
+	    	<th>Branch (vs. origin)</th>
+	    	<% if (branches.length > 0) { %>
+	 			<% for (var j = 0; j < branches[0].users.length; j++) { %>
+	 				<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[0].users[j].username) < 0) continue; %>
+	 				<th><span class="user"><%= branches[0].users[j].username %></span></th>
+	 			<% } %>
+	    	<% } %>
+	    	<th></th>
+    	</tr>
+		<% for (var i = 0; i < branches.length; i++) { %>
+		    <tr class="branch clickable" data-branch="<%= branches[i]['branch'] %>">
+		        <td><span class="blue"><%= branches[i]['branch'] %></span></td>
+	 			<% for (var j = 0; j < branches[i].users.length; j++) { %>
+	 				<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+	 				<% if (branches[i].users[j].relationWithOrigin == 'equal') { %><td class="branchEqual">
+	 				<% } else if (branches[i].users[j].relationWithOrigin.match(/in front$/)) { %><td class="branchInFront">
+	 				<% } else if (branches[i].users[j].relationWithOrigin.match(/behind$/)) { %><td class="branchBehind">
+	 				<% } else { %><td><% } %>
+	 				<%= branches[i].users[j].relationWithOrigin %></td>
+	 			<% } %>
+	 			<td></td>
+		    </tr>
+		<% } %>

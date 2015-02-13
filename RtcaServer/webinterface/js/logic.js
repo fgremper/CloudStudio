@@ -2,8 +2,12 @@ var activeRepository = undefined;
 var activeBranch = undefined;
 var activeFile = undefined;
 var activeUser = undefined;
+var activeRepositoryUsers = undefined;
+var activeRepositoryBranches = undefined;
 
+var selectedUsers = undefined;
 var showUncommitted = false;
+var selectedAdditionalBranches = undefined;
 
 var conflictType = "INTER_BRANCH_CONFLICTS"
 
@@ -126,6 +130,7 @@ function renderRepositoryView(data) {
     // content
     $('#createRepository').click(loadCreateRepositoryView);
     $('.repository').click(function () {
+        selectedUsers = [];
         loadBranchView($(this).data('alias'));
     });
     $('.addUserToRepository').click(function (e) {
@@ -326,12 +331,17 @@ function renderUsersView(data) {
 
 function loadBranchView(repositoryAlias) {
     sendRequest({
-        name: 'getBranchLevelAwareness',
+        name: 'getRepositoryInformation',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
-            console.log("Get branch awareness. Success: " + JSON.stringify(data));
+            console.log("Get repository info. Success: " + JSON.stringify(data));
+
             activeRepository = repositoryAlias;
-            renderBranchView({ branches: data.branches, repositoryAlias: repositoryAlias });
+            activeRepositoryUsers = data.repositoryUsers;
+
+
+            renderBranchView({ repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selectedUsers });
+
         },
         error: function () {
             alert('Something went wrong when trying to load branch level awareness data.');
@@ -341,7 +351,6 @@ function loadBranchView(repositoryAlias) {
 
 
 function renderBranchView(data) {
-
     $('body').html(new EJS({url: 'templates/branch_view.ejs'}).render(data));
 
     // header
@@ -352,32 +361,74 @@ function renderBranchView(data) {
     $('.loadRepositoryView').click(loadRepositoryView);
     $('#refresh').click(function () { loadBranchView(activeRepository); });
 
+    // filter
+    $('#usersFilter').change(function () {
+        selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
+
+        // remove "":
+        var index = selectedUsers.indexOf("");
+        if (index > -1) {
+            selectedUsers.splice(index, 1);
+        }
+
+        loadBranchViewTable(activeRepository);
+    });
+    $('select').chosen();
+
+    loadBranchViewTable(activeRepository);
+}
+
+function loadBranchViewTable(repositoryAlias) {
+    console.log('TRYING TO LOAD: ' + activeRepository);
+
+    sendRequest({
+        name: 'getBranchLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
+        success: function(data) {
+            console.log("Get branch awareness. Success: " + JSON.stringify(data));
+            renderBranchViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selectedUsers });
+        },
+        error: function () {
+            alert('Something went wrong when trying to load branch level awareness data.');
+        }
+    });
+
+}
+
+function renderBranchViewTable(data) {
+    $('#branchTable').html(new EJS({url: 'templates/branch_view_table.ejs'}).render(data));
+
     // content
     $('.branch').click(function () {
         showUncommitted = false;
+        selectedAdditionalBranches = [];
         loadFileView(activeRepository, $(this).data('branch'));
     });
-
 }
 
 
 /* LEVEL 2: FILE AWARENESS */
 
+
 function loadFileView(repositoryAlias, branch) {
     sendRequest({
-        name: 'getFileLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted },
+        name: 'getRepositoryInformation',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
-            console.log("Get file awareness. Success: " + JSON.stringify(data));
+            console.log("Get repository info. Success: " + JSON.stringify(data));
+
             activeBranch = branch;
-            renderFileView({ files: data.files, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted });
+            activeRepositoryUsers = data.repositoryUsers;
+            activeRepositoryBranches = data.repositoryBranches;
+
+            renderFileView({ repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, repositoryBranches: activeRepositoryBranches, selectedUsers: selectedUsers, selectedAdditionalBranches: selectedAdditionalBranches, showUncommitted: showUncommitted });
         },
         error: function () {
             alert('Something went wrong when trying to load file level awareness data.');
         }
     });
-
 }
+
 
 function renderFileView(data) {
     $('body').html(new EJS({url: 'templates/file_view.ejs'}).render(data));
@@ -389,8 +440,57 @@ function renderFileView(data) {
     // navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
     $('.loadBranchView').click(function () { loadBranchView(activeRepository); });
-    $('.loadFileView').click(function () { loadFileView(activeRepository, activeBranch); });
-    $('#refresh').click(function () { loadContentView(activeRepository, activeBranch, activeFile, activeUser); });
+    $('#refresh').click(function () { loadFileView(activeRepository, activeBranch); });
+
+    // filter
+    $('#usersFilter').change(function () {
+        selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
+
+        // remove "":
+        var index = selectedUsers.indexOf("");
+        if (index > -1) {
+            selectedUsers.splice(index, 1);
+        }
+
+        loadFileViewTable(activeRepository, activeBranch);
+    });
+    $('#branchesFilter').change(function () {
+        selectedAdditionalBranches = $.map($('#branchesFilter option:selected'), function (o) { return o.value })
+
+        // remove "":
+        var index = selectedAdditionalBranches.indexOf("");
+        if (index > -1) {
+            selectedAdditionalBranches.splice(index, 1);
+        }
+
+        loadFileViewTable(activeRepository, activeBranch);
+    });
+    $('#uncommittedFilter').change(function () {
+        showUncommitted = $('#uncommittedFilter').is(':checked');
+
+        loadFileViewTable(activeRepository, activeBranch);
+    });
+    $('select').chosen();
+
+    loadFileViewTable(activeRepository, activeBranch);
+}
+
+function loadFileViewTable(repositoryAlias, branch) {
+    sendRequest({
+        name: 'getFileLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted, selectedAdditionalBranches: selectedAdditionalBranches },
+        success: function(data) {
+            console.log("Get file awareness. Success: " + JSON.stringify(data));
+            renderFileViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, branch: branch, selectedUsers: selectedUsers, showUncommitted: showUncommitted, selectedAdditionalBranches: selectedAdditionalBranches });
+        },
+        error: function () {
+            alert('Something went wrong when trying to load file level awareness data.');
+        }
+    });
+}
+
+function renderFileViewTable(data) {
+    $('#fileTable').html(new EJS({url: 'templates/file_view_table.ejs'}).render(data));
 
     // content
     $('.fileAndUser').click(function () {
@@ -402,7 +502,6 @@ function renderFileView(data) {
 /* LEVEL 3: LOAD CONTENT LEVEL AWARENESS */
 
 function loadContentView(repositoryAlias, branch, filename, username) {
-console.log({ sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username });
     sendRequest({
         name: 'getContentLevelAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username },

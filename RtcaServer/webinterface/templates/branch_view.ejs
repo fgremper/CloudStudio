@@ -11,28 +11,23 @@
 </div>
 <div id="view">
 
+	<table id="invisibleTable">
+		<tr>
+			<td>
+				Filter users:<br>
+				<select id="usersFilter" multiple>
+					<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
+					<% for (var i = 0; i < repositoryUsers.length; i++) { %>
+						<% if (repositoryUsers[i] == 'origin') continue; %>
+						<option value="<%= repositoryUsers[i] %>"<% if (selectedUsers.indexOf(repositoryUsers[i]) >= 0) { %> selected<% } %>><%= repositoryUsers[i] %></option>
+					<% } %>
+				</select>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+
 	<table id="branchTable">
-	    <tr>
-	    	<th>Branch vs. origin</th>
-	    	<% if (branches.length > 0) { %>
-	 			<% for (var j = 0; j < branches[0].users.length; j++) { %>
-	 				<th><span class="user"><%= branches[0].users[j].username %></span></th>
-	 			<% } %>
-	    	<% } %>
-	    	<th></th>
-    	</tr>
-		<% for (var i = 0; i < branches.length; i++) { %>
-		    <tr class="branch clickable" data-branch="<%= branches[i]['branch'] %>">
-		        <td><span class="blue"><%= branches[i]['branch'] %></span></td>
-	 			<% for (var j = 0; j < branches[i].users.length; j++) { %>
-	 				<% if (branches[i].users[j].relationWithOrigin == 'equal') { %><td class="branchEqual">
-	 				<% } else if (branches[i].users[j].relationWithOrigin.match(/in front$/)) { %><td class="branchInFront">
-	 				<% } else if (branches[i].users[j].relationWithOrigin.match(/behind$/)) { %><td class="branchBehind">
-	 				<% } else { %><td><% } %>
-	 				<%= branches[i].users[j].relationWithOrigin %></td>
-	 			<% } %>
-	 			<td></td>
-		    </tr>
-		<% } %>
 	</table>
 </div>

@@ -10,37 +10,35 @@
 	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <strong><%= branch %></strong></span>
 </div>
 <div id="view">
-	View uncommitted:
-	<input type="checkbox" id="filterShowUncommitted"<% if (showUncommitted) { %> checked <% } %>>
-	<div id="submitFilter"><strong>Go!</strong></div>
 
-	<br>
-
+	<table id="invisibleTable">
+		<tr>
+			<td>
+				Filter users:<br>
+				<select id="usersFilter" multiple>
+					<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
+					<% for (var i = 0; i < repositoryUsers.length; i++) { %>
+						<option value="<%= repositoryUsers[i] %>"<% if (selectedUsers.indexOf(repositoryUsers[i]) >= 0) { %> selected<% } %>><%= repositoryUsers[i] %></option>
+					<% } %>
+				</select>
+			</td>
+			<td>
+				Compare with additional branches:<br>
+				<select id="branchesFilter" multiple>
+					<option<% if (selectedAdditionalBranches.length == 0) { %> selected<% } %>></option>
+					<% for (var i = 0; i < repositoryBranches.length; i++) { %>
+						<% if (repositoryBranches[i] == branch) continue; %>
+						<option value="<%= repositoryBranches[i] %>"<% if (selectedAdditionalBranches.indexOf(repositoryBranches[i]) >= 0) { %> selected<% } %>><%= repositoryBranches[i] %></option>
+					<% } %>
+				</select>
+			</td>
+			<td>
+				<input type="checkbox" id="uncommittedFilter"<% if (showUncommitted) { %> checked <% } %>><label for="uncommittedFilter">View uncommitted files</label>
+			</td>
+		</tr>
+	</table>
+	
 	<table id="fileTable">
-	    <tr>
-	    	<th>Filename</th>
-	    	<% if (files.length > 0) { %>
-	 			<% for (var j = 0; j < files[0].users.length; j++) { %>
-	 				<th><span class="user"><%= files[0].users[j].username %></span></th>
-	 			<% } %>
-	    	<% } %>
-	    	<th></th>
-    	</tr>
-		<% for (var i = 0; i < files.length; i++) { %>
-		    <tr class="static">
-		        <td><span class="blue"><%= files[i]['filename'] %></span></td>
-	 			<% for (var j = 0; j < files[i].users.length; j++) { %>
-	 				<% if (files[i].users[j].type == 'equal') { %>
-	 					<td class="clickable fileAndUser fileEqual" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].type %></td>
-	 				<% } else if (files[i].users[j].type == 'conflict' || files[i].users[j].type == 'delete') { %>
-	 					<td class="clickable fileAndUser fileConflict" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].type %></td>
-	 				<% } else { %>
-	 					<td class="clickable fileAndUser" data-filename="<%= files[i]['filename'] %>" data-username="<%= files[i].users[j].username %>"><%= files[i].users[j].type %></td>
-	 				<% } %>
-	 			<% } %>
-				<td></td>
-		    </tr>
-		<% } %>
 	</table>
 
 </div>

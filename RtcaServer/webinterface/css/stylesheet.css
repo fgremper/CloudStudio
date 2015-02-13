@@ -292,6 +292,7 @@ textarea, input { outline: none; }
     color: #808080;
     font-size: 14px;
     font-weight: normal;
+    line-height: 20px;
 }
 
 #repositoryTable td, #repositoryTable th {
@@ -364,6 +365,7 @@ textarea, input { outline: none; }
     color: #808080;
     font-size: 14px;
     font-weight: normal;
+    line-height: 20px;
 }
 
 #branchTable td, #branchTable th {
@@ -428,6 +430,7 @@ textarea, input { outline: none; }
     color: #808080;
     font-size: 14px;
     font-weight: normal;
+    line-height: 20px;
 }
 
 #fileTable td, #fileTable th {
@@ -455,6 +458,41 @@ textarea, input { outline: none; }
 }
 #fileTable .fileConflict {
     background-color: #ffffdd;
+}
+
+
+/* 33% */
+
+#invisibleTable {
+    width: 1000px;
+    table-layout: fixed;
+    border-collapse: collapse;
+    padding: 0;
+    margin-bottom: 20px;
+}
+
+#invisibleTable td {
+    padding-right: 20px;
+    color: #808080;
+    vertical-align: top;
+}
+
+#invisibleTable td:last-child {
+    padding-right: 0;
+}
+
+#invisibleTable label {
+    font-size: 16px;
+}
+
+#invisibleTable input {
+    margin-right: 5px;
+}
+
+
+#invisibleTable select {
+    width: 100%;
+    font-size: 14px;
 }
 
 /* utility */
@@ -505,4 +543,3 @@ span.user {
     display: inline-block;
     margin: 4px 4px 4px 0;
 }
-

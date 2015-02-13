@@ -91,21 +91,21 @@ Did today: Work on file line view.
 
 Did today: Make sure everthing works in branch/file view.
 
-#### Tuesday
+#### Tuesday 10.02.2015
 
-Clean up / document / comment
+Did today: Basically remade content diff with a new library.
 
-#### Wednesday
+#### Wednesday 11.02.2015
 
-Clean up / document / comment, nice GUI
+Did today: Make sure things run smoothly overall. Everything looks fabulous in the GUI :)
 
-#### Thursday
+#### Thursday 12.02.2015
 
-Get an Eiffel project. Start working on a workflow for the demo.
+Did today: Make sure things run smoothly overall. GUI. Select users and additional branch.
 
-#### Friday
+#### Friday 13.02.2015
 
-Test for presentation and write presentation
+Today: Prepare presentation
 
 
 

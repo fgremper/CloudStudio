@@ -360,7 +360,7 @@ public class DatabaseConnection {
 		6 repository alias
 		7 their branch
 		8 committed
-		9 their branch
+		9 branch
 		10 repository
 		*/
 		
@@ -434,7 +434,7 @@ public class DatabaseConnection {
 			6 repository alias
 			7 their branch
 			8 committed
-			9 their branch
+			9 branch
 			10 repository
 			*/
 			
@@ -446,7 +446,7 @@ public class DatabaseConnection {
 			stmt.setString(6, repositoryAlias);
 			stmt.setString(7, additionalBranch);
 			stmt.setString(8, showUncommittedString);
-			stmt.setString(9, additionalBranch);
+			stmt.setString(9, branch);
 			stmt.setString(10, repositoryAlias);
 			
 			rs = stmt.executeQuery();
