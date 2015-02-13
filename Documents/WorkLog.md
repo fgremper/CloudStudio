@@ -105,9 +105,7 @@ Did today: Make sure things run smoothly overall. GUI. Select users and addition
 
 #### Friday 13.02.2015
 
-Today: Prepare presentation
-* check if file sql is correct with diff branch and no 'where'
-* get an eiffel project and put some others into the folder
-* fix the origin updater
-* dry testrun!
+Did today: Prepare presentation. Fix the origin updater problem over time. Fix the uncommitted files submit crash bug. Get an eiffel project for the demo.
 
+* check if file sql is correct with diff branch and no 'where'
+* dry testrun!

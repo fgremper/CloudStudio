@@ -548,7 +548,7 @@ input[type=text], input[type=password] {
     border: 1px solid #aaa;
     padding: 6px 5px;
     overflow: hidden;
-    font-size: 13px;
+    font-size: 14px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -562,7 +562,7 @@ div.button {
     display: inline-block;
     border: 1px solid #aaaaaa;
     font-size: 14px;
-    padding: 6px 10px;
+    padding: 7px 10px;
     background-image: linear-gradient(#ffffff 1%, #eeeeee 100%);
     cursor: pointer;
 }

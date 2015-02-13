@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <username>john</username>
-    <password>johnpw</password>
+    <username>fabian</username>
+    <password>1234</password>
     <serverUrl>http://127.0.0.1:7330</serverUrl> <!-- don't put a dash at the end -->
     <repositories>
         <repository>
-            <alias>test</alias>
-            <localPath>/Users/novocaine/Documents/masterthesis/testsandpit/john</localPath>
+            <alias>DemoTest</alias>
+            <localPath>/Users/novocaine/Documents/masterthesis/DemoTest/DemoTest</localPath>
         </repository>
     </repositories>
-    <resubmitInterval>20</resubmitInterval> <!-- in seconds; if 0 it only submits once -->
+    <resubmitInterval>0</resubmitInterval> <!-- in seconds; if 0 it only submits once -->
 </config>

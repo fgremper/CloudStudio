@@ -12,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
@@ -185,13 +186,17 @@ public class RepositoryReader {
 		            	System.out.println("[Repository] Local File: " + treeWalk.getPathString());
 						JSONObject fileObject = new JSONObject();
 						fileObject.put("filename", treeWalk.getPathString());
-						
+
 						// Get file content
+						/*
+						// This used to work at some point? Oh well, get file directly from filesystem instead
 		            	ObjectId objectId = treeWalk.getObjectId(0);
 		            	ObjectLoader loader = repository.open(objectId);
 		            	InputStream fileInputStream = loader.openStream();
 		            	String fileContent = IOUtils.toString(fileInputStream, "UTF-8");
-
+					 	*/
+						String fileContent = FileUtils.readFileToString(new File(localPath + File.separator + treeWalk.getPathString()), "UTF-8");
+						
 		            	// Some other file properties
 						fileObject.put("content", fileContent);
 						fileObject.put("branch", branchName);

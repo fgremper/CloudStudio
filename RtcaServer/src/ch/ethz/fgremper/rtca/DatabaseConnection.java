@@ -315,13 +315,16 @@ public class DatabaseConnection {
 	}
 	
 
-	public String getFileSha(String repositoryAlias, String username, String branch, String filename) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT sha FROM files WHERE repositoryalias = ? AND username = ? AND branch = ? AND filename = ?");
+	public String getFileSha(String repositoryAlias, String username, String branch, String filename, boolean showUncommitted) throws Exception {
+		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
+		
+		PreparedStatement stmt = con.prepareStatement("SELECT sha FROM files WHERE repositoryalias = ? AND username = ? AND branch = ? AND filename = ? AND (committed = ? OR committed = 'both')");
 
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);
 		stmt.setString(3, branch);
 		stmt.setString(4, filename);
+		stmt.setString(5, showUncommittedString);
 
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
@@ -545,13 +548,16 @@ public class DatabaseConnection {
 		return repositoriesArray;
 	}
 	
-	public JSONArray getRepositories(String sessionId) throws Exception {
+	public JSONArray getRepositories(String myUsername) throws Exception {
 		// Statement to get all the repositories and users for your user permissions
-		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users JOIN usersessions AS us1 ON users.username = us1.username WHERE users.isadmin = 'true' AND us1.sessionid = ?) OR EXISTS (SELECT useraccess.username FROM useraccess JOIN usersessions AS us2 ON useraccess.username = us2.username WHERE us2.sessionid = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = (SELECT username FROM usersessions WHERE sessionid = ?)");
-		stmt.setString(1, sessionId);
+		
+		// TODO TODO TODO atm everyone can see everything
+		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias");
+		//WHERE EXISTS (SELECT users.username FROM users JOIN usersessions AS us1 ON users.username = us1.username WHERE users.isadmin = 'true' AND us1.sessionid = ?) OR EXISTS (SELECT useraccess.username FROM useraccess JOIN usersessions AS us2 ON useraccess.username = us2.username WHERE us2.sessionid = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = (SELECT username FROM usersessions WHERE sessionid = ?)");
+		/*stmt.setString(1, sessionId);
 		stmt.setString(2, sessionId);
 		stmt.setString(3, sessionId);
-		
+		*/
 		// Put the results into a JSON array
 		JSONArray repositoriesArray = new JSONArray();
 		ResultSet rs = stmt.executeQuery();
@@ -702,31 +708,32 @@ public class DatabaseConnection {
 	
 	/* AUTHORIZATION CHECKS */
 	
-	public boolean doesUserHaveRepositoryAccess(String sessionId, String repositoryAlias) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT useraccess.username FROM usersessions JOIN useraccess ON usersessions.username = useraccess.username WHERE usersessions.sessionid = ? AND useraccess.repositoryalias = ?");
-		stmt.setString(1, sessionId);
+	public boolean doesUserHaveRepositoryAccess(String username, String repositoryAlias) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT username FROM useraccess WHERE username = ? AND repositoryalias = ?");
+		stmt.setString(1, username);
 		stmt.setString(2, repositoryAlias);
 		ResultSet rs = stmt.executeQuery();
 		return rs.next();
 	}
 
-	public boolean isUserAdmin(String sessionId) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT users.username FROM usersessions JOIN users ON usersessions.username = users.username WHERE usersessions.sessionid = ? and users.isadmin = 'true'");
-		stmt.setString(1, sessionId);
+	public boolean isUserAdmin(String username) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? and isadmin = 'true'");
+		stmt.setString(1, username);
 		ResultSet rs = stmt.executeQuery();
 		return rs.next();
 	}
 
-	public boolean isUserCreator(String sessionId) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT users.username FROM usersessions JOIN users ON usersessions.username = users.username WHERE usersessions.sessionid = ? and users.iscreator = 'true'");
-		stmt.setString(1, sessionId);
+	public boolean isUserCreator(String username) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? and iscreator = 'true'");
+		stmt.setString(1, username);
 		ResultSet rs = stmt.executeQuery();
 		return rs.next();
 	}
 
-	public boolean isUserRepositoryOwner(String sessionId, String repositoryAlias) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT repositories.username FROM usersessions JOIN repositories ON usersessions.username = repositories.username WHERE usersessions.sessionid = ? AND repositories.repositoryalias = ? AND repositories.repositoryowner = usersessions.username");
-		stmt.setString(1, sessionId);
+	public boolean isUserRepositoryOwner(String username, String repositoryAlias) throws SQLException {
+		if (username == null) return false;
+		PreparedStatement stmt = con.prepareStatement("SELECT repositoryowner FROM repositories WHERE repositoryowner = ? AND repositoryalias = ?");
+		stmt.setString(1, username);
 		stmt.setString(2, repositoryAlias);
 		ResultSet rs = stmt.executeQuery();
 		return rs.next();

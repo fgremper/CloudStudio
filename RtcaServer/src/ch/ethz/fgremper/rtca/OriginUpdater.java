@@ -10,17 +10,9 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class OriginUpdater implements Runnable {
+public class OriginUpdater {
 	
-	private String repositoryAlias;
-	private String repositoryUrl;
-	
-	public OriginUpdater(String repositoryAlias, String repositoryUrl) {
-		this.repositoryAlias = repositoryAlias;
-		this.repositoryUrl = repositoryUrl;
-	}
-	
-	public void run() {
+	public static void update(String repositoryAlias, String repositoryUrl) {
 		DatabaseConnection db = null;
 		try {
 			String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
@@ -71,7 +63,7 @@ public class OriginUpdater implements Runnable {
 		}
 	}
 	
-	public void executeCommand(String consoleInput) throws Exception {
+	public static void executeCommand(String consoleInput) throws Exception {
 		System.out.println("[OriginUpdater] Executing: " + consoleInput);
 		Process p = Runtime.getRuntime().exec(consoleInput);
 		p.waitFor();

@@ -50,15 +50,27 @@ public class RequestHttpHandler implements HttpHandler {
 			
 			// POST request?
 			if (requestMethod.equalsIgnoreCase("POST")) {
+
+				String sessionId = null;
+				String sessionUsername = null;
+				
+				// Get the JSON object, session and username
+				JSONObject incomingObject = new JSONObject(inputJsonString);
+				try {
+					sessionId = incomingObject.getString("sessionId");
+					sessionUsername = db.getUsername(sessionId);
+				}
+				catch (Exception e) {
+					// No user found
+				}
 				
 				// Login request
 				if (uri.getPath().equals(prefix + "/login") || uri.getPath().equals(prefix + "/createUserAndLogin")) {
 					System.out.println("[RequestHttpHandler] Incoming LOGIN.");
 					
 					// Read parameters
-					JSONObject loginObject = new JSONObject(inputJsonString);
-					String username = loginObject.getString("username");
-					String password = loginObject.getString("password");
+					String username = incomingObject.getString("username");
+					String password = incomingObject.getString("password");
 					
 					// Do we need to create the user?
 					if (uri.getPath().equals(prefix + "/createUserAndLogin")) {
@@ -66,21 +78,21 @@ public class RequestHttpHandler implements HttpHandler {
 					}
 					
 					// Request new session ID from database
-					String sessionId = db.getNewSessionIdForCorrectLogin(username, password);
+					String newSessionId = db.getNewSessionIdForCorrectLogin(username, password);
 	
 					// Initialize response object
 					JSONObject responseObject = new JSONObject();
 					
-					if (sessionId != null) {
+					if (newSessionId != null) {
 						// Persist session ID
 						db.startTransaction();
-						db.persistSessionIdForUser(sessionId, username);
+						db.persistSessionIdForUser(newSessionId, username);
 						db.commitTransaction();
 	
 						// Create user object
-						responseObject.put("isAdmin", db.isUserAdmin(sessionId));
-						responseObject.put("isCreator", db.isUserCreator(sessionId));
-						responseObject.put("sessionId", sessionId);
+						responseObject.put("isAdmin", db.isUserAdmin(newSessionId));
+						responseObject.put("isCreator", db.isUserCreator(newSessionId));
+						responseObject.put("sessionId", newSessionId);
 						responseObject.put("username", username);
 					}
 					
@@ -92,27 +104,18 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/getRepositories")) {
 					System.out.println("[RequestHttpHandler] Incoming GET REPOSITORIES.");
 					
-					// Read parameters
-					JSONObject getRepositoriesObject = new JSONObject(inputJsonString);
-					String sessionId = getRepositoriesObject.getString("sessionId");
-					
 					// Read repository information from database
-					db.startTransaction();
-					response = db.getRepositories(sessionId).toString();
-					db.commitTransaction();
-					
+					if (sessionUsername != null) {
+						response = db.getRepositories(sessionUsername).toString();
+					}
 				}
 	
 				// Get users request
 				if (uri.getPath().equals(prefix + "/getUsers")) {
 					System.out.println("[RequestHttpHandler] Incoming GET USERS.");
 					
-					// Read parameters
-					JSONObject getRepositoriesObject = new JSONObject(inputJsonString);
-					String sessionId = getRepositoriesObject.getString("sessionId");
-					
 					// We need to be admin to retrieve this information
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionUsername)) {
 						response = db.getUsers().toString();
 					}
 				}
@@ -121,11 +124,11 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/getBranchLevelAwareness")) {
 					System.out.println("Incoming GET BRANCH LEVEL AWARENESS.");
 
-					JSONObject getConflictsObject = new JSONObject(inputJsonString);
-					String sessionId = getConflictsObject.getString("sessionId");
-					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
+					// Get repository alias
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
 					
-					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
+					// Need to be admin or have repository access
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 						response = db.getBranchLevelAwareness(repositoryAlias).toString();
 					}
 				}
@@ -134,17 +137,18 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/getContentLevelAwareness")) {
 					System.out.println("Incoming GET CONTENT LEVEL AWARENESS.");
 
-					JSONObject getFileLevelAwareness = new JSONObject(inputJsonString);
-					String sessionId = getFileLevelAwareness.getString("sessionId");
-					String repositoryAlias = getFileLevelAwareness.getString("repositoryAlias");
-					String theirUsername = getFileLevelAwareness.getString("username");
-					String myUsername = db.getUsername(sessionId);
-					String branch = getFileLevelAwareness.getString("branch");
-					String filename = getFileLevelAwareness.getString("filename");
-					
-					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						String mySha = db.getFileSha(repositoryAlias, myUsername, branch, filename);
-						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename);
+					// Get data
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					String theirUsername = incomingObject.getString("username");
+					String branch = incomingObject.getString("branch");
+					String filename = incomingObject.getString("filename");
+					boolean showUncommitted = incomingObject.getBoolean("showUncommitted");
+
+					// Need to be admin or have repository access
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+						
+						String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
+						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename, showUncommitted);
 						
 						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 
@@ -178,13 +182,11 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/getFileLevelAwareness")) {
 					System.out.println("Incoming GET FILE LEVEL CONFLICTS.");
 
-					JSONObject getConflictsObject = new JSONObject(inputJsonString);
-					String sessionId = getConflictsObject.getString("sessionId");
-					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
-					
-					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						String username = db.getUsername(sessionId);
-						response = db.getFileLevelAwareness(getConflictsObject, username);
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+
+					// Need to be admin or have repository access
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+						response = db.getFileLevelAwareness(incomingObject, sessionUsername);
 					}
 				}
 				
@@ -192,12 +194,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/getRepositoryInformation")) {
 					System.out.println("Incoming GET REPOSITORY INFORMATION.");
 
-					JSONObject getConflictsObject = new JSONObject(inputJsonString);
-					String sessionId = getConflictsObject.getString("sessionId");
-					String repositoryAlias = getConflictsObject.getString("repositoryAlias");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
 					
-					if (db.isUserAdmin(sessionId) || db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						String username = db.getUsername(sessionId);
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 						response = db.getRepositoryInformation(repositoryAlias);
 					}
 				}
@@ -206,15 +205,13 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/addRepository")) {
 					System.out.println("Incoming ADD REPOSITORY.");
 		
-					JSONObject addRepositoryObject = new JSONObject(inputJsonString);
-					String repositoryAlias = addRepositoryObject.getString("repositoryAlias");
-					String repositoryUrl = addRepositoryObject.getString("repositoryUrl");
-					String sessionId = addRepositoryObject.getString("sessionId");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					String repositoryUrl = incomingObject.getString("repositoryUrl");
 	
-					if (db.isUserAdmin(sessionId) || db.isUserCreator(sessionId)) {
+					if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
-						String repositoryOwner = db.getUsername(sessionId);
+						String repositoryOwner = sessionUsername;
 						db.addRepository(repositoryAlias, repositoryUrl, repositoryOwner);
 						db.commitTransaction();
 						response = "{}";
@@ -225,11 +222,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/deleteRepository")) {
 					System.out.println("Incoming DELETE REPOSITORY.");
 
-					JSONObject deleteRepositoryObject = new JSONObject(inputJsonString);
-					String repositoryAlias = deleteRepositoryObject.getString("repositoryAlias");
-					String sessionId = deleteRepositoryObject.getString("sessionId");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
 	
-					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+					if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.deleteRepository(repositoryAlias);
@@ -242,12 +237,10 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/addUserToRepository")) {
 					System.out.println("Incoming ADD USER TO REPOSITORY.");
 
-					JSONObject addUserToRepositoryObject = new JSONObject(inputJsonString);
-					String username = addUserToRepositoryObject.getString("username");
-					String repositoryAlias = addUserToRepositoryObject.getString("repositoryAlias");
-					String sessionId = addUserToRepositoryObject.getString("sessionId");
+					String username = incomingObject.getString("username");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
 	
-					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+					if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.addUserToRepository(username, repositoryAlias);
@@ -260,12 +253,10 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/deleteUserFromRepository")) {
 					System.out.println("Incoming DELETE USER FROM REPOSITORY.");
 
-					JSONObject removeUserToRepositoryObject = new JSONObject(inputJsonString);
-					String username = removeUserToRepositoryObject.getString("username");
-					String repositoryAlias = removeUserToRepositoryObject.getString("repositoryAlias");
-					String sessionId = removeUserToRepositoryObject.getString("sessionId");
+					String username = incomingObject.getString("username");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
 	
-					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+					if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.deleteUserFromRepository(username, repositoryAlias);
@@ -278,12 +269,10 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/modifyRepositoryOwner")) {
 					System.out.println("Incoming MODIFY REPOSITORY OWNER.");
 
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String repositoryAlias = modifyRepositoryOwner.getString("repositoryAlias");
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					String username = incomingObject.getString("username");
 	
-					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+					if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.modifyRepositoryOwner(repositoryAlias, username);
@@ -296,11 +285,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/deleteUser")) {
 					System.out.println("Incoming DELETE USER.");
 
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
+					String username = incomingObject.getString("username");
 	
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionUsername)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.deleteUser(username);
@@ -313,11 +300,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/makeUserAdmin")) {
 					System.out.println("Incoming MAKE USER ADMIN.");
 
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
+					String username = incomingObject.getString("username");
 	
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionUsername)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.makeUserAdmin(username);
@@ -330,11 +315,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/revokeUserAdmin")) {
 					System.out.println("Incoming REVOKE USER ADMIN.");
 
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
+					String username = incomingObject.getString("username");
 	
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionUsername)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.revokeUserAdmin(username);
@@ -347,11 +330,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/makeUserCreator")) {
 					System.out.println("Incoming MAKE USER CREATOR.");
 
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
+					String username = incomingObject.getString("username");
 	
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionUsername)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.makeUserCreator(username);
@@ -364,11 +345,9 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/revokeUserCreator")) {
 					System.out.println("Incoming REVOKE USER CREATOR.");
 
-					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
-					String username = modifyRepositoryOwner.getString("username");
-					String sessionId = modifyRepositoryOwner.getString("sessionId");
+					String username = incomingObject.getString("username");
 	
-					if (db.isUserAdmin(sessionId)) {
+					if (db.isUserAdmin(sessionUsername)) {
 						db = new DatabaseConnection();
 						db.startTransaction();
 						db.revokeUserCreator(username);
@@ -381,14 +360,11 @@ public class RequestHttpHandler implements HttpHandler {
 				if (uri.getPath().equals(prefix + "/setLocalGitState")) {
 					System.out.println("Incoming SET LOCAL GIT STATE.");
 
-					JSONObject setLocalGitStateObject = new JSONObject(inputJsonString);
-					String sessionId = setLocalGitStateObject.getString("sessionId");
-					String repositoryAlias = setLocalGitStateObject.getString("repositoryAlias");
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
 					
-					if (db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
-						String username = db.getUsername(sessionId);
+					if (db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 						db.startTransaction();
-						db.setEntireUserGitState(inputJsonString, username);
+						db.setEntireUserGitState(inputJsonString, sessionUsername);
 						db.commitTransaction();
 						response = "{}";
 					}

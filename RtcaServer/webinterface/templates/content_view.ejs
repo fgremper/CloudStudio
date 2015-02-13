@@ -7,7 +7,7 @@
 </div>
 <div id="navigationBar">
 	<span id="refresh">Refresh</span>
-	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <span class="loadFileView clickable"><%= branch %></span> &mdash; File: <strong><%= filename %></strong></span>
+	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <span class="loadFileView clickable"><%= branch %></span> &mdash; File: <strong><%= filename %></strong><% if (showUncommitted) { %> (uncommitted)<% } %></span>
 </div>
 <div id="view">
 

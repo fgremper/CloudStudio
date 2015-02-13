@@ -504,12 +504,12 @@ function renderFileViewTable(data) {
 function loadContentView(repositoryAlias, branch, filename, username) {
     sendRequest({
         name: 'getContentLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username },
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));
             activeFile = filename;
             activeUser = username;
-            renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username });
+            renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted });
         },
         error: function () {
             alert('Something went wrong when trying to load line level awareness data.');

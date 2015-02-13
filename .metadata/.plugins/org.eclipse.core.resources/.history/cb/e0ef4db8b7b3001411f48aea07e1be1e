@@ -1,0 +1,441 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.URI;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import ch.ethz.fgremper.rtca.helper.JSONHelper;
+
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+import difflib.DiffUtils;
+import difflib.Patch;
+
+public class RequestHttpHandler implements HttpHandler {
+	
+	public void handle(HttpExchange exchange) throws IOException {
+		
+		// Get HTTP exchange information
+		URI uri = exchange.getRequestURI();
+		String requestMethod = exchange.getRequestMethod();
+		System.out.println("[RequestHttpHandler] Incoming request: " + requestMethod + " " + uri.getPath());
+		String inputJsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
+		System.out.println("[RequestHttpHandler] JSON string: " + inputJsonString);
+		
+		// Variables
+		String response = null;
+		String prefix = "/request";
+
+		DatabaseConnection db = null;
+		try {
+			// Get database connection
+			db = new DatabaseConnection();
+			
+			// POST request?
+			if (requestMethod.equalsIgnoreCase("POST")) {
+
+				// Get the JSON object, session and username
+				JSONObject incomingObject = new JSONObject(inputJsonString);
+				String sessionId = incomingObject.getString("sessionId");
+				String sessionUsername = db.getUsername(sessionId);
+				
+				// Login request
+				if (uri.getPath().equals(prefix + "/login") || uri.getPath().equals(prefix + "/createUserAndLogin")) {
+					System.out.println("[RequestHttpHandler] Incoming LOGIN.");
+					
+					// Read parameters
+					String username = incomingObject.getString("username");
+					String password = incomingObject.getString("password");
+					
+					// Do we need to create the user?
+					if (uri.getPath().equals(prefix + "/createUserAndLogin")) {
+						db.addUser(username, password);
+					}
+					
+					// Request new session ID from database
+					String newSessionId = db.getNewSessionIdForCorrectLogin(username, password);
+	
+					// Initialize response object
+					JSONObject responseObject = new JSONObject();
+					
+					if (newSessionId != null) {
+						// Persist session ID
+						db.startTransaction();
+						db.persistSessionIdForUser(sessionId, username);
+						db.commitTransaction();
+	
+						// Create user object
+						responseObject.put("isAdmin", db.isUserAdmin(sessionId));
+						responseObject.put("isCreator", db.isUserCreator(sessionId));
+						responseObject.put("sessionId", sessionId);
+						responseObject.put("username", username);
+					}
+					
+					response = responseObject.toString();
+					
+				}
+			
+				// Get repositories request
+				if (uri.getPath().equals(prefix + "/getRepositories")) {
+					System.out.println("[RequestHttpHandler] Incoming GET REPOSITORIES.");
+					
+					// Read repository information from database
+					if (sessionUsername != null) {
+						response = db.getRepositories(sessionUsername).toString();
+					}
+				}
+	
+				// Get users request
+				if (uri.getPath().equals(prefix + "/getUsers")) {
+					System.out.println("[RequestHttpHandler] Incoming GET USERS.");
+					
+					// We need to be admin to retrieve this information
+					if (db.isUserAdmin(sessionUsername)) {
+						response = db.getUsers().toString();
+					}
+				}
+
+				// Get branch level awareness
+				if (uri.getPath().equals(prefix + "/getBranchLevelAwareness")) {
+					System.out.println("Incoming GET BRANCH LEVEL AWARENESS.");
+
+					// Get repository alias
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					
+					// Need to be admin or have repository access
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+						response = db.getBranchLevelAwareness(repositoryAlias).toString();
+					}
+				}
+
+				// Get content level awareness
+				if (uri.getPath().equals(prefix + "/getContentLevelAwareness")) {
+					System.out.println("Incoming GET CONTENT LEVEL AWARENESS.");
+
+					// Get data
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					String theirUsername = incomingObject.getString("username");
+					String branch = incomingObject.getString("branch");
+					String filename = incomingObject.getString("filename");
+
+					// Need to be admin or have repository access
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+						
+						String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename);
+						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename);
+						
+						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
+
+						JSONObject responseObject = new JSONObject();
+						
+						List<String> myContent;
+						List<String> theirContent;
+						
+						if (mySha != null) {
+					        myContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + mySha);
+						}
+						else {
+							myContent = new LinkedList<String>();
+						}
+
+						if (theirSha != null) {
+					        theirContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + theirSha);
+						}
+						else {
+							theirContent = new LinkedList<String>();
+						}
+						
+						responseObject.put("content", SideBySideDiff.diff(myContent, theirContent));
+						
+						response = responseObject.toString();
+						
+					}
+				}
+
+				// Get file awareness requests
+				if (uri.getPath().equals(prefix + "/getFileLevelAwareness")) {
+					System.out.println("Incoming GET FILE LEVEL CONFLICTS.");
+
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+
+					// Need to be admin or have repository access
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+						response = db.getFileLevelAwareness(incomingObject, sessionUsername);
+					}
+				}
+				
+				// Get repository information
+				if (uri.getPath().equals(prefix + "/getRepositoryInformation")) {
+					System.out.println("Incoming GET REPOSITORY INFORMATION.");
+
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					
+					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+						response = db.getRepositoryInformation(repositoryAlias);
+					}
+				}
+			
+				// Add repository request
+				if (uri.getPath().equals(prefix + "/addRepository")) {
+					System.out.println("Incoming ADD REPOSITORY.");
+		
+					String repositoryAlias = incomingObject.getString("repositoryAlias");
+					String repositoryUrl = incomingObject.getString("repositoryUrl");
+	
+					if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						String repositoryOwner = sessionUsername;
+						db.addRepository(repositoryAlias, repositoryUrl, repositoryOwner);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Delete repository request
+				if (uri.getPath().equals(prefix + "/deleteRepository")) {
+					System.out.println("Incoming DELETE REPOSITORY.");
+
+					JSONObject deleteRepositoryObject = new JSONObject(inputJsonString);
+					String repositoryAlias = deleteRepositoryObject.getString("repositoryAlias");
+					String sessionId = deleteRepositoryObject.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.deleteRepository(repositoryAlias);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Add user to repository request
+				if (uri.getPath().equals(prefix + "/addUserToRepository")) {
+					System.out.println("Incoming ADD USER TO REPOSITORY.");
+
+					JSONObject addUserToRepositoryObject = new JSONObject(inputJsonString);
+					String username = addUserToRepositoryObject.getString("username");
+					String repositoryAlias = addUserToRepositoryObject.getString("repositoryAlias");
+					String sessionId = addUserToRepositoryObject.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.addUserToRepository(username, repositoryAlias);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+				
+				// Delete user from repository request
+				if (uri.getPath().equals(prefix + "/deleteUserFromRepository")) {
+					System.out.println("Incoming DELETE USER FROM REPOSITORY.");
+
+					JSONObject removeUserToRepositoryObject = new JSONObject(inputJsonString);
+					String username = removeUserToRepositoryObject.getString("username");
+					String repositoryAlias = removeUserToRepositoryObject.getString("repositoryAlias");
+					String sessionId = removeUserToRepositoryObject.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.deleteUserFromRepository(username, repositoryAlias);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Modify repository owner
+				if (uri.getPath().equals(prefix + "/modifyRepositoryOwner")) {
+					System.out.println("Incoming MODIFY REPOSITORY OWNER.");
+
+					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String repositoryAlias = modifyRepositoryOwner.getString("repositoryAlias");
+					String username = modifyRepositoryOwner.getString("username");
+					String sessionId = modifyRepositoryOwner.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId) || db.isUserRepositoryOwner(sessionId, repositoryAlias)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.modifyRepositoryOwner(repositoryAlias, username);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Delete user
+				if (uri.getPath().equals(prefix + "/deleteUser")) {
+					System.out.println("Incoming DELETE USER.");
+
+					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String username = modifyRepositoryOwner.getString("username");
+					String sessionId = modifyRepositoryOwner.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.deleteUser(username);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Make user admin
+				if (uri.getPath().equals(prefix + "/makeUserAdmin")) {
+					System.out.println("Incoming MAKE USER ADMIN.");
+
+					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String username = modifyRepositoryOwner.getString("username");
+					String sessionId = modifyRepositoryOwner.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.makeUserAdmin(username);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Revoke user admin
+				if (uri.getPath().equals(prefix + "/revokeUserAdmin")) {
+					System.out.println("Incoming REVOKE USER ADMIN.");
+
+					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String username = modifyRepositoryOwner.getString("username");
+					String sessionId = modifyRepositoryOwner.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.revokeUserAdmin(username);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Make user creator
+				if (uri.getPath().equals(prefix + "/makeUserCreator")) {
+					System.out.println("Incoming MAKE USER CREATOR.");
+
+					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String username = modifyRepositoryOwner.getString("username");
+					String sessionId = modifyRepositoryOwner.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.makeUserCreator(username);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+
+				// Revoke user creator
+				if (uri.getPath().equals(prefix + "/revokeUserCreator")) {
+					System.out.println("Incoming REVOKE USER CREATOR.");
+
+					JSONObject modifyRepositoryOwner = new JSONObject(inputJsonString);
+					String username = modifyRepositoryOwner.getString("username");
+					String sessionId = modifyRepositoryOwner.getString("sessionId");
+	
+					if (db.isUserAdmin(sessionId)) {
+						db = new DatabaseConnection();
+						db.startTransaction();
+						db.revokeUserCreator(username);
+						db.commitTransaction();
+						response = "{}";
+					}
+				}
+				
+				// Set local git state request
+				if (uri.getPath().equals(prefix + "/setLocalGitState")) {
+					System.out.println("Incoming SET LOCAL GIT STATE.");
+
+					JSONObject setLocalGitStateObject = new JSONObject(inputJsonString);
+					String sessionId = setLocalGitStateObject.getString("sessionId");
+					String repositoryAlias = setLocalGitStateObject.getString("repositoryAlias");
+					
+					if (db.doesUserHaveRepositoryAccess(sessionId, repositoryAlias)) {
+						String username = db.getUsername(sessionId);
+						db.startTransaction();
+						db.setEntireUserGitState(inputJsonString, username);
+						db.commitTransaction();
+						response = "{}";
+					}
+					
+				}
+
+			}
+			
+			
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Close database connection
+		try {
+			if (db != null) {
+				db.closeConnection();
+			}
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (response != null) {
+			exchange.sendResponseHeaders(200, response.length());
+		}
+		else {
+			response = "500 (Error)";
+			exchange.sendResponseHeaders(500, response.length());
+		}
+		System.out.println("[RequestHttpHandler] Sending response: " + response);
+		OutputStream os = exchange.getResponseBody();
+		os.write(response.getBytes());
+		os.close();
+		
+	}
+
+	public static List<String> fileToLines(String filename) {
+        List<String> lines = new LinkedList<String>();
+        String line = "";
+        BufferedReader in = null;
+        try {
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8"));
+            while ((line = in.readLine()) != null) {
+                    lines.add(line);
+            }
+        } catch (IOException e) {
+                e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // ignore ... any errors should already have been
+                    // reported via an IOException from the final flush.
+                }
+            }
+        }
+        return lines;
+	}
+}
