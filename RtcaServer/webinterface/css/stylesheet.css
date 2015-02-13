@@ -9,7 +9,7 @@ textarea, input { outline: none; }
 
 
 /* login */
-
+/*
 #username, #password, #newUsername, #newPassword {
     display: block;
     width: 200px;
@@ -42,7 +42,7 @@ textarea, input { outline: none; }
     background-color: #e4e4e4;
     border-color: #e4e4e4;
 }
-
+*/
 /* create repository */
 
 
@@ -168,7 +168,6 @@ textarea, input { outline: none; }
     color: #c0c0c0;
     line-height: 14px;
     font-size: 14px;
-    border-radius: 3px;
     cursor: pointer;
 }
 
@@ -379,7 +378,7 @@ textarea, input { outline: none; }
 }
 #branchTable td:first-child, #branchTable th:first-child {
     text-align: left;
-    width: 200px;
+    width: 300px;
 }
 #branchTable .branchEqual {
     background-color: #e0ffdd;
@@ -542,4 +541,33 @@ span.user {
     border-radius: 50px;
     display: inline-block;
     margin: 4px 4px 4px 0;
+}
+
+input[type=text], input[type=password] {
+    background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
+    border: 1px solid #aaa;
+    padding: 6px 5px;
+    overflow: hidden;
+    font-size: 13px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    border: 1px solid #5897fb;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+div.button {
+    display: inline-block;
+    border: 1px solid #aaaaaa;
+    font-size: 14px;
+    padding: 6px 10px;
+    background-image: linear-gradient(#ffffff 1%, #eeeeee 100%);
+    cursor: pointer;
+}
+div.button.buttonHighlight, div.button:hover {
+    background-image: linear-gradient(#386fcf 1%, #386fcf 100%);
+    border: 1px solid #386fcf;
+    color: #ffffff;
 }

@@ -5,10 +5,25 @@
 	<span id="navigationLocation"><strong>Login</strong></span>
 </div>
 <div id="view">
-	<input id="username" type="text" placeholder="Username">
-	<input id="password" type="password" placeholder="Password">
-	<div id="submitLogin">Login</div>
-	<input id="newUsername" type="text" placeholder="Create new username">
-	<input id="newPassword" type="password" placeholder="Create new password">
-	<div id="submitCreateUserAndLogin">Create new user</div>
+
+	<table id="invisibleTable">
+		<tr>
+			<td>
+				Username:<br>
+				<input id="username" type="text"><br><br>
+				Password:<br>
+				<input id="password" type="password"><br><br>
+				<div id="submitLogin" class="button">Login</div>
+			</td>
+			<td>
+				New username:<br>
+				<input id="newUsername" type="text" placeholder="Create new username"><br><br>
+				New Password:<br>
+				<input id="newPassword" type="password" placeholder="Create new password"><br><br>
+				<div id="submitCreateUserAndLogin" class="button">Create new user</div>
+			</td>
+			<td></td>
+		</tr>
+	</table>
+
 </div>
