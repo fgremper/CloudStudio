@@ -32,6 +32,8 @@ public class ServerMain {
 	
 	public static void main(String[] args) throws Exception {
 		// create admin if it doens't exist
+		
+		/*
         try {
 
     		DatabaseConnection db = new DatabaseConnection();
@@ -45,13 +47,14 @@ public class ServerMain {
         catch (Exception e) {
         	// nothing
         }
+		*/
 		
 		// Periodically origin updater
 		System.out.println("[Main] Starting periodical origin updater");
 		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		new Thread(originUpdaterInterval).start();
-		
+
 		
 		
 		// HTTP server

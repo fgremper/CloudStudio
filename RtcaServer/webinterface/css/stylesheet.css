@@ -8,72 +8,6 @@ textarea, input { outline: none; }
 
 
 
-/* login */
-/*
-#username, #password, #newUsername, #newPassword {
-    display: block;
-    width: 200px;
-    font-size: 16px;
-    padding: 6px 6px;
-    border: 1px solid #d0d0d0;
-    margin: 0 0 5px 0;
-    font-size: 14px;
-}
-#username:focus, #password:focus, #newUsername:focus, #newPassword:focus {
-    border-color: #4C7CBA;
-}
-#submitLogin, #submitCreateUserAndLogin {
-    width: 200px;
-    font-weight: bold;
-    color: #ffffff;
-    text-align: center;
-    font-size: 16px;
-    padding: 6px 6px;
-    background-color: #4C7CBA;
-    border: 1px solid #4C7CBA;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 10px 0 20px 0;
-    font-size: 14px;
-}
-#submitCreateUserAndLogin {
-    font-weight: normal;
-    color: #444444;
-    background-color: #e4e4e4;
-    border-color: #e4e4e4;
-}
-*/
-/* create repository */
-
-
-#repositoryAlias, #repositoryUrl {
-    display: block;
-    width: 200px;
-    font-size: 16px;
-    padding: 6px 6px;
-    border: 1px solid #d0d0d0;
-    margin: 0 0 5px 0;
-}
-#repositoryAlias:focus, #repositoryUrl:focus {
-    border-color: #4C7CBA;
-}
-#submitCreateRepository {
-    width: 200px;
-    font-weight: bold;
-    color: #ffffff;
-    text-align: center;
-    font-size: 16px;
-    padding: 6px 6px;
-    background-color: #4C7CBA;
-    border: 1px solid #4C7CBA;
-    cursor: pointer;
-    border-radius: 4px;
-    margin: 10px 0 20px 0;
-}
-
-
-
-
 
 
 
@@ -457,6 +391,61 @@ textarea, input { outline: none; }
 }
 #fileTable .fileConflict {
     background-color: #ffffdd;
+}
+
+
+/* users */
+
+#userTable {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #d0d0d0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#userTable tr.static {
+    background-color: #fdfdfd;
+}
+
+#userTable td {
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 30px;
+    padding: 5px 10px;
+    color: #202020;
+    line-height: 20px;
+    font-size: 14px;
+}
+
+#userTable th {
+    padding: 5px 10px;
+    border-bottom: 1px solid #d0d0d0;
+    border-left: 1px solid #d0d0d0;
+    vertical-align: center;
+    text-align: left;
+    height: 40px;
+    color: #808080;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 20px;
+}
+
+#userTable td, #userTable th {
+    width: 150px;
+}
+#userTable td:last-child, #userTable th:last-child {
+    width: 100%;
+}
+#userTable td, #userTable th {
+    text-align: center;
+}
+#userTable td:first-child, #userTable th:first-child {
+    text-align: left;
+    width: 300px;
 }
 
 

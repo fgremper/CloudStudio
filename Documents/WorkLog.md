@@ -13,7 +13,6 @@
 * find out how to find the best merge-base-file commit
 * API documentation
 * last fetch (stat -c %Y .git/FETCH_HEAD, http://stackoverflow.com/questions/2993902/how-do-i-check-the-date-and-time-of-the-latest-git-pull-that-was-executed)
-* see if the instability thing over long runtime still exists since changes to the db connection pool etc.
 * comment the code more
 
 #### Done
@@ -32,6 +31,15 @@
 * make the server fetch origin (either directly by including client features or using "standalone" plugin [make user origin?!])
 * send more branch level information
 * find out where all users in a branch stand in relation to the origin
+* pick one of two diff libraries and build side by side diff
+* regularily fetch origin, general working with origin
+* branch view
+* see if the instability thing over long runtime still exists since changes to the db connection pool etc.
+* remake a lot of the gui so it looks nice
+* prepare presentation
+* fix some bugs that crash over time (origin updater, uncommitted files from the local plugin)
+* verify correctness of file compare sql when comparing to different branch
+* package as jar, test everything with a repo on github
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
@@ -107,5 +115,9 @@ Did today: Make sure things run smoothly overall. GUI. Select users and addition
 
 Did today: Prepare presentation. Fix the origin updater problem over time. Fix the uncommitted files submit crash bug. Get an eiffel project for the demo.
 
-* check if file sql is correct with diff branch and no 'where'
-* dry testrun!
+#### Sunday 15.02.2015
+
+Did today: Back to single connections for now, the c3p0 connection pool still has some over-time bug. Check if file sql is correct with diff branch and no 'where'. Test running from JAR. Test a bit.
+
+
+

@@ -1,19 +1,27 @@
 <div id="header">
-	<div id="headerText">
-		<div id="login">
-			Logged in as: <strong><%= login.username %></strong>
-			<% if (login.isAdmin) { %>(Administrator) &nbsp;|&nbsp; <span id="manageUsers">Manage users</span><% } %>
-		</div>
-		<span id="logo">RTCA Web Interface</span>
+	<div id="headerLogin">
+		Logged in as <strong><%= login.username %></strong>
+		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
 	</div>
+	<span id="headerLogo">RTCA Web Interface</span>
 </div>
-<div id="title">
-    <div id="titleText">
-    	<span class="repositoryViewButton clickable">Repositories</span> / <strong>Create repository</strong>
-    </div>
+<div id="navigationBar">
+	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; <strong>Create new repository</strong></span>
 </div>
 <div id="view">
-	<input id="repositoryAlias" type="text" placeholder="Repository alias">
-	<input id="repositoryUrl" type="text" placeholder="URL to repository">
-	<div id="submitCreateRepository">Create</div>
+
+	<table id="invisibleTable">
+		<tr>
+			<td>
+				Repository alias:<br>
+				<input id="repositoryAlias" type="text"><br><br>
+				URL to repository:
+				<input id="repositoryUrl" type="text"><br><br>
+				<div id="submitCreateRepository" class="button">Create</div>
+			</td>
+			<td></td>
+			<td></td>
+		</tr>
+	</table>
+
 </div>

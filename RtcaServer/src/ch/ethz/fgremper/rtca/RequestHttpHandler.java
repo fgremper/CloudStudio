@@ -47,7 +47,7 @@ public class RequestHttpHandler implements HttpHandler {
 		try {
 			// Get database connection
 			db = new DatabaseConnection();
-			
+
 			// POST request?
 			if (requestMethod.equalsIgnoreCase("POST")) {
 
@@ -90,8 +90,8 @@ public class RequestHttpHandler implements HttpHandler {
 						db.commitTransaction();
 	
 						// Create user object
-						responseObject.put("isAdmin", db.isUserAdmin(newSessionId));
-						responseObject.put("isCreator", db.isUserCreator(newSessionId));
+						responseObject.put("isAdmin", db.isUserAdmin(username));
+						responseObject.put("isCreator", db.isUserCreator(username));
 						responseObject.put("sessionId", newSessionId);
 						responseObject.put("username", username);
 					}
@@ -378,7 +378,7 @@ public class RequestHttpHandler implements HttpHandler {
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// Close database connection
 		try {
 			if (db != null) {

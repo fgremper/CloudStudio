@@ -21,6 +21,7 @@ public class DatabaseConnectionPool {
         cpds.setJdbcUrl(serverConfig.dbJdbcUrl);
         cpds.setUser(serverConfig.dbUser);
         cpds.setPassword(serverConfig.dbPassword);
+    	cpds.setAutoCommitOnClose(true);
     	
         cpds.setMinPoolSize(serverConfig.dbMinPoolSize);
         cpds.setAcquireIncrement(serverConfig.dbAcquireIncrement);
@@ -41,7 +42,6 @@ public class DatabaseConnectionPool {
     }
 
     public Connection getConnection() throws SQLException {
-    	
         return this.cpds.getConnection();
         
     }

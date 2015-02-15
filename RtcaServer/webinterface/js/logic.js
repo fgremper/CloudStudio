@@ -204,9 +204,14 @@ function loadCreateRepositoryView() {
 
 function renderCreateRepositoryView(data) {
     $('body').html(new EJS({url: 'templates/create_repository_view.ejs'}).render(data));
-    $('#logo').click(loadRepositoryView);
+
+    // header
+    $('#headerLogo').click(loadRepositoryView);
     $('#manageUsers').click(loadUsersView);
-    $('.repositoryViewButton').click(loadRepositoryView);
+
+    // navigation bar
+    $('.loadRepositoryView').click(loadRepositoryView);
+    
     $('#submitCreateRepository').click(function () {
         sendRequest({
             name: 'addRepository',
@@ -244,7 +249,7 @@ function renderUsersView(data) {
     $('body').html(new EJS({url: 'templates/users_view.ejs'}).render(data));
 
     // header
-    $('#logo').click(loadRepositoryView);
+    $('#headerLogo').click(loadRepositoryView);
     $('#manageUsers').click(loadUsersView);
 
     // navigation bar

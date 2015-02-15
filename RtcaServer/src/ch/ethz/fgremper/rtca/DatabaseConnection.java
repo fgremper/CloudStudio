@@ -18,6 +18,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
 import ch.ethz.fgremper.rtca.helper.JSONHelper;
 
 public class DatabaseConnection {
@@ -25,7 +27,10 @@ public class DatabaseConnection {
 	Connection con = null;
 
 	public DatabaseConnection() throws Exception {
-		con = DatabaseConnectionPool.getInstance().getConnection();
+		//con = DatabaseConnectionPool.getInstance().getConnection();
+    	ServerConfig serverConfig = ServerConfig.getInstance();
+        Class.forName(serverConfig.dbDriverClass);
+        con = DriverManager.getConnection(serverConfig.dbJdbcUrl, serverConfig.dbUser, serverConfig.dbPassword);
 	}
 
 	/* UTILITY */
