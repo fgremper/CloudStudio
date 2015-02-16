@@ -43,3 +43,5 @@ LEFT OUTER JOIN
 ) AS origin
 
 ON origin.branch = main.branch
+ORDER BY branch, username;
+
