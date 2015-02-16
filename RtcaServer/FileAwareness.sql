@@ -4,7 +4,7 @@ SELECT filename, mysha, theirusername, theirfilename, theirsha FROM (
 	SELECT me.filename AS filename, me.sha AS mysha, them.username AS theirusername, them.filename AS theirfilename, them.sha AS theirsha FROM (
 
 		# all the files X me
-		SELECT filelist.filename AS filename, f.sha AS sha FROM filelist
+		SELECT DISTINCT filelist.filename AS filename, f.sha AS sha FROM filelist
 		LEFT OUTER JOIN (
 			SELECT * FROM files
 			WHERE files.username = ? # my user
@@ -23,9 +23,9 @@ SELECT filename, mysha, theirusername, theirfilename, theirsha FROM (
 		SELECT filelistxusers.username, filelistxusers.filename, f.sha FROM (
 
 			# all the filenames X all the users
-			SELECT u.username AS username, filelist.filename AS filename FROM filelist
+			SELECT DISTINCT u.username AS username, filelist.filename AS filename FROM filelist
 			CROSS JOIN (SELECT DISTINCT username FROM useraccess WHERE repositoryalias = ?) AS u # repository
-			WHERE filelist.repositoryalias = ? AND filelist.branch = ? # repository, compare to branch
+			WHERE filelist.repositoryalias = ? # repository
 
 		) as filelistxusers
 		LEFT OUTER JOIN (

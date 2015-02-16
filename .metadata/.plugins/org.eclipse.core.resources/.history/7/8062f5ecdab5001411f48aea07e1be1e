@@ -366,7 +366,7 @@ public class DatabaseConnection {
 		4 repositoryalias
 		5 repositoryalias
 		6 repository alias
-		7 their branch <-- not anymore
+		7 their branch
 		8 committed
 		9 their branch
 		10 repository
@@ -439,7 +439,7 @@ public class DatabaseConnection {
 			4 repositoryalias
 			5 repositoryalias
 			6 repository alias
-			7 their branch <-- not anymore
+			7 their branch
 			8 committed
 			9 their branch
 			10 repository
