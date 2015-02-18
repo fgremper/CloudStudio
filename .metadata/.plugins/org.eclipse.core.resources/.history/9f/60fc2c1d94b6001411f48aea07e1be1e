@@ -149,7 +149,7 @@ public class RequestHttpHandler implements HttpHandler {
 					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 						
 						String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
-						String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
+						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename, showUncommitted);
 						
 						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 

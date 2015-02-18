@@ -4,6 +4,7 @@ var activeFile = undefined;
 var activeUser = undefined;
 var activeRepositoryUsers = undefined;
 var activeRepositoryBranches = undefined;
+var activeCompareToBranch = undefined;
 
 var selectedUsers = undefined;
 var showUncommitted = false;
@@ -499,21 +500,22 @@ function renderFileViewTable(data) {
 
     // content
     $('.fileAndUser').click(function () {
-        loadContentView(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'));
+        loadContentView(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'), $(this).data('comparetobranch'));
     });
 }
 
 
 /* LEVEL 3: LOAD CONTENT LEVEL AWARENESS */
 
-function loadContentView(repositoryAlias, branch, filename, username) {
+function loadContentView(repositoryAlias, branch, filename, username, compareToBranch) {
     sendRequest({
         name: 'getContentLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted },
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, compareToBranch: compareToBranch },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));
             activeFile = filename;
             activeUser = username;
+            activeCompareToBranch = compareToBranch;
             renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted });
         },
         error: function () {
@@ -535,7 +537,7 @@ function renderContentView(data) {
     $('.loadBranchView').click(function () { loadBranchView(activeRepository); });
     $('.loadFileView').click(function () { loadFileView(activeRepository, activeBranch); });
     $('.loadContentView').click(function () { loadFileView(activeRepository, activeBranch); });
-    $('#refresh').click(function () { loadContentView(activeRepository, activeBranch, activeFile, activeUser); });
+    $('#refresh').click(function () { loadContentView(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch); });
 
 }
 

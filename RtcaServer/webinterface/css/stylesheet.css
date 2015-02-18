@@ -161,6 +161,7 @@ textarea, input { outline: none; }
 
 #diffTable .diffBox {
     overflow-x: scroll;
+    white-space: nowrap;
 }
 
 #diffTable .diffLine {
@@ -169,6 +170,7 @@ textarea, input { outline: none; }
     line-height: 14px;
     padding: 2px 4px;
     color: #202020;
+    white-space: nowrap;
 }
 
 #diffTable .diffAdd {

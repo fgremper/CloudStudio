@@ -119,5 +119,7 @@ Did today: Prepare presentation. Fix the origin updater problem over time. Fix t
 
 Did today: Back to single connections for now, the c3p0 connection pool still has some over-time bug. Check if file sql is correct with diff branch and no 'where'. Test running from JAR. Test a bit.
 
+#### Monday 16.02.2015
 
+Did today: Prepare and hold presentation.
 

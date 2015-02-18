@@ -141,7 +141,7 @@ public class RequestHttpHandler implements HttpHandler {
 					String repositoryAlias = incomingObject.getString("repositoryAlias");
 					String theirUsername = incomingObject.getString("username");
 					String branch = incomingObject.getString("branch");
-					String compareToBranch = incomingObject.getString("compareToBranch");
+					String branch = incomingObject.getString("compareToBranch");
 					String filename = incomingObject.getString("filename");
 					boolean showUncommitted = incomingObject.getBoolean("showUncommitted");
 
@@ -149,7 +149,7 @@ public class RequestHttpHandler implements HttpHandler {
 					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 						
 						String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
-						String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
+						String theirSha = db.getFileSha(repositoryAlias, theirUsername, branch, filename, showUncommitted);
 						
 						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 
