@@ -764,12 +764,6 @@ public class DatabaseConnection {
 			throw new Exception("No Clone Count found");
 		}
 	}
-
-	public void incRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("UPDATE repository SET cloneclount = clonecount + 1 WHERE repositoryalias = ?");
-		stmt.setString(1, repositoryAlias);
-		stmt.executeUpdate();
-	}
 	
 	/* THE RANDOM STRING FUNCTION FOR SESSION IDS */
 	

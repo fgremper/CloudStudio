@@ -24,6 +24,7 @@ CREATE TABLE repositories
 	repositoryalias VARCHAR(255),
 	repositoryurl VARCHAR(255),
 	repositoryowner VARCHAR(255),
+	cloneclount INTEGER,
 	PRIMARY KEY (repositoryalias),
 	FOREIGN KEY (repositoryowner) REFERENCES users (username) ON DELETE CASCADE
 );
@@ -45,6 +46,7 @@ CREATE TABLE useraccess
 	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );
 
+/*
 CREATE TABLE activebranch
 (
 	repositoryalias VARCHAR(255),
@@ -55,6 +57,7 @@ CREATE TABLE activebranch
 	FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );
+*/
 
 CREATE TABLE branches
 (
@@ -62,6 +65,7 @@ CREATE TABLE branches
 	username VARCHAR(255),
 	branch VARCHAR(255),
 	commit VARCHAR(255),
+	active VARCHAR(5);
 	PRIMARY KEY (repositoryalias, username, branch),
 	FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE

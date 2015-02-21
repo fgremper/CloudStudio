@@ -39,9 +39,11 @@ public class RepositoryReader {
 		// Add the file array and commit history to the object
 		JSONArray fileArray = new JSONArray();
 		JSONArray commitHistory = new JSONArray();
+		JSONObject activeBranch = new JSONObject();
 		JSONArray branchesArray = new JSONArray();
         updateObject.put("files", fileArray);
         updateObject.put("commitHistory", commitHistory);
+        updateObject.put("activeBranch", activeBranch);
         updateObject.put("branches", branchesArray);
 		
 		// Open the repository in JGit
@@ -88,7 +90,6 @@ public class RepositoryReader {
 	            JSONObject branchObject = new JSONObject();
 	            branchObject.put("branch", branchName);
 	            branchObject.put("commit", commitId);
-	            branchObject.put("commit", isActiveBranch);
 	            branchesArray.put(branchObject);
 	            
 	            // If we didn't already, add the current commit to the commit history
@@ -167,7 +168,11 @@ public class RepositoryReader {
 					
 	            }
 	            
-	            if (isActiveBranch) {
+	            if (isActiveBranch) {	            
+	            	// Store active branch
+		            activeBranch.put("branch", branchName);
+		            activeBranch.put("commit", commitId);
+		            // TODO: find out time of last update or something?
 		            
 	            	// Get a TreeWalk to get the file system content
 	            	treeWalk = new TreeWalk(repository);

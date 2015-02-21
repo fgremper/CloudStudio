@@ -753,22 +753,16 @@ public class DatabaseConnection {
 		}
 	}
 
-	public int getRepositoryCloneCount(String repositoryAlias) throws Exception {
+	public String getRepositoryCloneCount(String repositoryAlias) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT clonecount FROM repositories WHERE repositoryalias = ?");
 		stmt.setString(1, repositoryAlias);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
-			return rs.getInt("clonecount");
+			return rs.getString("username");
 		}
 		else {
-			throw new Exception("No Clone Count found");
+			return null;
 		}
-	}
-
-	public void incRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("UPDATE repository SET cloneclount = clonecount + 1 WHERE repositoryalias = ?");
-		stmt.setString(1, repositoryAlias);
-		stmt.executeUpdate();
 	}
 	
 	/* THE RANDOM STRING FUNCTION FOR SESSION IDS */

@@ -61,6 +61,7 @@ public class DatabaseConnection {
 		JSONArray fileArray = setLocalGitStateObject.getJSONArray("files");
 		JSONArray commitHistory = setLocalGitStateObject.getJSONArray("commitHistory");
 		JSONArray branchesArray = setLocalGitStateObject.getJSONArray("branches");
+		JSONObject activeBranch = setLocalGitStateObject.getJSONObject("activeBranch");
 		String repositoryAlias = setLocalGitStateObject.getString("repositoryAlias");
 		
 		// Start transaction
@@ -103,11 +104,14 @@ public class DatabaseConnection {
 
 			String branch = branchObject.getString("branch");
 			String commit = branchObject.getString("commit");
-			String active = (branchObject.getBoolean("active") ? "true" : "false");
 			
-			storeBranches(repositoryAlias, username, branch, commit, active);
+			storeBranches(repositoryAlias, username, branch, commit);
 		}
-
+		
+		String activeBranchName = activeBranch.getString("branch");
+		String activeBranchCommit = activeBranch.getString("commit");
+		storeActiveBranch(repositoryAlias, username, activeBranchName, activeBranchCommit);
+		
 	}
 	
 	public void deleteAllRepositoryUserInformation(String repositoryAlias, String username) throws SQLException {
@@ -151,7 +155,6 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 	
-	/*
 	public void storeActiveBranch(String repositoryAlias, String username, String branch, String commit) throws Exception {
 		// Set active branch for user
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO activebranch (repositoryalias, username, branch, commit) VALUES (?, ?, ?, ?)");
@@ -161,15 +164,13 @@ public class DatabaseConnection {
 		stmt.setString(4, commit);
 		stmt.executeUpdate();
 	}
-	*/
 
-	public void storeBranches(String repositoryAlias, String username, String branch, String commit, String active) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO branches (repositoryalias, username, branch, commit, active) VALUES (?, ?, ?, ?, ?)");
+	public void storeBranches(String repositoryAlias, String username, String branch, String commit) throws Exception {
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO branches (repositoryalias, username, branch, commit) VALUES (?, ?, ?, ?)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);
 		stmt.setString(3, branch);
 		stmt.setString(4, commit);
-		stmt.setString(5, active);
 		stmt.executeUpdate();
 	}
 
@@ -588,7 +589,7 @@ public class DatabaseConnection {
 	
 	public void addRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner) throws SQLException {
 		// Add repository
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, clonecount) VALUES (?, ?, ?, 0)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner) VALUES (?, ?, ?)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
 		stmt.setString(3, repositoryOwner);
@@ -753,24 +754,6 @@ public class DatabaseConnection {
 		}
 	}
 
-	public int getRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT clonecount FROM repositories WHERE repositoryalias = ?");
-		stmt.setString(1, repositoryAlias);
-		ResultSet rs = stmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("clonecount");
-		}
-		else {
-			throw new Exception("No Clone Count found");
-		}
-	}
-
-	public void incRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("UPDATE repository SET cloneclount = clonecount + 1 WHERE repositoryalias = ?");
-		stmt.setString(1, repositoryAlias);
-		stmt.executeUpdate();
-	}
-	
 	/* THE RANDOM STRING FUNCTION FOR SESSION IDS */
 	
 	private String getRandomHexString(int numchars){

@@ -29,11 +29,11 @@ public class OriginUpdater {
 			FileUtils.cleanDirectory(userDir); 
 			
 			// Clone repository
-			executeCommand("git clone " + repositoryUrl + " " + repositoryOriginDirectory);
+			executeCommand("git clone " + repositoryUrl + " " + originStorageDirectory + "/" + repositoryAlias);
 			
 			System.out.println("[OriginUpdater] Reading repository \"" + repositoryAlias + "\"");
 			// Read repository information like we would normally
-			RepositoryReader repositoryReader = new RepositoryReader(repositoryOriginDirectory);
+			RepositoryReader repositoryReader = new RepositoryReader(originStorageDirectory + "/" + repositoryAlias);
 			JSONObject updateObject = repositoryReader.getUpdateObject();
 			updateObject.put("repositoryAlias", repositoryAlias);
 			String inputJsonString = updateObject.toString();

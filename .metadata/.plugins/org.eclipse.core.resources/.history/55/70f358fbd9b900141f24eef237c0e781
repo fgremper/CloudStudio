@@ -107,7 +107,11 @@ public class DatabaseConnection {
 			
 			storeBranches(repositoryAlias, username, branch, commit, active);
 		}
-
+		
+		String activeBranchName = activeBranch.getString("branch");
+		String activeBranchCommit = activeBranch.getString("commit");
+		storeActiveBranch(repositoryAlias, username, activeBranchName, activeBranchCommit);
+		
 	}
 	
 	public void deleteAllRepositoryUserInformation(String repositoryAlias, String username) throws SQLException {
@@ -151,7 +155,6 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 	
-	/*
 	public void storeActiveBranch(String repositoryAlias, String username, String branch, String commit) throws Exception {
 		// Set active branch for user
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO activebranch (repositoryalias, username, branch, commit) VALUES (?, ?, ?, ?)");
@@ -161,9 +164,8 @@ public class DatabaseConnection {
 		stmt.setString(4, commit);
 		stmt.executeUpdate();
 	}
-	*/
 
-	public void storeBranches(String repositoryAlias, String username, String branch, String commit, String active) throws Exception {
+	public void storeBranches(String repositoryAlias, String username, String branch, String commit) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO branches (repositoryalias, username, branch, commit, active) VALUES (?, ?, ?, ?, ?)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);
@@ -753,24 +755,6 @@ public class DatabaseConnection {
 		}
 	}
 
-	public int getRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("SELECT clonecount FROM repositories WHERE repositoryalias = ?");
-		stmt.setString(1, repositoryAlias);
-		ResultSet rs = stmt.executeQuery();
-		if (rs.next()) {
-			return rs.getInt("clonecount");
-		}
-		else {
-			throw new Exception("No Clone Count found");
-		}
-	}
-
-	public void incRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("UPDATE repository SET cloneclount = clonecount + 1 WHERE repositoryalias = ?");
-		stmt.setString(1, repositoryAlias);
-		stmt.executeUpdate();
-	}
-	
 	/* THE RANDOM STRING FUNCTION FOR SESSION IDS */
 	
 	private String getRandomHexString(int numchars){
