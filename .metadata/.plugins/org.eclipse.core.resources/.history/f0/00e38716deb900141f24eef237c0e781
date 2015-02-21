@@ -88,7 +88,7 @@ public class RepositoryReader {
 	            JSONObject branchObject = new JSONObject();
 	            branchObject.put("branch", branchName);
 	            branchObject.put("commit", commitId);
-	            branchObject.put("active", isActiveBranch);
+	            branchObject.put("commit", isActiveBranch);
 	            branchesArray.put(branchObject);
 	            
 	            // If we didn't already, add the current commit to the commit history

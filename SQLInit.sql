@@ -1,7 +1,6 @@
 # /usr/local/mysql/bin/mysql -u dbadmin cloudstudio < /Users/novocaine/Documents/masterthesis/workspace/SQLInit.sql
 
 DROP VIEW IF EXISTS filelist;
-DROP TABLE IF EXISTS activebranch;
 DROP TABLE IF EXISTS branches;
 DROP TABLE IF EXISTS usersessions;
 DROP TABLE IF EXISTS useraccess;
@@ -24,7 +23,7 @@ CREATE TABLE repositories
 	repositoryalias VARCHAR(255),
 	repositoryurl VARCHAR(255),
 	repositoryowner VARCHAR(255),
-	cloneclount INTEGER,
+	clonecount INTEGER,
 	PRIMARY KEY (repositoryalias),
 	FOREIGN KEY (repositoryowner) REFERENCES users (username) ON DELETE CASCADE
 );
@@ -46,26 +45,13 @@ CREATE TABLE useraccess
 	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );
 
-/*
-CREATE TABLE activebranch
-(
-	repositoryalias VARCHAR(255),
-	username VARCHAR(255),
-	branch VARCHAR(255),
-	commit VARCHAR(255),
-	PRIMARY KEY (repositoryalias, username),
-	FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
-	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
-);
-*/
-
 CREATE TABLE branches
 (
 	repositoryalias VARCHAR(255),
 	username VARCHAR(255),
 	branch VARCHAR(255),
 	commit VARCHAR(255),
-	active VARCHAR(5);
+	active VARCHAR(5),
 	PRIMARY KEY (repositoryalias, username, branch),
 	FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE

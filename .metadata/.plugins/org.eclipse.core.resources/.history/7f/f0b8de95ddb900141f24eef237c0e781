@@ -125,6 +125,12 @@ public class DatabaseConnection {
 		stmt.setString(2, username);
 		stmt.executeUpdate();
 
+		// Delete active branch for user
+		stmt = con.prepareStatement("DELETE FROM activebranch WHERE repositoryalias = ? AND username = ?");
+		stmt.setString(1, repositoryAlias);
+		stmt.setString(2, username);
+		stmt.executeUpdate();
+
 		// Delete branches for user
 		stmt = con.prepareStatement("DELETE FROM branches WHERE repositoryalias = ? AND username = ?");
 		stmt.setString(1, repositoryAlias);
@@ -760,7 +766,7 @@ public class DatabaseConnection {
 	}
 
 	public void incRepositoryCloneCount(String repositoryAlias) throws Exception {
-		PreparedStatement stmt = con.prepareStatement("UPDATE repositories SET clonecount = clonecount + 1 WHERE repositoryalias = ?");
+		PreparedStatement stmt = con.prepareStatement("UPDATE repository SET cloneclount = clonecount + 1 WHERE repositoryalias = ?");
 		stmt.setString(1, repositoryAlias);
 		stmt.executeUpdate();
 	}
