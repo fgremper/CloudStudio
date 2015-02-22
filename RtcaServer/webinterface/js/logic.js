@@ -8,6 +8,7 @@ var activeCompareToBranch = undefined;
 
 var selectedUsers = undefined;
 var showUncommitted = false;
+var showConflicts = false;
 var selectedAdditionalBranches = undefined;
 
 var conflictType = "INTER_BRANCH_CONFLICTS"
@@ -407,6 +408,7 @@ function renderBranchViewTable(data) {
     // content
     $('.branch').click(function () {
         showUncommitted = false;
+        showConflicts = false;
         selectedAdditionalBranches = [];
         loadFileView(activeRepository, $(this).data('branch'));
     });
@@ -427,7 +429,7 @@ function loadFileView(repositoryAlias, branch) {
             activeRepositoryUsers = data.repositoryUsers;
             activeRepositoryBranches = data.repositoryBranches;
 
-            renderFileView({ repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, repositoryBranches: activeRepositoryBranches, selectedUsers: selectedUsers, selectedAdditionalBranches: selectedAdditionalBranches, showUncommitted: showUncommitted });
+            renderFileView({ repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, repositoryBranches: activeRepositoryBranches, selectedUsers: selectedUsers, selectedAdditionalBranches: selectedAdditionalBranches, showUncommitted: showUncommitted, showConflicts: showConflicts });
         },
         error: function () {
             alert('Something went wrong when trying to load file level awareness data.');
@@ -476,6 +478,11 @@ function renderFileView(data) {
 
         loadFileViewTable(activeRepository, activeBranch);
     });
+    $('#conflictsFilter').change(function () {
+        showConflicts = $('#conflictsFilter').is(':checked');
+
+        loadFileViewTable(activeRepository, activeBranch);
+    });
     $('select').chosen();
 
     loadFileViewTable(activeRepository, activeBranch);
@@ -484,7 +491,7 @@ function renderFileView(data) {
 function loadFileViewTable(repositoryAlias, branch) {
     sendRequest({
         name: 'getFileLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted, selectedAdditionalBranches: selectedAdditionalBranches },
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted, showConflicts: showConflicts, selectedAdditionalBranches: selectedAdditionalBranches },
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
             renderFileViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, branch: branch, selectedUsers: selectedUsers, showUncommitted: showUncommitted, selectedAdditionalBranches: selectedAdditionalBranches });
@@ -510,13 +517,13 @@ function renderFileViewTable(data) {
 function loadContentView(repositoryAlias, branch, filename, username, compareToBranch) {
     sendRequest({
         name: 'getContentLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, compareToBranch: compareToBranch },
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));
             activeFile = filename;
             activeUser = username;
             activeCompareToBranch = compareToBranch;
-            renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted });
+            renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts });
         },
         error: function () {
             alert('Something went wrong when trying to load line level awareness data.');

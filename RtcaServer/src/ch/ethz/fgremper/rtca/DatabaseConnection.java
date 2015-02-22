@@ -188,8 +188,6 @@ public class DatabaseConnection {
 		PreparedStatement stmt;
 		stmt = con.prepareStatement("DELETE FROM branches");
 		stmt.executeUpdate();
-		stmt = con.prepareStatement("DELETE FROM activebranch");
-		stmt.executeUpdate();
 		stmt = con.prepareStatement("DELETE FROM usersessions");
 		stmt.executeUpdate();
 		stmt = con.prepareStatement("DELETE FROM useraccess");
@@ -763,6 +761,43 @@ public class DatabaseConnection {
 		PreparedStatement stmt = con.prepareStatement("UPDATE repositories SET clonecount = clonecount + 1 WHERE repositoryalias = ?");
 		stmt.setString(1, repositoryAlias);
 		stmt.executeUpdate();
+	}
+	
+	public String getMergeBaseCommitId(String repositoryAlias, String commit1, String commit2) throws SQLException {
+
+		PreparedStatement stmt = con.prepareStatement("SELECT b1.downstreamcommit, (b1.distance + b2.distance) AS totaldistance FROM commithistory AS b1 CROSS JOIN commithistory AS b2 WHERE b1.commit = ? AND b2.commit = ? AND b1.downstreamcommit = b2.downstreamcommit AND b1.repositoryalias = ? AND b2.repositoryalias = ? ORDER BY totaldistance ASC");
+
+		stmt.setString(1, commit2);
+		stmt.setString(2, commit1);
+		stmt.setString(3, repositoryAlias);
+		stmt.setString(4, repositoryAlias);
+
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			return rs.getString("downstreamcommit");
+		}
+		else {
+			return null;
+		}
+		
+	}
+	
+	public String getCommitForBranchAndFile(String repositoryAlias, String username, String branch, String filename) throws SQLException {
+
+		PreparedStatement stmt = con.prepareStatement("SELECT commit FROM files WHERE repositoryalias = ? AND username = ? AND branch = ? AND filename = ? AND (committed = 'committed' OR committed = 'both')");
+
+		stmt.setString(1, repositoryAlias);
+		stmt.setString(2, username);
+		stmt.setString(3, branch);
+		stmt.setString(4, filename);
+
+		ResultSet rs = stmt.executeQuery();
+		if (rs.next()) {
+			return rs.getString("commit");
+		}
+		else {
+			return null;
+		}
 	}
 	
 	/* THE RANDOM STRING FUNCTION FOR SESSION IDS */

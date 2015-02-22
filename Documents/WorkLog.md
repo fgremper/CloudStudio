@@ -40,6 +40,10 @@
 * fix some bugs that crash over time (origin updater, uncommitted files from the local plugin)
 * verify correctness of file compare sql when comparing to different branch
 * package as jar, test everything with a repo on github
+* send and show the active branch directly in the branch []
+* have a new database table to store where the current 'clone' is -> possibly a number that goes up!
+* update into the right folder!
+* gui "conflict" box
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
@@ -121,5 +125,21 @@ Did today: Back to single connections for now, the c3p0 connection pool still ha
 
 #### Monday 16.02.2015
 
-Did today: Prepare and hold presentation.
+Did today: Prepare and demonstration and test run with Martin and Christian.
+
+#### Tuesday 17.02.2015
+
+Did today: Demo.
+
+#### Wednesday 18.02.2014
+
+Did today: Three-way conflict.
+
+#### Saturday 21.02.2014
+
+Did today: Three-way conflict.
+
+#### Sunday 22.02.2014
+
+Did today: Three-way conflict.
 

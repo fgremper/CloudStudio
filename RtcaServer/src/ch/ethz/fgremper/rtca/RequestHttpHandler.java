@@ -144,38 +144,52 @@ public class RequestHttpHandler implements HttpHandler {
 					String compareToBranch = incomingObject.getString("compareToBranch");
 					String filename = incomingObject.getString("filename");
 					boolean showUncommitted = incomingObject.getBoolean("showUncommitted");
+					boolean showConflicts = incomingObject.getBoolean("showConflicts");
 
 					// Need to be admin or have repository access
 					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 						
-						String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
-						String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
-						
-						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
+						if (!showConflicts) {
+							
+							String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
+							String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
+							
+							String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
+	
+							JSONObject responseObject = new JSONObject();
+							
+							List<String> myContent;
+							List<String> theirContent;
+							
+							if (mySha != null) {
+						        myContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + mySha);
+							}
+							else {
+								myContent = new LinkedList<String>();
+							}
+	
+							if (theirSha != null) {
+						        theirContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + theirSha);
+							}
+							else {
+								theirContent = new LinkedList<String>();
+							}
+							
+							responseObject.put("content", SideBySideDiff.diff(myContent, theirContent));
+							
+							response = responseObject.toString();
 
-						JSONObject responseObject = new JSONObject();
-						
-						List<String> myContent;
-						List<String> theirContent;
-						
-						if (mySha != null) {
-					        myContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + mySha);
 						}
 						else {
-							myContent = new LinkedList<String>();
+							String commit1 = db.getCommitForBranchAndFile(repositoryAlias, sessionUsername, branch, filename);
+							System.out.println("C1: " + commit1);
+							String commit2 = db.getCommitForBranchAndFile(repositoryAlias, theirUsername, compareToBranch, filename);
+							System.out.println("C2: " + commit2);
+							String mergeBaseCommitId = db.getMergeBaseCommitId(repositoryAlias, commit1, commit2);
+							System.out.println("MC: " + mergeBaseCommitId);
+							response = mergeBaseCommitId;
+							
 						}
-
-						if (theirSha != null) {
-					        theirContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + theirSha);
-						}
-						else {
-							theirContent = new LinkedList<String>();
-						}
-						
-						responseObject.put("content", SideBySideDiff.diff(myContent, theirContent));
-						
-						response = responseObject.toString();
-						
 					}
 				}
 

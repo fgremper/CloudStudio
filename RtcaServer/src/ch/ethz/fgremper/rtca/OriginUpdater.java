@@ -52,6 +52,7 @@ public class OriginUpdater {
 			db.commitTransaction();
 			
 			db.incRepositoryCloneCount(repositoryAlias);
+			db.commitTransaction();
 		}
 		catch (Exception e) {
 			e.printStackTrace();

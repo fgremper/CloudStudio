@@ -47,7 +47,7 @@ public class ServerMain {
         catch (Exception e) {
         	// nothing
         }
-		
+		/*
 		
 		// Periodically origin updater
 		System.out.println("[Main] Starting periodical origin updater");
@@ -55,7 +55,7 @@ public class ServerMain {
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		new Thread(originUpdaterInterval).start();
 
-		
+		*/
 		
 		// HTTP server
 		
