@@ -206,7 +206,7 @@ public class RequestHttpHandler implements HttpHandler {
 
 							// Check, is this an actual git repository?
 							if (repository.getDirectory() == null) {
-								throw new Exception("Not a git repository: " + repositoryOriginDirectory);
+								throw new Exception("Not a git repository: " + localPath);
 							}
 					        System.out.println("[RequestHttpHandler] Opened in jgit: " + repository.getDirectory());
 					        
