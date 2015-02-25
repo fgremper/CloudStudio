@@ -220,7 +220,7 @@ public class RequestHttpHandler implements HttpHandler {
 			        		//RevWalk walk = new RevWalk(repository);
 			        		//RevCommit commit = walk.parseCommit(ref.getObjectId());
 			        		
-			        		//System.out.println("Commit: " + commit);
+			        		System.out.println("Commit: " + commit);
 				            
 						}
 					}

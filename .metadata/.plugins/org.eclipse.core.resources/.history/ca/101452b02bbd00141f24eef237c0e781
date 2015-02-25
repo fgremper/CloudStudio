@@ -216,11 +216,10 @@ public class RequestHttpHandler implements HttpHandler {
 
 					        // Walk
 			        		Ref ref = repository.getRef(mergeBaseCommitId);
-			        		System.out.println("Ref: " + ref);
 			        		//RevWalk walk = new RevWalk(repository);
 			        		//RevCommit commit = walk.parseCommit(ref.getObjectId());
 			        		
-			        		//System.out.println("Commit: " + commit);
+			        		System.out.println("Commit: " + commit);
 				            
 						}
 					}

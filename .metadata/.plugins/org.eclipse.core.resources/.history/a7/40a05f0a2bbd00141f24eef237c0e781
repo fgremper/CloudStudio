@@ -197,7 +197,7 @@ public class RequestHttpHandler implements HttpHandler {
 							
 							// get origin storage dir
 							String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
-							String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + db.getRepositoryCloneCount(repositoryAlias);
+							String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (db.getRepositoryCloneCount(repositoryAlias) + 1);
 							
 							// Open the repository in JGit
 							System.out.println("[RequestHttpHandler] Reading: " + repositoryOriginDirectory);
@@ -215,12 +215,15 @@ public class RequestHttpHandler implements HttpHandler {
 					        System.out.println("[RequestHttpHandler] Opened in jgit: " + repository.getDirectory());
 
 					        // Walk
-			        		Ref ref = repository.getRef(mergeBaseCommitId);
-			        		System.out.println("Ref: " + ref);
-			        		//RevWalk walk = new RevWalk(repository);
-			        		//RevCommit commit = walk.parseCommit(ref.getObjectId());
+			        		RevWalk walk = new RevWalk(repository);
+
+			        		Ref branch = repository.getRef(ref.getName());
+			        		RevWalk walk = new RevWalk(repository);
+			        		RevCommit commit = walk.parseCommit(branch.getObjectId());
 			        		
-			        		//System.out.println("Commit: " + commit);
+			        		System.out.println("Commit: " + commit);
+				            RevTree tree = commit.getTree();
+				            
 				            
 						}
 					}

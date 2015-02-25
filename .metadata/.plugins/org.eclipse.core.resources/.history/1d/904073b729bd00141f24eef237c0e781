@@ -15,10 +15,7 @@ import java.util.List;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.json.JSONArray;
@@ -197,7 +194,7 @@ public class RequestHttpHandler implements HttpHandler {
 							
 							// get origin storage dir
 							String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
-							String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + db.getRepositoryCloneCount(repositoryAlias);
+							String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (db.getRepositoryCloneCount(repositoryAlias) + 1);
 							
 							// Open the repository in JGit
 							System.out.println("[RequestHttpHandler] Reading: " + repositoryOriginDirectory);
@@ -215,13 +212,9 @@ public class RequestHttpHandler implements HttpHandler {
 					        System.out.println("[RequestHttpHandler] Opened in jgit: " + repository.getDirectory());
 
 					        // Walk
-			        		Ref ref = repository.getRef(mergeBaseCommitId);
-			        		System.out.println("Ref: " + ref);
-			        		//RevWalk walk = new RevWalk(repository);
-			        		//RevCommit commit = walk.parseCommit(ref.getObjectId());
+			        		RevWalk walk = new RevWalk(repository);
 			        		
-			        		//System.out.println("Commit: " + commit);
-				            
+			        		
 						}
 					}
 				}
