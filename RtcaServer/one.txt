@@ -1,10 +1,11 @@
-fixpoint one
-first
-second
-fixpoint two
-fixpoint three
-sixth
-seventh
-nineth
-tenth
-fixpoint four change
+one
+two
+three
+four
+newlinebyme
+five
+six
+seven
+eight
+nine
+ten

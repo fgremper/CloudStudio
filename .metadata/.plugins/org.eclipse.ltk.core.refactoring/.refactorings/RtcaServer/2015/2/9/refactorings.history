@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;sha&apos; in &apos;ch.ethz.fgremper.rtca.RequestHttpHandler.handle(...)&apos; to &apos;ancestorSha&apos;&#x0A;- Original project: &apos;RtcaServer&apos;&#x0A;- Original element: &apos;ch.ethz.fgremper.rtca.RequestHttpHandler.handle(HttpExchange).sha&apos;&#x0A;- Renamed element: &apos;sha&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;sha&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;ch.ethz.fgremper.rtca{RequestHttpHandler.java[RequestHttpHandler~handle~QHttpExchange;@sha!10148!10212!10155!10157!QString;!0!false" name="ancestorSha" references="true" stamp="1424986279401" version="1.0"/>
+</session>

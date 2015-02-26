@@ -12,10 +12,6 @@ import java.net.URI;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-
-import jlibdiff.Diff3;
-import jlibdiff.Hunk3;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -248,28 +244,9 @@ public class RequestHttpHandler implements HttpHandler {
 					            	ObjectId objectId = treeWalk.getObjectId(0);
 					            	ObjectLoader loader = repository.open(objectId);
 					            	InputStream fileInputStream = loader.openStream();
-					            	String ancestorFileContent = IOUtils.toString(fileInputStream, "UTF-8");
+					            	String fileContent = IOUtils.toString(fileInputStream, "UTF-8");
 					            	
-					            	System.out.println("Content MC: " + ancestorFileContent);
-					            	
-
-					    			String ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
-					    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
-
-					    			
-					            	Diff3 diff3 = new Diff3();
-					            	diff3.diffFile(
-					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted),
-					            			fileStorageDirectory + "/" + ancestorSha,
-					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)
-					            		);
-
-					        		Vector<Hunk3> vector = (Vector<Hunk3>) diff3.getHunk3();
-					        		
-					        		for (Hunk3 hunk3 : vector) {
-					        		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
-					        		}
-					        		
+					            	System.out.println("Content MC: " + fileContent);
 				            	}
 				            }
 				            

@@ -252,20 +252,12 @@ public class RequestHttpHandler implements HttpHandler {
 					            	
 					            	System.out.println("Content MC: " + ancestorFileContent);
 					            	
-
-					    			String ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
-					    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
-
-					    			
 					            	Diff3 diff3 = new Diff3();
-					            	diff3.diffFile(
-					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted),
-					            			fileStorageDirectory + "/" + ancestorSha,
-					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)
-					            		);
+					            	diff3.diffFile("a", "b", "c");
 
-					        		Vector<Hunk3> vector = (Vector<Hunk3>) diff3.getHunk3();
+					        		Vector<Hunk3> vector = diff3.getHunk3();
 					        		
+
 					        		for (Hunk3 hunk3 : vector) {
 					        		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
 					        		}

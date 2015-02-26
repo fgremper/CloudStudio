@@ -264,8 +264,9 @@ public class RequestHttpHandler implements HttpHandler {
 					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)
 					            		);
 
-					        		Vector<Hunk3> vector = (Vector<Hunk3>) diff3.getHunk3();
+					        		Vector<Hunk3> vector = diff3.getHunk3();
 					        		
+
 					        		for (Hunk3 hunk3 : vector) {
 					        		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
 					        		}

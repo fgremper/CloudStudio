@@ -5,30 +5,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
-
-import jlibdiff.Diff3;
-import jlibdiff.Hunk3;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.treewalk.TreeWalk;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -162,13 +155,13 @@ public class RequestHttpHandler implements HttpHandler {
 
 					// Need to be admin or have repository access
 					if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
-						String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
-											
+						
 						if (!showConflicts) {
 							
 							String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
 							String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
 							
+							String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 	
 							JSONObject responseObject = new JSONObject();
 							
@@ -197,12 +190,8 @@ public class RequestHttpHandler implements HttpHandler {
 						else {
 							String commit1 = db.getCommitForBranchAndFile(repositoryAlias, sessionUsername, branch, filename);
 							System.out.println("[RequestHttpHandler] C1: " + commit1);
-							String myFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted)), "UTF-8");
-							System.out.println("Content: " + myFileContent);
 							String commit2 = db.getCommitForBranchAndFile(repositoryAlias, theirUsername, compareToBranch, filename);
 							System.out.println("[RequestHttpHandler] C2: " + commit2);
-							String theirFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)), "UTF-8");
-							System.out.println("Content: " + theirFileContent);
 							String mergeBaseCommitId = db.getMergeBaseCommitId(repositoryAlias, commit1, commit2);
 							System.out.println("[RequestHttpHandler] MC: " + mergeBaseCommitId);
 							response = mergeBaseCommitId;
@@ -228,52 +217,11 @@ public class RequestHttpHandler implements HttpHandler {
 
 					        // Walk
 			        		ObjectId id = repository.resolve(mergeBaseCommitId);
-			        		System.out.println("[RequestHttpHandler] Id: " + id);
-			        		RevWalk walk = new RevWalk(repository);
+			        		System.out.println("Id: " + id);
+			        		//RevWalk walk = new RevWalk(repository);
 			        		RevCommit commit = walk.parseCommit(id);
-			        		System.out.println("[RequestHttpHandler] Commit: " + commit);
-				            RevTree tree = commit.getTree();
-				            
-				            // Get a TreeWalk to walk through all the files of the commit
-				            TreeWalk treeWalk = new TreeWalk(repository);
-				            treeWalk.addTree(tree);
-				            treeWalk.setRecursive(true);
-
-				            // Iterate through the files (maybe some way to find it faster?)
-				            while (treeWalk.next()) {
-				            	if (treeWalk.getPathString().equals(filename)) {
-				            		System.out.println("found file");
-				            		
-
-					            	ObjectId objectId = treeWalk.getObjectId(0);
-					            	ObjectLoader loader = repository.open(objectId);
-					            	InputStream fileInputStream = loader.openStream();
-					            	String ancestorFileContent = IOUtils.toString(fileInputStream, "UTF-8");
-					            	
-					            	System.out.println("Content MC: " + ancestorFileContent);
-					            	
-
-					    			String ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
-					    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
-
-					    			
-					            	Diff3 diff3 = new Diff3();
-					            	diff3.diffFile(
-					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted),
-					            			fileStorageDirectory + "/" + ancestorSha,
-					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)
-					            		);
-
-					        		Vector<Hunk3> vector = (Vector<Hunk3>) diff3.getHunk3();
-					        		
-					        		for (Hunk3 hunk3 : vector) {
-					        		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
-					        		}
-					        		
-				            	}
-				            }
-				            
-				            
+			        		
+			        		System.out.println("Commit: " + commit);
 				            
 						}
 					}
