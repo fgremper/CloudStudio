@@ -3,9 +3,10 @@ two
 three
 four
 newlinebyme
+secondnewlinebyme
 five
 six
-seven
+sevenconflict2
 eight
 nine
 ten

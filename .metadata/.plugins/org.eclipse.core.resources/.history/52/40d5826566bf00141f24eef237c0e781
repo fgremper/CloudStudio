@@ -34,16 +34,15 @@ public class ServerMain {
 
 		Diff3 diff3 = new Diff3();
 		
-		diff3.diffBuffer(new BufferedReader(new FileReader("one.txt")), new BufferedReader(new FileReader("three.txt")), new BufferedReader(new FileReader("two.txt")));
-		diff3.save("merge.txt");
+		diff3.diffBuffer(new BufferedReader(new FileReader("one.txt")), new BufferedReader(new FileReader("two.txt")), new BufferedReader(new FileReader("three.txt")));
+		
 		Vector<Hunk3> vector = diff3.getHunk3();
 
 		for (Hunk3 hunk3 : vector) {
-		    //System.out.println(">>>>>>>>>>>>>>> " + hunk3.convert());
-		    System.out.println("C: " + hunk3.getType());
-		    System.out.println("1:" + hunk3.lowLine(0) + "," + hunk3.highLine(0) + " lines " + hunk3.numLines(0));
-		    System.out.println("2:" + hunk3.lowLine(1) + "," + hunk3.highLine(1) + " lines " + hunk3.numLines(1));
-		    System.out.println("3:" + hunk3.lowLine(2) + "," + hunk3.highLine(2) + " lines " + hunk3.numLines(2));
+		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
+		    System.out.println("1:" + hunk3.lowLine(0) + "," + hunk3.highLine(0));
+		    System.out.println("2:" + hunk3.lowLine(1) + "," + hunk3.highLine(1));
+		    System.out.println("3:" + hunk3.lowLine(2) + "," + hunk3.highLine(2));
 		    
 		}
 		

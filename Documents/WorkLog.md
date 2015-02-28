@@ -133,13 +133,25 @@ Did today: Demo.
 
 #### Wednesday 18.02.2014
 
-Did today: Three-way conflict.
+Did today: Three-way merging for conflict detection setup. Stuff like cloning "increments" in separate directories. New db column for that also.
 
 #### Saturday 21.02.2014
 
-Did today: Three-way conflict.
+Did today: Three-way merging for conflict detection setup. JGit in the server.
 
 #### Sunday 22.02.2014
 
-Did today: Three-way conflict.
+Did today: More three-way conflict stuff.
+
+#### Tuesday
+
+Did today: Found problems with the jlibdiff implementation for the 3-way merge that I'm using, so I'm looking for something else.
+
+#### Wednesday, Thursday
+
+Feeling sick.
+
+#### Saturday 28.02.2014
+
+Did today: Researching about three-way merging a lot. Most probably going to incorporate the command-line diff3. Nothing good out there for Java and implementing something is probably error-prone and outside of the scope of this work.
 

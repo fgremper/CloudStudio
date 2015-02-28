@@ -265,11 +265,9 @@ public class RequestHttpHandler implements HttpHandler {
 					            		);
 
 					        		Vector<Hunk3> vector = (Vector<Hunk3>) diff3.getHunk3();
-					        		//diff3.toString();
 					        		
 					        		for (Hunk3 hunk3 : vector) {
 					        		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
-					        		    System.out.println(hunk3.convert());
 					        		}
 					        		
 				            	}
