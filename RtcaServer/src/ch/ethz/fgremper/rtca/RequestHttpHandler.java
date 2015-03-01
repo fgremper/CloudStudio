@@ -14,9 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Vector;
 
-import jlibdiff.Diff3;
-import jlibdiff.Hunk3;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -256,7 +253,7 @@ public class RequestHttpHandler implements HttpHandler {
 					    			String ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
 					    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
 
-					    			
+					    			/*
 					            	Diff3 diff3 = new Diff3();
 					            	diff3.diffFile(
 					            			fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted),
@@ -271,7 +268,7 @@ public class RequestHttpHandler implements HttpHandler {
 					        		    System.out.println(">>>>>>>>>>>>>>> " + hunk3.toString());
 					        		    System.out.println(hunk3.convert());
 					        		}
-					        		
+					        		*/
 				            	}
 				            }
 				            

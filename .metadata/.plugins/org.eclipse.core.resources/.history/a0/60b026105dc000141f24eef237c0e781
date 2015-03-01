@@ -1,0 +1,144 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.InetSocketAddress;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+import java.util.concurrent.Executors;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import JLibDiff.Diff3;
+import JLibDiff.Hunk3;
+
+import com.sun.net.httpserver.HttpServer;
+
+import difflib.Delta;
+import difflib.Delta.TYPE;
+import difflib.DiffAlgorithm;
+import difflib.DiffUtils;
+import difflib.Patch;
+
+public class ServerMain {
+
+	static int port = 7330;
+
+	public static void executeCommand(String consoleInput) throws Exception {
+		System.out.println("[TestGitHelper] Executing: " + consoleInput);
+		Process p = Runtime.getRuntime().exec(consoleInput);
+		p.waitFor();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+		String line;
+		while ((line = reader.readLine()) != null) {
+			System.out.println("[TestGitHelper] Console: " + line);
+		}
+	}
+
+	public static List<String> fileToLines(String filename) {
+        List<String> lines = new LinkedList<String>();
+        String line = "";
+        BufferedReader in = null;
+        try {
+                in = new BufferedReader(new InputStreamReader(
+                        new FileInputStream(filename), "UTF8"));
+                while ((line = in.readLine()) != null) {
+                        lines.add(line);
+                }
+        } catch (IOException e) {
+                e.printStackTrace();
+        } finally {
+                if (in != null) {
+                        try {
+                                in.close();
+                        } catch (IOException e) {
+                                // ignore ... any errors should already have been
+                                // reported via an IOException from the final flush.
+                        }
+                }
+        }
+        return lines;
+	}
+	
+	public static void main(String[] args) throws Exception {
+
+		List<String> file1Content = fileToLines("one.txt");
+		List<String> file2Content = fileToLines("two.txt");
+		List<String> file3Content = fileToLines("three.txt");
+
+	    List<String> file1Type = new LinkedList<String>();
+	    List<String> file2Type = new LinkedList<String>();
+	    List<String> file3Type = new LinkedList<String>();
+	    
+	    int offset1 = 0;
+	    int offset2 = 0;
+	    int offset3 = 0;
+	    
+	    /*
+		Process p = Runtime.getRuntime().exec("diff3 one.txt two.txt three.txt");
+		p.waitFor();
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+		String line;
+		while ((line = reader.readLine()) != null) {
+			System.out.println("[TestGitHelper] Console: " + line);
+		}
+*/
+	    
+	    for (ha : file1Content) {
+	    	String.out.println(ha);
+	    }
+		/*
+				// create admin if it doens't exist
+		
+
+        try {
+
+    		DatabaseConnection db = new DatabaseConnection();
+    		
+    		db.startTransaction();
+    		db.addUser("admin", "1234");
+    		db.makeUserAdmin("admin");
+    		db.commitTransaction();
+    		
+        }
+        catch (Exception e) {
+        	// nothing
+        }
+        */
+		/*
+		
+		// Periodically origin updater
+		System.out.println("[Main] Starting periodical origin updater");
+		
+		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
+		new Thread(originUpdaterInterval).start();
+
+		*/
+		
+		// HTTP server
+		/*
+		int port = ServerConfig.getInstance().serverPort;
+		
+		System.out.println("[Main] Starting HTTP server on port " + port + "...");
+
+		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
+		server.createContext("/webinterface", new WebInterfaceHttpHandler());
+		server.createContext("/request", new RequestHttpHandler());
+		server.setExecutor(Executors.newCachedThreadPool());
+		server.start();
+
+		System.out.println("[Main] Server up!");
+		*/
+	}
+
+}

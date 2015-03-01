@@ -16,6 +16,5 @@
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/diffutils-1.2.1.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/c3p0-0.9.5.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/org.eclipse.jgit-3.5.2.201411120430-r.jar"/>
-	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/jlibdiff-1.01.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -5,6 +5,7 @@ four
 five
 six
 sevenconflict1
+enlarge
 eight
 newlinebythem
 nine

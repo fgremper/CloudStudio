@@ -1,0 +1,5 @@
+package JLibDiff;
+
+public class HunkChange {
+
+}
