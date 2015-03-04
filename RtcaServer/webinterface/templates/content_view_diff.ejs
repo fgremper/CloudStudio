@@ -1,0 +1,47 @@
+		<tr>
+			<td class="diffHeader diffNumberColumn">&nbsp;</td>
+			<td class="diffHeader">my file</td>
+			<td class="diffHeader diffNumberColumn">&nbsp;</td>
+			<td class="diffHeader"><%= username %>'s file</td>
+		</tr>
+		<tr>
+			<td class="diffNumberColumn">
+				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
+					<% if (content[i].myType != 'pad' && content[i].myType != 'modifiedpad') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
+					<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
+				<% } %>
+			</td>
+
+			<td>
+				<div class="diffBox">
+				<% for (i = 0; i < content.length; i++) { %>
+					<% if (content[i].myType == 'add') { %><div class="diffLine diffAdd">
+					<% } else if (content[i].myType == 'pad') { %><div class="diffLine diffPad">
+					<% } else if (content[i].myType == 'modified' || content[i].myType == 'modifiedpad') { %><div class="diffLine diffModify">
+					<% } else { %><div class="diffLine"><% } %>
+						<%= content[i].myContent %>&nbsp;
+					</div>
+				<% } %>
+				</div>
+			</td>
+
+			<td class="diffNumberColumn">
+				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
+					<% if (content[i].theirType != 'pad' && content[i].theirType != 'modifiedpad') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
+					<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
+				<% } %>
+			</td>
+
+			<td>
+				<div class="diffBox">
+				<% for (i = 0; i < content.length; i++) { %>
+					<% if (content[i].theirType == 'add') { %><div class="diffLine diffAdd">
+					<% } else if (content[i].theirType == 'pad') { %><div class="diffLine diffPad">
+					<% } else if (content[i].theirType == 'modified' || content[i].theirType == 'modifiedpad') { %><div class="diffLine diffModify">
+					<% } else { %><div class="diffLine"><% } %>
+						<%= content[i].theirContent %>&nbsp;
+					</div>
+				<% } %>
+				</div>
+			</td>
+		</tr>

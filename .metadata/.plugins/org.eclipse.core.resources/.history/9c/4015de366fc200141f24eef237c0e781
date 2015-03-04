@@ -32,6 +32,12 @@ public class ServerMain {
 
 	
 	public static void main(String[] args) throws Exception {
+		//JSONObject haha = SideBySideThreeWayDiff.diff("one.txt", "two.txt", "three.txt");
+	    //System.out.println("count: " + SideBySideThreeWayDiff.countConflicts("one.txt", "two.txt", "three.txt"));
+	    
+		/*
+				// create admin if it doens't exist
+		
 
         try {
 
@@ -46,6 +52,7 @@ public class ServerMain {
         catch (Exception e) {
         	// nothing
         }
+        */
 		/*
 		
 		// Periodically origin updater
@@ -57,7 +64,7 @@ public class ServerMain {
 		*/
 		
 		// HTTP server
-		
+		/*
 		int port = ServerConfig.getInstance().serverPort;
 		
 		System.out.println("[Main] Starting HTTP server on port " + port + "...");
@@ -69,7 +76,7 @@ public class ServerMain {
 		server.start();
 
 		System.out.println("[Main] Server up!");
-		
+		*/
 	}
 
 }

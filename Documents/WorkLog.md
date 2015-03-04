@@ -8,12 +8,14 @@
 * mgmt: change repository url
 * line conflict (gonna be a lot of subtasks) (edit: started adding subtasks below)
 * think about file rename heuristics?
-* binary files don't get submitted?
+* binary files don't get submitted? binary files handling generally
 * make sure session expiration works properly
 * find out how to find the best merge-base-file commit
 * API documentation
 * last fetch (stat -c %Y .git/FETCH_HEAD, http://stackoverflow.com/questions/2993902/how-do-i-check-the-date-and-time-of-the-latest-git-pull-that-was-executed)
 * comment the code more
+* reimplement that active branch thing with the new db syntax
+* dont rewrite files in the filestorage folder
 
 #### Done
 
@@ -44,6 +46,8 @@
 * have a new database table to store where the current 'clone' is -> possibly a number that goes up!
 * update into the right folder!
 * gui "conflict" box
+* three way side by side info
+* count conflicts with less computing power
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 

@@ -145,8 +145,8 @@ public class SideBySideThreeWayDiff {
 	    	JSONObject lineObject = new JSONObject();
 	    	lineObject.put("myContent", fileContent.get(0).get(i));
 	    	lineObject.put("myType", fileContentType.get(0).get(i));
-	    	lineObject.put("baseContent", fileContent.get(1).get(i));
-	    	lineObject.put("baseType", fileContentType.get(1).get(i));
+	    	lineObject.put("baseContent", fileContent.get(2).get(i));
+	    	lineObject.put("baseContent", fileContentType.get(2).get(i));
 	    	lineObject.put("theirContent", fileContent.get(2).get(i));
 	    	lineObject.put("theirType", fileContentType.get(2).get(i));
 	    	lineArray.put(lineObject);
@@ -154,6 +154,7 @@ public class SideBySideThreeWayDiff {
     
     	return lineArray;
     	
+		return null;
 	}
 	
 	public static List<String> fileToLines(String filename) {

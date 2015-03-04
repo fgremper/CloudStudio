@@ -331,7 +331,7 @@ public class DatabaseConnection {
 		}
 	}
 
-	public JSONObject getFileLevelAwareness(JSONObject getConflictsObject, String username) throws Exception {
+	public String getFileLevelAwareness(JSONObject getConflictsObject, String username) throws Exception {
 		String repositoryAlias = getConflictsObject.getString("repositoryAlias");
 		String branch = getConflictsObject.getString("branch");
 		boolean showUncommitted = getConflictsObject.getBoolean("showUncommitted");
@@ -486,7 +486,7 @@ public class DatabaseConnection {
 			branchObject.put("files", conflictList);
 		}
 		
-		return responseObject;
+		return responseObject.toString();
 	}
 	
 	/* REPOSITORY MANAGEMENT */

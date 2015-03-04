@@ -515,21 +515,12 @@ function renderFileViewTable(data) {
 /* LEVEL 3: LOAD CONTENT LEVEL AWARENESS */
 
 function loadContentView(repositoryAlias, branch, filename, username, compareToBranch) {
-    sendRequest({
-        name: 'getContentLevelAwareness',
-        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
-        success: function(data) {
-            console.log("Get content awareness. Success: " + JSON.stringify(data));
-            activeFile = filename;
-            activeUser = username;
-            activeCompareToBranch = compareToBranch;
-            renderContentView({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts });
-        },
-        error: function () {
-            alert('Something went wrong when trying to load line level awareness data.');
-        }
-    });
+    activeFile = filename;
+    activeUser = username;
+    activeCompareToBranch = compareToBranch;
+    renderContentView({ sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts });
 }
+
 
 function renderContentView(data) {
     
@@ -546,5 +537,41 @@ function renderContentView(data) {
     $('.loadContentView').click(function () { loadFileView(activeRepository, activeBranch); });
     $('#refresh').click(function () { loadContentView(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch); });
 
+    $('#uncommittedFilter').change(function () {
+        showUncommitted = $('#uncommittedFilter').is(':checked');
+
+        loadContentViewDiff(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch);
+    });
+    $('#conflictsFilter').change(function () {
+        showConflicts = $('#conflictsFilter').is(':checked');
+
+        loadContentViewDiff(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch);
+    });
+
+    loadContentViewDiff(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch);
+
 }
 
+function loadContentViewDiff(repositoryAlias, branch, filename, username, compareToBranch) {
+    sendRequest({
+        name: 'getContentLevelAwareness',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
+        success: function(data) {
+            console.log("Get content awareness. Success: " + JSON.stringify(data));
+            renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts });
+        },
+        error: function () {
+            alert('Something went wrong when trying to load line level awareness data.');
+        }
+    });
+}
+
+
+function renderContentViewDiff(data) {
+    if (showConflicts) {
+        $('#diffTable').html(new EJS({url: 'templates/content_view_diff3.ejs'}).render(data));
+    }
+    else {
+        $('#diffTable').html(new EJS({url: 'templates/content_view_diff.ejs'}).render(data));
+    }
+}

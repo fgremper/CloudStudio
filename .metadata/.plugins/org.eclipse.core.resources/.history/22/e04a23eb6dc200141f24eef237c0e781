@@ -141,19 +141,18 @@ public class SideBySideThreeWayDiff {
 		
 
 	    JSONArray lineArray = new JSONArray();
-	    for (int i = 0; i < fileContent.get(0).size(); i++) {
+	    for (int i = 0; i < myContent.size(); i++) {
 	    	JSONObject lineObject = new JSONObject();
-	    	lineObject.put("myContent", fileContent.get(0).get(i));
-	    	lineObject.put("myType", fileContentType.get(0).get(i));
-	    	lineObject.put("baseContent", fileContent.get(1).get(i));
-	    	lineObject.put("baseType", fileContentType.get(1).get(i));
-	    	lineObject.put("theirContent", fileContent.get(2).get(i));
-	    	lineObject.put("theirType", fileContentType.get(2).get(i));
+	    	lineObject.put("myContent", myContent.get(i));
+	    	lineObject.put("myType", myType.get(i));
+	    	lineObject.put("theirContent", theirContent.get(i));
+	    	lineObject.put("theirType", theirType.get(i));
 	    	lineArray.put(lineObject);
 	    }
     
     	return lineArray;
     	
+		return null;
 	}
 	
 	public static List<String> fileToLines(String filename) {
