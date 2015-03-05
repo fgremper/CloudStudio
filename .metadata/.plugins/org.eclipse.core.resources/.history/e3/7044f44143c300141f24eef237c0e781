@@ -15,7 +15,6 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GitReader {
@@ -23,8 +22,6 @@ public class GitReader {
 	private String mySha = null;
 	private String theirSha = null;
 	private String ancestorSha = null;
-
-	String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 	
 	public GitReader(String repositoryAlias, String branch, String filename, String sessionUsername, String compareToBranch, String theirUsername, boolean showUncommitted) {
 
@@ -37,6 +34,7 @@ public class GitReader {
 			mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
 		 	theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
 			
+			String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
 			
 			
 			String commit1 = db.getCommitForBranchAndFile(repositoryAlias, sessionUsername, branch, filename);
@@ -88,6 +86,7 @@ public class GitReader {
 		        	if (treeWalk.getPathString().equals(filename)) {
 		        		System.out.println("found file");
 		        		
+		
 		            	ObjectId objectId = treeWalk.getObjectId(0);
 		            	ObjectLoader loader = repository.open(objectId);
 		            	InputStream fileInputStream = loader.openStream();
@@ -95,9 +94,17 @@ public class GitReader {
 		            	
 		            	System.out.println("Content MC: " + ancestorFileContent);
 		            	
-		            	ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
+		
+		    			String ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
 		    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
 		
+						JSONObject responseObject = new JSONObject();
+		
+						responseObject.put("content", SideBySideThreeWayDiff.diff(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha));
+						
+						//response = responseObject.toString();
+						
+		    			
 		        	}
 		        }
         
@@ -123,15 +130,6 @@ public class GitReader {
 		
 	}
 	
-	public JSONArray diff() throws Exception {
-		return SideBySideThreeWayDiff.diff(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha);
-			
-	}
 	
-	public Integer countConflicts() throws Exception {
-
-		return SideBySideThreeWayDiff.countConflicts(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha);
-		
-	}
 	
 }

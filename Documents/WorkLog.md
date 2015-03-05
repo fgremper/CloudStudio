@@ -48,6 +48,12 @@
 * gui "conflict" box
 * three way side by side info
 * count conflicts with less computing power
+* do three way diff
+* package three way diff info in json object
+* display the 3 way diff in client
+* have a [conflict] checkbox in the line level
+* have a switch for showing line conflicts on a file level (we get the information from the server already? just now pipe all conflicts through the countconflicts mechanic)
+* have a row select!
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 

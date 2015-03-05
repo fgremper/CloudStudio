@@ -15,7 +15,6 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GitReader {
@@ -123,15 +122,17 @@ public class GitReader {
 		
 	}
 	
-	public JSONArray diff() throws Exception {
-		return SideBySideThreeWayDiff.diff(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha);
-			
-	}
+	public JSONObject diff() {
+		if (mySha != null && theirSha != null && ancestorSha != null) {
 	
-	public Integer countConflicts() throws Exception {
-
-		return SideBySideThreeWayDiff.countConflicts(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha);
-		
+			JSONObject responseObject = new JSONObject();
+	
+			responseObject.put("content", SideBySideThreeWayDiff.diff(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha));
+			
+			return responseObject.toString();
+			
+			
+		}
 	}
 	
 }

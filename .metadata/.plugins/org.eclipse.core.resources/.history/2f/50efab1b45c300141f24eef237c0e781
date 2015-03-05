@@ -250,11 +250,9 @@ public class RequestHttpHandler implements HttpHandler {
 
 								            GitReader gitReader = new GitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
 								            
-								            int lineConflicts = gitReader.countConflicts();
+											
 
-								            if (lineConflicts > 0) {
-								            	user.put("type", lineConflicts + " line conflict");
-								            }
+											user.put("type", gitReader.countConflicts());
 											
 											
 											

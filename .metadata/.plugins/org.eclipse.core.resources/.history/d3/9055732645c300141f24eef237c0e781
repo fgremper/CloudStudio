@@ -253,7 +253,7 @@ public class RequestHttpHandler implements HttpHandler {
 								            int lineConflicts = gitReader.countConflicts();
 
 								            if (lineConflicts > 0) {
-								            	user.put("type", lineConflicts + " line conflict");
+								            	user.put("type", gitReader.countConflicts());
 								            }
 											
 											
