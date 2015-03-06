@@ -1,0 +1,74 @@
+package ch.ethz.fgremper.rtca;
+
+import org.apache.commons.configuration.XMLConfiguration;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+/**
+ * Server configuration.
+ * @author Fabian Gremper
+ */
+public class ServerConfig {
+	
+	// Instance
+	private static ServerConfig serverConfig;
+
+	// DB config parameters
+	public String dbDriverClass;
+	public String dbJdbcUrl;
+	public String dbUser;
+	public String dbPassword;
+
+	// DB pool parameters
+	public int dbMinPoolSize;
+	public int dbAcquireIncrement;
+	public int dbMaxPoolSize;
+	public int dbMaxStatements;
+	
+	// Server port parameters
+	public int serverPort;
+
+	// Directory parameters
+	public String fileStorageDirectory;
+	public String originStorageDirectory;
+
+	// Hash salt
+	public String passwordSalt;
+	
+	public ServerConfig() {
+		try {
+			XMLConfiguration xmlConfig = new XMLConfiguration("serverConfig.xml");
+		
+			dbDriverClass = xmlConfig.getString("dbDriverClass");
+			dbJdbcUrl = xmlConfig.getString("dbJdbcUrl");
+			dbUser = xmlConfig.getString("dbUser");
+			dbPassword = xmlConfig.getString("dbPassword");
+
+			dbMinPoolSize = Integer.parseInt(xmlConfig.getString("dbMinPoolSize"));
+			dbAcquireIncrement = Integer.parseInt(xmlConfig.getString("dbAcquireIncrement"));
+			dbMaxPoolSize = Integer.parseInt(xmlConfig.getString("dbMaxPoolSize"));
+			dbMaxStatements = Integer.parseInt(xmlConfig.getString("dbMaxStatements"));
+
+			serverPort = Integer.parseInt(xmlConfig.getString("serverPort"));
+			
+			fileStorageDirectory = xmlConfig.getString("fileStorageDirectory");
+			originStorageDirectory = xmlConfig.getString("originStorageDirectory");
+
+			passwordSalt = xmlConfig.getString("passwordSalt");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * Get the instance server config
+	 * @return ServerConfig instance
+	 */
+	public static ServerConfig getInstance() {
+		if (serverConfig == null) {
+			serverConfig = new ServerConfig();
+		}
+		return serverConfig;
+	}
+}

@@ -6,3 +6,7 @@
 1425253873597	Move compilation unit
 1425593818776	Move file
 1425595469604	Copy file
+1425613262074	Rename local variable 'fileStart'
+1425613278167	Rename local variable 'fileType'
+1425613287161	Rename local variable 'offset'
+1425613734644	Rename field 'map'

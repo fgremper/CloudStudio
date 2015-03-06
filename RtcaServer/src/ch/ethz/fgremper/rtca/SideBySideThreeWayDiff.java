@@ -15,40 +15,69 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Utility class to provide side-by-side comparison of three files
+ * @author Fabian Gremper
+ */
 public class SideBySideThreeWayDiff {
 
 	private static final Logger log = LogManager.getLogger(SideBySideThreeWayDiff.class);
 	
+	/**
+	 * Find the number of conflicting blocks in a three way file comparison
+	 * @param fileName1 my file
+	 * @param fileName2 base file
+	 * @param fileName3 their file
+	 * @return number of conflict blocks
+	 * @throws Exception
+	 */
 	public static int countConflicts(String fileName1, String fileName2, String fileName3) throws Exception {
+		
+		// Count
 		int count = 0;
 
+		// Compile pattern: a merge conflict occurs if all 3 files or only the base file differs
 		Pattern pattern = Pattern.compile("^(====|====2)$");
 
+		// Run diff3
 		Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
 		p.waitFor();
 
+		// Read the output
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
 		String line;
-
 		while ((line = reader.readLine()) != null) {
 
+			// If we match the pattern, there's a conflicting merge block
 			Matcher m = pattern.matcher(line);
 			if (m.matches()) {
 				count++;
 			}
 		}
 		
+		// Return counter
 		return count;
+		
 	}
-	
+
+	/**
+	 * Create side-by-side-by-side displayable view for three files
+	 * @param fileName1 my file
+	 * @param fileName2 base file
+	 * @param fileName3 their file
+	 * @return JSON array of lines, where every line is an object with the keys myContent,
+	 * baseContent, theirContent, myType, baseType, theirType
+	 * @throws Exception
+	 */
 	public static JSONArray diff(String fileName1, String fileName2, String fileName3) throws Exception {
 
+		// File content (0: me, 1: base, 2: them)
 		Vector<List<String>> fileContent = new Vector<List<String>>(3);
 		fileContent.add(fileToLines(fileName1));
 		fileContent.add(fileToLines(fileName2));
 		fileContent.add(fileToLines(fileName3));
 
+		// File type (0: me, 1: base, 2: them)
 		Vector<List<String>> fileContentType = new Vector<List<String>>(3);
 	    for (int i = 0; i < 3; i++) {
 			fileContentType.add(new LinkedList<String>());
@@ -56,94 +85,98 @@ public class SideBySideThreeWayDiff {
 	    		fileContentType.get(i).add("unchanged");
 	    	}
 	    }
-	    
-	    
-	    
-	    
+
+		// Run diff3
 		Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
 		p.waitFor();
 
+		// Read the output
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
-
 		String line;
 		
+		// Pattern to watch: it's always repetitions of triplets with all 3 files
 		Pattern pattern = Pattern.compile("^([1-3]):([0-9]+)(,([0-9]+))?([ac])$");
 
-		Vector<Integer> fileStart = new Vector<Integer>(3);
-		Vector<Integer> fileEnd = new Vector<Integer>(3);
-		Vector<String> fileType = new Vector<String>(3);
-		Vector<Integer> offset = new Vector<Integer>(3);
+		// Init block and offset
+		Vector<Integer> blockStart = new Vector<Integer>(3);
+		Vector<Integer> blockEnd = new Vector<Integer>(3);
+		Vector<String> blockType = new Vector<String>(3);
+		Vector<Integer> fileOffset = new Vector<Integer>(3);
 		for (int i = 0; i < 3; i++) {
-			fileStart.add(0);
-			fileEnd.add(0);
-			fileType.add("");
-			offset.add(0);
+			blockStart.add(0);
+			blockEnd.add(0);
+			blockType.add("");
+			fileOffset.add(0);
 		}
 		int maxLength = 0;
 		
+		// Go through the diff3 output
 		while ((line = reader.readLine()) != null) {
+			
+			// Do we match the pattern=
 			Matcher m = pattern.matcher(line);
 			if (m.matches()) {
 				
-				log.info("Console: " + line);
+				log.debug("diff3 output: " + line);
 				
-				
+				// Which file?
 				int fileNum = Integer.parseInt(m.group(1)) - 1;
 				
+				// First file? Reset the max length, so we can get the max block length for this block
 				if (fileNum == 0) {
 					maxLength = 0;
 				}
 				
-				fileStart.set(fileNum, Integer.parseInt(m.group(2)) - 1);
-				fileEnd.set(fileNum, m.group(4) != null ? (Integer.parseInt(m.group(4)) - 1) : (Integer.parseInt(m.group(2)) - 1));
+				// Set start, end, type and max length of block
+				blockStart.set(fileNum, Integer.parseInt(m.group(2)) - 1);
+				blockEnd.set(fileNum, m.group(4) != null ? (Integer.parseInt(m.group(4)) - 1) : (Integer.parseInt(m.group(2)) - 1));
 				maxLength = Math.max(maxLength, (m.group(4) != null ? (Integer.parseInt(m.group(4)) - Integer.parseInt(m.group(2)) + 1) : 1));
-				fileType.set(fileNum, m.group(5));
+				blockType.set(fileNum, m.group(5));
 				
-
+				// Last file? End of block, time to process
 				if (fileNum == 2) {
+					
+					// For all files, process the block information, meaning set type to modified, pad
+					// or modifiedpad where necessary and inserting empty lines to the content where
+					// necessary
 					for (int i = 0; i < 3; i++) {
-						//log.info("file " + i + " type + " + fileType.get(i));
-						if (fileType.get(i).equals("c")) {
+						
+						// Change block?
+						if (blockType.get(i).equals("c")) {
 							int length = maxLength;
-							for (int j = fileStart.get(i); j <= fileEnd.get(i); j++) {
-								log.info(" changing " + j);
-								fileContentType.get(i).set(j + offset.get(i), "modified");
+							
+							// Go through all the lines and set their type to modified
+							for (int j = blockStart.get(i); j <= blockEnd.get(i); j++) {
+								fileContentType.get(i).set(j + fileOffset.get(i), "modified");
 								length--;
 							}
+							
+							// Still some difference to the max length, so we insert some padding
 							while (length > 0) {
-								fileContentType.get(i).add(fileEnd.get(i) + offset.get(i) + 1, "modifiedpad");
-								fileContent.get(i).add(fileEnd.get(i) + offset.get(i) + 1, "");
-								offset.set(i, offset.get(i) + 1);
+								fileContentType.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "modifiedpad");
+								fileContent.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "");
+								fileOffset.set(i, fileOffset.get(i) + 1);
 								length--;
 							}
 						}
-						else if (fileType.get(i).equals("a")) {
+						
+						// Add block?
+						else if (blockType.get(i).equals("a")) {
 							int length = maxLength;
 							while (length > 0) {
-								log.info("file " + i + " pad ");
-								fileContentType.get(i).add(fileEnd.get(i) + offset.get(i) + 1, "pad");
-								fileContent.get(i).add(fileEnd.get(i) + offset.get(i) + 1, "");
-								offset.set(i, offset.get(i) + 1);
+								fileContentType.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "pad");
+								fileContent.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "");
+								fileOffset.set(i, fileOffset.get(i) + 1);
 								length--;
 							}
 						}
 					}
 				}
 				
-				//System.out.println(m.groupCount());
-				//log.info(" >> " + fileNum + " " + fileStart + " " + fileEnd + " " + fileType);
 			}
 		}
 
-	    
-		for (int i = 0; i < 3; i++) {
-			log.info("File " + i);
-			for (int j = 0; j < fileContent.get(i).size(); j++) {
-				System.out.println((j + 1) + " " + fileContentType.get(i).get(j) + " " + fileContent.get(i).get(j));
-			}
-		}
-		
-
+		// Build JSON array with the diff
 	    JSONArray lineArray = new JSONArray();
 	    for (int i = 0; i < fileContent.get(0).size(); i++) {
 	    	JSONObject lineObject = new JSONObject();
@@ -156,34 +189,39 @@ public class SideBySideThreeWayDiff {
 	    	lineArray.put(lineObject);
 	    }
     
+	    // Return it
     	return lineArray;
     	
 	}
 	
+	/**
+	 * Reads a file into a list of lines
+	 * @param filename filename of the file to read
+	 * @return list of lines
+	 */
 	public static List<String> fileToLines(String filename) {
         List<String> lines = new LinkedList<String>();
         String line = "";
         BufferedReader in = null;
         try {
-                in = new BufferedReader(new InputStreamReader(
-                        new FileInputStream(filename), "UTF8"));
-                while ((line = in.readLine()) != null) {
-                        lines.add(line);
-                }
+            in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filename), "UTF8"));
+            while ((line = in.readLine()) != null) {
+                lines.add(line);
+            }
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } finally {
-                if (in != null) {
-                        try {
-                                in.close();
-                        } catch (IOException e) {
-                                // ignore ... any errors should already have been
-                                // reported via an IOException from the final flush.
-                        }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // ignore ... any errors should already have been
+                    // reported via an IOException from the final flush.
                 }
+            }
         }
         return lines;
 	}
-	
 	
 }

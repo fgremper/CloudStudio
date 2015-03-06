@@ -2,54 +2,73 @@ package ch.ethz.fgremper.rtca;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import difflib.Delta;
+import difflib.Delta.TYPE;
 import difflib.DiffUtils;
 import difflib.Patch;
-import difflib.Delta.TYPE;
 
+/**
+ * Utility class to provide side-by-side comparison of two files
+ * @author Fabian Gremper
+ */
 public class SideBySideDiff {
 
-	private static final Logger log = LogManager.getLogger(SideBySideDiff.class);
-	
+	/**
+	 * Side by side diff of two files
+	 * @param original line array of original file
+	 * @param revised line array of revised file
+	 * @return JSON array which for every line has an object with the keys myContent, myType, theirContent, theirType
+	 * @throws Exception
+	 */
 	@SuppressWarnings("unchecked")
 	public static JSONArray diff(List<String> original, List<String> revised) throws Exception {
 		
+		// Using DiffUtils to create a diff patch
 	    Patch patch = DiffUtils.diff(original, revised);
 	    
+	    // Initializing myContent, theirContent (copy of myContent), mytype, theirType
 	    List<String> myContent = new LinkedList<String>(original);
 	    List<String> theirContent = new LinkedList<String>(original);
 	    List<String> myType = new LinkedList<String>();
 	    List<String> theirType = new LinkedList<String>();
-	    
 	    for (int i = 0; i < myContent.size(); i++) {
 	    	myType.add("unchanged");
 	    	theirType.add("unchanged");
 	    }
 	    
+	    // After adding lines, position references from the patch shift by some offset
 	    int offset = 0;
+	    
+	    // Go through all patches and create a nice side-by-side displayable version
 	    for (Delta delta : patch.getDeltas()) {
+	    	
+	    	// What type of patch is it?
 	    	if (delta.getType() == TYPE.CHANGE) {
+	    		
+	    		// Position
 	    		int pos = delta.getOriginal().getPosition() + offset;
+	    		
+	    		// Get my and their lines
 	    		List<String> myLines = (List<String>) delta.getOriginal().getLines();
 	    		List<String> theirLines = (List<String>) delta.getRevised().getLines();
+	    		
+	    		// Max lines so we pad modified-blocks to be of the same size
 	    		int maxLines = Math.max(myLines.size(), theirLines.size());
 	    	
+	    		// Do all the necessary changes to content and type
 	    		for (int i = 0; i < maxLines; i++) {
 	    			if (i < myLines.size()) {
-	    				// my content is already right, no need to change anything, just set it as 'modified'
+	    				// My content is already right, no need to change anything, just set it as 'modified'
 		    			myType.set(pos, "modified");
-		    			// if we have more lines than them, set their content to empty strings
+		    			// If we have more lines than them, set their content to empty strings
 		    			if (i < theirLines.size()) {
 			    			theirContent.set(pos, theirLines.get(i));
 			    			theirType.set(pos, "modified");
@@ -59,7 +78,7 @@ public class SideBySideDiff {
 			    			theirType.set(pos, "modifiedpad");
 		    			}
 	    			}
-	    			// they have more lines than me, we need to add new empty lines for me and their lines
+	    			// They have more lines than me, we need to add new empty lines for me and their lines
 	    			else {
 		    			myType.add(pos, "modifiedpad");
 		    			myContent.add(pos, "");
@@ -69,19 +88,27 @@ public class SideBySideDiff {
 	    			pos++;
 	    		}
 	    	}
-	    	if (delta.getType() == TYPE.DELETE) {
+	    	else if (delta.getType() == TYPE.DELETE) {
+	    		
+	    		// Position
 	    		int pos = delta.getOriginal().getPosition() + offset;
+
+	    		// Do all the necessary changes to content and type
 	    		for (String line : (List<String>) delta.getOriginal().getLines()) {
-	    			//their.(pos, "+" + line);
 	    			myContent.set(pos, line);
 	    			myType.set(pos, "add");
 	    			theirContent.set(pos, "");
 	    			theirType.set(pos, "pad");
 	    			pos++;
 	    		}
+	    		
 	    	}
-	    	if (delta.getType() == TYPE.INSERT) {
+	    	else if (delta.getType() == TYPE.INSERT) {
+
+	    		// Position
 	    		int pos = delta.getOriginal().getPosition() + offset;
+
+	    		// Do all the necessary changes to content and type
 	    		for (String line : (List<String>) delta.getRevised().getLines()) {
 	    			theirContent.add(pos, line);
 	    			theirType.add(pos, "add");
@@ -94,6 +121,7 @@ public class SideBySideDiff {
 	    	
 	    }
 	    
+	    // Build a JSON array from the side-by-side information we just created
 	    JSONArray lineArray = new JSONArray();
 	    for (int i = 0; i < myContent.size(); i++) {
 	    	JSONObject lineObject = new JSONObject();
@@ -104,31 +132,37 @@ public class SideBySideDiff {
 	    	lineArray.put(lineObject);
 	    }
     
+	    // Return it
     	return lineArray;
     	
 	}
 
+	/**
+	 * Reads a file into a list of lines
+	 * @param filename filename of the file to read
+	 * @return list of lines
+	 */
 	public static List<String> fileToLines(String filename) {
         List<String> lines = new LinkedList<String>();
         String line = "";
         BufferedReader in = null;
         try {
-                in = new BufferedReader(new InputStreamReader(
-                        new FileInputStream(filename), "UTF8"));
-                while ((line = in.readLine()) != null) {
-                        lines.add(line);
-                }
+            in = new BufferedReader(new InputStreamReader(
+                new FileInputStream(filename), "UTF8"));
+            while ((line = in.readLine()) != null) {
+                lines.add(line);
+            }
         } catch (IOException e) {
-                e.printStackTrace();
+            e.printStackTrace();
         } finally {
-                if (in != null) {
-                        try {
-                                in.close();
-                        } catch (IOException e) {
-                                // ignore ... any errors should already have been
-                                // reported via an IOException from the final flush.
-                        }
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    // ignore ... any errors should already have been
+                    // reported via an IOException from the final flush.
                 }
+            }
         }
         return lines;
 	}

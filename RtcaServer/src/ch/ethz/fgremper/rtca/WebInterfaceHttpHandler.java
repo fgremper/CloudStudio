@@ -18,7 +18,10 @@ import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-/* This handler just returns static HTML files if the web interface is requested. */
+/**
+ * This HTTP handler just returns static HTML files if the web interface is requested.
+ * @author Fabian Gremper
+ */
 
 public class WebInterfaceHttpHandler implements HttpHandler {
 

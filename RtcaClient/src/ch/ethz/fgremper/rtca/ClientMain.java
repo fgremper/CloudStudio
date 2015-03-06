@@ -59,6 +59,8 @@ public class ClientMain {
 				
 				try {
 					
+					log.info("Reading and sending repository \"" + repositoryInfo.alias + "\" at " + repositoryInfo.localPath);
+					
 					// Read repository info
 					RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
 					JSONObject updateObject = repositoryReader.getUpdateObject();
@@ -73,7 +75,7 @@ public class ClientMain {
 				
 				}
 				catch (Exception e) {
-					log.error("Error while sending local git state for " + repositoryInfo.alias + ": " + e.getMessage());
+					log.error("Error while reading/sending local git state for " + repositoryInfo.alias + ": " + e.getMessage());
 				}
 				
 			}

@@ -6,10 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -17,13 +14,12 @@ import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import ch.ethz.fgremper.rtca.helper.JSONHelper;
-
+/**
+ * Connection to the MySQL database.
+ * @author Fabian Gremper
+ */
 public class DatabaseConnection {
 
 	private static final Logger log = LogManager.getLogger(DatabaseConnection.class);
@@ -31,7 +27,7 @@ public class DatabaseConnection {
 	Connection con = null;
 
 	public DatabaseConnection() throws Exception {
-		//con = DatabaseConnectionPool.getInstance().getConnection();
+		// con = DatabaseConnectionPool.getInstance().getConnection();
     	ServerConfig serverConfig = ServerConfig.getInstance();
         Class.forName(serverConfig.dbDriverClass);
         con = DriverManager.getConnection(serverConfig.dbJdbcUrl, serverConfig.dbUser, serverConfig.dbPassword);
@@ -148,18 +144,6 @@ public class DatabaseConnection {
 		stmt.setString(7, committed);
 		stmt.executeUpdate();
 	}
-	
-	/*
-	public void storeActiveBranch(String repositoryAlias, String username, String branch, String commit) throws Exception {
-		// Set active branch for user
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO activebranch (repositoryalias, username, branch, commit) VALUES (?, ?, ?, ?)");
-		stmt.setString(1, repositoryAlias);
-		stmt.setString(2, username);
-		stmt.setString(3, branch);
-		stmt.setString(4, commit);
-		stmt.executeUpdate();
-	}
-	*/
 
 	public void storeBranches(String repositoryAlias, String username, String branch, String commit, String active) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO branches (repositoryalias, username, branch, commit, active) VALUES (?, ?, ?, ?, ?)");

@@ -25,12 +25,21 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * Uses JGit to read a local git repository.
+ * @author Fabian Gremper
+ */
 public class RepositoryReader {
 
 	private static final Logger log = LogManager.getLogger(RepositoryReader.class);
 	
 	private JSONObject updateObject;
 	
+	/**
+	 * Reads a local git repository and builds an update JSON object to send to the RTCA server.
+	 * @param localPath path to the local git repository
+	 * @throws Exception
+	 */
 	public RepositoryReader(String localPath) throws Exception {
 		
 		// Create the object that we're going to send to the server
@@ -204,6 +213,10 @@ public class RepositoryReader {
         
 	}
 	
+	/**
+	 * Get the JSON object created by the reader to send to the RTCA server as local git state.
+	 * @return JSON object to send to the RTCA server
+	 */
 	public JSONObject getUpdateObject() {
 		return updateObject;
 	}

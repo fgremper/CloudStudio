@@ -3,26 +3,36 @@ package ch.ethz.fgremper.rtca;
 import java.io.File;
 import java.util.HashMap;
 
-import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.commons.io.FileUtils;
 
+/**
+ * Utility to read in .sql files to string for big SQL queries. Also caching queries that we already read.
+ * @author Fabian Gremper
+ */
 public class SqlQueryReader {
+	
+	// Instance
 	private static SqlQueryReader sqlQueryReader;
-	private HashMap<String, String> map = new HashMap<String, String>();
 	
-	public SqlQueryReader() {
-		
-	}
+	// Cache
+	private HashMap<String, String> cache = new HashMap<String, String>();
 	
+	/**
+	 * Read an SQL query
+	 * @param queryName name of the query which maps to the filename without the ".sql" extension
+	 * @return content of the file
+	 */
 	public String getQuery(String queryName) {
-		if (map.containsKey(queryName)) {
-			return map.get(queryName);
+		// Did we already read this file?
+		if (cache.containsKey(queryName)) {
+			// Get from cache
+			return cache.get(queryName);
 		}
 		else {
 			try {
+				// Read file contents and store them in the cache
 				String content = FileUtils.readFileToString(new File(queryName + ".sql"), "UTF-8");
-				System.out.println("READ: " + content);
-				map.put(queryName, content);
+				cache.put(queryName, content);
 				return content;
 			}
 			catch (Exception e) {
@@ -32,6 +42,10 @@ public class SqlQueryReader {
 		}
 	}
 	
+	/**
+	 * Get instance of the SqlQueryReader
+	 * @return SqlQueryReader instance
+	 */
 	public static SqlQueryReader getInstance() {
 		if (sqlQueryReader == null) {
 			sqlQueryReader = new SqlQueryReader();

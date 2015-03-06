@@ -53,7 +53,9 @@
 * display the 3 way diff in client
 * have a [conflict] checkbox in the line level
 * have a switch for showing line conflicts on a file level (we get the information from the server already? just now pipe all conflicts through the countconflicts mechanic)
-* have a row select!
+* log4j for logging
+* display file conflicts in file view as red
+* clean up code in client
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
