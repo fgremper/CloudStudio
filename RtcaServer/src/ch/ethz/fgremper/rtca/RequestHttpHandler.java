@@ -1,54 +1,36 @@
 package ch.ethz.fgremper.rtca;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URI;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
-import org.eclipse.jgit.lib.ObjectId;
-import org.eclipse.jgit.lib.ObjectLoader;
-import org.eclipse.jgit.lib.Ref;
-import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevCommit;
-import org.eclipse.jgit.revwalk.RevTree;
-import org.eclipse.jgit.revwalk.RevWalk;
-import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.treewalk.TreeWalk;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import ch.ethz.fgremper.rtca.helper.JSONHelper;
-
-import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
-import difflib.DiffUtils;
-import difflib.Patch;
-
 public class RequestHttpHandler implements HttpHandler {
+
+	private static final Logger log = LogManager.getLogger(RequestHttpHandler.class);
 	
 	public void handle(HttpExchange exchange) throws IOException {
 		
 		// Get HTTP exchange information
 		URI uri = exchange.getRequestURI();
 		String requestMethod = exchange.getRequestMethod();
-		System.out.println("[RequestHttpHandler] Incoming request: " + requestMethod + " " + uri.getPath());
+		System.out.println("Incoming request: " + requestMethod + " " + uri.getPath());
 		String inputJsonString = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
-		System.out.println("[RequestHttpHandler] JSON string: " + inputJsonString);
+		System.out.println("JSON string: " + inputJsonString);
 		
 		// Variables
 		String response = null;
@@ -77,7 +59,7 @@ public class RequestHttpHandler implements HttpHandler {
 				
 				// Login request
 				if (uri.getPath().equals(prefix + "/login") || uri.getPath().equals(prefix + "/createUserAndLogin")) {
-					System.out.println("[RequestHttpHandler] Incoming LOGIN.");
+					log.info("Incoming LOGIN.");
 					
 					// Read parameters
 					String username = incomingObject.getString("username");
@@ -113,7 +95,7 @@ public class RequestHttpHandler implements HttpHandler {
 			
 				// Get repositories request
 				if (uri.getPath().equals(prefix + "/getRepositories")) {
-					System.out.println("[RequestHttpHandler] Incoming GET REPOSITORIES.");
+					log.info("Incoming GET REPOSITORIES.");
 					
 					// Read repository information from database
 					if (sessionUsername != null) {
@@ -123,7 +105,7 @@ public class RequestHttpHandler implements HttpHandler {
 	
 				// Get users request
 				if (uri.getPath().equals(prefix + "/getUsers")) {
-					System.out.println("[RequestHttpHandler] Incoming GET USERS.");
+					log.info("Incoming GET USERS.");
 					
 					// We need to be admin to retrieve this information
 					if (db.isUserAdmin(sessionUsername)) {
@@ -475,34 +457,11 @@ public class RequestHttpHandler implements HttpHandler {
 			response = "500 (Error)";
 			exchange.sendResponseHeaders(500, response.length());
 		}
-		System.out.println("[RequestHttpHandler] Sending response: " + response);
+		log.info("Sending response: " + response);
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();
 		
 	}
 
-	public static List<String> fileToLines(String filename) {
-        List<String> lines = new LinkedList<String>();
-        String line = "";
-        BufferedReader in = null;
-        try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(filename), "UTF8"));
-            while ((line = in.readLine()) != null) {
-                    lines.add(line);
-            }
-        } catch (IOException e) {
-                e.printStackTrace();
-        } finally {
-            if (in != null) {
-                try {
-                    in.close();
-                } catch (IOException e) {
-                    // ignore ... any errors should already have been
-                    // reported via an IOException from the final flush.
-                }
-            }
-        }
-        return lines;
-	}
 }

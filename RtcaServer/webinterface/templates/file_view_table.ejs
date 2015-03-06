@@ -18,6 +18,8 @@
 		 					<td class="clickable fileAndUser fileEqual" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>"><%= branches[h].files[i].users[j].type %></td>
 		 				<% } else if (branches[h].files[i].users[j].type == 'file conflict') { %>
 		 					<td class="clickable fileAndUser fileConflict" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>"><%= branches[h].files[i].users[j].type %></td>
+		 				<% } else if (branches[h].files[i].users[j].type.match(/line conflict/)) { %>
+		 					<td class="clickable fileAndUser fileLineConflict" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>"><%= branches[h].files[i].users[j].type %></td>
 		 				<% } else { %>
 		 					<td class="clickable fileAndUser" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>"><%= branches[h].files[i].users[j].type %></td>
 		 				<% } %>

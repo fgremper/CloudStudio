@@ -14,6 +14,8 @@ import java.util.Random;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,6 +26,8 @@ import ch.ethz.fgremper.rtca.helper.JSONHelper;
 
 public class DatabaseConnection {
 
+	private static final Logger log = LogManager.getLogger(DatabaseConnection.class);
+	
 	Connection con = null;
 
 	public DatabaseConnection() throws Exception {
@@ -80,7 +84,7 @@ public class DatabaseConnection {
 			String commit = fileObject.getString("commit");
 			String committed = fileObject.getString("committed");
 			
-			System.out.println("[DatabaseConnection] File: " + filename + " (sha: " + sha + ")");
+			log.info("File: " + filename + " (sha: " + sha + ")");
 
 			FileUtils.writeStringToFile(new File(ServerConfig.getInstance().fileStorageDirectory + "/" + sha), content);
 
@@ -212,7 +216,7 @@ public class DatabaseConnection {
 		
 		PreparedStatement stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("BranchAwareness"));
 
-		System.out.println("READ CONTENTS: " + SqlQueryReader.getInstance().getQuery("BranchAwareness"));
+		log.info("READ CONTENTS: " + SqlQueryReader.getInstance().getQuery("BranchAwareness"));
 		
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryAlias);

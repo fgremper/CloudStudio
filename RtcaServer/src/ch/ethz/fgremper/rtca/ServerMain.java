@@ -1,38 +1,23 @@
 package ch.ethz.fgremper.rtca;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Vector;
 import java.util.concurrent.Executors;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.sun.net.httpserver.HttpServer;
 
-import difflib.Delta;
-import difflib.Delta.TYPE;
-import difflib.DiffAlgorithm;
-import difflib.DiffUtils;
-import difflib.Patch;
-
 public class ServerMain {
 
-	static int port = 7330;
-
+	private static final Logger log = LogManager.getLogger(ServerMain.class);
 	
+	private static int port = ServerConfig.getInstance().serverPort;
+
 	public static void main(String[] args) throws Exception {
 
+		log.info("Server started.");
+		
         try {
 
     		DatabaseConnection db = new DatabaseConnection();
@@ -46,10 +31,11 @@ public class ServerMain {
         catch (Exception e) {
         	// nothing
         }
+        
 		/*
 		
 		// Periodically origin updater
-		System.out.println("[Main] Starting periodical origin updater");
+		log.info("Starting periodical origin updater...");
 		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		new Thread(originUpdaterInterval).start();
@@ -58,9 +44,7 @@ public class ServerMain {
 		
 		// HTTP server
 		
-		int port = ServerConfig.getInstance().serverPort;
-		
-		System.out.println("[Main] Starting HTTP server on port " + port + "...");
+		log.info("Starting HTTP server on port " + port + "...");
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 		server.createContext("/webinterface", new WebInterfaceHttpHandler());
@@ -68,7 +52,7 @@ public class ServerMain {
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 
-		System.out.println("[Main] Server up!");
+		log.info("Server up!");
 		
 	}
 

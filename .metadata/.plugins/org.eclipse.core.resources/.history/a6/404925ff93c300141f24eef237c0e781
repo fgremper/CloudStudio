@@ -1,0 +1,23 @@
+package ch.ethz.fgremper.rtca;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apache.commons.configuration.XMLConfiguration;
+
+public class ClientConfig {
+	private static ClientConfig clientConfig;
+	
+	public String username;
+	public String password;
+	public String serverUrl;
+	public int resubmitInterval;
+	public LinkedList<RepositoryInfo> repositoriesList = new LinkedList<RepositoryInfo>();
+	
+	public static ClientConfig getInstance() {
+		if (clientConfig == null) {
+			clientConfig = new ClientConfig();
+		}
+		return clientConfig;
+	}
+}

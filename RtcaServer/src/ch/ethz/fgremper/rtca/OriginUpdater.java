@@ -7,10 +7,14 @@ import java.sql.SQLException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class OriginUpdater {
+
+	private static final Logger log = LogManager.getLogger(OriginUpdater.class);
 	
 	public static void update(String repositoryAlias, String repositoryUrl) {
 		DatabaseConnection db = null;
@@ -19,7 +23,7 @@ public class OriginUpdater {
 			
 			String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
 			
-			System.out.println("[OriginUpdater] Cloning repository \"" + repositoryAlias + "\": " + repositoryUrl);
+			log.info("Cloning repository \"" + repositoryAlias + "\": " + repositoryUrl);
 
 			String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (db.getRepositoryCloneCount(repositoryAlias) + 1);
 			
@@ -31,16 +35,16 @@ public class OriginUpdater {
 			// Clone repository
 			executeCommand("git clone " + repositoryUrl + " " + repositoryOriginDirectory);
 			
-			System.out.println("[OriginUpdater] Reading repository \"" + repositoryAlias + "\"");
+			log.info("Reading repository \"" + repositoryAlias + "\"");
 			// Read repository information like we would normally
 			RepositoryReader repositoryReader = new RepositoryReader(repositoryOriginDirectory);
 			JSONObject updateObject = repositoryReader.getUpdateObject();
 			updateObject.put("repositoryAlias", repositoryAlias);
 			String inputJsonString = updateObject.toString();
-			System.out.println("[OriginUpdater] JSON string: " + inputJsonString);
+			log.info("JSON string: " + inputJsonString);
 			
 			// Inserting into database
-			System.out.println("[OriginUpdater] Doing database stuff");
+			log.info("Doing database stuff");
 			db.startTransaction();
 			
 			// Create database user if it doesn't exist
@@ -70,7 +74,7 @@ public class OriginUpdater {
 	}
 	
 	public static void executeCommand(String consoleInput) throws Exception {
-		System.out.println("[OriginUpdater] Executing: " + consoleInput);
+		log.info("Executing: " + consoleInput);
 		Process p = Runtime.getRuntime().exec(consoleInput);
 		p.waitFor();
 
@@ -78,7 +82,7 @@ public class OriginUpdater {
 
 		String line;
 		while ((line = reader.readLine()) != null) {
-			System.out.println("[OriginUpdater] Console: " + line);
+			log.info("Console: " + line);
 		}
 	}
 	

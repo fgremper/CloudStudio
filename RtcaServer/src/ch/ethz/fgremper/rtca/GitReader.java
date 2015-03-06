@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Repository;
@@ -20,6 +22,8 @@ import org.json.JSONObject;
 
 public class GitReader {
 
+	private static final Logger log = LogManager.getLogger(GitReader.class);
+	
 	private String mySha = null;
 	private String theirSha = null;
 	private String ancestorSha = null;
@@ -40,15 +44,15 @@ public class GitReader {
 			
 			
 			String commit1 = db.getCommitForBranchAndFile(repositoryAlias, sessionUsername, branch, filename);
-			System.out.println("[RequestHttpHandler] C1: " + commit1);
+			log.info("C1: " + commit1);
 			String myFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted)), "UTF-8");
-			System.out.println("Content: " + myFileContent);
+			log.info("Content: " + myFileContent);
 			String commit2 = db.getCommitForBranchAndFile(repositoryAlias, theirUsername, compareToBranch, filename);
-			System.out.println("[RequestHttpHandler] C2: " + commit2);
+			log.info("C2: " + commit2);
 			String theirFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)), "UTF-8");
-			System.out.println("Content: " + theirFileContent);
+			log.info("Content: " + theirFileContent);
 			String mergeBaseCommitId = db.getMergeBaseCommitId(repositoryAlias, commit1, commit2);
-			System.out.println("[RequestHttpHandler] MC: " + mergeBaseCommitId);
+			log.info("MC: " + mergeBaseCommitId);
 			
 			if (mergeBaseCommitId != null) {
 				// get origin storage dir
@@ -56,7 +60,7 @@ public class GitReader {
 				String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + db.getRepositoryCloneCount(repositoryAlias);
 				
 				// Open the repository in JGit
-				System.out.println("[RequestHttpHandler] Reading: " + repositoryOriginDirectory);
+				log.info("Reading: " + repositoryOriginDirectory);
 				FileRepositoryBuilder builder = new FileRepositoryBuilder();
 				builder.setGitDir(new File(repositoryOriginDirectory + "/.git"));
 				builder.setMustExist(true);
@@ -68,14 +72,14 @@ public class GitReader {
 				if (repository.getDirectory() == null) {
 					throw new Exception("Not a git repository: " + repositoryOriginDirectory);
 				}
-		        System.out.println("[RequestHttpHandler] Opened in jgit: " + repository.getDirectory());
+		        log.info("Opened in jgit: " + repository.getDirectory());
 		
 		        // Walk
 				ObjectId id = repository.resolve(mergeBaseCommitId);
-				System.out.println("[RequestHttpHandler] Id: " + id);
+				log.info("Id: " + id);
 				RevWalk walk = new RevWalk(repository);
 				RevCommit commit = walk.parseCommit(id);
-				System.out.println("[RequestHttpHandler] Commit: " + commit);
+				log.info("Commit: " + commit);
 		        RevTree tree = commit.getTree();
 		        
 		        // Get a TreeWalk to walk through all the files of the commit
@@ -86,14 +90,14 @@ public class GitReader {
 		        // Iterate through the files (maybe some way to find it faster?)
 		        while (treeWalk.next()) {
 		        	if (treeWalk.getPathString().equals(filename)) {
-		        		System.out.println("found file");
+		        		log.info("found file");
 		        		
 		            	ObjectId objectId = treeWalk.getObjectId(0);
 		            	ObjectLoader loader = repository.open(objectId);
 		            	InputStream fileInputStream = loader.openStream();
 		            	String ancestorFileContent = IOUtils.toString(fileInputStream, "UTF-8");
 		            	
-		            	System.out.println("Content MC: " + ancestorFileContent);
+		            	log.info("Content MC: " + ancestorFileContent);
 		            	
 		            	ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
 		    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
@@ -129,9 +133,10 @@ public class GitReader {
 	}
 	
 	public Integer countConflicts() throws Exception {
-
+		if (ancestorSha != null)
 		return SideBySideThreeWayDiff.countConflicts(fileStorageDirectory + "/" + mySha, fileStorageDirectory + "/" + ancestorSha, fileStorageDirectory + "/" + theirSha);
-		
+		else
+			return 0;
 	}
 	
 }

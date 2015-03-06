@@ -398,6 +398,9 @@ textarea, input { outline: none; }
 #fileTable .fileConflict {
     background-color: #ffffdd;
 }
+#fileTable .fileLineConflict {
+    background-color: #ffdddd;
+}
 
 
 /* users */

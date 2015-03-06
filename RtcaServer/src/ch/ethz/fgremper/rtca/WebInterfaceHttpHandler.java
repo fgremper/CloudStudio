@@ -9,6 +9,8 @@ import java.net.URI;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,10 +22,12 @@ import com.sun.net.httpserver.HttpHandler;
 
 public class WebInterfaceHttpHandler implements HttpHandler {
 
+	private static final Logger log = LogManager.getLogger(WebInterfaceHttpHandler.class);
+	
 	public void handle(HttpExchange exchange) throws IOException {
 		URI uri = exchange.getRequestURI();
 		String requestMethod = exchange.getRequestMethod();
-		System.out.println("Incoming WEB INTERFACE request: " + requestMethod + " " + uri.getPath());
+		log.info("Incoming WEB INTERFACE request: " + requestMethod + " " + uri.getPath());
 
 		// TODO: don't allow '..' and shit in path!
 		// actually, there should be a library to serve static content, no?
@@ -31,7 +35,7 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 		if (requestMethod.equalsIgnoreCase("GET")) {
 			String requestedFile = uri.getPath().substring(1);
 			if (requestedFile.equals("webinterface") || requestedFile.equals("webinterface/")) requestedFile = "webinterface/index.html";
-			System.out.println("Looking for: " + requestedFile);
+			log.info("Looking for: " + requestedFile);
 			
 			String path = uri.getPath();
 			File file = new File(requestedFile).getCanonicalFile();

@@ -1,14 +1,17 @@
 package ch.ethz.fgremper.rtca;
 
 import java.util.LinkedList;
-import java.util.List;
 
-import org.apache.commons.configuration.XMLConfiguration;
-
+/**
+ * Contains the configuration for the RTCA client.
+ * @author Fabian Gremper
+ */
 public class ClientConfig {
+	
 	public String username;
 	public String password;
 	public String serverUrl;
 	public int resubmitInterval;
 	public LinkedList<RepositoryInfo> repositoriesList = new LinkedList<RepositoryInfo>();
+	
 }

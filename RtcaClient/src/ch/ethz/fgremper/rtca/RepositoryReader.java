@@ -2,18 +2,16 @@ package ch.ethz.fgremper.rtca;
 
 import java.io.File;
 import java.io.InputStream;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.Ref;
@@ -28,6 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class RepositoryReader {
+
+	private static final Logger log = LogManager.getLogger(RepositoryReader.class);
 	
 	private JSONObject updateObject;
 	
@@ -45,7 +45,7 @@ public class RepositoryReader {
         updateObject.put("branches", branchesArray);
 		
 		// Open the repository in JGit
-		System.out.println("[Repository] Reading: " + localPath);
+		log.debug("Reading: " + localPath);
 		FileRepositoryBuilder builder = new FileRepositoryBuilder();
 		builder.setGitDir(new File(localPath + "/.git"));
 		builder.setMustExist(true);
@@ -57,7 +57,7 @@ public class RepositoryReader {
 		if (repository.getDirectory() == null) {
 			throw new Exception("Not a git repository: " + localPath);
 		}
-        System.out.println("[Repository] Opened in jgit: " + repository.getDirectory());
+        log.debug("Opened in jgit: " + repository.getDirectory());
         
         // Get all references we have in this git repository
         Collection<Ref> refs = repository.getAllRefs().values();
@@ -67,7 +67,7 @@ public class RepositoryReader {
         
         // Loop through all references
         for (Ref ref : refs) {
-        	System.out.println("[Repository] Ref: " + ref.getName());
+        	log.debug("Ref: " + ref.getName());
         	
         	// Is this a reference to a local branch?
         	if (ref.getName().startsWith("refs/heads/")) {
@@ -82,7 +82,7 @@ public class RepositoryReader {
         		RevCommit commit = walk.parseCommit(branch.getObjectId());
 	            RevTree tree = commit.getTree();
 	            String commitId = commit.getName();
-	            System.out.println("[Repository] Commit: " + commit.getName());
+	            log.debug("Commit: " + commit.getName());
 
             	// Store branch
 	            JSONObject branchObject = new JSONObject();
@@ -144,7 +144,7 @@ public class RepositoryReader {
 	            while (treeWalk.next()) {
 	            	
 	            	// Get file name
-	            	System.out.println("[Repository] File: " + treeWalk.getPathString());
+	            	log.debug("File: " + treeWalk.getPathString());
 					JSONObject fileObject = new JSONObject();
 					fileObject.put("filename", treeWalk.getPathString());
 					
@@ -159,7 +159,7 @@ public class RepositoryReader {
 					fileObject.put("branch", branchName);
 					fileObject.put("commit", commitId);
 					
-					// If we're in the active branch, there's separate info for uncommitted
+					// If we're in the active branch, there's separate.debug for uncommitted
 					fileObject.put("committed", isActiveBranch ? "committed" : "both");
 					
 					// Store the file object in the file array
@@ -178,18 +178,11 @@ public class RepositoryReader {
 		            while (treeWalk.next()) {
 		            	
 		            	// Get file name
-		            	System.out.println("[Repository] Local File: " + treeWalk.getPathString());
+		            	log.debug("Local File: " + treeWalk.getPathString());
 						JSONObject fileObject = new JSONObject();
 						fileObject.put("filename", treeWalk.getPathString());
 
 						// Get file content
-						/*
-						// This used to work at some point? Oh well, get file directly from filesystem instead
-		            	ObjectId objectId = treeWalk.getObjectId(0);
-		            	ObjectLoader loader = repository.open(objectId);
-		            	InputStream fileInputStream = loader.openStream();
-		            	String fileContent = IOUtils.toString(fileInputStream, "UTF-8");
-					 	*/
 						String fileContent = FileUtils.readFileToString(new File(localPath + File.separator + treeWalk.getPathString()), "UTF-8");
 						
 		            	// Some other file properties
@@ -207,7 +200,7 @@ public class RepositoryReader {
             
         }
 
-        System.out.println("[Repository] JSON String: " + updateObject.toString());
+        log.debug("JSON String: " + updateObject.toString());
         
 	}
 	

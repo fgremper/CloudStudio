@@ -10,11 +10,15 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class SideBySideThreeWayDiff {
 
+	private static final Logger log = LogManager.getLogger(SideBySideThreeWayDiff.class);
+	
 	public static int countConflicts(String fileName1, String fileName2, String fileName3) throws Exception {
 		int count = 0;
 
@@ -81,7 +85,7 @@ public class SideBySideThreeWayDiff {
 			Matcher m = pattern.matcher(line);
 			if (m.matches()) {
 				
-				System.out.println("[TestGitHelper] Console: " + line);
+				log.info("Console: " + line);
 				
 				
 				int fileNum = Integer.parseInt(m.group(1)) - 1;
@@ -98,11 +102,11 @@ public class SideBySideThreeWayDiff {
 
 				if (fileNum == 2) {
 					for (int i = 0; i < 3; i++) {
-						//System.out.println("file " + i + " type + " + fileType.get(i));
+						//log.info("file " + i + " type + " + fileType.get(i));
 						if (fileType.get(i).equals("c")) {
 							int length = maxLength;
 							for (int j = fileStart.get(i); j <= fileEnd.get(i); j++) {
-								System.out.println(" changing " + j);
+								log.info(" changing " + j);
 								fileContentType.get(i).set(j + offset.get(i), "modified");
 								length--;
 							}
@@ -116,7 +120,7 @@ public class SideBySideThreeWayDiff {
 						else if (fileType.get(i).equals("a")) {
 							int length = maxLength;
 							while (length > 0) {
-								System.out.println("file " + i + " pad ");
+								log.info("file " + i + " pad ");
 								fileContentType.get(i).add(fileEnd.get(i) + offset.get(i) + 1, "pad");
 								fileContent.get(i).add(fileEnd.get(i) + offset.get(i) + 1, "");
 								offset.set(i, offset.get(i) + 1);
@@ -127,13 +131,13 @@ public class SideBySideThreeWayDiff {
 				}
 				
 				//System.out.println(m.groupCount());
-				//System.out.println("[TestGitHelper]  >> " + fileNum + " " + fileStart + " " + fileEnd + " " + fileType);
+				//log.info(" >> " + fileNum + " " + fileStart + " " + fileEnd + " " + fileType);
 			}
 		}
 
 	    
 		for (int i = 0; i < 3; i++) {
-			System.out.println("File " + i);
+			log.info("File " + i);
 			for (int j = 0; j < fileContent.get(i).size(); j++) {
 				System.out.println((j + 1) + " " + fileContentType.get(i).get(j) + " " + fileContent.get(i).get(j));
 			}
