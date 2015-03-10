@@ -2,14 +2,11 @@ package ch.ethz.fgremper.rtca;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -39,14 +36,6 @@ public class ClientMain {
         fruitsName.addElement("Mango");
         fruitsName.addElement("Peer");
 
-        try {
-	        BufferedImage myPicture = ImageIO.read(new File("traffic-light-all.png"));
-	        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-	        frame.add(picLabel);
-        }
-        catch (Exception e) {
-        	// 
-        }
         
         JList fruitList = new JList(fruitsName);
         

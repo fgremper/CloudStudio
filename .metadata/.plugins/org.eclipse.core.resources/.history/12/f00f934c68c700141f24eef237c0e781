@@ -1,15 +1,9 @@
 package ch.ethz.fgremper.rtca;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 /**
@@ -23,40 +17,11 @@ public class ClientMain {
     private static void createAndShowGUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("RTCA Client");
-        
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-               System.exit(0);
-            }        
-         });
-        
-        frame.setSize(400,400);
-        
-        DefaultListModel fruitsName = new DefaultListModel();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        fruitsName.addElement("Apple");
-        fruitsName.addElement("Grapes");
-        fruitsName.addElement("Mango");
-        fruitsName.addElement("Peer");
-
-        try {
-	        BufferedImage myPicture = ImageIO.read(new File("traffic-light-all.png"));
-	        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-	        frame.add(picLabel);
-        }
-        catch (Exception e) {
-        	// 
-        }
-        
-        JList fruitList = new JList(fruitsName);
-        
-        JScrollPane fruitListScrollPane = new JScrollPane(fruitList); 
-
-        frame.add(fruitListScrollPane);
-        
         //Add the ubiquitous "Hello World" label.
-        //JLabel label = new JLabel("Hello World");
-        //frame.getContentPane().add(label);
+        JLabel label = new JLabel("Hello World");
+        frame.getContentPane().add(label);
 
         //Display the window.
         frame.pack();
