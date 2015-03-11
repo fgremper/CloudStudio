@@ -1,24 +1,8 @@
 package ch.ethz.fgremper.rtca;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.border.BevelBorder;
 
 /**
  * RTCA client main class.
@@ -123,8 +107,8 @@ public class ClientMain {
 				}
 				catch (Exception e) {
 					ClientGUI.setStatusYellow();
-					ClientGUI.addLogMessage("Error while reading/sending local git state for " + repositoryInfo.alias + ": " + e.getMessage());
-					log.error("Error while reading/sending local git state for " + repositoryInfo.alias + ": " + e.getMessage());
+					ClientGUI.addLogMessage("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
+					log.error("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
 				}
 				
 			}

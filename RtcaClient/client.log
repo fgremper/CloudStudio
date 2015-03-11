@@ -1,0 +1,1309 @@
+2015-01-11 13:01:04.124 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-01-11 13:01:04.127 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-01-11 13:01:04.136 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-01-11 13:01:04.326 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-01-11 13:01:04.326 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-01-11 13:01:04.327 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-01-11 13:01:04.327 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-01-11 13:01:04.329 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-01-11 13:01:04.333 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-01-11 13:01:04.338 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:04.452 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-01-11 13:01:04.462 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"c5f34aa8e75b78538e4f145697b3dd10","isAdmin":true}
+2015-01-11 13:01:04.464 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: c5f34aa8e75b78538e4f145697b3dd10
+2015-01-11 13:01:04.464 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:04.672 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:04.806 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:04.821 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:04.821 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:04.881 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:04.909 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:04.928 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:04.936 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:04.936 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:04.937 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:04.938 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:04.956 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:04.976 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:04.977 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:25.140 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:25.140 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:25.150 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:25.152 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:25.152 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:25.153 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:25.154 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:25.155 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:25.156 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:25.156 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:25.156 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:25.157 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:25.169 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:25.169 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:25.169 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:32.117 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:32.117 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:32.119 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:32.120 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:32.121 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:32.121 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:32.122 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:32.123 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:32.123 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:32.123 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:32.124 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:32.124 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:32.134 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:32.134 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:32.134 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:32.938 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:32.939 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:32.941 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:32.942 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:32.943 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:32.943 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:32.944 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:32.945 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:32.945 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:32.945 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:32.945 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:32.945 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:32.955 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:32.955 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:32.955 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:33.660 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:33.661 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:33.663 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:33.664 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:33.664 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:33.665 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:33.665 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:33.666 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:33.666 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:33.666 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:33.666 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:33.667 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:33.675 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:33.675 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:33.675 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:34.378 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:34.379 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:34.381 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:34.382 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:34.382 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:34.382 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:34.383 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:34.384 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:34.384 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:34.384 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:34.385 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:34.385 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:34.405 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:34.405 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:34.405 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:35.008 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:35.009 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:35.011 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:35.012 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:35.012 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:35.013 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:35.014 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:35.015 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:35.016 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:35.016 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:35.016 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:35.017 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:35.037 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:35.038 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:35.038 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:35.743 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:35.744 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:35.745 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:35.746 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:35.746 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:35.747 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:35.748 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:35.749 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:35.749 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:35.749 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:35.749 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:35.750 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:35.766 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:35.767 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:35.767 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:36.270 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:36.270 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:36.272 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:36.273 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:36.273 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:36.274 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:36.275 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:36.276 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:36.276 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:36.276 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:36.276 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:36.277 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:36.293 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:36.294 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:36.294 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:36.698 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:36.698 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:36.700 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:36.702 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:36.703 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:36.704 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:36.704 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:36.705 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:36.706 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:36.706 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:36.706 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:36.706 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:36.715 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:36.716 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:36.716 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:37.220 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:37.220 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:37.222 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:37.223 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:37.223 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:37.224 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:37.224 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:37.225 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:37.225 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:37.226 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:37.226 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:37.226 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:37.251 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:37.251 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:37.252 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:37.755 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:37.755 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:37.756 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:37.757 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:37.757 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:37.758 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:37.758 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:37.759 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:37.759 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:37.759 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:37.759 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:37.759 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:37.772 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:37.772 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:37.773 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:38.277 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:38.278 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:38.280 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:38.283 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:38.283 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:38.283 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:38.284 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:38.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:38.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:38.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:38.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:38.286 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:38.298 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:38.298 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:38.299 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:42.120 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:42.129 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:42.130 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:42.131 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:42.131 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:42.132 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:42.132 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:42.132 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:42.133 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:42.133 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:42.133 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:42.133 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:42.141 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:42.141 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:42.141 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:45.665 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:45.665 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:45.667 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:45.668 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:45.668 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:45.669 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:45.670 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:45.671 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:45.671 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:45.671 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:45.671 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:45.671 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:45.681 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:45.681 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:45.681 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:46.185 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:46.185 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:46.187 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:46.189 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:46.189 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:46.190 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:46.191 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:46.193 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:46.193 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:46.194 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:46.194 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:46.194 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:46.202 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:46.202 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:46.203 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:46.708 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:46.708 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:46.711 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:46.712 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:46.713 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:46.714 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:46.714 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:46.715 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:46.715 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:46.716 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:46.716 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:46.716 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:46.725 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:46.725 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:46.725 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-01-11 13:01:47.231 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:47.231 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-01-11 13:01:47.232 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-01-11 13:01:47.233 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-01-11 13:01:47.233 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-01-11 13:01:47.233 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-01-11 13:01:47.233 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-01-11 13:01:47.234 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-01-11 13:01:47.234 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-01-11 13:01:47.234 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-01-11 13:01:47.234 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-01-11 13:01:47.234 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-01-11 13:01:47.246 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-01-11 13:01:47.246 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Response code 500 when trying to send git state.
+2015-01-11 13:01:47.246 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-53-11 13:53:53.252 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-53-11 13:53:53.255 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-53-11 13:53:53.256 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-53-11 13:53:53.431 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-53-11 13:53:53.433 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-53-11 13:53:53.433 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-53-11 13:53:53.433 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-53-11 13:53:53.434 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-53-11 13:53:53.437 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-53-11 13:53:53.442 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-53-11 13:53:53.668 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-53-11 13:53:53.696 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"37b9c317d8710ac2e40c37b11b6e91c7","isAdmin":true}
+2015-53-11 13:53:53.697 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 37b9c317d8710ac2e40c37b11b6e91c7
+2015-53-11 13:53:53.697 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-53-11 13:53:53.902 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-53-11 13:53:54.028 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-53-11 13:53:54.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-53-11 13:53:54.050 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-53-11 13:53:54.117 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-53-11 13:53:54.151 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-53-11 13:53:54.167 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-53-11 13:53:54.181 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-53-11 13:53:54.181 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-53-11 13:53:54.182 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-53-11 13:53:54.182 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-53-11 13:53:54.195 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-53-11 13:53:54.196 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-53-11 13:53:54.197 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:14.344 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:14.347 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:14.349 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:14.352 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:14.352 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:14.353 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:14.354 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:14.355 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:14.356 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:14.356 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:14.356 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:14.357 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:14.367 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:14.368 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:14.368 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:22.225 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:22.225 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:22.227 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:22.228 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:22.229 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:22.229 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:22.230 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:22.231 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:22.232 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:22.232 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:22.232 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:22.233 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:22.250 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:22.250 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:22.250 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:23.056 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:23.056 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:23.058 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:23.059 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:23.060 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:23.060 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:23.061 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:23.062 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:23.062 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:23.062 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:23.062 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:23.063 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:23.073 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:23.073 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:23.073 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:23.477 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:23.477 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:23.479 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:23.480 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:23.481 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:23.481 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:23.482 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:23.483 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:23.483 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:23.483 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:23.483 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:23.484 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:23.494 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:23.495 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:23.495 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:23.898 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:23.898 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:23.900 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:23.901 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:23.901 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:23.902 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:23.902 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:23.903 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:23.904 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:23.904 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:23.904 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:23.905 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:23.913 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:23.913 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:23.913 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:24.317 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:24.317 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:24.319 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:24.320 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:24.320 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:24.320 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:24.321 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:24.322 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:24.323 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:24.323 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:24.323 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:24.323 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:24.346 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:24.346 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:24.346 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:29.280 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:29.280 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:29.281 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:29.282 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:29.282 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:29.283 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:29.284 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:29.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:29.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:29.285 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:29.286 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:29.286 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:29.294 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:29.295 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:29.295 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:29.798 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:29.798 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:29.799 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:29.800 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:29.800 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:29.801 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:29.801 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:29.802 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:29.802 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:29.802 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:29.803 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:29.803 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:29.812 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:29.813 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:29.813 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:30.216 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:30.216 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:30.218 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:30.219 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:30.219 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:30.219 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:30.220 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:30.221 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:30.221 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:30.221 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:30.222 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:30.222 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:30.241 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:30.242 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:30.242 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:30.745 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:30.745 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:30.747 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:30.748 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:30.748 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:30.749 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:30.750 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:30.750 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:30.751 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:30.751 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:30.751 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:30.752 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:30.771 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:30.772 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:30.772 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:31.176 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:31.176 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:31.178 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:31.179 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:31.180 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:31.180 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:31.181 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:31.181 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:31.182 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:31.182 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:31.182 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:31.182 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:31.201 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:31.201 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:31.201 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:31.605 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:31.606 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:31.607 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:31.608 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:31.608 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:31.609 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:31.609 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:31.610 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:31.611 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:31.611 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:31.611 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:31.611 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:31.628 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:31.628 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:31.628 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:32.132 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:32.132 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:32.134 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:32.135 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:32.136 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:32.136 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:32.137 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:32.138 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:32.138 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:32.138 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:32.138 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:32.138 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:32.150 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:32.151 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:32.151 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-54-11 13:54:52.293 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:52.301 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-54-11 13:54:52.303 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-54-11 13:54:52.305 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-54-11 13:54:52.305 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-54-11 13:54:52.306 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-54-11 13:54:52.307 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-54-11 13:54:52.309 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-54-11 13:54:52.309 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-54-11 13:54:52.309 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-54-11 13:54:52.309 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-54-11 13:54:52.310 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-54-11 13:54:52.323 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-54-11 13:54:52.324 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-54-11 13:54:52.324 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-32-11 15:32:28.923 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-32-11 15:32:28.925 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-32-11 15:32:28.927 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-32-11 15:32:29.055 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-32-11 15:32:29.056 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-32-11 15:32:29.056 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-32-11 15:32:29.056 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-32-11 15:32:29.060 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-32-11 15:32:29.062 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-32-11 15:32:29.084 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-32-11 15:32:29.637 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-32-11 15:32:29.647 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"969df6c8922ecd39aefe16c92db7fbd4","isAdmin":true}
+2015-32-11 15:32:29.648 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 969df6c8922ecd39aefe16c92db7fbd4
+2015-32-11 15:32:29.649 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-32-11 15:32:29.874 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-32-11 15:32:30.000 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-32-11 15:32:30.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-32-11 15:32:30.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-32-11 15:32:30.116 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-32-11 15:32:30.127 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-32-11 15:32:30.141 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-32-11 15:32:30.148 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-32-11 15:32:30.149 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-32-11 15:32:30.149 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-32-11 15:32:30.149 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-32-11 15:32:30.188 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-32-11 15:32:30.189 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-32-11 15:32:30.189 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-34-11 15:34:28.157 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-34-11 15:34:28.159 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-34-11 15:34:28.161 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-34-11 15:34:28.284 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-34-11 15:34:28.285 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-34-11 15:34:28.285 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-34-11 15:34:28.285 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-34-11 15:34:28.286 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-34-11 15:34:28.287 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-34-11 15:34:28.290 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-34-11 15:34:28.332 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-34-11 15:34:28.339 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"7f34ee2cb97c359c4a321899762283dd","isAdmin":true}
+2015-34-11 15:34:28.340 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 7f34ee2cb97c359c4a321899762283dd
+2015-34-11 15:34:28.340 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-34-11 15:34:28.559 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-34-11 15:34:28.749 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-34-11 15:34:28.770 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-34-11 15:34:28.770 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-34-11 15:34:28.830 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-34-11 15:34:28.856 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-34-11 15:34:28.869 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-34-11 15:34:28.873 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-34-11 15:34:28.873 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-34-11 15:34:28.874 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-34-11 15:34:28.874 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-34-11 15:34:28.891 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-34-11 15:34:28.896 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-34-11 15:34:28.896 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-34-11 15:34:49.039 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-34-11 15:34:49.039 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-34-11 15:34:49.042 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-34-11 15:34:49.046 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-34-11 15:34:49.046 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-34-11 15:34:49.047 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-34-11 15:34:49.048 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-34-11 15:34:49.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-34-11 15:34:49.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-34-11 15:34:49.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-34-11 15:34:49.049 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-34-11 15:34:49.050 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-34-11 15:34:49.063 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-34-11 15:34:49.063 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-34-11 15:34:49.063 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-35-11 15:35:09.199 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-35-11 15:35:09.207 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-35-11 15:35:09.209 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-35-11 15:35:09.211 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-35-11 15:35:09.212 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-35-11 15:35:09.212 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-35-11 15:35:09.214 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-35-11 15:35:09.215 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-35-11 15:35:09.216 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-35-11 15:35:09.216 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-35-11 15:35:09.216 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-35-11 15:35:09.216 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-35-11 15:35:09.232 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-35-11 15:35:09.233 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-35-11 15:35:09.233 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-35-11 15:35:29.374 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-35-11 15:35:29.383 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-35-11 15:35:29.385 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-35-11 15:35:29.387 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-35-11 15:35:29.388 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-35-11 15:35:29.389 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-35-11 15:35:29.390 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-35-11 15:35:29.391 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-35-11 15:35:29.391 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-35-11 15:35:29.391 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-35-11 15:35:29.392 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-35-11 15:35:29.392 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-35-11 15:35:29.406 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-35-11 15:35:29.406 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-35-11 15:35:29.407 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-35-11 15:35:49.548 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-35-11 15:35:49.556 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-35-11 15:35:49.559 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-35-11 15:35:49.561 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-35-11 15:35:49.561 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-35-11 15:35:49.562 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-35-11 15:35:49.563 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-35-11 15:35:49.564 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-35-11 15:35:49.565 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-35-11 15:35:49.565 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-35-11 15:35:49.565 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-35-11 15:35:49.566 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-35-11 15:35:49.584 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-35-11 15:35:49.584 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-35-11 15:35:49.584 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-36-11 15:36:06.922 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-36-11 15:36:06.924 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-36-11 15:36:06.926 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-36-11 15:36:07.133 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-36-11 15:36:07.133 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-36-11 15:36:07.133 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-36-11 15:36:07.133 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-36-11 15:36:07.134 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-36-11 15:36:07.139 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-36-11 15:36:07.144 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:07.213 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-36-11 15:36:07.221 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"18a8c0ab935ed092c8b3bfd99e459238","isAdmin":true}
+2015-36-11 15:36:07.224 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 18a8c0ab935ed092c8b3bfd99e459238
+2015-36-11 15:36:07.225 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:07.439 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:07.563 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-36-11 15:36:07.581 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-36-11 15:36:07.581 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-36-11 15:36:07.635 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-36-11 15:36:07.647 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-36-11 15:36:07.659 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-36-11 15:36:07.665 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-36-11 15:36:07.665 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-36-11 15:36:07.666 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-36-11 15:36:07.666 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:07.726 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-36-11 15:36:07.764 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-36-11 15:36:07.764 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-36-11 15:36:09.718 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:09.718 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:09.720 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-36-11 15:36:09.722 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-36-11 15:36:09.722 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-36-11 15:36:09.723 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-36-11 15:36:09.724 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-36-11 15:36:09.725 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-36-11 15:36:09.725 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-36-11 15:36:09.725 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-36-11 15:36:09.726 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-36-11 15:36:09.726 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:09.753 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-36-11 15:36:09.754 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-36-11 15:36:09.754 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-36-11 15:36:27.907 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:27.915 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:27.917 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-36-11 15:36:27.918 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-36-11 15:36:27.918 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-36-11 15:36:27.918 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-36-11 15:36:27.918 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-36-11 15:36:27.919 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-36-11 15:36:27.919 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-36-11 15:36:27.919 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-36-11 15:36:27.919 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-36-11 15:36:27.919 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:27.932 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-36-11 15:36:27.933 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-36-11 15:36:27.933 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-36-11 15:36:29.876 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:29.877 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:29.879 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-36-11 15:36:29.880 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-36-11 15:36:29.880 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-36-11 15:36:29.880 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-36-11 15:36:29.880 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-36-11 15:36:29.881 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-36-11 15:36:29.882 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-36-11 15:36:29.882 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-36-11 15:36:29.882 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-36-11 15:36:29.883 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:29.919 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-36-11 15:36:29.919 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-36-11 15:36:29.919 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-36-11 15:36:48.085 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:48.093 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:48.096 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-36-11 15:36:48.098 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-36-11 15:36:48.098 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-36-11 15:36:48.098 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-36-11 15:36:48.099 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-36-11 15:36:48.101 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-36-11 15:36:48.101 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-36-11 15:36:48.101 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-36-11 15:36:48.102 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-36-11 15:36:48.102 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:48.114 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-36-11 15:36:48.115 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-36-11 15:36:48.115 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-36-11 15:36:50.050 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:50.051 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-36-11 15:36:50.052 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-36-11 15:36:50.053 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-36-11 15:36:50.053 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-36-11 15:36:50.054 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-36-11 15:36:50.055 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-36-11 15:36:50.056 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-36-11 15:36:50.057 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-36-11 15:36:50.057 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-36-11 15:36:50.057 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-36-11 15:36:50.058 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-36-11 15:36:50.069 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-36-11 15:36:50.071 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-36-11 15:36:50.071 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-37-11 15:37:08.257 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:08.258 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:08.267 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-37-11 15:37:08.270 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-37-11 15:37:08.270 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-37-11 15:37:08.271 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-37-11 15:37:08.272 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-37-11 15:37:08.273 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-37-11 15:37:08.275 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-37-11 15:37:08.275 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-37-11 15:37:08.275 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-37-11 15:37:08.276 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-37-11 15:37:08.289 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-37-11 15:37:08.289 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-37-11 15:37:08.289 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-37-11 15:37:10.212 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:10.213 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:10.215 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-37-11 15:37:10.216 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-37-11 15:37:10.216 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-37-11 15:37:10.217 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-37-11 15:37:10.217 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-37-11 15:37:10.218 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-37-11 15:37:10.218 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-37-11 15:37:10.218 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-37-11 15:37:10.219 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-37-11 15:37:10.219 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-37-11 15:37:10.290 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-37-11 15:37:10.291 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-37-11 15:37:10.292 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-37-11 15:37:30.427 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:30.428 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:30.430 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-37-11 15:37:30.431 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-37-11 15:37:30.431 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-37-11 15:37:30.432 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-37-11 15:37:30.433 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-37-11 15:37:30.434 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-37-11 15:37:30.434 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-37-11 15:37:30.434 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-37-11 15:37:30.434 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-37-11 15:37:30.435 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-37-11 15:37:30.450 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-37-11 15:37:30.450 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-37-11 15:37:30.450 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-37-11 15:37:50.602 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:50.603 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-37-11 15:37:50.605 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-37-11 15:37:50.607 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-37-11 15:37:50.607 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-37-11 15:37:50.616 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-37-11 15:37:50.617 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-37-11 15:37:50.618 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-37-11 15:37:50.618 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-37-11 15:37:50.618 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-37-11 15:37:50.618 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-37-11 15:37:50.618 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-37-11 15:37:50.641 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-37-11 15:37:50.641 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-37-11 15:37:50.641 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-38-11 15:38:10.777 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-38-11 15:38:10.777 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-38-11 15:38:10.779 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-38-11 15:38:10.781 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-38-11 15:38:10.781 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-38-11 15:38:10.782 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-38-11 15:38:10.783 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-38-11 15:38:10.784 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-38-11 15:38:10.785 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-38-11 15:38:10.785 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-38-11 15:38:10.785 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-38-11 15:38:10.785 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-38-11 15:38:10.796 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-38-11 15:38:10.796 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-38-11 15:38:10.796 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-38-11 15:38:30.921 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-38-11 15:38:30.929 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-38-11 15:38:30.931 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-38-11 15:38:30.933 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-38-11 15:38:30.933 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-38-11 15:38:30.934 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-38-11 15:38:30.935 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-38-11 15:38:30.937 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-38-11 15:38:30.937 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-38-11 15:38:30.938 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-38-11 15:38:30.938 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-38-11 15:38:30.938 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-38-11 15:38:30.949 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-38-11 15:38:30.949 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-38-11 15:38:30.949 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-38-11 15:38:51.092 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-38-11 15:38:51.093 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-38-11 15:38:51.094 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-38-11 15:38:51.096 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-38-11 15:38:51.096 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-38-11 15:38:51.097 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-38-11 15:38:51.098 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-38-11 15:38:51.099 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-38-11 15:38:51.100 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-38-11 15:38:51.100 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-38-11 15:38:51.100 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-38-11 15:38:51.100 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-38-11 15:38:51.114 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-38-11 15:38:51.114 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-38-11 15:38:51.114 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-39-11 15:39:09.667 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-39-11 15:39:09.669 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-39-11 15:39:09.686 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-39-11 15:39:09.848 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-39-11 15:39:09.848 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-39-11 15:39:09.849 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-39-11 15:39:09.849 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-39-11 15:39:09.850 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-39-11 15:39:09.852 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-39-11 15:39:09.854 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-39-11 15:39:09.897 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-39-11 15:39:09.908 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"310e5483cf0b42f14aa60cb9dea0507b","isAdmin":true}
+2015-39-11 15:39:09.909 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 310e5483cf0b42f14aa60cb9dea0507b
+2015-39-11 15:39:09.909 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-39-11 15:39:10.136 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-39-11 15:39:10.235 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-39-11 15:39:10.249 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-39-11 15:39:10.249 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-39-11 15:39:10.302 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-39-11 15:39:10.311 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-39-11 15:39:10.360 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-39-11 15:39:10.367 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-39-11 15:39:10.367 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-39-11 15:39:10.367 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-39-11 15:39:10.368 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-39-11 15:39:10.391 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-39-11 15:39:10.397 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-39-11 15:39:10.397 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-39-11 15:39:30.536 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-39-11 15:39:30.544 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-39-11 15:39:30.546 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-39-11 15:39:30.548 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-39-11 15:39:30.549 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-39-11 15:39:30.549 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-39-11 15:39:30.550 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-39-11 15:39:30.552 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-39-11 15:39:30.552 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-39-11 15:39:30.552 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-39-11 15:39:30.553 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-39-11 15:39:30.553 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-39-11 15:39:30.563 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-39-11 15:39:30.564 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-39-11 15:39:30.564 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-39-11 15:39:50.707 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-39-11 15:39:50.715 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-39-11 15:39:50.717 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-39-11 15:39:50.719 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-39-11 15:39:50.720 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-39-11 15:39:50.721 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-39-11 15:39:50.722 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-39-11 15:39:50.723 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-39-11 15:39:50.724 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-39-11 15:39:50.724 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-39-11 15:39:50.724 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-39-11 15:39:50.724 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-39-11 15:39:50.735 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-39-11 15:39:50.735 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-39-11 15:39:50.736 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-40-11 15:40:10.897 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-40-11 15:40:10.897 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-40-11 15:40:10.900 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-40-11 15:40:10.901 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-40-11 15:40:10.901 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-40-11 15:40:10.902 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-40-11 15:40:10.903 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-40-11 15:40:10.904 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-40-11 15:40:10.904 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-40-11 15:40:10.904 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-40-11 15:40:10.905 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-40-11 15:40:10.905 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-40-11 15:40:10.917 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-40-11 15:40:10.917 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-40-11 15:40:10.918 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-40-11 15:40:31.068 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-40-11 15:40:31.068 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-40-11 15:40:31.069 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-40-11 15:40:31.070 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-40-11 15:40:31.070 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-40-11 15:40:31.070 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-40-11 15:40:31.071 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-40-11 15:40:31.071 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-40-11 15:40:31.072 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-40-11 15:40:31.072 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-40-11 15:40:31.072 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-40-11 15:40:31.072 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-40-11 15:40:31.094 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-40-11 15:40:31.095 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-40-11 15:40:31.095 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-40-11 15:40:51.233 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-40-11 15:40:51.241 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-40-11 15:40:51.244 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-40-11 15:40:51.247 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-40-11 15:40:51.247 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-40-11 15:40:51.248 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-40-11 15:40:51.249 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-40-11 15:40:51.262 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-40-11 15:40:51.266 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-40-11 15:40:51.266 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-40-11 15:40:51.266 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-40-11 15:40:51.267 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-40-11 15:40:51.308 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-40-11 15:40:51.309 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-40-11 15:40:51.309 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-41-11 15:41:11.454 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-41-11 15:41:11.461 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-41-11 15:41:11.464 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-41-11 15:41:11.465 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-41-11 15:41:11.466 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-41-11 15:41:11.466 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-41-11 15:41:11.467 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-41-11 15:41:11.468 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-41-11 15:41:11.468 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-41-11 15:41:11.468 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-41-11 15:41:11.468 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-41-11 15:41:11.469 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-41-11 15:41:11.482 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-41-11 15:41:11.482 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-41-11 15:41:11.483 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-41-11 15:41:31.624 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-41-11 15:41:31.625 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-41-11 15:41:31.627 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-41-11 15:41:31.629 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-41-11 15:41:31.629 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-41-11 15:41:31.629 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-41-11 15:41:31.630 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-41-11 15:41:31.631 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-41-11 15:41:31.631 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-41-11 15:41:31.631 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-41-11 15:41:31.631 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-41-11 15:41:31.631 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-41-11 15:41:31.655 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-41-11 15:41:31.657 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-41-11 15:41:31.657 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-41-11 15:41:51.800 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-41-11 15:41:51.808 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-41-11 15:41:51.810 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-41-11 15:41:51.812 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-41-11 15:41:51.812 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-41-11 15:41:51.813 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-41-11 15:41:51.814 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-41-11 15:41:51.816 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-41-11 15:41:51.816 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-41-11 15:41:51.816 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-41-11 15:41:51.816 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-41-11 15:41:51.817 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-41-11 15:41:51.829 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-41-11 15:41:51.829 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while reading/sending local git state for Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-41-11 15:41:51.829 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-42-11 15:42:00.920 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-42-11 15:42:00.925 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-42-11 15:42:00.927 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-42-11 15:42:01.045 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-42-11 15:42:01.045 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-42-11 15:42:01.045 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-42-11 15:42:01.046 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-42-11 15:42:01.046 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-42-11 15:42:01.048 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-42-11 15:42:01.052 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-42-11 15:42:01.081 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-42-11 15:42:01.088 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"67eaee0e12fef685e7ff954c50cadfe7","isAdmin":true}
+2015-42-11 15:42:01.089 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 67eaee0e12fef685e7ff954c50cadfe7
+2015-42-11 15:42:01.089 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-42-11 15:42:01.300 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-42-11 15:42:01.441 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-42-11 15:42:01.456 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-42-11 15:42:01.456 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-42-11 15:42:01.502 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-42-11 15:42:01.525 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-42-11 15:42:01.537 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-42-11 15:42:01.544 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-42-11 15:42:01.545 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-42-11 15:42:01.545 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-42-11 15:42:01.545 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-42-11 15:42:01.558 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-42-11 15:42:01.568 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-42-11 15:42:01.568 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-42-11 15:42:21.707 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-42-11 15:42:21.715 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-42-11 15:42:21.718 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-42-11 15:42:21.721 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-42-11 15:42:21.721 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-42-11 15:42:21.722 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-42-11 15:42:21.723 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-42-11 15:42:21.725 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-42-11 15:42:21.725 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-42-11 15:42:21.725 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-42-11 15:42:21.726 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-42-11 15:42:21.726 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-42-11 15:42:21.741 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-42-11 15:42:21.741 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: Server returned HTTP response code: 500 for URL: http://127.0.0.1:7330/request/setLocalGitState
+2015-42-11 15:42:21.741 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-42-11 15:42:49.284 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-42-11 15:42:49.286 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-42-11 15:42:49.287 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-42-11 15:42:49.390 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-42-11 15:42:49.390 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-42-11 15:42:49.390 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-42-11 15:42:49.390 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-42-11 15:42:49.391 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-42-11 15:42:49.408 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-42-11 15:42:49.412 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-42-11 15:42:49.442 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-42-11 15:42:49.449 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"606d13ab97f49eb0e63b9d4cd483f52a","isAdmin":true}
+2015-42-11 15:42:49.451 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 606d13ab97f49eb0e63b9d4cd483f52a
+2015-42-11 15:42:49.451 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-42-11 15:42:49.638 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-42-11 15:42:49.753 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-42-11 15:42:49.771 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-42-11 15:42:49.772 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-42-11 15:42:49.819 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-42-11 15:42:49.846 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-42-11 15:42:49.859 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-42-11 15:42:49.865 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-42-11 15:42:49.865 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-42-11 15:42:49.866 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-42-11 15:42:49.866 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-42-11 15:42:59.362 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-44-11 15:44:08.203 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-44-11 15:44:08.206 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-44-11 15:44:08.208 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-44-11 15:44:08.487 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-44-11 15:44:08.487 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-44-11 15:44:08.488 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-44-11 15:44:08.488 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-44-11 15:44:08.490 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-44-11 15:44:08.497 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-44-11 15:44:08.501 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-44-11 15:44:08.556 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-44-11 15:44:08.562 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"a50435ec96515d15f1ab3e289c9d4b77","isAdmin":true}
+2015-44-11 15:44:08.564 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: a50435ec96515d15f1ab3e289c9d4b77
+2015-44-11 15:44:08.564 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-44-11 15:44:08.859 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-44-11 15:44:09.006 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-44-11 15:44:09.027 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-44-11 15:44:09.027 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-44-11 15:44:09.139 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-44-11 15:44:09.166 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-44-11 15:44:09.208 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-44-11 15:44:09.214 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-44-11 15:44:09.214 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-44-11 15:44:09.215 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-44-11 15:44:09.215 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-45-11 15:45:42.828 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-45-11 15:45:42.831 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-45-11 15:45:42.834 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-45-11 15:45:42.924 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-45-11 15:45:42.924 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-45-11 15:45:42.925 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-45-11 15:45:42.925 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-45-11 15:45:42.926 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-45-11 15:45:42.928 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-45-11 15:45:42.931 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-45-11 15:45:42.972 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-45-11 15:45:43.373 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while requesting session ID: null
+2015-45-11 15:45:59.226 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-45-11 15:45:59.228 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-45-11 15:45:59.229 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-45-11 15:45:59.358 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-45-11 15:45:59.358 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-45-11 15:45:59.358 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-45-11 15:45:59.359 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-45-11 15:45:59.359 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-45-11 15:45:59.365 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-45-11 15:45:59.368 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-45-11 15:45:59.404 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-51-11 15:51:36.783 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-51-11 15:51:36.786 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-51-11 15:51:36.794 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-51-11 15:51:36.895 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-51-11 15:51:36.895 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-51-11 15:51:36.895 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-51-11 15:51:36.896 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-51-11 15:51:36.896 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-51-11 15:51:36.898 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-51-11 15:51:36.904 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-51-11 15:51:37.611 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-51-11 15:51:37.646 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while requesting session ID: null
+2015-07-11 16:07:00.862 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-07-11 16:07:00.886 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-07-11 16:07:00.889 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-07-11 16:07:01.233 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-07-11 16:07:01.234 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-07-11 16:07:01.234 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-07-11 16:07:01.234 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-07-11 16:07:01.235 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-07-11 16:07:01.249 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-07-11 16:07:01.255 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-07-11 16:07:01.374 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-08-11 16:08:43.491 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-08-11 16:08:43.498 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-08-11 16:08:43.499 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-08-11 16:08:43.702 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-08-11 16:08:43.702 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-08-11 16:08:43.702 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-08-11 16:08:43.703 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-08-11 16:08:43.707 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-08-11 16:08:43.716 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-08-11 16:08:43.721 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-08-11 16:08:44.210 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-08-11 16:08:44.225 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"3239e87b3501afa6eaa1e09d15b91014","isAdmin":true}
+2015-08-11 16:08:44.227 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 3239e87b3501afa6eaa1e09d15b91014
+2015-08-11 16:08:44.228 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-08-11 16:08:44.553 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-08-11 16:08:44.687 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-08-11 16:08:44.704 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-08-11 16:08:44.704 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-08-11 16:08:44.826 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-08-11 16:08:44.843 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-08-11 16:08:44.861 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-08-11 16:08:44.869 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-08-11 16:08:44.869 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-08-11 16:08:44.870 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-08-11 16:08:44.870 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-08-11 16:08:52.156 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-08-11 16:08:55.554 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-09-11 16:09:34.527 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-09-11 16:09:34.528 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-09-11 16:09:34.532 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-09-11 16:09:34.713 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-09-11 16:09:34.714 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-09-11 16:09:34.714 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-09-11 16:09:34.714 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-09-11 16:09:34.715 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-09-11 16:09:34.721 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-09-11 16:09:34.757 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-09-11 16:09:34.817 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-09-11 16:09:34.826 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"41ee78e8ffdef2d33d0de2ed782807fe","isAdmin":true}
+2015-09-11 16:09:34.827 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 41ee78e8ffdef2d33d0de2ed782807fe
+2015-09-11 16:09:34.827 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-09-11 16:09:35.116 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-09-11 16:09:35.224 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-09-11 16:09:35.238 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-09-11 16:09:35.239 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-09-11 16:09:35.292 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-09-11 16:09:35.307 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-09-11 16:09:35.356 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-09-11 16:09:35.363 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-09-11 16:09:35.364 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-09-11 16:09:35.364 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-09-11 16:09:35.365 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-09-11 16:09:46.140 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-09-11 16:09:48.237 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-10-11 16:10:02.150 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-10-11 16:10:02.152 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-10-11 16:10:02.162 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-10-11 16:10:02.294 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-10-11 16:10:02.294 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-10-11 16:10:02.295 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-10-11 16:10:02.295 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-10-11 16:10:02.296 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-10-11 16:10:02.299 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-10-11 16:10:02.306 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-10-11 16:10:02.384 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-10-11 16:10:02.398 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"32d546126f95f35f7205e26130f3266d","isAdmin":true}
+2015-10-11 16:10:02.402 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 32d546126f95f35f7205e26130f3266d
+2015-10-11 16:10:02.403 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-10-11 16:10:02.655 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-10-11 16:10:02.787 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-10-11 16:10:02.801 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-10-11 16:10:02.802 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-10-11 16:10:02.855 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-10-11 16:10:02.866 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-10-11 16:10:02.932 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-10-11 16:10:02.941 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-10-11 16:10:02.945 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-10-11 16:10:02.947 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-10-11 16:10:02.947 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-10-11 16:10:02.974 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-10-11 16:10:02.974 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-10-11 16:10:02.979 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: Error when trying to send git state: No access to repository
+2015-10-11 16:10:02.980 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-11-11 16:11:37.353 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-11-11 16:11:37.355 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-11-11 16:11:37.356 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-11-11 16:11:37.517 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-11-11 16:11:37.517 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-11-11 16:11:37.517 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-11-11 16:11:37.517 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-11-11 16:11:37.520 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-11-11 16:11:37.522 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-11-11 16:11:37.528 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-11-11 16:11:37.640 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-11-11 16:11:37.652 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"5fd0b15435bc15bd7a607c77d637e31e","isAdmin":true}
+2015-11-11 16:11:37.654 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 5fd0b15435bc15bd7a607c77d637e31e
+2015-11-11 16:11:37.654 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-11-11 16:11:37.840 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-11-11 16:11:38.032 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-11-11 16:11:38.050 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-11-11 16:11:38.050 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-11-11 16:11:38.098 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-11-11 16:11:38.108 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-11-11 16:11:38.155 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-11-11 16:11:38.159 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-11-11 16:11:38.159 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-11-11 16:11:38.159 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-11-11 16:11:38.160 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-11-11 16:11:38.204 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-11-11 16:11:38.204 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-11-11 16:11:38.205 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
+2015-11-11 16:11:38.205 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-11-11 16:11:58.355 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-11-11 16:11:58.363 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-11-11 16:11:58.365 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-11-11 16:11:58.367 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-11-11 16:11:58.368 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-11-11 16:11:58.369 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-11-11 16:11:58.370 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-11-11 16:11:58.371 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-11-11 16:11:58.372 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-11-11 16:11:58.372 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-11-11 16:11:58.372 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-11-11 16:11:58.372 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-11-11 16:11:58.387 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-11-11 16:11:58.388 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-11-11 16:11:58.388 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
+2015-11-11 16:11:58.388 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-12-11 16:12:18.527 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-12-11 16:12:18.535 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-12-11 16:12:18.537 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-12-11 16:12:18.539 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-12-11 16:12:18.539 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-12-11 16:12:18.540 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-12-11 16:12:18.541 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-12-11 16:12:18.542 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-12-11 16:12:18.543 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-12-11 16:12:18.543 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-12-11 16:12:18.543 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-12-11 16:12:18.543 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-12-11 16:12:18.554 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-12-11 16:12:18.555 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-12-11 16:12:18.555 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
+2015-12-11 16:12:18.555 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-12-11 16:12:38.694 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-12-11 16:12:38.695 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-12-11 16:12:38.697 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-12-11 16:12:38.701 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-12-11 16:12:38.701 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-12-11 16:12:38.703 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-12-11 16:12:38.705 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-12-11 16:12:38.707 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-12-11 16:12:38.708 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-12-11 16:12:38.709 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-12-11 16:12:38.709 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-12-11 16:12:38.709 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-12-11 16:12:38.744 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-12-11 16:12:38.746 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-12-11 16:12:38.746 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
+2015-12-11 16:12:38.746 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-12-11 16:12:58.879 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-12-11 16:12:58.886 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-12-11 16:12:58.889 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-12-11 16:12:58.891 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-12-11 16:12:58.891 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-12-11 16:12:58.892 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-12-11 16:12:58.893 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-12-11 16:12:58.894 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-12-11 16:12:58.895 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-12-11 16:12:58.895 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-12-11 16:12:58.896 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-12-11 16:12:58.896 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-12-11 16:12:58.912 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-12-11 16:12:58.913 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-12-11 16:12:58.913 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
+2015-12-11 16:12:58.913 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...

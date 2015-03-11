@@ -16,6 +16,8 @@ public class ServerMain {
 
 	public static void main(String[] args) throws Exception {
 
+		/*
+		
 		log.info("Server started.");
 		
         try {
@@ -31,6 +33,8 @@ public class ServerMain {
         catch (Exception e) {
         	// nothing
         }
+        
+        */
         
 		/*
 		
@@ -48,7 +52,7 @@ public class ServerMain {
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 		server.createContext("/webinterface", new WebInterfaceHttpHandler());
-		server.createContext("/request", new RequestHttpHandler());
+		server.createContext("/api", new ApiHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 

@@ -7,6 +7,7 @@ import java.net.URL;
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
@@ -28,7 +29,7 @@ public class HttpClient {
 	public String login(String serverUrl, String username, String password) throws Exception {
 
 		// URL
-		String url = serverUrl + "/request/login";
+		String url = serverUrl + "/api/login";
 		
 		// Create login request JSON object
 		JSONObject loginObject = new JSONObject();
@@ -49,18 +50,43 @@ public class HttpClient {
 		// Response code
 		int responseCode = con.getResponseCode();
 		log.debug("Response code: " + responseCode);
-		
+
 		// Login successful?
 		if (responseCode == 200) {
+			
+			// Response text
 			String response = IOUtils.toString(con.getInputStream(), "UTF-8");
 			log.debug("Response text: " + response);
 			
 			// Unwrap the session ID from the response object
 			JSONObject loginResponseObject = new JSONObject(response);
 			return loginResponseObject.getString("sessionId");
+			
 		}
 		else {
-			throw new Exception("Response code " + responseCode + " when trying to log in.");
+			
+			// Response text
+			String response = IOUtils.toString(con.getErrorStream(), "UTF-8");
+			log.debug("Response text: " + response);
+			
+			// Get error message if there is one
+			String errorMessage = null;
+			try {
+				JSONObject responseObject = new JSONObject(response);
+				errorMessage = responseObject.getString("error");
+			}
+			catch (JSONException e) {
+				// There's no error message in the response
+			}
+			
+			// Throw an exception
+			if (errorMessage != null) {
+				throw new Exception(errorMessage);
+			}
+			else {
+				throw new Exception("Unknown error");
+			}
+			
 		}
 
 	}
@@ -74,7 +100,7 @@ public class HttpClient {
 	public void sendGitState(String serverUrl, String jsonString) throws Exception {
 
 		// URL
-		String url = serverUrl + "/request/setLocalGitState";
+		String url = serverUrl + "/api/setLocalGitState";
 
 		// Send local git state to server
 		log.debug("Sending login request to server...");
@@ -86,12 +112,37 @@ public class HttpClient {
 		out.write(jsonString);
 		out.close();
 
-		// Response code should be 200!
+		// Response code
 		int responseCode = con.getResponseCode();
 		log.debug("Response code: " + responseCode);
+
+		// Not successful?
 		if (responseCode != 200) {
-			throw new Exception("Response code " + responseCode + " when trying to send git state.");
+
+			// Response text
+			String response = IOUtils.toString(con.getErrorStream(), "UTF-8");
+			log.debug("Response text: " + response);
+			
+			// Get error message if there is one
+			String errorMessage = null;
+			try {
+				JSONObject responseObject = new JSONObject(response);
+				errorMessage = responseObject.getString("error");
+			}
+			catch (JSONException e) {
+				// There's no error message in the response
+			}
+			
+			// Throw an exception
+			if (errorMessage != null) {
+				throw new Exception(errorMessage);
+			}
+			else {
+				throw new Exception("Unknown error");
+			}
+			
 		}
+		
 	}
 	
 }
