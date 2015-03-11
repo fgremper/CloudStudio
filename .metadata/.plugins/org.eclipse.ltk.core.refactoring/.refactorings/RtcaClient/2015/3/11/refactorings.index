@@ -1,1 +1,10 @@
 1426031399563	Rename local variable 'nextUpdate'
+1426034106789	Rename local variable 'fruitsName'
+1426034115046	Rename local variable 'fruitList'
+1426034121201	Rename local variable 'fruitListScrollPane'
+1426034203303	Rename local variable 'myPicture'
+1426034209049	Rename local variable 'trafficLightGreen'
+1426034216059	Rename local variable 'picLabel'
+1426034234788	Rename local variable 'log'
+1426034337807	Rename local variable 'progressBar'
+1426036857848	Delete element

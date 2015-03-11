@@ -27,129 +27,6 @@ import javax.swing.border.BevelBorder;
 public class ClientMain {
 
 	private static final Logger log = LogManager.getLogger(ClientMain.class);
-
-    private static void createAndShowGUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("RTCA Client");
-        
-        frame.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent windowEvent){
-               System.exit(0);
-            }
-         });
-        
-        frame.setSize(600, 420);
-        frame.setResizable(false);
-
-        
-        Container pane = frame.getContentPane();
-        pane.setLayout(null);
-        
-        
-        JPanel statusPanel = new JPanel();
-        statusPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-        statusPanel.setBounds(0, 0, 600, 150);
-        //pane.add(statusPanel);
-        
-        
-        
-        DefaultListModel fruitsName = new DefaultListModel();
-
-        fruitsName.addElement("Apple");
-        fruitsName.addElement("Grapes");
-        fruitsName.addElement("Mango");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Peer");
-        fruitsName.addElement("Last");
-
-        JList fruitList = new JList(fruitsName);
-
-        fruitList.setFont(new Font("Helvetica", Font.PLAIN, 12));
-        
-        JScrollPane fruitListScrollPane = new JScrollPane(fruitList);
-        fruitListScrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        fruitListScrollPane.setBounds(5, 155, 590, 237);
-        
-        // Scroll down
-        JScrollBar vertical = fruitListScrollPane.getVerticalScrollBar();
-        vertical.setValue(vertical.getMaximum());
-        
-        pane.add(fruitListScrollPane);
-        
-        try {
-	        BufferedImage myPicture = ImageIO.read(new File("TrafficGreen.png"));
-	        JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-	        picLabel.setBounds(15, 15, 120, 120);
-	        pane.add(picLabel);
-        }
-        catch (Exception e) {
-        	// 
-        }
-
-        JLabel monitoringText = new JLabel("Monitoring 4 local repositories.");
-        monitoringText.setFont(new Font("Helvetica", Font.PLAIN, 14));
-        monitoringText.setBounds(160, 27, 400, 20);
-        pane.add(monitoringText);
-        
-        JLabel statusCaption = new JLabel("Status:");
-        statusCaption.setFont(new Font("Helvetica", Font.BOLD, 14));
-        statusCaption.setBounds(160, 58, 100, 20);
-        pane.add(statusCaption);
-        
-        JLabel lastUpdateCaption = new JLabel("Last update:");
-        lastUpdateCaption.setFont(new Font("Helvetica", Font.BOLD, 14));
-        lastUpdateCaption.setBounds(160, 78, 100, 20);
-        pane.add(lastUpdateCaption);
-
-        JLabel nextUpdateCaption = new JLabel("Next update:");
-        nextUpdateCaption.setFont(new Font("Helvetica", Font.BOLD, 14));
-        nextUpdateCaption.setBounds(160, 109, 100, 20);
-        pane.add(nextUpdateCaption);
-        
-
-        JLabel statusText = new JLabel("Idle");
-        statusText.setFont(new Font("Helvetica", Font.PLAIN, 14));
-        statusText.setBounds(270, 58, 300, 20);
-        pane.add(statusText);
-        
-        JLabel lastUpdateText = new JLabel("49 seconds ago");
-        lastUpdateText.setFont(new Font("Helvetica", Font.PLAIN, 14));
-        lastUpdateText.setBounds(270, 78, 300, 20);
-        pane.add(lastUpdateText);
-        
-
-        JProgressBar progressBar = new JProgressBar(0, 100);
-        progressBar.setValue(80);
-        //progressBar.setStringPainted(true);
-        //progressBar.setFont(new Font("Helvetica", Font.PLAIN, 14));
-        progressBar.setBounds(270, 109, 190, 20);
-        pane.add(progressBar);
-        
-        JButton forceUpdateButton = new JButton("Force update");
-        forceUpdateButton.setFont(new Font("Helvetica", Font.PLAIN, 12));
-        forceUpdateButton.setBounds(470, 109, 100, 20);
-        pane.add(forceUpdateButton);
-        
-        //frame.add();
-        
-        //Add the ubiquitous "Hello World" label.
-        //JLabel label = new JLabel("Hello World");
-        //frame.getContentPane().add(label);
-
-        //Display the window.
-        //frame.pack();
-        frame.setVisible(true);
-    }
     
 	/**
 	 * Run the RTCA client.
@@ -157,22 +34,25 @@ public class ClientMain {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) {
-		 try {
-	            // Set System L&F
-	        //UIManager.setLookAndFeel(
-	        //    UIManager.getSystemLookAndFeelClassName());
+		
+		// Set system look and feel
+		/*
+		try {
+	        // UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 	    } 
-		 catch (Exception e) {
-			 
-		 }
+		catch (Exception e) {
+			// Do nothing
+		}
+		*/
+		
+		// Load GUI
+		ClientGUI.createGuiContents();
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                createAndShowGUI();
+                ClientGUI.createAndShowGUI();
             }
         });
-        
-		/*
-		
+
 		ClientConfig config;
 		String sessionId;
 
@@ -181,28 +61,38 @@ public class ClientMain {
 		
 		// Read the config XML
 		try {
+			ClientGUI.setStatus("Reading config...");
+			ClientGUI.addLogMessage("Reading config...");
 			log.info("Reading config...");
 			String configFileName = "config.xml";
 			if (args.length >= 1) configFileName = args[0];
 			config = new ClientConfigReader(configFileName).getConfig();
 		}
 		catch (Exception e) {
+			ClientGUI.setStatusRed();
+			ClientGUI.addLogMessage("Error while reading config file: " + e.getMessage());
 			log.error("Error while reading config file: " + e.getMessage());
 			return;
 		}
+		ClientGUI.setMonitoringText("Monitoring " + config.repositoriesList.size() + " local " + (config.repositoriesList.size() == 1 ? "repository" : "repositories") + ".");
 		
 		// Get our HTTP client
 		HttpClient httpClient = new HttpClient();
 
 		// Login and get a session ID
-		log.info("Login and requesting session ID...");
+		ClientGUI.setStatus("Requesting session ID for login...");
+		ClientGUI.addLogMessage("Requesting session ID for login...");
+		log.info("Requesting session ID for login...");
 		try {
 			sessionId = httpClient.login(config.serverUrl, config.username, config.password);
 		}
 		catch (Exception e) {
+			ClientGUI.setStatusRed();
+			ClientGUI.addLogMessage("Error while requesting session ID: " + e.getMessage());
 			log.error("Error while requesting session ID: " + e.getMessage());
 			return;
 		}
+		ClientGUI.addLogMessage("Successfully retrieved session ID.");
 		log.info("Retrieved session ID: " + sessionId);
 		
 		// Keep updating the RTCA server
@@ -212,9 +102,11 @@ public class ClientMain {
 			for (RepositoryInfo repositoryInfo : config.repositoriesList) {	
 				
 				try {
-					
+
+					ClientGUI.setStatus("Reading and sending \"" + repositoryInfo.alias + "\"...");
+					ClientGUI.addLogMessage("Reading and sending state for repository \"" + repositoryInfo.alias + "\"...");
 					log.info("Reading and sending repository \"" + repositoryInfo.alias + "\" at " + repositoryInfo.localPath);
-					
+
 					// Read repository info
 					RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
 					JSONObject updateObject = repositoryReader.getUpdateObject();
@@ -227,8 +119,11 @@ public class ClientMain {
 					String jsonString = updateObject.toString();
 					httpClient.sendGitState(config.serverUrl, jsonString);
 				
+					ClientGUI.setLastUpdate();
 				}
 				catch (Exception e) {
+					ClientGUI.setStatusYellow();
+					ClientGUI.addLogMessage("Error while reading/sending local git state for " + repositoryInfo.alias + ": " + e.getMessage());
 					log.error("Error while reading/sending local git state for " + repositoryInfo.alias + ": " + e.getMessage());
 				}
 				
@@ -239,18 +134,23 @@ public class ClientMain {
 				break;
 			}
 			else {
+				ClientGUI.setStatus("Idle");
+				ClientGUI.addLogMessage("Waiting " + config.resubmitInterval + " seconds.");
+				
 				log.info("Waiting " + config.resubmitInterval + " seconds...");
-				try {
-				    Thread.sleep(config.resubmitInterval * 1000);
-				} catch (InterruptedException ex) {
-				    Thread.currentThread().interrupt();
+				for (int i = 0; i < config.resubmitInterval * 10; i++) {
+					ClientGUI.setTimeTillNextUpdate((int) (1000.0 / config.resubmitInterval * i));
+					ClientGUI.refreshLastUpdate();
+					try {
+					    Thread.sleep(100);
+					} catch (InterruptedException ex) {
+					    Thread.currentThread().interrupt();
+					}
 				}
 			}
 		}
 
 		log.info("RTCA client stopping...");
-		
-		*/
 		
 	}
 
