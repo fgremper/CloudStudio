@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename local variable &apos;nextUpdate&apos; in &apos;ch.ethz.fgremper.rtca.ClientMain.createAndShowGUI()&apos; to &apos;nextUpdateCaption&apos;&#x0A;- Original project: &apos;RtcaClient&apos;&#x0A;- Original element: &apos;ch.ethz.fgremper.rtca.ClientMain.createAndShowGUI().nextUpdate&apos;&#x0A;- Renamed element: &apos;nextUpdate&apos;&#x0A;- Update references to refactored element" description="Rename local variable &apos;nextUpdate&apos;" id="org.eclipse.jdt.ui.rename.local.variable" input="/src&lt;ch.ethz.fgremper.rtca{ClientMain.java[ClientMain~createAndShowGUI@nextUpdate!3628!3674!3635!3644!QJLabel;!0!false" name="nextUpdateCaption" references="true" stamp="1426031399563" version="1.0"/>
+</session>
