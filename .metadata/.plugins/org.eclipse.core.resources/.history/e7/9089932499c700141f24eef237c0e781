@@ -136,11 +136,10 @@ public class ClientMain {
 			else {
 				ClientGUI.setStatus("Idle");
 				ClientGUI.addLogMessage("Waiting " + config.resubmitInterval + " seconds.");
-				log.info("Waiting " + config.resubmitInterval + " seconds...");
 				
+				log.info("Waiting " + config.resubmitInterval + " seconds...");
 				for (int i = 0; i < config.resubmitInterval * 10; i++) {
 					if (ClientGUI.getForceUpdate() == true) {
-						ClientGUI.addLogMessage("Update forced.");
 						ClientGUI.setForceUpdate(false);
 						break;
 					}

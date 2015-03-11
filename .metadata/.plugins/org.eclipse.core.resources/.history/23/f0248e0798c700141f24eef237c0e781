@@ -3,8 +3,6 @@ package ch.ethz.fgremper.rtca;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
@@ -49,16 +47,6 @@ public class ClientGUI {
     private static long lastUpdate = 0;
     
     private static int errorLevel = 0;
-    
-    private static boolean forceUpdate = false;
-    
-    public static void setForceUpdate(boolean b) {
-    	forceUpdate = b;
-    }
-    
-    public static boolean getForceUpdate() {
-    	return forceUpdate;
-    }
     
     public static void addLogMessage(String logString) {
     	// Add log message
@@ -185,11 +173,6 @@ public class ClientGUI {
         forceUpdateButton = new JButton("Force update");
         forceUpdateButton.setFont(new Font("Helvetica", Font.PLAIN, 12));
         forceUpdateButton.setBounds(470, 109, 100, 20);
-        forceUpdateButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				ClientGUI.setForceUpdate(true);
-			}
-    	});
 
     }
     
@@ -227,7 +210,8 @@ public class ClientGUI {
         frame.setVisible(true);
         
         // Always update the "last update" time
-        new Thread() {
+        new Thread()
+        {
             public void run() {
             	while (true) {
 					ClientGUI.refreshLastUpdate();

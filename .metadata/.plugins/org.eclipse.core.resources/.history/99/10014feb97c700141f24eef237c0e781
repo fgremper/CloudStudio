@@ -53,6 +53,18 @@ public class ClientMain {
             }
         });
 
+        // Always update the "last update" time
+        new Thread()
+        {
+            public void run() {
+				ClientGUI.refreshLastUpdate();
+				try {
+				    Thread.sleep(100);
+				} catch (InterruptedException ex) {
+				    Thread.currentThread().interrupt();
+				}
+            }
+        }.start();
 		ClientConfig config;
 		String sessionId;
 
@@ -136,14 +148,9 @@ public class ClientMain {
 			else {
 				ClientGUI.setStatus("Idle");
 				ClientGUI.addLogMessage("Waiting " + config.resubmitInterval + " seconds.");
-				log.info("Waiting " + config.resubmitInterval + " seconds...");
 				
+				log.info("Waiting " + config.resubmitInterval + " seconds...");
 				for (int i = 0; i < config.resubmitInterval * 10; i++) {
-					if (ClientGUI.getForceUpdate() == true) {
-						ClientGUI.addLogMessage("Update forced.");
-						ClientGUI.setForceUpdate(false);
-						break;
-					}
 					ClientGUI.setTimeTillNextUpdate((int) (1000.0 / config.resubmitInterval * i));
 					try {
 					    Thread.sleep(100);

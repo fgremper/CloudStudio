@@ -86,7 +86,7 @@ public class HttpClient {
 		out.write(jsonString);
 		out.close();
 
-		// Response code should be 200!
+		// Response code
 		int responseCode = con.getResponseCode();
 		log.debug("Response code: " + responseCode);
 		if (responseCode != 200) {
