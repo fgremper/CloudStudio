@@ -1,0 +1,104 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import sun.net.www.protocol.http.HttpURLConnection;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+public class ApiHttpHandler implements HttpHandler {
+
+	private static final Logger log = LogManager.getLogger(ApiHttpHandler.class);
+	
+	@SuppressWarnings("unchecked")
+	public void handle(HttpExchange exchange) throws IOException {
+		
+		// Get HTTP exchange information
+		URI uri = exchange.getRequestURI();
+		
+		// Request method
+		String requestMethod = exchange.getRequestMethod();
+
+		// API name
+		String prefix = "/api/";
+		String apiName = uri.getPath().substring(prefix.length(), uri.getPath().length());
+		
+		// Parameters
+        Map<String, Object> params = (Map<String, Object>) exchange.getAttribute("parameters");
+
+        // Body
+		String body = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
+        log.info("Incoming request: " + requestMethod + " " + uri.getPath());
+        log.info("Body: " + body);
+
+		// Variables
+		String response = null;
+		String error = null;
+
+		DatabaseConnection db = null;
+		try {
+			// Get database connection
+			db = new DatabaseConnection();
+
+
+			// Login request
+			if (apiName.equals("login")) {
+
+				// Read parameters
+				String username = incomingObject.getString("username");
+				String password = incomingObject.getString("password");
+				
+			
+		}
+		catch (Exception e) {
+			error = e.getMessage();
+			log.error("Handling request error: " + e.getMessage());
+		}
+
+		// Close database connection
+		try {
+			if (db != null) {
+				db.closeConnection();
+			}
+		}
+		catch (SQLException e) {
+			// Do nothing
+		}
+		
+		if (response != null) {
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
+		}
+		else {
+			response = "{}";
+			try {
+				JSONObject errorObject = new JSONObject();
+				errorObject.put("error", (error == null ? "Unknown error" : error));
+				response = errorObject.toString();
+			}
+			catch (JSONException e) {
+				// Don't see how this can happen, we're just putting stuff into an object
+			}
+			exchange.sendResponseHeaders(500, response.length());
+		}
+		log.info("Sending response: " + response);
+		OutputStream os = exchange.getResponseBody();
+		os.write(response.getBytes());
+		os.close();
+		
+	}
+
+}

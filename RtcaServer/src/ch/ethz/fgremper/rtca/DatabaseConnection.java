@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -319,12 +320,15 @@ public class DatabaseConnection {
 		}
 	}
 
-	public JSONObject getFileLevelAwareness(JSONObject getConflictsObject, String username) throws Exception {
-		String repositoryAlias = getConflictsObject.getString("repositoryAlias");
+	public JSONObject getFileLevelAwareness(String repositoryAlias, String username, String branch, List<String> selectedAdditionalBranches, boolean showUncommitted, boolean showConflicts) throws Exception {
+		
+		/*String repositoryAlias = getConflictsObject.getString("repositoryAlias");
 		String branch = getConflictsObject.getString("branch");
 		boolean showUncommitted = getConflictsObject.getBoolean("showUncommitted");
-		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
 		JSONArray selectedAdditionalBranches = getConflictsObject.getJSONArray("selectedAdditionalBranches");
+		*/
+
+		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
 		
 		JSONObject responseObject = new JSONObject();
 		JSONArray branchesArray = new JSONArray();
@@ -401,9 +405,7 @@ public class DatabaseConnection {
 		branchObject.put("files", conflictList);
 		
 		
-		
-		for (int i = 0; i < selectedAdditionalBranches.length(); i++) {
-			String additionalBranch = selectedAdditionalBranches.getString(i);
+		for (String additionalBranch : selectedAdditionalBranches) {
 
 			branchObject = new JSONObject();
 			branchesArray.put(branchObject);
@@ -423,7 +425,7 @@ public class DatabaseConnection {
 			9 their branch
 			10 repository
 			*/
-			
+
 			stmt.setString(1, username);
 			stmt.setString(2, showUncommittedString);
 			stmt.setString(3, branch);
@@ -801,4 +803,3 @@ public class DatabaseConnection {
     }
 	
 }
-

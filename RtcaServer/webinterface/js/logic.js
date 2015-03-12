@@ -17,7 +17,7 @@ var conflictType;
 
 var login = undefined;
 
-var apiPrefix = '/request'
+var apiPrefix = '/api'
 
 
 
@@ -36,8 +36,20 @@ function sendRequest(requestObject) {
         url: apiPrefix + '/' + requestObject.name,
         type: 'POST',
         dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify(requestObject.data),
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: requestObject.data,
+        success: requestObject.success,
+        error: requestObject.error
+    });
+}
+
+function sendRequestGET(requestObject) {
+    $.ajax({
+        url: apiPrefix + '/' + requestObject.name,
+        type: 'GET',
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: requestObject.data,
         success: requestObject.success,
         error: requestObject.error
     });
@@ -105,8 +117,8 @@ function renderLoginView() {
 /* OVERVIEW: LIST OF ALL REPOSITORIES */
 
 function loadRepositoryView() {
-    sendRequest({
-        name: 'getRepositories',
+    sendRequestGET({
+        name: 'repositories',
         data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Load overview. Success: " + JSON.stringify(data));
@@ -337,8 +349,8 @@ function renderUsersView(data) {
 /* LEVEL 1: BRANCH AWARENESS */
 
 function loadBranchView(repositoryAlias) {
-    sendRequest({
-        name: 'getRepositoryInformation',
+    sendRequestGET({
+        name: 'repositoryInformation',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get repository info. Success: " + JSON.stringify(data));
@@ -388,8 +400,8 @@ function renderBranchView(data) {
 function loadBranchViewTable(repositoryAlias) {
     console.log('TRYING TO LOAD: ' + activeRepository);
 
-    sendRequest({
-        name: 'getBranchLevelAwareness',
+    sendRequestGET({
+        name: 'branchAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get branch awareness. Success: " + JSON.stringify(data));
@@ -419,8 +431,8 @@ function renderBranchViewTable(data) {
 
 
 function loadFileView(repositoryAlias, branch) {
-    sendRequest({
-        name: 'getRepositoryInformation',
+    sendRequestGET({
+        name: 'repositoryInformation',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get repository info. Success: " + JSON.stringify(data));
@@ -489,8 +501,8 @@ function renderFileView(data) {
 }
 
 function loadFileViewTable(repositoryAlias, branch) {
-    sendRequest({
-        name: 'getFileLevelAwareness',
+    sendRequestGET({
+        name: 'fileAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted, showConflicts: showConflicts, selectedAdditionalBranches: selectedAdditionalBranches },
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));

@@ -107,6 +107,15 @@ public class HttpClient {
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 		con.setRequestMethod("POST");
+		
+		/*
+		// Cookie
+		String loginCookie = "login=";
+		con.setRequestProperty("Cookie", loginCookie);
+		con.connect();
+		*/
+		
+		// Write content
 		con.setDoOutput(true);
 		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
 		out.write(jsonString);

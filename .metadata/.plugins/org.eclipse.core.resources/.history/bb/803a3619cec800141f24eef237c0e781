@@ -1,0 +1,245 @@
+package ch.ethz.fgremper.rtca;
+
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URI;
+import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import sun.net.www.protocol.http.HttpURLConnection;
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+
+public class ApiHttpHandler implements HttpHandler {
+
+	private static final Logger log = LogManager.getLogger(ApiHttpHandler.class);
+	
+	@SuppressWarnings("unchecked")
+	public void handle(HttpExchange exchange) throws IOException {
+		
+		// Get HTTP exchange information
+		URI uri = exchange.getRequestURI();
+		
+		// Request method
+		String requestMethod = exchange.getRequestMethod();
+
+		// API name
+		String prefix = "/api/";
+		String apiName = uri.getPath().substring(prefix.length(), uri.getPath().length());
+		
+		// Parameters
+        Map<String, Object> params = (Map<String, Object>) exchange.getAttribute("parameters");
+
+        // Body
+		String body = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
+        log.info("Incoming request: " + requestMethod + " " + uri.getPath());
+        log.info("Body: " + body);
+
+		// Variables
+		String response = null;
+		String error = null;
+
+		DatabaseConnection db = null;
+		try {
+			// Get database connection
+			db = new DatabaseConnection();
+
+			String sessionId = null;
+			String sessionUsername = null;
+			sessionId = (String) params.get("sessionId");
+			if (sessionId != null) sessionUsername = db.getUsername(sessionId);
+			
+			// Login request
+			if (apiName.equals("login") && requestMethod.equalsIgnoreCase("post")) {
+
+				// Read parameters
+				String username = (String) params.get("username");
+				String password = (String) params.get("password");
+
+				// Request new session ID from database
+				String newSessionId = db.getNewSessionIdForCorrectLogin(username, password);
+
+				if (newSessionId != null) {
+				
+					// Initialize response object
+					JSONObject responseObject = new JSONObject();
+					
+					// Persist session ID
+					db.startTransaction();
+					db.persistSessionIdForUser(newSessionId, username);
+					db.commitTransaction();
+
+					// Create user object
+					responseObject.put("isAdmin", db.isUserAdmin(username));
+					responseObject.put("isCreator", db.isUserCreator(username));
+					responseObject.put("sessionId", newSessionId);
+					responseObject.put("username", username);
+					
+					response = responseObject.toString();
+					
+				}
+				else {
+					throw new Exception("Incorrect login credentials");
+				}
+			}
+			
+			// Repositories request
+			else if (apiName.equals("repositories") && requestMethod.equalsIgnoreCase("get")) {
+				// Read repository information from database
+				if (sessionUsername != null) {
+					response = db.getRepositories(sessionUsername).toString();
+				}
+				else {
+					throw new Exception("No session ID given");
+				}
+			}
+
+			// Get users request
+			else if (apiName.equals("repositories") && requestMethod.equalsIgnoreCase("get")) {
+				// We need to be admin to retrieve this information
+				if (db.isUserAdmin(sessionUsername)) {
+					response = db.getUsers().toString();
+				}
+				else {
+					throw new Exception("No administrator privileges");
+				}
+			}
+
+			// Get repository information
+			else if (apiName.equals("repositoryInformation") && requestMethod.equalsIgnoreCase("get")) {
+				String repositoryAlias = (String) params.get("repositoryAlias");
+				
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+					response = db.getRepositoryInformation(repositoryAlias);
+				}
+				else {
+					throw new Exception("No repository access");
+				}
+			}
+			
+			// Get branch level awareness
+			else if (apiName.equals("branchAwareness") && requestMethod.equalsIgnoreCase("get")) {
+				String repositoryAlias = (String) params.get("repositoryAlias");
+				
+				// Need to be admin or have repository access
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+					response = db.getBranchLevelAwareness(repositoryAlias).toString();
+				}
+				else {
+					throw new Exception("No repository access");
+				}
+			}
+			
+			
+			// Get file awareness requests
+			else if (apiName.equals("fileAwareness") && requestMethod.equalsIgnoreCase("get")) {
+				String repositoryAlias = (String) params.get("repositoryAlias");
+				String branch = (String) params.get("branch");
+				List<String> selectedAdditionalBranches = (List<String>) params.get("selectedAdditionalBranches");
+				Boolean showConflicts = (Boolean) params.get("showConflicts");
+				Boolean showUncommitted = (Boolean) params.get("showUncommitted");
+				
+				// Need to be admin or have repository access
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+					JSONObject responseObject = db.getFileLevelAwareness(repositoryAlias, sessionUsername, branch, selectedAdditionalBranches, showUncommitted, showConflicts);
+					
+
+					if (showConflicts) {
+
+						JSONArray branches = responseObject.getJSONArray("branches");
+						
+						for (int i = 0; i < branches.length(); i++) {
+							JSONObject branchObject = branches.getJSONObject(i);
+							
+							String compareToBranch = branchObject.getString("branch");
+							
+							JSONArray fileArray = branchObject.getJSONArray("files");
+							
+							for (int j = 0; j < fileArray.length(); j++) {
+								JSONObject conflict = fileArray.getJSONObject(j);
+								
+								String filename = conflict.getString("filename");
+								
+								JSONArray users = conflict.getJSONArray("users");
+							
+								for (int k = 0; k < users.length(); k++) {
+									JSONObject user = users.getJSONObject(k);
+									
+									if (user.getString("type").equals("file conflict")) {
+										
+										String theirUsername = user.getString("username");
+
+							            GitReader gitReader = new GitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
+							            
+							            int lineConflicts = gitReader.countConflicts();
+
+							            if (lineConflicts > 0) {
+							            	user.put("type", lineConflicts + " line conflict");
+							            }
+										
+										
+										
+									}
+								}
+							
+							}
+								
+						}
+					}
+					response = responseObject.toString();
+				}
+				else {
+					throw new Exception("No repository access");
+				}
+			}
+			
+		}
+		catch (Exception e) {
+			error = e.getMessage();
+			log.error("Handling request error: " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		// Close database connection
+		try {
+			if (db != null) {
+				db.closeConnection();
+			}
+		}
+		catch (SQLException e) {
+			// Do nothing
+		}
+		
+		if (response != null) {
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
+		}
+		else {
+			response = "{}";
+			try {
+				JSONObject errorObject = new JSONObject();
+				errorObject.put("error", (error == null ? "Unknown error" : error));
+				response = errorObject.toString();
+			}
+			catch (JSONException e) {
+				// Don't see how this can happen, we're just putting stuff into an object
+			}
+			exchange.sendResponseHeaders(500, response.length());
+		}
+		log.info("Sending response: " + response);
+		OutputStream os = exchange.getResponseBody();
+		os.write(response.getBytes());
+		os.close();
+		
+	}
+
+}

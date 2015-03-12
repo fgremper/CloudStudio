@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
 public class ServerMain {
@@ -52,7 +53,8 @@ public class ServerMain {
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 		server.createContext("/webinterface", new WebInterfaceHttpHandler());
-		server.createContext("/api", new ApiHttpHandler());
+		HttpContext context = server.createContext("/api", new ApiHttpHandler());
+		context.getFilters().add(new ParameterFilter());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 
