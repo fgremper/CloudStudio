@@ -1,3 +1,5 @@
 1426087119356	Rename type 'RequestHttpHandler'
 1426169812907	Rename local variable 'inputJsonString'
 1426169816363	Rename local variable 'data'
+1426253765532	Rename type 'GitReader'
+1426354783172	Move compilation unit

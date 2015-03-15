@@ -63,43 +63,8 @@ public class ApiHttpHandler implements HttpHandler {
 			
 			/* GET REQUESTS */
 			
-			// Login request
-			if (apiName.equals("login") && requestMethod.equalsIgnoreCase("post")) {
-
-				// Read parameters
-				String username = (String) params.get("username");
-				String password = (String) params.get("password");
-
-				// Request new session ID from database
-				String newSessionId = db.getNewSessionIdForCorrectLogin(username, password);
-
-				if (newSessionId != null) {
-				
-					// Initialize response object
-					JSONObject responseObject = new JSONObject();
-					
-					// Persist session ID
-					db.startTransaction();
-					db.persistSessionIdForUser(newSessionId, username);
-					db.commitTransaction();
-
-					// Create user object
-					responseObject.put("isAdmin", db.isUserAdmin(username));
-					responseObject.put("isCreator", db.isUserCreator(username));
-					responseObject.put("sessionId", newSessionId);
-					responseObject.put("username", username);
-					
-					response = responseObject.toString();
-					
-				}
-				else {
-					throw new Exception("Incorrect login credentials");
-				}
-				
-			}
-			
 			// Repositories request
-			else if (apiName.equals("repositories") && requestMethod.equalsIgnoreCase("get")) {
+			if (apiName.equals("repositories") && requestMethod.equalsIgnoreCase("get")) {
 				
 				// Read repository information from database
 				if (sessionUsername != null) {
@@ -189,7 +154,7 @@ public class ApiHttpHandler implements HttpHandler {
 										String theirUsername = user.getString("username");
 										
 										// Look up the ancestor file in the git repository
-							            GitReader gitReader = new GitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
+							            ContentConflictGitReader gitReader = new ContentConflictGitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
 
 							            // If there are content conflicts, put this instead
 							            int lineConflicts = gitReader.countConflicts();
@@ -278,7 +243,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Need to be admin or have repository access
 				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 					
-		            GitReader gitReader = new GitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
+		            ContentConflictGitReader gitReader = new ContentConflictGitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
 					JSONObject responseObject = new JSONObject();
 					responseObject.put("content", gitReader.diff());
 					response = responseObject.toString();
@@ -291,6 +256,41 @@ public class ApiHttpHandler implements HttpHandler {
 			}
 			
 			/* POST REQUESTS */
+
+			// Auth request
+			else if (apiName.equals("auth") && requestMethod.equalsIgnoreCase("post")) {
+
+				// Read parameters
+				String username = (String) params.get("username");
+				String password = (String) params.get("password");
+
+				// Request new session ID from database
+				String newSessionId = db.getNewSessionIdForCorrectLogin(username, password);
+
+				if (newSessionId != null) {
+				
+					// Initialize response object
+					JSONObject responseObject = new JSONObject();
+					
+					// Persist session ID
+					db.startTransaction();
+					db.persistSessionIdForUser(newSessionId, username);
+					db.commitTransaction();
+
+					// Create user object
+					responseObject.put("isAdmin", db.isUserAdmin(username));
+					responseObject.put("isCreator", db.isUserCreator(username));
+					responseObject.put("sessionId", newSessionId);
+					responseObject.put("username", username);
+					
+					response = responseObject.toString();
+					
+				}
+				else {
+					throw new Exception("Incorrect login credentials");
+				}
+				
+			}
 			
 			// Create repository
 			else if (apiName.equals("createRepository") && requestMethod.equalsIgnoreCase("post")) {
@@ -299,6 +299,7 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				String repositoryUrl = (String) params.get("repositoryUrl");
 
+				// Need to be administrator or creator
 				if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -319,6 +320,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");
 
+				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -338,7 +340,8 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				String username = (String) params.get("username");
-				
+
+				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -359,6 +362,7 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				String username = (String) params.get("username");
 
+				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -378,6 +382,7 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				String username = (String) params.get("username");
 
+				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -391,12 +396,24 @@ public class ApiHttpHandler implements HttpHandler {
 				
 			}
 
+			// Create user
+			else if (apiName.equals("createUser") && requestMethod.equalsIgnoreCase("post")) {
+
+				// Read parameters
+				String username = (String) params.get("username");
+				String password = (String) params.get("password");
+
+				db.addUser(username, password);
+				
+			}
+			
 			// Delete user
 			else if (apiName.equals("deleteUser") && requestMethod.equalsIgnoreCase("post")) {
 
 				// Get parameters
 				String username = (String) params.get("username");
 
+				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -416,6 +433,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String username = (String) params.get("username");
 
+				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -435,6 +453,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String username = (String) params.get("username");
 
+				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -454,6 +473,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String username = (String) params.get("username");
 
+				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -473,6 +493,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String username = (String) params.get("username");
 
+				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
@@ -489,7 +510,7 @@ public class ApiHttpHandler implements HttpHandler {
 			/* ALSO POST BUT THE ONLY ONE THAT ACCESSES POST DATA */
 			
 			// Set local git state request
-			if (uri.getPath().equals(prefix + "/localState")) {
+			else if (apiName.equals("localState") && requestMethod.equalsIgnoreCase("post")) {
 				
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");
@@ -506,8 +527,9 @@ public class ApiHttpHandler implements HttpHandler {
 				
 			}
 			
+			// Unknown API call
 			else {
-				throw new Exception("Unknown API call")
+				throw new Exception("Unknown API call");
 			}
 
 		}

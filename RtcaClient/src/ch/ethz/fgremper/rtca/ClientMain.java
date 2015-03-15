@@ -68,7 +68,7 @@ public class ClientMain {
 		ClientGUI.addLogMessage("Requesting session ID for login...");
 		log.info("Requesting session ID for login...");
 		try {
-			sessionId = httpClient.login(config.serverUrl, config.username, config.password);
+			sessionId = httpClient.auth(config.serverUrl, config.username, config.password);
 		}
 		catch (Exception e) {
 			ClientGUI.setStatusRed();
@@ -95,13 +95,9 @@ public class ClientMain {
 					RepositoryReader repositoryReader = new RepositoryReader(repositoryInfo.localPath);
 					JSONObject updateObject = repositoryReader.getUpdateObject();
 					
-			        // Store user information
-					updateObject.put("sessionId", sessionId);
-					updateObject.put("repositoryAlias", repositoryInfo.alias);
-					
 					// Send it to to the server
-					String jsonString = updateObject.toString();
-					httpClient.sendGitState(config.serverUrl, jsonString);
+					String body = updateObject.toString();
+					httpClient.sendGitState(config.serverUrl, sessionId, repositoryInfo.alias, body);
 				
 					ClientGUI.setLastUpdate();
 				}

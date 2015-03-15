@@ -3,6 +3,7 @@ package ch.ethz.fgremper.rtca;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
@@ -26,27 +27,19 @@ public class HttpClient {
 	 * @return session ID
 	 * @throws Exception
 	 */
-	public String login(String serverUrl, String username, String password) throws Exception {
+	public String auth(String serverUrl, String username, String password) throws Exception {
 
 		// URL
-		String url = serverUrl + "/api/login";
-		
-		// Create login request JSON object
-		JSONObject loginObject = new JSONObject();
-		loginObject.put("username", username);
-		loginObject.put("password", password);
-		String jsonString = loginObject.toString();
+		String url = serverUrl + "/api/auth?username=" + URLEncoder.encode(username, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8");
 		
 		// Send request to server
 		log.debug("Sending login request to server...");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setReadTimeout(10000);
+		con.setConnectTimeout(15000);
 		con.setRequestMethod("POST");
-		con.setDoOutput(true);
-		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
-		out.write(jsonString);
-		out.close();
-
+		
 		// Response code
 		int responseCode = con.getResponseCode();
 		log.debug("Response code: " + responseCode);
@@ -94,31 +87,26 @@ public class HttpClient {
 	/**
 	 * Send the entire local git state of a single git repository to the RTCA server.
 	 * @param serverUrl RTCA server URL
-	 * @param jsonString JSON string provided by the RepositoryReader
+	 * @param body JSON string provided by the RepositoryReader
 	 * @throws Exception
 	 */
-	public void sendGitState(String serverUrl, String jsonString) throws Exception {
+	public void sendGitState(String serverUrl, String sessionId, String repositoryAlias, String body) throws Exception {
 
 		// URL
-		String url = serverUrl + "/api/setLocalGitState";
+		String url = serverUrl + "/api/localState?sessionId=" + URLEncoder.encode(sessionId, "UTF-8") + "&repositoryAlias=" + URLEncoder.encode(repositoryAlias, "UTF-8");;
 
 		// Send local git state to server
 		log.debug("Sending login request to server...");
 		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setReadTimeout(10000);
+		con.setConnectTimeout(15000);
 		con.setRequestMethod("POST");
-		
-		/*
-		// Cookie
-		String loginCookie = "login=";
-		con.setRequestProperty("Cookie", loginCookie);
-		con.connect();
-		*/
 		
 		// Write content
 		con.setDoOutput(true);
 		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
-		out.write(jsonString);
+		out.write(body);
 		out.close();
 
 		// Response code

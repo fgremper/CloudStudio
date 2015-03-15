@@ -32,8 +32,8 @@ public class ClientGUI {
 
 	private static final Logger log = LogManager.getLogger(ClientGUI.class);
 
-    private static DefaultListModel<String> logModel;
-    private static JList<String> logList;
+    private static DefaultListModel logModel;
+    private static JList logList;
     private static JScrollPane logScrollPane;
     private static JLabel trafficLabelGreen;
     private static JLabel trafficLabelYellow;
@@ -167,8 +167,8 @@ public class ClientGUI {
     public static void createGuiContents() {
 
         // Init log list and scroll pane
-    	logModel = new DefaultListModel<String>();
-        logList = new JList<String>(logModel);
+    	logModel = new DefaultListModel();
+        logList = new JList(logModel);
         logList.setFont(new Font("Helvetica", Font.PLAIN, 12));
         logScrollPane = new JScrollPane(logList);
         logScrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -274,7 +274,7 @@ public class ClientGUI {
         // Display the window.
         frame.setVisible(true);
         
-        // Always update the "last update" time
+        // Always update the "last update" time (every 100ms)
         new Thread() {
             public void run() {
             	while (true) {

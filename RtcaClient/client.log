@@ -1307,3 +1307,127 @@
 2015-12-11 16:12:58.913 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
 2015-12-11 16:12:58.913 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
 2015-12-11 16:12:58.913 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-45-13 14:45:29.589 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-45-13 14:45:29.591 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-45-13 14:45:29.593 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-45-13 14:45:29.703 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-45-13 14:45:29.703 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-45-13 14:45:29.704 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-45-13 14:45:29.704 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-45-13 14:45:29.705 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-45-13 14:45:29.707 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-45-13 14:45:29.711 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-45-13 14:45:30.178 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while requesting session ID: Connection refused
+2015-07-14 19:07:49.127 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-07-14 19:07:49.130 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-07-14 19:07:49.132 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-07-14 19:07:49.241 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-07-14 19:07:49.241 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-07-14 19:07:49.242 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-07-14 19:07:49.242 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-07-14 19:07:49.244 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-07-14 19:07:49.247 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-07-14 19:07:49.248 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-07-14 19:07:49.869 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-07-14 19:07:49.878 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"Unknown API call"}
+2015-07-14 19:07:49.952 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while requesting session ID: Unknown API call
+2015-08-14 19:08:03.275 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-08-14 19:08:03.278 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-08-14 19:08:03.279 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-08-14 19:08:03.428 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-08-14 19:08:03.428 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-08-14 19:08:03.428 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-08-14 19:08:03.428 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-08-14 19:08:03.429 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-08-14 19:08:03.431 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-08-14 19:08:03.431 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-08-14 19:08:03.474 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-08-14 19:08:03.485 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"Unknown API call"}
+2015-08-14 19:08:03.884 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error while requesting session ID: Unknown API call
+2015-08-14 19:08:17.382 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-08-14 19:08:17.383 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-08-14 19:08:17.384 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-08-14 19:08:17.516 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-08-14 19:08:17.516 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-08-14 19:08:17.516 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-08-14 19:08:17.520 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-08-14 19:08:17.521 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-08-14 19:08:17.525 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-08-14 19:08:17.526 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-08-14 19:08:17.660 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-08-14 19:08:17.689 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"d2540f053cc68777a932870f12e47143","isAdmin":true}
+2015-08-14 19:08:17.693 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: d2540f053cc68777a932870f12e47143
+2015-08-14 19:08:17.694 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-08-14 19:08:17.960 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-08-14 19:08:18.099 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-08-14 19:08:18.136 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-08-14 19:08:18.136 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-08-14 19:08:18.224 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-08-14 19:08:18.234 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-08-14 19:08:18.248 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-08-14 19:08:18.254 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-08-14 19:08:18.254 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-08-14 19:08:18.255 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-08-14 19:08:18.255 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-08-14 19:08:18.266 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-08-14 19:08:18.267 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"Unknown API call"}
+2015-08-14 19:08:18.267 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: Unknown API call
+2015-08-14 19:08:18.268 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-11-14 19:11:46.047 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-11-14 19:11:46.057 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-11-14 19:11:46.058 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-11-14 19:11:46.146 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-11-14 19:11:46.147 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-11-14 19:11:46.147 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-11-14 19:11:46.147 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-11-14 19:11:46.148 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-11-14 19:11:46.150 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-11-14 19:11:46.151 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-11-14 19:11:46.233 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-11-14 19:11:46.240 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"c2fbecdf8b2d378b8403e5bc4df86736","isAdmin":true}
+2015-11-14 19:11:46.244 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: c2fbecdf8b2d378b8403e5bc4df86736
+2015-11-14 19:11:46.244 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-11-14 19:11:46.442 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-11-14 19:11:46.582 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-11-14 19:11:46.600 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-11-14 19:11:46.601 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-11-14 19:11:46.659 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-11-14 19:11:46.682 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-11-14 19:11:46.692 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-11-14 19:11:46.697 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-11-14 19:11:46.697 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-11-14 19:11:46.698 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-11-14 19:11:46.698 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-11-14 19:11:46.713 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-11-14 19:11:46.713 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"Unknown API call"}
+2015-11-14 19:11:46.746 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: Unknown API call
+2015-11-14 19:11:46.746 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
+2015-13-14 19:13:35.818 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - RTCA client starting...
+2015-13-14 19:13:35.821 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading config...
+2015-13-14 19:13:35.823 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - Reading config file: config.xml
+2015-13-14 19:13:35.970 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * username: admin
+2015-13-14 19:13:35.970 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * password: 1234
+2015-13-14 19:13:35.970 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * serverUrl: http://127.0.0.1:7330
+2015-13-14 19:13:35.970 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * resubmitInterval: 20
+2015-13-14 19:13:35.972 [main] INFO  ch.ethz.fgremper.rtca.ClientConfigReader - * repository(0): "Demo" (/Users/novocaine/Documents/masterthesis/testsandpit/john)
+2015-13-14 19:13:35.974 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Requesting session ID for login...
+2015-13-14 19:13:35.975 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-13-14 19:13:36.475 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 200
+2015-13-14 19:13:36.501 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"isCreator":false,"username":"admin","sessionId":"13e36113346d025413bf0560e1f82117","isAdmin":true}
+2015-13-14 19:13:36.505 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Retrieved session ID: 13e36113346d025413bf0560e1f82117
+2015-13-14 19:13:36.505 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Reading and sending repository "Demo" at /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-13-14 19:13:36.660 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Reading: /Users/novocaine/Documents/masterthesis/testsandpit/john
+2015-13-14 19:13:36.746 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Opened in jgit: /Users/novocaine/Documents/masterthesis/testsandpit/john/.git
+2015-13-14 19:13:36.761 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: HEAD
+2015-13-14 19:13:36.761 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/heads/master
+2015-13-14 19:13:36.848 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Commit: 85bb2d6eef39ee058461f35705df4a025cdb3a43
+2015-13-14 19:13:36.859 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - File: default.txt
+2015-13-14 19:13:36.873 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Local File: default.txt
+2015-13-14 19:13:36.878 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/HEAD
+2015-13-14 19:13:36.878 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - Ref: refs/remotes/origin/master
+2015-13-14 19:13:36.879 [main] DEBUG ch.ethz.fgremper.rtca.RepositoryReader - JSON String: {"files":[{"content":"john\n","committed":"committed","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"},{"content":"john\n","committed":"uncommitted","commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","branch":"master","filename":"default.txt"}],"commitHistory":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","downstreamCommits":[{"distance":1,"commit":"9efccea7937592225ef4a95dbb04afe823859f19"}]}],"branches":[{"commit":"85bb2d6eef39ee058461f35705df4a025cdb3a43","active":true,"branch":"master"}]}
+2015-13-14 19:13:36.880 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Sending login request to server...
+2015-13-14 19:13:36.914 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response code: 500
+2015-13-14 19:13:36.914 [main] DEBUG ch.ethz.fgremper.rtca.HttpClient - Response text: {"error":"No access to repository"}
+2015-13-14 19:13:36.915 [main] ERROR ch.ethz.fgremper.rtca.ClientMain - Error reading or sending Demo: No access to repository
+2015-13-14 19:13:36.915 [main] INFO  ch.ethz.fgremper.rtca.ClientMain - Waiting 20 seconds...
