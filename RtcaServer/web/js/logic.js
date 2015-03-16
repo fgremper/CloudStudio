@@ -23,10 +23,22 @@ var apiPrefix = '/api'
 
 
 
+var webInterfacePrefix = "/web/";
 
 $(function () {
-    renderLoginView();
+    renderFromURL();
 });
+
+window.onpopstate = function() {
+    renderFromURL();
+}
+
+function renderFromURL() {
+    var url = document.location.pathname;
+    var params = url.split(/\//).splice(2);
+    if (params[0] == "") renderLoginView();
+    else if (params[0] == "repositories") loadRepositoryView();
+}
 
 
 /* UTILITY FUNCTIONS */
@@ -59,7 +71,7 @@ function sendRequestGET(requestObject) {
 /* LOGIN */
 
 function renderLoginView() {
-    $('body').html(new EJS({url: 'templates/login_view.ejs'}).render());
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/login_view.ejs'}).render());
     $('#submitLogin').click(function () {
         sendRequest({
             name: 'login',
@@ -132,7 +144,10 @@ function loadRepositoryView() {
 
 function renderRepositoryView(data) {
 
-    $('body').html(new EJS({url: 'templates/repository_view.ejs'}).render(data));
+    // set state
+    history.pushState(null, "", webInterfacePrefix + "repositories");
+
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/repository_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -217,7 +232,11 @@ function loadCreateRepositoryView() {
 }
 
 function renderCreateRepositoryView(data) {
-    $('body').html(new EJS({url: 'templates/create_repository_view.ejs'}).render(data));
+
+    // set state
+    history.pushState(null, "", webInterfacePrefix + "createRepository");
+
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/create_repository_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -260,7 +279,11 @@ function loadUsersView() {
 }
 
 function renderUsersView(data) {
-    $('body').html(new EJS({url: 'templates/users_view.ejs'}).render(data));
+
+    // set state
+    history.pushState(null, "", webInterfacePrefix + "users");
+
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/users_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -349,6 +372,7 @@ function renderUsersView(data) {
 /* LEVEL 1: BRANCH AWARENESS */
 
 function loadBranchView(repositoryAlias) {
+
     sendRequestGET({
         name: 'repositoryInformation',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
@@ -370,7 +394,11 @@ function loadBranchView(repositoryAlias) {
 
 
 function renderBranchView(data) {
-    $('body').html(new EJS({url: 'templates/branch_view.ejs'}).render(data));
+
+    // set state
+    history.pushState(null, "", webInterfacePrefix + "repositories/" + activeRepository);
+
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/branch_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -415,7 +443,7 @@ function loadBranchViewTable(repositoryAlias) {
 }
 
 function renderBranchViewTable(data) {
-    $('#branchTable').html(new EJS({url: 'templates/branch_view_table.ejs'}).render(data));
+    $('#branchTable').html(new EJS({url: webInterfacePrefix + 'templates/branch_view_table.ejs'}).render(data));
 
     // content
     $('.branch').click(function () {
@@ -451,7 +479,11 @@ function loadFileView(repositoryAlias, branch) {
 
 
 function renderFileView(data) {
-    $('body').html(new EJS({url: 'templates/file_view.ejs'}).render(data));
+
+    // set state
+    history.pushState(null, "", webInterfacePrefix + "repositories/" + activeRepository + "/" + activeBranch);
+
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/file_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -515,7 +547,7 @@ function loadFileViewTable(repositoryAlias, branch) {
 }
 
 function renderFileViewTable(data) {
-    $('#fileTable').html(new EJS({url: 'templates/file_view_table.ejs'}).render(data));
+    $('#fileTable').html(new EJS({url: webInterfacePrefix + 'templates/file_view_table.ejs'}).render(data));
 
     // content
     $('.fileAndUser').click(function () {
@@ -536,7 +568,7 @@ function loadContentView(repositoryAlias, branch, filename, username, compareToB
 
 function renderContentView(data) {
     
-    $('body').html(new EJS({url: 'templates/content_view.ejs'}).render(data));
+    $('body').html(new EJS({url: webInterfacePrefix + 'templates/content_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -581,9 +613,9 @@ function loadContentViewDiff(repositoryAlias, branch, filename, username, compar
 
 function renderContentViewDiff(data) {
     if (showConflicts) {
-        $('#diffTable').html(new EJS({url: 'templates/content_view_diff3.ejs'}).render(data));
+        $('#diffTable').html(new EJS({url: webInterfacePrefix + 'templates/content_view_diff3.ejs'}).render(data));
     }
     else {
-        $('#diffTable').html(new EJS({url: 'templates/content_view_diff.ejs'}).render(data));
+        $('#diffTable').html(new EJS({url: webInterfacePrefix + 'templates/content_view_diff.ejs'}).render(data));
     }
 }

@@ -258,7 +258,7 @@ public class ApiHttpHandler implements HttpHandler {
 			/* POST REQUESTS */
 
 			// Auth request
-			else if (apiName.equals("login") && requestMethod.equalsIgnoreCase("post")) {
+			else if (apiName.equals("auth") && requestMethod.equalsIgnoreCase("post")) {
 
 				// Read parameters
 				String username = (String) params.get("username");

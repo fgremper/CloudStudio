@@ -52,7 +52,7 @@ public class ServerMain {
 		log.info("Starting HTTP server on port " + port + "...");
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-		server.createContext("/web", new WebInterfaceHttpHandler());
+		server.createContext("/webinterface", new WebInterfaceHttpHandler());
 		HttpContext context = server.createContext("/api", new ApiHttpHandler());
 		context.getFilters().add(new ParameterFilter());
 		server.setExecutor(Executors.newCachedThreadPool());

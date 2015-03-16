@@ -35,7 +35,7 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 		// TODO: don't allow '..' and shit in path!
 		// actually, there should be a library to serve static content, no?
 		
-		String webInterfacePrefix = "web/";
+		String webInterfacePrefix = "/web/";
 		
 		if (requestMethod.equalsIgnoreCase("GET")) {
 			String requestedFile = uri.getPath().substring(1);
