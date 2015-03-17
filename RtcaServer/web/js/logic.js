@@ -15,7 +15,7 @@ var conflictType = "INTER_BRANCH_CONFLICTS"
 
 var conflictType;
 
-var login = undefined;
+var login = {};
 
 var apiPrefix = '/api'
 
@@ -26,6 +26,10 @@ var apiPrefix = '/api'
 var webInterfacePrefix = "/web/";
 
 $(function () {
+    if (getCookie("sessionId") != null) {
+        login = { sessionId: getCookie("sessionId"), username: getCookie("username"), isAdmin: (getCookie("isAdmin") == "true"), isCreator: (getCookie("isCreator") == "true") };
+    }
+    renderHeaderBar();
     renderFromURL();
 });
 
@@ -40,6 +44,40 @@ function renderFromURL() {
     else if (params[0] == "repositories") loadRepositoryView();
 }
 
+
+function renderHeaderBar() {
+
+    $('#headerBar').html('');
+    $('#headerBar').append('<div class="headerBarLeft">CloudStudio</div>');
+    if (login.sessionId != null) {
+        $('#headerBar').append('<div class="headerBarRight" id="logout">Logout</div>');
+        if (login.isAdmin) { $('#headerBar').append('<div class="headerBarRight">Manage Users</div>'); }
+        $('#headerBar').append('<div class="headerBarRight">Profile</div>');
+    }
+    else {
+        $('#headerBar').append('<div class="headerBarRight">Sign Up</div>');
+        $('#headerBar').append('<div class="headerBarRight">Log In</div>');
+    }
+
+
+    $('#logout').click(function () {
+        // Delete the login cookies
+        setCookie("sessionId", login.sessionId, -1);
+        setCookie("username", login.username, -1);
+        setCookie("isCreator", login.isCreator, -1);
+        setCookie("isAdmin", login.isAdmin, -1);
+
+        // Delete the login variable
+        login = {};
+
+        // Render the header bar
+        renderHeaderBar();
+
+        // Render the login view
+        renderLoginView();
+    });
+
+}
 
 /* UTILITY FUNCTIONS */
 
@@ -71,7 +109,9 @@ function sendRequestGET(requestObject) {
 /* LOGIN */
 
 function renderLoginView() {
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/login_view.ejs'}).render());
+    
+
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/login_view.ejs'}).render());
     $('#submitLogin').click(function () {
         sendRequest({
             name: 'login',
@@ -80,9 +120,23 @@ function renderLoginView() {
                 console.log("Login. Success: " + JSON.stringify(data));
                 login = data;
 
+
+                renderHeaderBar();
+
                 if (login.sessionId != undefined) {
                     loadRepositoryView();
+
+                    if ($('#rememberMe').is(':checked')) {
+                        setCookie("sessionId", login.sessionId, 10);
+                        setCookie("username", login.username, 10);
+                        setCookie("isCreator", login.isCreator, 10);
+                        setCookie("isAdmin", login.isAdmin, 10);
+                    }
+
                 }
+
+
+
                 else {
                     alert('Login error. Wrong username/password probably.');
                 }
@@ -147,7 +201,7 @@ function renderRepositoryView(data) {
     // set state
     history.pushState(null, "", webInterfacePrefix + "repositories");
 
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/repository_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/repository_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -158,7 +212,7 @@ function renderRepositoryView(data) {
 
     // content
     $('#createRepository').click(loadCreateRepositoryView);
-    $('.repository').click(function () {
+    $('.repositoryListItem').click(function () {
         selectedUsers = [];
         loadBranchView($(this).data('alias'));
     });
@@ -236,7 +290,7 @@ function renderCreateRepositoryView(data) {
     // set state
     history.pushState(null, "", webInterfacePrefix + "createRepository");
 
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/create_repository_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/create_repository_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -247,7 +301,7 @@ function renderCreateRepositoryView(data) {
     
     $('#submitCreateRepository').click(function () {
         sendRequest({
-            name: 'addRepository',
+            name: 'createRepository',
             data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId },
             success: function(data) {
                 console.log("Create repository. Success: " + JSON.stringify(data));
@@ -283,7 +337,7 @@ function renderUsersView(data) {
     // set state
     history.pushState(null, "", webInterfacePrefix + "users");
 
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/users_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/users_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -398,7 +452,7 @@ function renderBranchView(data) {
     // set state
     history.pushState(null, "", webInterfacePrefix + "repositories/" + activeRepository);
 
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/branch_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/branch_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -483,7 +537,7 @@ function renderFileView(data) {
     // set state
     history.pushState(null, "", webInterfacePrefix + "repositories/" + activeRepository + "/" + activeBranch);
 
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/file_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/file_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -568,7 +622,7 @@ function loadContentView(repositoryAlias, branch, filename, username, compareToB
 
 function renderContentView(data) {
     
-    $('body').html(new EJS({url: webInterfacePrefix + 'templates/content_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/content_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -619,3 +673,32 @@ function renderContentViewDiff(data) {
         $('#diffTable').html(new EJS({url: webInterfacePrefix + 'templates/content_view_diff.ejs'}).render(data));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+    return null;
+}
+

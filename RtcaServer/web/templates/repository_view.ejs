@@ -1,14 +1,35 @@
-<div id="header">
-	<div id="headerLogin">
-		Logged in as <strong><%= login.username %></strong>
-		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
-	</div>
-	<span id="headerLogo">CloudStudio</span>
-</div>
 <div id="navigationBar">
-	<span id="refresh">Refresh</span>
-	<span id="navigationLocation"><strong>All Repositories</strong></span>
+	<div id="navigationBarLocation">Location: <strong>Repository Overview</strong></div>
+	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
 </div>
+
+<div id="titleBar">
+	Repository Overview
+</div>
+
+<div id="repositoryList">
+
+	<% for (var i = 0; i < repositories.length; i++) { %>
+
+	<div class="repositoryListItem" data-alias="<%= repositories[i]['repositoryAlias'] %>">
+		<div class="repositoryListBlock">
+			<h1><%= repositories[i]['repositoryAlias'] %></h1>
+			<div class="description">Project description.</div>
+			<h2>Repository URL</h2>
+			<p><%= repositories[i]['repositoryUrl'] %></p>
+			<h2>Users</h2>
+			<p>
+		        <% for (var j = 0; j < repositories[i]['users'].length; j++) { %>
+		        	<span class="userSmall"><%= repositories[i]['users'][j] %></span>
+		        <% } %>
+	        </p>
+		</div>
+	</div>
+
+	<% } %>
+
+</div>
+
 <div id="view">
 	<table id="repositoryTable">
 	    <tr><th>Alias</th><th>URL</th><th>Owner</th><th>Users</th></tr>

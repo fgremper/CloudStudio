@@ -1,6 +1,4 @@
-* {
-    font-family: Helvetica, Arial, sans-serif;
-}
+
 html, body {
     margin: 0;
 }
@@ -64,6 +62,7 @@ textarea, input { outline: none; }
 
 /* nagivation bar */
 
+/*
 #navigationBar {
     border-bottom: 1px solid #d0d0d0;
     line-height: 70px;
@@ -110,6 +109,7 @@ textarea, input { outline: none; }
     background-color: #386fcf;
     color: #fdfdfd;
 }
+*/
 
 /* diff */
 
@@ -568,4 +568,173 @@ div.button.buttonHighlight, div.button:hover {
     background-image: linear-gradient(#386fcf 1%, #386fcf 100%);
     border: 1px solid #386fcf;
     color: #ffffff;
+}
+
+
+
+
+/* redesign */
+
+
+
+/* header bar */
+
+#headerBar {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #ffffff;
+    background-color: #404040;
+    height: 50px;
+}
+#headerBar div {
+    height: 50px;
+    line-height: 50px;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+#headerBar div:hover {
+    background-color: #707070;
+}
+#headerBar div.headerBarLeft {
+    float: left;
+}
+#headerBar div.headerBarRight {
+    float: right;
+}
+
+/* content */
+
+#content {
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    color: #000000;
+}
+
+/* navigation bar */
+
+#navigationBar {
+    height: 40px;
+    background: linear-gradient(#ffffff 0%, #f0f0f0 100%);
+    border-bottom: 1px solid #b0b0b0;
+    color: #808080;
+    font-size: 14px;
+}
+
+#navigationBar div {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 17px 0 20px;
+}
+
+#navigationBar div strong {
+    font-weight: 400;
+    color: #404040;
+}
+
+#navigationBarLocation {
+    float: left;
+}
+
+#navigationBar .clickable {
+    color: #386fcf;
+    font-weight: 400;
+    padding: 2px 3px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#navigationBar .clickable:hover {
+    color: #fdfdfd;
+    padding: 2px 3px;
+    background-color: #386fcf;
+}
+
+#navigationBar strong {
+    color: #404040;
+    font-weight: 400;
+    padding: 2px 3px;
+}
+
+#navigationBarLogin {
+    float: right;
+}
+
+/* title bar */
+
+#titleBar {
+    height: 80px;
+    line-height: 80px;
+    padding: 0 20px;
+    font-size: 24px;
+    font-weight: 600;
+    border-bottom: 2px solid #386fcf;
+    margin-bottom: 20px;
+    color: #386fcf;
+}
+
+#repositoryList {
+    padding: 0 10px;
+    column-count: 2;
+    -webkit-column-count: 2; /* Chrome, Safari, Opera */
+    -moz-column-count: 2; /* Firefox */
+    -webkit-column-gap: 0; /* Chrome, Safari, Opera */
+    -moz-column-gap: 0; /* Firefox */
+    column-gap: 0;
+}
+
+#repositoryList div.repositoryListItem {
+    width: 100%;
+    display: inline-block;;
+}
+
+#repositoryList div.repositoryListBlock {
+    margin: 0 10px 20px 10px;
+    border: 1px solid #b0b0b0;
+    cursor: pointer;
+    padding: 20px 20px 0 20px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#repositoryList div.repositoryListBlock:hover {
+    border-color: #386fcf;
+    background-color: #f0f0fa;
+}
+
+#repositoryList div.repositoryListBlock div.description {
+    font-size: 16px;
+    color: #808080;
+    margin: 0 0 40px 0;
+}
+#repositoryList div.repositoryListBlock h1 {
+    font-weight: 400;
+    font-size: 28px;
+    margin: 0 0 30px 0;
+}
+
+#repositoryList div.repositoryListBlock h2 {
+    font-weight: 300;
+    font-size: 14px;
+    margin: 0 0 8px 0;
+    color: #a0a0a0;
+}
+
+#repositoryList div.repositoryListBlock p {
+    font-size: 14px;
+    margin: 0 0 25px 0;
+    color: #808080;
+}
+
+
+
+
+
+/* user labels */
+
+span.userSmall {
+    border: 1px solid #b0b0b0;
+    padding: 3px 8px;
+    border-radius: 5px;
 }

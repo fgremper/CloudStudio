@@ -1,13 +1,9 @@
-<div id="header">
-	<div id="headerLogin">
-		Logged in as <strong><%= login.username %></strong>
-		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
-	</div>
-	<span id="headerLogo">CloudStudio</span>
-</div>
 <div id="navigationBar">
-	<span id="refresh">Refresh</span>
-	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <strong><%= repositoryAlias %></strong></span>
+	<div id="navigationBarLocation">Location: <span class="loadRepositoryView clickable">Repository Overview</span> &mdash; Repository: <strong><%= repositoryAlias %></strong></div>
+	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
+</div>
+<div id="titleBar">
+	Branch Level Awareness
 </div>
 <div id="view">
 
