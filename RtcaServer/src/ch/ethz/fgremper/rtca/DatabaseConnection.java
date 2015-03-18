@@ -56,13 +56,12 @@ public class DatabaseConnection {
 
 	/* UPDATE FROM CLIENT CYCLE */
 	
-	public void setEntireUserGitState(String inputJsonString, String username) throws Exception {
+	public void setEntireUserGitState(String inputJsonString, String username, String repositoryAlias) throws Exception {
 
 		JSONObject setLocalGitStateObject = new JSONObject(inputJsonString);
 		JSONArray fileArray = setLocalGitStateObject.getJSONArray("files");
 		JSONArray commitHistory = setLocalGitStateObject.getJSONArray("commitHistory");
 		JSONArray branchesArray = setLocalGitStateObject.getJSONArray("branches");
-		String repositoryAlias = setLocalGitStateObject.getString("repositoryAlias");
 		
 		// Start transaction
 		startTransaction();
@@ -215,31 +214,36 @@ public class DatabaseConnection {
 			String branch = rs.getString("branch");
 			String username = rs.getString("username");
 			String commit = rs.getString("commit");
+			String active = rs.getString("active");
 			String origincommit = rs.getString("origincommit");
 			String relation;
+			Integer distance = null;
 			
 			Integer d = null;
 			
 			if (commit == null) {
-				relation = "not checked out";
+				relation = "NOT_CHECKED_OUT";
 			}
 			else if (origincommit == null) {
-				relation = "local branch";
+				relation = "LOCAL_BRANCH";
 			}
 			else if (commit.equals(origincommit)) {
-				relation = "equal";
+				relation = "EQUAL";
 			}
 			else if ((d = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, commit, origincommit)) != null) {
-				relation = d + " behind";
+				relation = "BEHIND";
+				distance = d;
 			}
 			else if ((d = branchCommitIsInHistoryOfBranchCommit(repositoryAlias, origincommit, commit)) != null) {
-				relation = d + " in front";
+				relation = "AHEAD";
+				distance = d;
 			}
 			else if ((d = distanceForCommitsToSeeEachOther(repositoryAlias, origincommit, commit)) != null) {
-				relation = d + " away";
+				relation = "FORK";
+				distance = d;
 			}
 			else {
-				relation = "unknown";
+				relation = "UNKNOWN";
 			}
 			
 			JSONObject branchObject;
@@ -249,6 +253,7 @@ public class DatabaseConnection {
 				index.put(branch, branchObject);
 				branchObject.put("branch", branch);
 				branchObject.put("users", new JSONArray());
+				branchObject.put("activeUsers", new JSONArray());
 			}
 			else {
 				branchObject = index.get(branch);
@@ -258,6 +263,12 @@ public class DatabaseConnection {
 			branchObject.getJSONArray("users").put(branchUserObject);
 			branchUserObject.put("username", username);
 			branchUserObject.put("relationWithOrigin", relation);
+			if (distance != null) {
+				branchUserObject.put("distanceFromOrigin", distance);
+			}
+
+			if (active.equals("true")) branchObject.getJSONArray("activeUsers").put(username);
+			
 		}
 		
 		responseObject.put("branches", branchesArray);
@@ -535,7 +546,6 @@ public class DatabaseConnection {
 	public JSONArray getRepositories(String myUsername) throws Exception {
 		// Statement to get all the repositories and users for your user permissions
 		
-		// TODO TODO TODO atm everyone can see everything
 		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ?");
 		stmt.setString(1, myUsername);
 		stmt.setString(2, myUsername);

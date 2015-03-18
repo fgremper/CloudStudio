@@ -1,8 +1,8 @@
-SELECT main.branch AS branch, main.username AS username, main.commit AS commit, origin.commit AS origincommit FROM
+SELECT main.branch AS branch, main.username AS username, main.commit AS commit, main.active as active, origin.commit AS origincommit FROM
 
 (
 
-	SELECT branchxuser.branch AS branch, branchxuser.username AS username, branches.commit AS commit FROM 
+	SELECT branchxuser.branch AS branch, branchxuser.username AS username, branches.commit AS commit, branches.active AS active FROM 
 
 	(
 		SELECT allbranches.branch AS branch, allusers.username FROM
@@ -25,7 +25,7 @@ SELECT main.branch AS branch, main.username AS username, main.commit AS commit, 
 	LEFT OUTER JOIN 
 
 	(
-		SELECT branch, username, commit FROM branches
+		SELECT branch, username, commit, active FROM branches
 		WHERE repositoryalias = ?
 	) AS branches
 
@@ -44,4 +44,3 @@ LEFT OUTER JOIN
 
 ON origin.branch = main.branch
 ORDER BY branch, username;
-

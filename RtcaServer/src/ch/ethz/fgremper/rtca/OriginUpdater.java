@@ -39,7 +39,6 @@ public class OriginUpdater {
 			// Read repository information like we would normally
 			RepositoryReader repositoryReader = new RepositoryReader(repositoryOriginDirectory);
 			JSONObject updateObject = repositoryReader.getUpdateObject();
-			updateObject.put("repositoryAlias", repositoryAlias);
 			String inputJsonString = updateObject.toString();
 			log.info("JSON string: " + inputJsonString);
 			
@@ -52,7 +51,7 @@ public class OriginUpdater {
 			try { db.addUserToRepository("origin", repositoryAlias); }
 			catch (Exception e) { }
 
-			db.setEntireUserGitState(inputJsonString, "origin");
+			db.setEntireUserGitState(inputJsonString, "origin", repositoryAlias);
 			db.commitTransaction();
 			
 			db.incRepositoryCloneCount(repositoryAlias);

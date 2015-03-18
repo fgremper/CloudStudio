@@ -9,7 +9,7 @@ public class HttpClientTest {
 	@Test
 	public void authTest() throws Exception {
 		HttpClient httpClient = new HttpClient();
-		httpClient.auth("http://127.0.0.1:7331", "john", "totallysecret");
+		httpClient.login("http://127.0.0.1:7331", "john", "totallysecret");
 	}
 
 }

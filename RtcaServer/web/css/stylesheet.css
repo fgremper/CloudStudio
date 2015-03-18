@@ -531,7 +531,7 @@ span.modify:hover {
     border: 1px solid #386fcf;
     color: #ffffff;
 }
-
+/*
 span.user {
     padding: 5px 10px;
     background-color: rgba(0, 0, 0, 0.08);
@@ -541,16 +541,61 @@ span.user {
     margin: 4px 4px 4px 0;
 }
 
-
+*/
 
 
 
 
 /* redesign */
 
-
 body {
     background-color: #fcfcfc;
+}
+
+/* error overlay */
+
+#errorOverlay {
+    position: fixed;
+    display: none;
+    top: 50%;
+    left: 50%;
+    z-index: 1000;
+    width: 500px;
+    height: 150px;
+    background-color: #404040;
+    border-radius: 10px;
+    margin-left: -250px;
+    margin-top: -75px;
+    font-family: Helvetica, Arial, sans-serif;
+    font-weight: 300;
+}
+
+#errorOverlayTitle {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 20px;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+}
+
+#errorOverlayDescription {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    top: 57px;
+    font-size: 15px;
+    color: #ffffff;
+    text-align: center;
+}
+
+#errorOverlayClose {
+    position: absolute;
+    left: 200px;
+    right: 200px;
+    bottom: 20px;
+    text-align: center;
 }
 
 /* header bar */
@@ -761,6 +806,93 @@ body {
     color: rgba(0, 0, 0, 0.5);
 }
 
+/* filter box */
+
+#filterBox {
+    margin: 0 20px 20px 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #e0e0e0;
+    border: 1px solid #b0b0b0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#filterBoxBlock {
+    //background-color: yellow;
+    padding: 10px;
+    width: 100px;
+    display: inline-block;
+    height: 100px;
+}
+
+/* branch list */
+
+#branchListContainer {
+    margin: 0 20px 20px 20px;
+}
+
+#branchList {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-bottom: 1px solid #b0b0b0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#branchList tr.branchListItem {
+    background-color: #ffffff;
+    border-top: 1px solid #b0b0b0;
+    border-left: 1px solid #b0b0b0;
+    border-right: 1px solid #b0b0b0;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#branchList tr.branchListItem:hover {
+    border-top: 1px solid #386fcf;
+    border-bottom: 1px solid #386fcf;
+    border-left: 1px solid #386fcf;
+    border-right: 1px solid #386fcf;
+    background-color: #c0e2fa;
+}
+
+#branchList th {
+    font-weight: 300;
+    text-align: left;
+    padding: 20px 20px;
+    border-bottom: 2px solid #386fcf;
+    color: #808080;
+    border-top: 1px solid #f4f4f4;
+}
+
+#branchList h1 {
+    font-weight: 300;
+    font-size: 14px;
+    margin: 8px 0 0 0;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+#branchList h1:first-child {
+    margin: 0;
+}
+
+#branchList p {
+    margin: 0;
+}
+
+#branchList td.branchListBranchName {
+    font-size: 16px;
+    font-weight: 400;
+}
+
+#branchList tr.branchListItem td {
+    padding: 20px;
+}
+
+/* file list */
+
+
 
 
 
@@ -772,6 +904,32 @@ span.userSmall {
     padding: 3px 8px;
     border-radius: 5px;
     background-color: rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    margin: 3px 0;
+}
+
+span.user {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    padding: 7px 12px;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    display: inline-block;
+    margin: 3px 0;
+}
+
+span.userGreen {
+    border: 1px solid rgba(0, 180, 0, 1);
+    background-color: rgba(0, 255, 0, 0.5);
+}
+
+span.userYellow {
+    border: 1px solid rgba(180, 180, 0, 1);
+    background-color: rgba(255, 255, 0, 0.5);
+}
+
+span.userRed {
+    border: 1px solid rgba(180, 0, 0, 1);
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 /* input */

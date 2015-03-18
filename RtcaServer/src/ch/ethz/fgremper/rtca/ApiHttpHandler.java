@@ -517,7 +517,7 @@ public class ApiHttpHandler implements HttpHandler {
 				
 				if (db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
 					db.startTransaction();
-					db.setEntireUserGitState(body, sessionUsername);
+					db.setEntireUserGitState(body, sessionUsername, repositoryAlias);
 					db.commitTransaction();
 					response = "{}";
 				}

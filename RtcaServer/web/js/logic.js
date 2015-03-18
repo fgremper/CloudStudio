@@ -21,32 +21,135 @@ var apiPrefix = '/api'
 
 
 
-
-
 var webInterfacePrefix = "/web/";
 
+
+
+/* UTILITY FUNCTIONS */
+
+// Send an API request
+function sendApiRequest(requestObject) {
+    $.ajax({
+        url: apiPrefix + '/' + requestObject.name,
+        type: requestObject.type,
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+        data: requestObject.data,
+        success: requestObject.success,
+        error: requestObject.error
+    });
+}
+
+// Display an error overlay
+function displayError(module, errorObject) {
+
+    if (errorObject == undefined) { errorObject = {} };
+    var errorMessage = errorObject.error;
+    if (errorMessage == undefined || errorMessage == "") errorMessage = "An error occured";
+
+    $('#errorOverlayTitle').text(module + ' Error');
+    $('#errorOverlayDescription').text(errorMessage);
+    $('#errorOverlay').show();
+    $('#errorOverlayClose').click(function () {
+        $('#errorOverlay').hide();
+    });
+
+}
+
+
+
+/* INITIALIZE */
+
+// Document gets loaded for the first time
 $(function () {
+
+    // Do we have a session cookie?
     if (getCookie("sessionId") != null) {
-        login = { sessionId: getCookie("sessionId"), username: getCookie("username"), isAdmin: (getCookie("isAdmin") == "true"), isCreator: (getCookie("isCreator") == "true") };
+
+        // Recreate login element from cookies
+        login = {
+            sessionId: getCookie("sessionId"),
+            username: getCookie("username"),
+            isAdmin: (getCookie("isAdmin") == "true"),
+            isCreator: (getCookie("isCreator") == "true")
+        };
+
+        // Look at URL to find out what to render
+        renderFromDocumentLocation();
     }
+    else {
+        // We're not logged in, render login view
+        renderLoginView();
+    }
+
+    // Render header bar
     renderHeaderBar();
-    renderFromURL();
+
+    // If the error overlay is visible and we press enter, close it
+    $('body').keypress(function(e) {
+        if (e.which == 13 && $('#errorOverlay').is(':visible')) {
+            $('#errorOverlay').hide();
+        }
+    });
+
 });
 
+// Someone hit the history back of or forward button
 window.onpopstate = function() {
-    renderFromURL();
+
+    // Look at URL to find out what to render
+    renderFromDocumentLocation();
+
 }
 
-function renderFromURL() {
+// Set the URL to a certain path, only if it is different from the current path
+function pushHistoryState(path) {
+
+    // Don't push the state if it's the same URL as where we are now.
+    // This would otherwise prevent the (history) forward button from working.
+    if (document.location.pathname == webInterfacePrefix + path) return;
+
+    // Push the history state
+    history.pushState(null, "", webInterfacePrefix + path);
+
+}
+
+// Look at URL to find out what to render
+function renderFromDocumentLocation() {
+
     var url = document.location.pathname;
     var params = url.split(/\//).splice(2);
-    if (params[0] == "") renderLoginView();
-    else if (params[0] == "repositories") loadRepositoryView();
+
+    if (params[0] == "") {
+        renderLoginView();
+    }
+    else if (params[0] == "repositories" && (params[1] == undefined || params[1] == "")) {
+        loadRepositoryView();
+    }
+    else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && (params[2] == undefined || params[2] == "")) {
+        selectedUsers = [];
+        loadBranchView(params[1]);
+    }
+    else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "")) {
+        selectedUsers = [];
+        showUncommitted = false;
+        showConflicts = false;
+        selectedAdditionalBranches = [];
+        activeRepository = params[1];
+        loadFileView(params[1], params[2]);
+    }
+    else {
+        renderLoginView();
+    }
 }
 
+
+
+/* RENDERING THE HEADER BAR */
 
 function renderHeaderBar() {
 
+    // Rendering the header HTML
     $('#headerBar').html('');
     $('#headerBar').append('<div class="headerBarLeft">CloudStudio</div>');
     if (login.sessionId != null) {
@@ -59,7 +162,7 @@ function renderHeaderBar() {
         $('#headerBar').append('<div class="headerBarRight">Log In</div>');
     }
 
-
+    // Clicking the logout button
     $('#logout').click(function () {
         // Delete the login cookies
         setCookie("sessionId", login.sessionId, -1);
@@ -79,47 +182,28 @@ function renderHeaderBar() {
 
 }
 
-/* UTILITY FUNCTIONS */
-
-function sendRequest(requestObject) {
-    $.ajax({
-        url: apiPrefix + '/' + requestObject.name,
-        type: 'POST',
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: requestObject.data,
-        success: requestObject.success,
-        error: requestObject.error
-    });
-}
-
-function sendRequestGET(requestObject) {
-    $.ajax({
-        url: apiPrefix + '/' + requestObject.name,
-        type: 'GET',
-        dataType: 'json',
-        contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
-        data: requestObject.data,
-        success: requestObject.success,
-        error: requestObject.error
-    });
-}
 
 
 /* LOGIN */
 
 function renderLoginView() {
     
+    // Push history state
+    pushHistoryState("");
 
+    // Render template
     $('#content').html(new EJS({url: webInterfacePrefix + 'templates/login_view.ejs'}).render());
-    $('#submitLogin').click(function () {
-        sendRequest({
-            name: 'login',
-            data: { username: $('#username').val(), password: $('#password').val() },
-            success: function(data) { // request success
-                console.log("Login. Success: " + JSON.stringify(data));
-                login = data;
 
+    // Register login click event
+    $('#submitLogin').click(function () {
+        sendApiRequest({
+            name: 'login',
+            type: 'POST',
+            data: { username: $('#username').val(), password: $('#password').val() },
+            success: function(data) {
+                console.log("Login. Success: " + JSON.stringify(data));
+
+                login = data;
 
                 renderHeaderBar();
 
@@ -134,93 +218,75 @@ function renderLoginView() {
                     }
 
                 }
-
-
-
                 else {
-                    alert('Login error. Wrong username/password probably.');
+                    displayError('Login', { error: 'No session ID reveived' });
                 }
+
             },
-            error: function () {
-                alert('Something went wrong when logging in.');
+            error: function (data) {
+                displayError('Login', data.responseJSON);
             }
         });
     });
-    $('#submitCreateUserAndLogin').click(function () {
-        sendRequest({
-            name: 'createUserAndLogin',
-            data: { username: $('#newUsername').val(), password: $('#newPassword').val() },
-            success: function(data) { // request success
-                console.log("Login. Success: " + JSON.stringify(data));
-                login = data;
 
-                if (login.sessionId != undefined) {
-                    loadRepositoryView();
-                }
-                else {
-                    alert('Login error. Wrong username/password probably.');
-                }
-            },
-            error: function () {
-                alert('Something went wrong when logging in.');
-            }
-        });
-    });
+    // Submit form when we press enter while we're in one of the input fields
     $('#username, #password').keypress(function(e) {
-        if (e.which == 13) {
+        if (e.which == 13 && !$('#errorOverlay').is(':visible')) {
             $('#submitLogin').click();
         }
     });
-    $('#newUsername, #newPassword').keypress(function(e) {
-        if (e.which == 13) {
-            $('#submitCreateUserAndLogin').click();
-        }
-    });
+
+    // Focus on the username input field
     $('#username').focus();
 }
 
 
-/* OVERVIEW: LIST OF ALL REPOSITORIES */
+
+/* REPOSITORY OVERIEW */
 
 function loadRepositoryView() {
-    sendRequestGET({
+
+    // Send api request
+    sendApiRequest({
         name: 'repositories',
+        type: 'GET',
         data: { sessionId: login.sessionId },
         success: function(data) {
             console.log("Load overview. Success: " + JSON.stringify(data));
+
+            //Render
             renderRepositoryView({ repositories: data, login: login });
         },
         error: function () {
-            alert('Error loading list of repositories.');
+            displayError('Repository Overview', data.responseJSON);
         }
     });
+
 }
 
 function renderRepositoryView(data) {
 
-    // set state
-    history.pushState(null, "", webInterfacePrefix + "repositories");
+    // Set state
+    pushHistoryState("repositories");
 
+    // Render template
     $('#content').html(new EJS({url: webInterfacePrefix + 'templates/repository_view.ejs'}).render(data));
 
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
-
-    // navigation bar
-    $('#refresh').click(loadRepositoryView);
-
-    // content
-    $('#createRepository').click(loadCreateRepositoryView);
+    // Clicking on a repository
     $('.repositoryListItem').click(function () {
         selectedUsers = [];
         loadBranchView($(this).data('alias'));
     });
+
+    /*
+    // content
+    $('#createRepository').click(loadCreateRepositoryView);
     $('.addUserToRepository').click(function (e) {
         var usernameToAdd = prompt('Enter user to add to repository "' + $(this).data('repositoryalias') + '":');
         if (usernameToAdd == null) return;
-        sendRequest({
+        sendApiRequest({
             name: 'addUserToRepository',
+            type: 'POST',
             data: { repositoryAlias: $(this).data('repositoryalias'), username: usernameToAdd, sessionId: login.sessionId },
             success: function(data) {
                 console.log("Add repository. Success: " + JSON.stringify(data));
@@ -233,8 +299,9 @@ function renderRepositoryView(data) {
         e.stopPropagation();
     });
     $('.deleteUserFromRepository').click(function (e) {
-        sendRequest({
+        sendApiRequest({
             name: 'deleteUserFromRepository',
+            type: 'POST',
             data: { repositoryAlias: $(this).data('repositoryalias'), username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
                 console.log("Delete user from repository. Success: " + JSON.stringify(data));
@@ -247,8 +314,9 @@ function renderRepositoryView(data) {
         e.stopPropagation();
     });
     $('.deleteRepository').click(function (e) {
-        sendRequest({
+        sendApiRequest({
             name: 'deleteRepository',
+            type: 'POST',
             data: { repositoryAlias: $(this).data('repositoryalias'), sessionId: login.sessionId },
             success: function(data) {
                 console.log("Delete repository. Success: " + JSON.stringify(data));
@@ -263,8 +331,9 @@ function renderRepositoryView(data) {
     $('.modifyRepositoryOwner').click(function (e) {
         var newRepositoryOwner = prompt('Enter new owner for repository "' + $(this).data('repositoryalias') + '":');
         if (newRepositoryOwner == null) return;
-        sendRequest({
+        sendApiRequest({
             name: 'modifyRepositoryOwner',
+            type: 'POST',
             data: { repositoryAlias: $(this).data('repositoryalias'), username: newRepositoryOwner, sessionId: login.sessionId },
             success: function(data) {
                 console.log("Modify repository owner. Success: " + JSON.stringify(data));
@@ -276,192 +345,47 @@ function renderRepositoryView(data) {
         });
         e.stopPropagation();
     });
+    */
 }
 
 
-/* CREATE REPOSITORY VIEW */
 
-function loadCreateRepositoryView() {
-    renderCreateRepositoryView({ login: login });
-}
-
-function renderCreateRepositoryView(data) {
-
-    // set state
-    history.pushState(null, "", webInterfacePrefix + "createRepository");
-
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/create_repository_view.ejs'}).render(data));
-
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
-
-    // navigation bar
-    $('.loadRepositoryView').click(loadRepositoryView);
-    
-    $('#submitCreateRepository').click(function () {
-        sendRequest({
-            name: 'createRepository',
-            data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Create repository. Success: " + JSON.stringify(data));
-
-                loadRepositoryView();
-            },
-            error: function () {
-                alert('Something went wrong when trying to create a repository.');
-            }
-        });
-    });
-}
-
-
-/* USER MANAGEMENT VIEW */
-
-function loadUsersView() {
-    sendRequest({
-        name: 'getUsers',
-        data: { sessionId: login.sessionId },
-        success: function(data) {
-            console.log("Load users. Success: " + JSON.stringify(data));
-            renderUsersView({ users: data, login: login });
-        },
-        error: function () {
-            alert('Something went wrong when trying to load the list of users.');
-        }
-    });
-}
-
-function renderUsersView(data) {
-
-    // set state
-    history.pushState(null, "", webInterfacePrefix + "users");
-
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/users_view.ejs'}).render(data));
-
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
-
-    // navigation bar
-    $('#refresh').click(loadUsersView);
-
-    $('.repository').click(function () {
-        loadRepositoryView($(this).data('alias'));
-    });
-
-    // content
-    $('.deleteUser').click(function (e) {
-        sendRequest({
-            name: 'deleteUser',
-            data: { username: $(this).data('username'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Delete user. Success: " + JSON.stringify(data));
-                loadUsersView();
-            },
-            error: function () {
-                alert('Something went wrong when trying to delete a user.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.makeUserAdmin').click(function (e) {
-        sendRequest({
-            name: 'makeUserAdmin',
-            data: { username: $(this).data('username'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Make user admin. Success: " + JSON.stringify(data));
-                loadUsersView();
-            },
-            error: function () {
-                alert('Something went wrong when trying to make a user admin.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.revokeUserAdmin').click(function (e) {
-        sendRequest({
-            name: 'revokeUserAdmin',
-            data: { username: $(this).data('username'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Revoke user admin. Success: " + JSON.stringify(data));
-                loadUsersView();
-            },
-            error: function () {
-                alert('Something went wrong when trying to revoke a users admin privileges.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.makeUserCreator').click(function (e) {
-        sendRequest({
-            name: 'makeUserCreator',
-            data: { username: $(this).data('username'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Make user creator. Success: " + JSON.stringify(data));
-                loadUsersView();
-            },
-            error: function () {
-                alert('Something went wrong when trying to give a user repository creator privileges.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.revokeUserCreator').click(function (e) {
-        sendRequest({
-            name: 'revokeUserCreator',
-            data: { username: $(this).data('username'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Revoke user creator. Success: " + JSON.stringify(data));
-                loadUsersView();
-            },
-            error: function () {
-                alert('Something went wrong when trying to remove a users creator privileges.');
-            }
-        });
-        e.stopPropagation();
-    });
-}
-
-/* LEVEL 1: BRANCH AWARENESS */
+/* BRANCH LEVEL AWARENESS */
 
 function loadBranchView(repositoryAlias) {
 
-    sendRequestGET({
+    // Send api request
+    sendApiRequest({
         name: 'repositoryInformation',
+        type: 'GET',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get repository info. Success: " + JSON.stringify(data));
 
+            // Set our active variables
             activeRepository = repositoryAlias;
             activeRepositoryUsers = data.repositoryUsers;
 
-
+            // Render branch view
             renderBranchView({ repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selectedUsers });
-
         },
         error: function () {
-            alert('Something went wrong when trying to load branch level awareness data.');
+            displayError('Branch Level Awareness', data.responseJSON);
         }
     });
 }
 
-
 function renderBranchView(data) {
 
     // set state
-    history.pushState(null, "", webInterfacePrefix + "repositories/" + activeRepository);
+    pushHistoryState("repositories/" + activeRepository);
 
     $('#content').html(new EJS({url: webInterfacePrefix + 'templates/branch_view.ejs'}).render(data));
 
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
-
-    // navigation bar
+    // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
-    $('#refresh').click(function () { loadBranchView(activeRepository); });
 
+    /*
     // filter
     $('#usersFilter').change(function () {
         selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
@@ -475,58 +399,71 @@ function renderBranchView(data) {
         loadBranchViewTable(activeRepository);
     });
     $('select').chosen();
+    */
 
     loadBranchViewTable(activeRepository);
 }
 
-function loadBranchViewTable(repositoryAlias) {
-    console.log('TRYING TO LOAD: ' + activeRepository);
 
-    sendRequestGET({
+function loadBranchViewTable(repositoryAlias) {
+
+    // Send API request
+    sendApiRequest({
         name: 'branchAwareness',
+        type: 'GET',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get branch awareness. Success: " + JSON.stringify(data));
+
+            // Render table
             renderBranchViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selectedUsers });
         },
         error: function () {
-            alert('Something went wrong when trying to load branch level awareness data.');
+            displayError('Branch Level Awareness', data.responseJSON);
         }
     });
 
 }
 
 function renderBranchViewTable(data) {
-    $('#branchTable').html(new EJS({url: webInterfacePrefix + 'templates/branch_view_table.ejs'}).render(data));
 
-    // content
-    $('.branch').click(function () {
+    // Render template
+    $('#branchListContainer').html(new EJS({url: webInterfacePrefix + 'templates/branch_view_table.ejs'}).render(data));
+
+    // Click on a branch event
+    $('.branchListItem').click(function () {
         showUncommitted = false;
         showConflicts = false;
         selectedAdditionalBranches = [];
         loadFileView(activeRepository, $(this).data('branch'));
     });
+
 }
 
 
-/* LEVEL 2: FILE AWARENESS */
 
+/* FILE LEVEL AWARENESS */
 
 function loadFileView(repositoryAlias, branch) {
-    sendRequestGET({
+
+    // Send API request
+    sendApiRequest({
         name: 'repositoryInformation',
+        type: 'GET',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
             console.log("Get repository info. Success: " + JSON.stringify(data));
 
+            // Set active variables
             activeBranch = branch;
             activeRepositoryUsers = data.repositoryUsers;
             activeRepositoryBranches = data.repositoryBranches;
 
+            // Render
             renderFileView({ repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, repositoryBranches: activeRepositoryBranches, selectedUsers: selectedUsers, selectedAdditionalBranches: selectedAdditionalBranches, showUncommitted: showUncommitted, showConflicts: showConflicts });
         },
         error: function () {
-            alert('Something went wrong when trying to load file level awareness data.');
+            displayError('File Level Awareness', data.responseJSON);
         }
     });
 }
@@ -534,20 +471,17 @@ function loadFileView(repositoryAlias, branch) {
 
 function renderFileView(data) {
 
-    // set state
-    history.pushState(null, "", webInterfacePrefix + "repositories/" + activeRepository + "/" + activeBranch);
+    // Set state
+    pushHistoryState("repositories/" + activeRepository + "/" + activeBranch);
 
+    // Render template
     $('#content').html(new EJS({url: webInterfacePrefix + 'templates/file_view.ejs'}).render(data));
 
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
-
-    // navigation bar
+    // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
     $('.loadBranchView').click(function () { loadBranchView(activeRepository); });
-    $('#refresh').click(function () { loadFileView(activeRepository, activeBranch); });
 
+/*
     // filter
     $('#usersFilter').change(function () {
         selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
@@ -582,20 +516,49 @@ function renderFileView(data) {
         loadFileViewTable(activeRepository, activeBranch);
     });
     $('select').chosen();
+*/
 
     loadFileViewTable(activeRepository, activeBranch);
 }
 
 function loadFileViewTable(repositoryAlias, branch) {
-    sendRequestGET({
+    sendApiRequest({
         name: 'fileAwareness',
+        type: 'GET',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted, showConflicts: showConflicts, selectedAdditionalBranches: selectedAdditionalBranches },
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
+
+            var branches = data.branches;
+
+            for (var h = 0; h < branches.length; h++) {
+
+                var root = { subfolders: {}, files: [], conflict: "NONE" }
+
+                for (var i = 0; i < branches[h].files.length; i++) { 
+
+                    var filename = branches[h].files[i].filename;
+
+                    var filenameSplit = filename.split(/\//);
+
+                    for (var j = 0; j < filenameSplit.length - 1; j++) {
+                        console.log("PATH: " + filenameSplit[j]);
+                    }
+
+                    console.log("FILE: " + filenameSplit[filenameSplit.length - 1]);
+
+
+                    console.log(filenameSplit);
+
+                }
+            }
+
+
+            // Render
             renderFileViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, branch: branch, selectedUsers: selectedUsers, showUncommitted: showUncommitted, selectedAdditionalBranches: selectedAdditionalBranches });
         },
         error: function () {
-            alert('Something went wrong when trying to load file level awareness data.');
+            displayError('File Level Awareness', data.responseJSON);
         }
     });
 }
@@ -603,11 +566,185 @@ function loadFileViewTable(repositoryAlias, branch) {
 function renderFileViewTable(data) {
     $('#fileTable').html(new EJS({url: webInterfacePrefix + 'templates/file_view_table.ejs'}).render(data));
 
-    // content
+    // Clicking on a file and user
     $('.fileAndUser').click(function () {
         loadContentView(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'), $(this).data('comparetobranch'));
     });
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* CREATE REPOSITORY VIEW */
+
+function loadCreateRepositoryView() {
+    renderCreateRepositoryView({ login: login });
+}
+
+function renderCreateRepositoryView(data) {
+
+    // set state
+    pushHistoryState("createRepository");
+
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/create_repository_view.ejs'}).render(data));
+
+    // header
+    $('#headerLogo').click(loadRepositoryView);
+    $('#manageUsers').click(loadUsersView);
+
+    // navigation bar
+    $('.loadRepositoryView').click(loadRepositoryView);
+    
+    $('#submitCreateRepository').click(function () {
+        sendApiRequest({
+            name: 'createRepository',
+            type: 'POST',
+            data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Create repository. Success: " + JSON.stringify(data));
+
+                loadRepositoryView();
+            },
+            error: function () {
+                alert('Something went wrong when trying to create a repository.');
+            }
+        });
+    });
+}
+
+
+/* USER MANAGEMENT VIEW */
+
+function loadUsersView() {
+    sendApiRequest({
+        name: 'users',
+        type: 'GET',
+        data: { sessionId: login.sessionId },
+        success: function(data) {
+            console.log("Load users. Success: " + JSON.stringify(data));
+            renderUsersView({ users: data, login: login });
+        },
+        error: function () {
+            alert('Something went wrong when trying to load the list of users.');
+        }
+    });
+}
+
+function renderUsersView(data) {
+
+    // set state
+    pushHistoryState("users");
+
+    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/users_view.ejs'}).render(data));
+
+    // header
+    $('#headerLogo').click(loadRepositoryView);
+    $('#manageUsers').click(loadUsersView);
+
+    // navigation bar
+    $('#refresh').click(loadUsersView);
+
+    $('.repository').click(function () {
+        loadRepositoryView($(this).data('alias'));
+    });
+
+    // content
+    $('.deleteUser').click(function (e) {
+        sendApiRequest({
+            name: 'deleteUser',
+            type: 'POST',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Delete user. Success: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when trying to delete a user.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.makeUserAdmin').click(function (e) {
+        sendApiRequest({
+            name: 'makeUserAdmin',
+            type: 'POST',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Make user admin. Success: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when trying to make a user admin.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.revokeUserAdmin').click(function (e) {
+        sendApiRequest({
+            name: 'revokeUserAdmin',
+            type: 'POST',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Revoke user admin. Success: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when trying to revoke a users admin privileges.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.makeUserCreator').click(function (e) {
+        sendApiRequest({
+            name: 'makeUserCreator',
+            type: 'POST',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Make user creator. Success: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when trying to give a user repository creator privileges.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('.revokeUserCreator').click(function (e) {
+        sendApiRequest({
+            name: 'revokeUserCreator',
+            type: 'POST',
+            data: { username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Revoke user creator. Success: " + JSON.stringify(data));
+                loadUsersView();
+            },
+            error: function () {
+                alert('Something went wrong when trying to remove a users creator privileges.');
+            }
+        });
+        e.stopPropagation();
+    });
+}
+
+
+
 
 
 /* LEVEL 3: LOAD CONTENT LEVEL AWARENESS */
@@ -651,8 +788,9 @@ function renderContentView(data) {
 }
 
 function loadContentViewDiff(repositoryAlias, branch, filename, username, compareToBranch) {
-    sendRequestGET({
+    sendApiRequest({
         name: 'contentAwareness',
+        type: 'GET',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));

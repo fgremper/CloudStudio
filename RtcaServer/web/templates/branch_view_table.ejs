@@ -1,3 +1,61 @@
+
+	<table id="branchList">
+		<tr>
+			<th>Branch</th>
+			<th>Working On This Branch</th>
+			<th>Relationship To Origin</th>
+		</tr>
+
+		<% for (var i = 0; i < branches.length; i++) { %>
+
+			<tr class="branchListItem" data-branch="<%= branches[i]['branch'] %>">
+				<td class="branchListBranchName"><%= branches[i]['branch'] %></td>
+				<td>
+					<% for (var j = 0; j < branches[i].activeUsers.length; j++) { %>
+
+						<span class="user"><%= branches[0].activeUsers[j] %></span>
+
+					<% } %>
+				</td>
+				<td>
+					<h1>Up to date</h1>
+					<p>
+						<% for (var j = 0; j < branches[i].users.length; j++) { %>
+
+							<% if (branches[i].users[j].relationWithOrigin == 'EQUAL') { %>
+								<span class="user userGreen"><%= branches[0].users[j].username %></span>
+							<% } %>
+
+						<% } %>
+					</p>
+
+					<h1>Behind origin</h1>
+					<p>
+						<% for (var j = 0; j < branches[i].users.length; j++) { %>
+
+							<% if (branches[i].users[j].relationWithOrigin == 'BEHIND') { %>
+								<span class="user userRed"><%= branches[0].users[j].username %></span>
+							<% } %>
+
+						<% } %>
+					</p>
+					<h1>Made new commits</h1>
+					<p>
+						<% for (var j = 0; j < branches[i].users.length; j++) { %>
+
+							<% if (branches[i].users[j].relationWithOrigin == 'AHEAD' || branches[i].users[j].relationWithOrigin == 'FORK') { %>
+								<span class="user userYellow"><%= branches[0].users[j].username %> (<% if (branches[i].users[j].relationWithOrigin == 'AHEAD') { %>+<% } else { %>&plusmn;<% } %><%= branches[0].users[j].distanceFromOrigin %>)</span>
+							<% } %>
+
+						<% } %>
+					</p>
+				</td>
+			</tr>
+
+    	<% } %>
+
+	</table>
+<!--
 	    <tr>
 	    	<th>Branch (vs. origin)</th>
 	    	<% if (branches.length > 0) { %>
@@ -22,3 +80,4 @@
 	 			<td></td>
 		    </tr>
 		<% } %>
+-->

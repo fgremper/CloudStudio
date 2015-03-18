@@ -27,10 +27,10 @@ public class HttpClient {
 	 * @return session ID
 	 * @throws Exception
 	 */
-	public String auth(String serverUrl, String username, String password) throws Exception {
+	public String login(String serverUrl, String username, String password) throws Exception {
 
 		// URL
-		String url = serverUrl + "/api/auth?username=" + URLEncoder.encode(username, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8");
+		String url = serverUrl + "/api/login?username=" + URLEncoder.encode(username, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8");
 		
 		// Send request to server
 		log.debug("Sending login request to server...");
@@ -103,12 +103,15 @@ public class HttpClient {
 		con.setConnectTimeout(15000);
 		con.setRequestMethod("POST");
 		
+		
 		// Write content
 		con.setDoOutput(true);
 		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
 		out.write(body);
 		out.close();
 
+		
+		
 		// Response code
 		int responseCode = con.getResponseCode();
 		log.debug("Response code: " + responseCode);

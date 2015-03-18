@@ -68,7 +68,7 @@ public class ClientMain {
 		ClientGUI.addLogMessage("Requesting session ID for login...");
 		log.info("Requesting session ID for login...");
 		try {
-			sessionId = httpClient.auth(config.serverUrl, config.username, config.password);
+			sessionId = httpClient.login(config.serverUrl, config.username, config.password);
 		}
 		catch (Exception e) {
 			ClientGUI.setStatusRed();
@@ -105,6 +105,7 @@ public class ClientMain {
 					ClientGUI.setStatusYellow();
 					ClientGUI.addLogMessage("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
 					log.error("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
+					e.printStackTrace();
 				}
 				
 			}
