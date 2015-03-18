@@ -651,8 +651,8 @@ function renderContentView(data) {
 }
 
 function loadContentViewDiff(repositoryAlias, branch, filename, username, compareToBranch) {
-    sendRequest({
-        name: 'getContentLevelAwareness',
+    sendRequestGET({
+        name: 'contentAwareness',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));

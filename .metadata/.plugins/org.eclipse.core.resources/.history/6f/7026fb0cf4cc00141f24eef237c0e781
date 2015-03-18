@@ -536,11 +536,12 @@ public class DatabaseConnection {
 		// Statement to get all the repositories and users for your user permissions
 		
 		// TODO TODO TODO atm everyone can see everything
-		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ?");
-		stmt.setString(1, myUsername);
-		stmt.setString(2, myUsername);
-		stmt.setString(3, myUsername);
-		
+		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias");
+		//WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ?");
+		/*stmt.setString(1, sessionId);
+		stmt.setString(2, sessionId);
+		stmt.setString(3, sessionId);
+		*/
 		// Put the results into a JSON array
 		JSONArray repositoriesArray = new JSONArray();
 		ResultSet rs = stmt.executeQuery();

@@ -39,7 +39,7 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 		
 		if (requestMethod.equalsIgnoreCase("GET")) {
 			String requestedFile = uri.getPath().substring(1);
-			if (!requestedFile.startsWith(webInterfacePrefix + "css/") && !requestedFile.startsWith(webInterfacePrefix + "js/") && !requestedFile.startsWith(webInterfacePrefix + "templates/") && !requestedFile.startsWith(webInterfacePrefix + "img/")) requestedFile = "web/index.html";
+			if (!requestedFile.startsWith(webInterfacePrefix + "css/") && !requestedFile.startsWith(webInterfacePrefix + "js/") && !requestedFile.startsWith(webInterfacePrefix + "templates/")) requestedFile = "web/index.html";
 			log.info("Looking for: " + requestedFile);
 			
 			String path = uri.getPath();
@@ -52,10 +52,6 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				os.write(response.getBytes());
 				os.close();
 			} else {
-				
-				
-				/*
-				// Set content type
 				String mime = "text/html";
 				if (path.substring(path.length()-3).equals(".js")) mime = "application/javascript";
 				if (path.substring(path.length()-4).equals(".css")) mime = "text/css";
@@ -63,17 +59,14 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 
 				Headers h = exchange.getResponseHeaders();
 				h.set("Content-Type", mime);
-				*/
-				
-				// Read and send file
-				
-				exchange.sendResponseHeaders(200, 0);
+				exchange.sendResponseHeaders(200, 0);              
+
 				OutputStream os = exchange.getResponseBody();
 				FileInputStream fs = new FileInputStream(file);
 				final byte[] buffer = new byte[0x10000];
 				int count = 0;
 				while ((count = fs.read(buffer)) >= 0) {
-				os.write(buffer,0,count);
+					os.write(buffer,0,count);
 				}
 				fs.close();
 				os.close();

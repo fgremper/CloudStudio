@@ -541,34 +541,7 @@ span.user {
     margin: 4px 4px 4px 0;
 }
 
-input[type=text], input[type=password] {
-    background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
-    border: 1px solid #aaa;
-    padding: 6px 5px;
-    overflow: hidden;
-    font-size: 14px;
-    width: 100%;
-    box-sizing: border-box;
-}
 
-input[type=text]:focus, input[type=password]:focus {
-    border: 1px solid #5897fb;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-}
-
-div.button {
-    display: inline-block;
-    border: 1px solid #aaaaaa;
-    font-size: 14px;
-    padding: 7px 10px;
-    background-image: linear-gradient(#ffffff 1%, #eeeeee 100%);
-    cursor: pointer;
-}
-div.button.buttonHighlight, div.button:hover {
-    background-image: linear-gradient(#386fcf 1%, #386fcf 100%);
-    border: 1px solid #386fcf;
-    color: #ffffff;
-}
 
 
 
@@ -576,6 +549,9 @@ div.button.buttonHighlight, div.button:hover {
 /* redesign */
 
 
+body {
+    background-color: #fcfcfc;
+}
 
 /* header bar */
 
@@ -587,6 +563,7 @@ div.button.buttonHighlight, div.button:hover {
     background-color: #404040;
     height: 50px;
 }
+
 #headerBar div {
     height: 50px;
     line-height: 50px;
@@ -594,12 +571,15 @@ div.button.buttonHighlight, div.button:hover {
     cursor: pointer;
     transition: background-color 0.1s;
 }
+
 #headerBar div:hover {
-    background-color: #707070;
+    background-color: #386fcf;
 }
+
 #headerBar div.headerBarLeft {
     float: left;
 }
+
 #headerBar div.headerBarRight {
     float: right;
 }
@@ -644,6 +624,7 @@ div.button.buttonHighlight, div.button:hover {
     padding: 2px 3px;
     border-radius: 3px;
     cursor: pointer;
+    transition: background-color 0.1s, color 0.1s;
 }
 
 #navigationBar .clickable:hover {
@@ -671,9 +652,59 @@ div.button.buttonHighlight, div.button:hover {
     font-size: 24px;
     font-weight: 600;
     border-bottom: 2px solid #386fcf;
-    margin-bottom: 20px;
     color: #386fcf;
+    background-color: #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
+
+/* login */
+
+#loginSplash {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    //background: url('/web/img/splash.jpg') no-repeat;
+    background-color: #386fcf;
+    background-position: center center;
+    background-size: cover;
+}
+
+#loginBrand {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #ffffff;
+    margin-top: -200px;
+    font-weight: 600;
+    font-size: 100px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#loginBox {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -70px;
+    margin-left: -200px;
+    background-color: #ffffff;
+    padding: 24px 26px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+#loginBox p {
+    margin: 5px 0;
+}
+
+/* repository overview */
 
 #repositoryList {
     padding: 0 10px;
@@ -696,16 +727,19 @@ div.button.buttonHighlight, div.button:hover {
     cursor: pointer;
     padding: 20px 20px 0 20px;
     transition: background-color 0.3s, border-color 0.3s;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    background-color: #ffffff;
 }
 
 #repositoryList div.repositoryListBlock:hover {
     border-color: #386fcf;
-    background-color: #f0f0fa;
+    background-color: #c0e2fa;
 }
 
 #repositoryList div.repositoryListBlock div.description {
     font-size: 16px;
-    color: #808080;
+    color: rgba(0, 0, 0, 0.7);
     margin: 0 0 40px 0;
 }
 #repositoryList div.repositoryListBlock h1 {
@@ -718,13 +752,13 @@ div.button.buttonHighlight, div.button:hover {
     font-weight: 300;
     font-size: 14px;
     margin: 0 0 8px 0;
-    color: #a0a0a0;
+    color: rgba(0, 0, 0, 0.3);
 }
 
 #repositoryList div.repositoryListBlock p {
     font-size: 14px;
     margin: 0 0 25px 0;
-    color: #808080;
+    color: rgba(0, 0, 0, 0.5);
 }
 
 
@@ -734,7 +768,51 @@ div.button.buttonHighlight, div.button:hover {
 /* user labels */
 
 span.userSmall {
-    border: 1px solid #b0b0b0;
+    border: 1px solid rgba(0, 0, 0, 0.3);
     padding: 3px 8px;
     border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+/* input */
+
+
+input[type=text], input[type=password] {
+    background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
+    border: 1px solid #aaa;
+    overflow: hidden;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 10px;
+    font-family: Helvetica, Arial, sans-serif;
+    border-radius: 3px;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+    border: 1px solid #386fcf;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-input-placeholder { font-weight: 300; }
+::-moz-placeholder { font-weight: 300; } /* firefox 19+ */
+:-ms-input-placeholder { font-weight: 300; } /* ie */
+input:-moz-placeholder { font-weight: 300; }
+
+
+div.button {
+    display: inline-block;
+    border: 1px solid #b0b0b0;
+    font-size: 16px;
+    padding: 10px;
+    background-image: linear-gradient(#ffffff 1%, #eeeeee 100%);
+    cursor: pointer;
+    border-radius: 3px;
+    font-weight: 400;
+    color: #404040;
+}
+div.button.buttonHighlight, div.button:hover {
+    background-image: linear-gradient(#386fcf 1%, #386fcf 100%);
+    border: 1px solid #386fcf;
+    color: #ffffff;
 }

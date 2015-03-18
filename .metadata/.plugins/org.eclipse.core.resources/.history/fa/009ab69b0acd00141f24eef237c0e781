@@ -55,7 +55,6 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				
 				
 				/*
-				// Set content type
 				String mime = "text/html";
 				if (path.substring(path.length()-3).equals(".js")) mime = "application/javascript";
 				if (path.substring(path.length()-4).equals(".css")) mime = "text/css";
@@ -63,20 +62,39 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 
 				Headers h = exchange.getResponseHeaders();
 				h.set("Content-Type", mime);
-				*/
+				exchange.sendResponseHeaders(200, 0);              
+
 				
-				// Read and send file
-				
-				exchange.sendResponseHeaders(200, 0);
-				OutputStream os = exchange.getResponseBody();
+				byte[] data = null;
+
 				FileInputStream fs = new FileInputStream(file);
+				IOUtils.read(fs, data);
+				
+				
+				
+				OutputStream os = exchange.getResponseBody();
+				
+				IOUtils.write(data, os);
+				/*
 				final byte[] buffer = new byte[0x10000];
 				int count = 0;
 				while ((count = fs.read(buffer)) >= 0) {
-				os.write(buffer,0,count);
+					os.write(buffer,0,count);
 				}
 				fs.close();
 				os.close();
+				*/
+				
+exchange.sendResponseHeaders(200, 0);
+			      OutputStream os = exchange.getResponseBody();
+			      FileInputStream fs = new FileInputStream(file);
+			      final byte[] buffer = new byte[0x10000];
+			      int count = 0;
+			      while ((count = fs.read(buffer)) >= 0) {
+			        os.write(buffer,0,count);
+			      }
+			      fs.close();
+			      os.close();
 
 			}
 		}
