@@ -1,9 +1,13 @@
+<%= JSON.stringify(content) %>
+	<table id="contentDiff">
+	<!--
 		<tr>
 			<td class="diffHeader diffNumberColumn">&nbsp;</td>
 			<td class="diffHeader">my file</td>
 			<td class="diffHeader diffNumberColumn">&nbsp;</td>
 			<td class="diffHeader"><%= username %>'s file</td>
 		</tr>
+	-->
 		<tr>
 			<td class="diffNumberColumn">
 				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
@@ -45,3 +49,4 @@
 				</div>
 			</td>
 		</tr>
+	</table>

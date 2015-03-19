@@ -4,12 +4,13 @@
 
 #### TODO
 
-* Redesign icons
-* Webinterface: severity selector
-* Webinterface: bring back the filters
-* Webinterface: restyle the remaining features
 * Fix the json string detection for local plugin /localState
 * Have a setup system that setups something nice that you can show to people and test
+* Webinterface: bring back the filters
+* Redesign icons
+* Webinterface: severity selector
+* Webinterface: restyle the remaining features
+* restyle the content diff
 
 * user mgmt.: change password
 * mgmt: change repository url

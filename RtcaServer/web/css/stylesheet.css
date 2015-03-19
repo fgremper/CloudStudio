@@ -699,7 +699,6 @@ body {
     border-bottom: 2px solid #386fcf;
     color: #386fcf;
     background-color: #ffffff;
-    margin-bottom: 20px;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 
@@ -752,6 +751,7 @@ body {
 /* repository overview */
 
 #repositoryList {
+    margin-top: 20px;
     padding: 0 10px;
     column-count: 2;
     -webkit-column-count: 2; /* Chrome, Safari, Opera */
@@ -775,9 +775,9 @@ body {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     background-color: #ffffff;
-    background-image: url('/web/img/branch.png');
-    background-size: 30px 30px;
-    background-position: 20px 18px;
+    background-image: url('/web/img/repository.png');
+    background-size: 36px 36px;
+    background-position: 17px 14px;
     background-repeat: no-repeat;
 }
 
@@ -814,25 +814,22 @@ body {
 /* filter box */
 
 #filterBox {
-    margin: 0 20px 20px 20px;
     padding: 10px;
-    border-radius: 5px;
     background-color: #e0e0e0;
-    border: 1px solid #b0b0b0;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #d0d0d0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
 }
 
 #filterBoxBlock {
     padding: 10px;
-    width: 100px;
+    width: 300px;
     display: inline-block;
-    height: 100px;
 }
 
 /* branch list */
 
 #branchListContainer {
-    margin: 0 20px 20px 20px;
+    margin: 20px 20px 20px 20px;
 }
 
 #branchList {
@@ -903,7 +900,7 @@ body {
 
 #fileListContainer {
 
-    margin: 0 20px 20px 20px;
+    margin: 20px 20px 20px 20px;
 }
 
 #fileListHeader {
@@ -917,7 +914,7 @@ body {
     border-bottom: 2px solid #386fcf;
 }
 
-.fileFileNameHeader {
+#fileListHeader .fileFileNameHeader {
     display: table-cell;
     width: 400px;
     vertical-align: middle;
@@ -927,7 +924,7 @@ body {
     height: 40px;
 }
 
-.fileFileConflictsHeader {
+#fileListHeader .fileFileConflictsHeader {
     display: table-cell;
     vertical-align: middle;
     box-sizing: border-box;
@@ -936,6 +933,14 @@ body {
     height: 40px;
 }
 
+#fileListHeader .toggleFiles {
+    transition: color 0.2s;
+    cursor: pointer;
+}
+
+#fileListHeader .toggleFiles:hover {
+    color: #386fcf;
+}
 
 #fileList {
     width: 100%;
@@ -945,10 +950,7 @@ body {
     border-top: 0;
 }
 
-.fileFolder {
-
-}
-.fileFolderName {
+#fileList .fileFolderName {
     color: #808080;
     height: 37px;
     line-height: 37px;
@@ -960,13 +962,26 @@ body {
     background-position: 10px center;
     background-repeat: no-repeat;
 }
-.fileFolderName:hover {
+
+#fileList .fileFolderName:hover {
     background-color: #f0f0f0;
 }
-.fileFolderContent {
-    
+
+#fileList .fileFolderNameYellow {
+    color: rgba(240, 180, 0, 1);
+    font-weight: 500;
 }
-.fileFile {
+
+#fileList .fileFolderNameRed {
+    color: rgba(180, 0, 0, 1);
+}
+
+
+#fileList .fileFolderContent {
+    display: none;
+}
+
+#fileList .fileFile {
     padding: 10px;
     display: table;
     width: 100%;
@@ -976,7 +991,8 @@ body {
     border-spacing: 0;
     border-bottom: 1px solid #e0e0e0;
 }
-.fileFileName {
+
+#fileList .fileFileName {
     display: table-cell;
     width: 400px;
     vertical-align: middle;
@@ -988,11 +1004,98 @@ body {
     background-position: 10px center;
     background-repeat: no-repeat;
 }
-.fileFileConflicts {
+
+#fileList .fileFileConflicts {
     display: table-cell;
     vertical-align: middle;
     box-sizing: border-box;
     padding: 0 20px;
+}
+
+/* content awareness */
+
+
+#contentDiffContainer {
+    margin: 20px 20px 20px 20px;
+}
+
+#contentDiff {
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border: 1px solid #b0b0b0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#contentDiff td {
+    padding: 0;
+    border-left: 1px solid #b0b0b0;
+}
+
+/*
+#contentDiff .diffHeader {
+    line-height: 40px;
+    height: 40px;
+    border-bottom: 1px solid #b0b0b0;
+    padding: 2px;
+    color: #808080;
+    font-size: 16px;
+    text-align: center;
+    border-left: 0;
+}
+*/
+
+#contentDiff .diffHeader.diffNumberColumn {
+    border-left: 1px solid #b0b0b0;
+}
+
+#contentDiff .diffNumberColumn {
+    width: 40px;
+}
+
+#contentDiff .diffNumber {
+    width: 38px;
+    text-align: right;
+    font-family: "Courier New";
+    font-size: 14px;
+    line-height: 14px;
+    padding: 2px 2px;
+    color: #a0a0a0;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+#contentDiff .diffBox {
+    overflow-x: scroll;
+    white-space: nowrap;
+}
+
+#contentDiff .diffLine {
+    font-family: "Courier New";
+    font-size: 14px;
+    line-height: 14px;
+    padding: 2px 4px;
+    color: #202020;
+    white-space: nowrap;
+}
+
+#contentDiff .diffAdd {
+    background-color: rgba(0, 255, 0, 0.4);
+}
+
+#contentDiff .diffPad {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+#contentDiff .diffModify {
+    background-color: rgba(0, 0, 255, 0.4);
+}
+
+#contentDiff .diffConflict {
+    background-color: rgba(255, 0, 0, 0.4);
 }
 
 
@@ -1023,8 +1126,8 @@ span.userGreen {
 }
 
 span.userYellow {
-    border: 1px solid rgba(180, 180, 0, 1);
-    background-color: rgba(255, 255, 0, 0.5);
+    border: 1px solid rgba(220, 160, 0, 1);
+    background-color: rgba(255, 200, 0, 0.5);
 }
 
 span.userRed {

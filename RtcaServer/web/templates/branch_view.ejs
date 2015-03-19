@@ -5,40 +5,11 @@
 <div id="titleBar">
 	Branch Level Awareness
 </div>
-<!--
+
 <div id="filterBox">
 	<div id="filterBoxBlock">
-	
-	</div>
-	<div id="filterBoxBlock">
-	
+		Filter users: <%= JSON.stringify(repositoryUsers) %>
 	</div>
 </div>
--->
-<div id="branchListContainer">
-</div>
 
-<!--
-<div id="view">
-
-	<table id="invisibleTable">
-		<tr>
-			<td>
-				Filter users:<br>
-				<select id="usersFilter" multiple>
-					<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
-					<% for (var i = 0; i < repositoryUsers.length; i++) { %>
-						<% if (repositoryUsers[i] == 'origin') continue; %>
-						<option value="<%= repositoryUsers[i] %>"<% if (selectedUsers.indexOf(repositoryUsers[i]) >= 0) { %> selected<% } %>><%= repositoryUsers[i] %></option>
-					<% } %>
-				</select>
-			</td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-
-	<table id="branchTable">
-	</table>
-</div>
--->
+<div id="branchListContainer"></div>

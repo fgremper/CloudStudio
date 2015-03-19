@@ -475,20 +475,21 @@ public class DatabaseConnection {
 				conflictUsers.put(user);
 				
 				user.put("username", theirUsername);
-
+				
 				String conflictType;
-				if (mySha == null && theirSha != null) conflictType = "FILE_CONFLICT"; //new
-				else if (mySha != null && theirSha == null) conflictType = "FILE_CONFLICT"; //delete
-				else if (mySha == null && theirSha == null) conflictType = "NO_CONFLICT"; //inexistent
-				else if (mySha.equals(theirSha)) conflictType = "NO_CONFLICT"; //equal
-				else conflictType = "FILE_CONFLICT"; //conflict
+				if (mySha == null && theirSha != null) conflictType = "new";
+				else if (mySha != null && theirSha == null) conflictType = "delete";
+				else if (mySha == null && theirSha == null) conflictType = "inexistent";
+				else if (mySha.equals(theirSha)) conflictType = "equal";
+				else conflictType = "file conflict";
 				
 				user.put("type", conflictType);
 				
 			}
 			branchObject.put("files", conflictList);
+		}
 		
-		return branchObject;
+		return responseObject;
 	}
 	
 	/* REPOSITORY MANAGEMENT */

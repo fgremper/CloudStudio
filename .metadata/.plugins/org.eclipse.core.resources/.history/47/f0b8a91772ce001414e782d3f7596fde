@@ -479,16 +479,17 @@ public class DatabaseConnection {
 				String conflictType;
 				if (mySha == null && theirSha != null) conflictType = "FILE_CONFLICT"; //new
 				else if (mySha != null && theirSha == null) conflictType = "FILE_CONFLICT"; //delete
-				else if (mySha == null && theirSha == null) conflictType = "NO_CONFLICT"; //inexistent
-				else if (mySha.equals(theirSha)) conflictType = "NO_CONFLICT"; //equal
+				else if (mySha == null && theirSha == null) conflictType = "EQUAL"; //inexistent
+				else if (mySha.equals(theirSha)) conflictType = "EQUAL"; //equal
 				else conflictType = "FILE_CONFLICT"; //conflict
 				
 				user.put("type", conflictType);
 				
 			}
 			branchObject.put("files", conflictList);
+		}
 		
-		return branchObject;
+		return responseObject;
 	}
 	
 	/* REPOSITORY MANAGEMENT */

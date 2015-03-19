@@ -5,73 +5,14 @@
 <div id="titleBar">
 	File Level Awareness
 </div>
-<!--
+
 <div id="filterBox">
 	<div id="filterBoxBlock">
-	
+		Filter users: <%= JSON.stringify(repositoryUsers) %>
 	</div>
 	<div id="filterBoxBlock">
-	
+		Compare to: <%= JSON.stringify(repositoryBranches) %>
 	</div>
 </div>
--->
-<div id="fileListContainer">
-</div>
 
-
-
-
-<!--
-
-<div id="header">
-	<div id="headerLogin">
-		Logged in as <strong><%= login.username %></strong>
-		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
-	</div>
-	<span id="headerLogo">CloudStudio</span>
-</div>
-<div id="navigationBar">
-	<span id="refresh">Refresh</span>
-	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <strong><%= branch %></strong></span>
-</div>
-<div id="view">
-
-	<table id="invisibleTable">
-		<tr>
-			<td>
-				Filter users:<br>
-				<select id="usersFilter" multiple>
-					<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
-					<% for (var i = 0; i < repositoryUsers.length; i++) { %>
-						<option value="<%= repositoryUsers[i] %>"<% if (selectedUsers.indexOf(repositoryUsers[i]) >= 0) { %> selected<% } %>><%= repositoryUsers[i] %></option>
-					<% } %>
-				</select>
-			</td>
-			<td>
-				Compare with additional branches:<br>
-				<select id="branchesFilter" multiple>
-					<option<% if (selectedAdditionalBranches.length == 0) { %> selected<% } %>></option>
-					<% for (var i = 0; i < repositoryBranches.length; i++) { %>
-						<% if (repositoryBranches[i] == branch) continue; %>
-						<option value="<%= repositoryBranches[i] %>"<% if (selectedAdditionalBranches.indexOf(repositoryBranches[i]) >= 0) { %> selected<% } %>><%= repositoryBranches[i] %></option>
-					<% } %>
-				</select>
-			</td>
-			<td>
-				<input type="checkbox" id="uncommittedFilter"<% if (showUncommitted) { %> checked <% } %>><label for="uncommittedFilter">View uncommitted files</label><br>
-				<input type="checkbox" id="conflictsFilter"<% if (showConflicts) { %> checked <% } %>><label for="conflictsFilter">View content conflicts</label>
-				<select id="severityFilter">
-					<option value="all">All</option>
-					<option value="file">File conflicts</option>
-					<option value="line">Line Conflicts</option>
-				</select>
-			</td>
-		</tr>
-	</table>
-	
-	<table id="fileTable">
-	</table>
-
-</div>
-
--->
+<div id="fileListContainer"></div>

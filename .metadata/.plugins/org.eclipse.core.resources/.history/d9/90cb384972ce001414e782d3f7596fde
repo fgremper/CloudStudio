@@ -139,8 +139,8 @@ public class ApiHttpHandler implements HttpHandler {
 						/*
 						JSONArray branches = responseObject.getJSONArray("branches");
 						for (int i = 0; i < branches.length(); i++) {
-							JSONObject branchObject = branches.getJSONObject(i);*/
-							//compareToBranch = responseObject.getString("branch");
+							JSONObject branchObject = branches.getJSONObject(i);
+							String compareToBranch = branchObject.getString("branch");*/
 							JSONArray fileArray = responseObject.getJSONArray("files");
 							for (int j = 0; j < fileArray.length(); j++) {
 								JSONObject conflict = fileArray.getJSONObject(j);
@@ -166,7 +166,7 @@ public class ApiHttpHandler implements HttpHandler {
 									}
 								}
 							}
-						//}
+						}
 					}
 					response = responseObject.toString();
 				}

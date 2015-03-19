@@ -331,7 +331,7 @@ public class DatabaseConnection {
 		}
 	}
 
-	public JSONObject getFileLevelAwareness(String repositoryAlias, String username, String branch, String additionalBranch, boolean showUncommitted, boolean showConflicts) throws Exception {
+	public JSONObject getFileLevelAwareness(String repositoryAlias, String username, String branch, List<String> selectedAdditionalBranches, boolean showUncommitted, boolean showConflicts) throws Exception {
 		
 		/*String repositoryAlias = getConflictsObject.getString("repositoryAlias");
 		String branch = getConflictsObject.getString("branch");
@@ -341,8 +341,6 @@ public class DatabaseConnection {
 
 		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
 		
-		
-		/*
 		JSONObject responseObject = new JSONObject();
 		JSONArray branchesArray = new JSONArray();
 		responseObject.put("branches", branchesArray);
@@ -367,7 +365,7 @@ public class DatabaseConnection {
 		9 their branch
 		10 repository
 		*/
-		/*
+		
 		stmt.setString(1, username);
 		stmt.setString(2, showUncommittedString);
 		stmt.setString(3, branch);
@@ -417,14 +415,14 @@ public class DatabaseConnection {
 		}
 		branchObject.put("files", conflictList);
 		
-		*/
 		
-			
-			
-			JSONObject branchObject = new JSONObject();
+		for (String additionalBranch : selectedAdditionalBranches) {
+
+			branchObject = new JSONObject();
+			branchesArray.put(branchObject);
 			branchObject.put("branch", additionalBranch);
 			
-			PreparedStatement stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
+			stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
 			
 			/* 
 			1 my user
@@ -448,10 +446,10 @@ public class DatabaseConnection {
 			stmt.setString(7, showUncommittedString);
 			stmt.setString(8, additionalBranch);
 			stmt.setString(9, repositoryAlias);
-
-			ResultSet rs = stmt.executeQuery();
-			HashMap<String, JSONObject> fileMap = new HashMap<String, JSONObject>();
-			JSONArray conflictList = new JSONArray();
+			
+			rs = stmt.executeQuery();
+			fileMap = new HashMap<String, JSONObject>();
+			conflictList = new JSONArray();
 			while (rs.next()) {
 				String filename = rs.getString("filename");
 				String mySha = rs.getString("mysha");
@@ -475,20 +473,21 @@ public class DatabaseConnection {
 				conflictUsers.put(user);
 				
 				user.put("username", theirUsername);
-
+				
 				String conflictType;
-				if (mySha == null && theirSha != null) conflictType = "FILE_CONFLICT"; //new
-				else if (mySha != null && theirSha == null) conflictType = "FILE_CONFLICT"; //delete
-				else if (mySha == null && theirSha == null) conflictType = "NO_CONFLICT"; //inexistent
-				else if (mySha.equals(theirSha)) conflictType = "NO_CONFLICT"; //equal
-				else conflictType = "FILE_CONFLICT"; //conflict
+				if (mySha == null && theirSha != null) conflictType = "new";
+				else if (mySha != null && theirSha == null) conflictType = "delete";
+				else if (mySha == null && theirSha == null) conflictType = "inexistent";
+				else if (mySha.equals(theirSha)) conflictType = "equal";
+				else conflictType = "file conflict";
 				
 				user.put("type", conflictType);
 				
 			}
 			branchObject.put("files", conflictList);
+		}
 		
-		return branchObject;
+		return responseObject;
 	}
 	
 	/* REPOSITORY MANAGEMENT */

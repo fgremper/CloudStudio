@@ -132,16 +132,15 @@ public class ApiHttpHandler implements HttpHandler {
 				
 				// Need to be admin or have repository access
 				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
-					JSONObject responseObject = db.getFileLevelAwareness(repositoryAlias, sessionUsername, branch, compareToBranch, showUncommitted, showConflicts);
+					JSONObject responseObject = db.getFileLevelAwareness(repositoryAlias, sessionUsername, branch, selectedAdditionalBranches, showUncommitted, showConflicts);
 					
 					// If we show conflicts, go through all of the items and check the ones with file conflicts for line conflicts
 					if (showConflicts) {
-						/*
 						JSONArray branches = responseObject.getJSONArray("branches");
 						for (int i = 0; i < branches.length(); i++) {
-							JSONObject branchObject = branches.getJSONObject(i);*/
-							//compareToBranch = responseObject.getString("branch");
-							JSONArray fileArray = responseObject.getJSONArray("files");
+							JSONObject branchObject = branches.getJSONObject(i);
+							String compareToBranch = branchObject.getString("branch");
+							JSONArray fileArray = branchObject.getJSONArray("files");
 							for (int j = 0; j < fileArray.length(); j++) {
 								JSONObject conflict = fileArray.getJSONObject(j);
 								String filename = conflict.getString("filename");
@@ -166,7 +165,7 @@ public class ApiHttpHandler implements HttpHandler {
 									}
 								}
 							}
-						//}
+						}
 					}
 					response = responseObject.toString();
 				}
