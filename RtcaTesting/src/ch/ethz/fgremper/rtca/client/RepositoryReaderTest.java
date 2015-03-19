@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-import ch.ethz.fgremper.rtca.RepositoryReader;
 import ch.ethz.fgremper.rtca.test.helper.TestGitHelper;
 import ch.ethz.fgremper.rtca.test.helper.TestSettings;
 

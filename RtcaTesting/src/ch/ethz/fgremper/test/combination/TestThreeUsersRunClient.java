@@ -16,11 +16,11 @@ public class TestThreeUsersRunClient {
 		String[] argsDavid = {"configDavid.xml"};
 		String[] argsIsabelle = {"configIsabelle.xml"};
 		
-		while (true) {
+		//while (true) {
 			ClientMain.main(argsJohn);
 			ClientMain.main(argsDavid);
 			ClientMain.main(argsIsabelle);
-			
+			/*
 			
 			try {
 			    Thread.sleep(10000);
@@ -29,7 +29,7 @@ public class TestThreeUsersRunClient {
 			}
 			
 		}
-		
+		*/
 	}
 
 }

@@ -28,7 +28,10 @@ public class ParameterFilter extends Filter {
     @Override
     public void doFilter(HttpExchange exchange, Chain chain) throws IOException {
         parseGetParameters(exchange);
-        parsePostParameters(exchange);
+        System.out.println("HEADERS: " + exchange.getRequestHeaders().get("Content-Type"));
+        if (exchange.getRequestHeaders().get("Content-Type").size() > 0 && !exchange.getRequestHeaders().get("Content-Type").get(0).equals("application/json")) {
+        	parsePostParameters(exchange);
+        }
         chain.doFilter(exchange);
     }    
 
@@ -40,7 +43,6 @@ public class ParameterFilter extends Filter {
         exchange.setAttribute("parameters", parameters);
     }
 
-    
     private void parsePostParameters(HttpExchange exchange) throws IOException {
     	try {
 	        if ("post".equalsIgnoreCase(exchange.getRequestMethod())) {

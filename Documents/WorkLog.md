@@ -5,6 +5,8 @@
 #### TODO
 
 * Fix the json string detection for local plugin /localState
+
+
 * Have a setup system that setups something nice that you can show to people and test
 * Webinterface: bring back the filters
 * Redesign icons

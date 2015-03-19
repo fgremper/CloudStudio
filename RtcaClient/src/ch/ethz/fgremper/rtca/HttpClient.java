@@ -39,6 +39,7 @@ public class HttpClient {
 		con.setReadTimeout(10000);
 		con.setConnectTimeout(15000);
 		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 		
 		// Response code
 		int responseCode = con.getResponseCode();
@@ -102,7 +103,7 @@ public class HttpClient {
 		con.setReadTimeout(10000);
 		con.setConnectTimeout(15000);
 		con.setRequestMethod("POST");
-		
+		con.setRequestProperty("Content-Type", "application/json");
 		
 		// Write content
 		con.setDoOutput(true);
@@ -110,8 +111,6 @@ public class HttpClient {
 		out.write(body);
 		out.close();
 
-		
-		
 		// Response code
 		int responseCode = con.getResponseCode();
 		log.debug("Response code: " + responseCode);

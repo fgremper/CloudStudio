@@ -29,13 +29,17 @@ public class ClientMain {
 		}
 		*/
 		
+		boolean showGui = false;
+		
 		// Load GUI
-		ClientGUI.createGuiContents();
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                ClientGUI.createAndShowGUI();
-            }
-        });
+		if (showGui) {
+			ClientGUI.createGuiContents();
+	        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+	            public void run() {
+	                ClientGUI.createAndShowGUI();
+	            }
+	        });
+		}
 
 		ClientConfig config;
 		String sessionId;
@@ -45,38 +49,38 @@ public class ClientMain {
 		
 		// Read the config XML
 		try {
-			ClientGUI.setStatus("Reading config...");
-			ClientGUI.addLogMessage("Reading config...");
+			if (showGui) ClientGUI.setStatus("Reading config...");
+			if (showGui) ClientGUI.addLogMessage("Reading config...");
 			log.info("Reading config...");
 			String configFileName = "config.xml";
 			if (args.length >= 1) configFileName = args[0];
 			config = new ClientConfigReader(configFileName).getConfig();
 		}
 		catch (Exception e) {
-			ClientGUI.setStatusRed();
-			ClientGUI.addLogMessage("Error while reading config file: " + e.getMessage());
+			if (showGui) ClientGUI.setStatusRed();
+			if (showGui) ClientGUI.addLogMessage("Error while reading config file: " + e.getMessage());
 			log.error("Error while reading config file: " + e.getMessage());
 			return;
 		}
-		ClientGUI.setMonitoringText("Monitoring " + config.repositoriesList.size() + " local " + (config.repositoriesList.size() == 1 ? "repository" : "repositories") + ".");
+		if (showGui) ClientGUI.setMonitoringText("Monitoring " + config.repositoriesList.size() + " local " + (config.repositoriesList.size() == 1 ? "repository" : "repositories") + ".");
 		
 		// Get our HTTP client
 		HttpClient httpClient = new HttpClient();
 
 		// Login and get a session ID
-		ClientGUI.setStatus("Requesting session ID for login...");
-		ClientGUI.addLogMessage("Requesting session ID for login...");
+		if (showGui) ClientGUI.setStatus("Requesting session ID for login...");
+		if (showGui) ClientGUI.addLogMessage("Requesting session ID for login...");
 		log.info("Requesting session ID for login...");
 		try {
 			sessionId = httpClient.login(config.serverUrl, config.username, config.password);
 		}
 		catch (Exception e) {
-			ClientGUI.setStatusRed();
-			ClientGUI.addLogMessage("Error while requesting session ID: " + e.getMessage());
+			if (showGui) ClientGUI.setStatusRed();
+			if (showGui) ClientGUI.addLogMessage("Error while requesting session ID: " + e.getMessage());
 			log.error("Error while requesting session ID: " + e.getMessage());
 			return;
 		}
-		ClientGUI.addLogMessage("Successfully retrieved session ID.");
+		if (showGui) ClientGUI.addLogMessage("Successfully retrieved session ID.");
 		log.info("Retrieved session ID: " + sessionId);
 		
 		// Keep updating the RTCA server
@@ -87,8 +91,8 @@ public class ClientMain {
 				
 				try {
 
-					ClientGUI.setStatus("Reading and sending \"" + repositoryInfo.alias + "\"...");
-					ClientGUI.addLogMessage("Reading and sending state for repository \"" + repositoryInfo.alias + "\"...");
+					if (showGui) ClientGUI.setStatus("Reading and sending \"" + repositoryInfo.alias + "\"...");
+					if (showGui) ClientGUI.addLogMessage("Reading and sending state for repository \"" + repositoryInfo.alias + "\"...");
 					log.info("Reading and sending repository \"" + repositoryInfo.alias + "\" at " + repositoryInfo.localPath);
 
 					// Read repository info
@@ -99,11 +103,11 @@ public class ClientMain {
 					String body = updateObject.toString();
 					httpClient.sendGitState(config.serverUrl, sessionId, repositoryInfo.alias, body);
 				
-					ClientGUI.setLastUpdate();
+					if (showGui) ClientGUI.setLastUpdate();
 				}
 				catch (Exception e) {
-					ClientGUI.setStatusYellow();
-					ClientGUI.addLogMessage("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
+					if (showGui) ClientGUI.setStatusYellow();
+					if (showGui) ClientGUI.addLogMessage("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
 					log.error("Error reading or sending " + repositoryInfo.alias + ": " + e.getMessage());
 					e.printStackTrace();
 				}
@@ -115,17 +119,17 @@ public class ClientMain {
 				break;
 			}
 			else {
-				ClientGUI.setStatus("Idle");
-				ClientGUI.addLogMessage("Waiting " + config.resubmitInterval + " seconds.");
+				if (showGui) ClientGUI.setStatus("Idle");
+				if (showGui) ClientGUI.addLogMessage("Waiting " + config.resubmitInterval + " seconds.");
 				log.info("Waiting " + config.resubmitInterval + " seconds...");
 				
 				for (int i = 0; i < config.resubmitInterval * 10; i++) {
 					if (ClientGUI.getForceUpdate() == true) {
-						ClientGUI.addLogMessage("Update forced.");
-						ClientGUI.setForceUpdate(false);
+						if (showGui) ClientGUI.addLogMessage("Update forced.");
+						if (showGui) ClientGUI.setForceUpdate(false);
 						break;
 					}
-					ClientGUI.setTimeTillNextUpdate((int) (1000.0 / config.resubmitInterval * i));
+					if (showGui) ClientGUI.setTimeTillNextUpdate((int) (1000.0 / config.resubmitInterval * i));
 					try {
 					    Thread.sleep(100);
 					} catch (InterruptedException ex) {
