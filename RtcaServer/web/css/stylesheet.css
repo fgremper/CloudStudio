@@ -955,7 +955,7 @@ body {
     height: 37px;
     line-height: 37px;
     cursor: pointer;
-    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
     transition: background-color 0.3s;
     background-image: url('/web/img/folder.png');
     background-size: 30px 30px;
@@ -989,9 +989,12 @@ body {
     border-collapse: collapse;
     padding: 0;
     border-spacing: 0;
-    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
 }
 
+#fileList div:first-child {
+    border-top: 0;
+}
 #fileList .fileFileName {
     display: table-cell;
     width: 400px;
@@ -1071,6 +1074,7 @@ body {
 #contentDiff .diffBox {
     overflow-x: scroll;
     white-space: nowrap;
+    background-color: #ffffff;
 }
 
 #contentDiff .diffLine {

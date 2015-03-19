@@ -16,6 +16,4 @@
     <originStorageDirectory>../../origins</originStorageDirectory>
     
     <passwordSalt>heyoiamthesaltwhatisupwithyou</passwordSalt>
-    
-    <originUpdateInterval>10</originUpdateInterval>
 </config>

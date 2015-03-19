@@ -49,6 +49,16 @@
 
 						<% } %>
 					</p>
+					<h1>Local branch</h1>
+					<p>
+						<% for (var j = 0; j < branches[i].users.length; j++) { %>
+
+							<% if (branches[i].users[j].relationWithOrigin == 'LOCAL_BRANCH') { %>
+								<span class="user"><%= branches[0].users[j].username %></span>
+							<% } %>
+
+						<% } %>
+					</p>
 				</td>
 			</tr>
 

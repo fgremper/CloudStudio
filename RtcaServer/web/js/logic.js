@@ -631,14 +631,14 @@ function renderContentView(data) {
 
 }
 
-function loadContentViewDiff(repositoryAlias, branch, filename, username, compareToBranch) {
+function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, compareToBranch) {
     sendApiRequest({
         name: 'contentAwareness',
         type: 'GET',
-        data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
+        data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
         success: function(data) {
             console.log("Get content awareness. Success: " + JSON.stringify(data));
-            renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts });
+            renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername, showUncommitted: showUncommitted, showConflicts: showConflicts });
         },
         error: function (data) {
             alert('Something went wrong when trying to load line level awareness data.');
