@@ -59,7 +59,6 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				if (path.substring(path.length() - 3).equals(".js")) mime = "application/javascript";
 				if (path.substring(path.length() - 4).equals(".css")) mime = "text/css";
 				if (path.substring(path.length() - 4).equals(".jpg")) mime = "image/jpeg";
-				if (path.substring(path.length() - 4).equals(".png")) mime = "image/png";
 
 				Headers h = exchange.getResponseHeaders();
 				h.set("Content-Type", mime);

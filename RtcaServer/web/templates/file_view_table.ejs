@@ -1,5 +1,60 @@
+	    <% for (var h = 0; h < branches.length; h++) { %>
+
+	    	<div id="fileListHeader">
+	    		<div class="fileFileNameHeader">Filename</div>
+	    		<div class="fileFileConflictsHeader">Branch-interal conflicts</div>
+	    	</div>
+			<div id="fileList">
+
+			<% var currentPath = []; indent = 0; %>
+
+			<% for (var i = 0; i < branches[h].files.length; i++) { %>
 
 
+
+
+				<%
+                	var filename = branches[h].files[i].filename;
+                	var filenameSplit = filename.split(/\//);
+                	var filenamePath = filenameSplit.slice(0, -1);
+                	var filenameFile = filenameSplit.pop();
+                %>
+
+                <% var closeFlag = false %>
+                <% var rebuildFrom = currentPath.length; %>
+                <% for (var j = 0; j < currentPath.length; j++) { %>
+                	<% if (!closeFlag && currentPath[j] != filenamePath[j]) { closeFlag = true; rebuildFrom = j } %>
+                	<% if (closeFlag) { indent--; } %>
+                	<% if (closeFlag) { %></div></div><% } %>
+               	<% } %>
+
+                <% for (var j = rebuildFrom; j < filenamePath.length; j++) { %>
+                	<% indent++ %>
+                	<div class="fileFolder">
+                		<div class="fileFolderName" style="padding-left: <%= ((indent - 1) * 30 + 50) %>px; background-position: <%= ((indent - 1) * 35 + 10) %>px center;">
+                			<%= filenamePath[j] %>
+            			</div>
+            			<div class="fileFolderContent">
+                <% } %>
+
+                <% currentPath = filenamePath; %>
+
+                <div class="fileFile">
+                	<div class="fileFileName" style="padding-left: <%= (indent * 30 + 50) %>px; background-position: <%= (indent * 35 + 10) %>px center;""><%= filenameFile %></div>
+                	<div class="fileFileConflicts">
+		 				<% for (var j = 0; j < branches[h].files[i].users.length; j++) { %>
+		 					<% if (branches[h].files[i].users[j].type == "CONTENT_CONFLICT") { %><span class="user userRed userClickable fileAndUser" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>">
+		 					<% } else if (branches[h].files[i].users[j].type == "FILE_CONFLICT") { %><span class="user userYellow userClickable fileAndUser" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>">
+		 					<% } else if (branches[h].files[i].users[j].type == "EQUAL") { %><span class="user userGreen userClickable fileAndUser" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>">
+		 					<% } else { %><span class="user userClickable fileAndUser" data-filename="<%= branches[h].files[i]['filename'] %>" data-username="<%= branches[h].files[i].users[j].username %>" data-comparetobranch="<%= branches[h].branch %>"><% } %>
+		 					<%= branches[h].files[i].users[j].username %></span>
+		 				<% } %>
+                	</div>
+            	</div>
+                    
+			<% } %>
+			</div>
+		<% } %>
 <!--
 	    <% for (var h = 0; h < branches.length; h++) { %>
 		    <tr>

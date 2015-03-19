@@ -404,11 +404,11 @@ public class DatabaseConnection {
 			user.put("username", theirUsername);
 			
 			String conflictType;
-			if (mySha == null && theirSha != null) conflictType = "FILE_CONFLICT"; //new
-			else if (mySha != null && theirSha == null) conflictType = "FILE_CONFLICT"; //delete
-			else if (mySha == null && theirSha == null) conflictType = "EQUAL"; //inexistent
-			else if (mySha.equals(theirSha)) conflictType = "EQUAL"; //equal
-			else conflictType = "FILE_CONFLICT"; //conflict
+			if (mySha == null && theirSha != null) conflictType = "new";
+			else if (mySha != null && theirSha == null) conflictType = "delete";
+			else if (mySha == null && theirSha == null) conflictType = "inexistent";
+			else if (mySha.equals(theirSha)) conflictType = "equal";
+			else conflictType = "file conflict";
 			
 			user.put("type", conflictType);
 			

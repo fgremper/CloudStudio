@@ -150,7 +150,7 @@ public class ApiHttpHandler implements HttpHandler {
 									JSONObject user = users.getJSONObject(k);
 									
 									// File conflict?
-									if (user.getString("type").equals("FILE_CONFLICT")) {
+									if (user.getString("type").equals("file conflict")) {
 										String theirUsername = user.getString("username");
 										
 										// Look up the ancestor file in the git repository
@@ -159,8 +159,7 @@ public class ApiHttpHandler implements HttpHandler {
 							            // If there are content conflicts, put this instead
 							            int lineConflicts = gitReader.countConflicts();
 							            if (lineConflicts > 0) {
-							            	user.put("type", "CONTENT_CONFLICT");
-							            	user.put("conflictCount", lineConflicts);
+							            	user.put("type", lineConflicts + " line conflict");
 							            }
 										
 									}

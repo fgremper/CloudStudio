@@ -159,7 +159,7 @@ public class ApiHttpHandler implements HttpHandler {
 							            // If there are content conflicts, put this instead
 							            int lineConflicts = gitReader.countConflicts();
 							            if (lineConflicts > 0) {
-							            	user.put("type", "CONTENT_CONFLICT");
+							            	user.put("type", "LINE_CONFLICT");
 							            	user.put("conflictCount", lineConflicts);
 							            }
 										

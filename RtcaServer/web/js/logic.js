@@ -541,6 +541,8 @@ function loadFileViewTable(repositoryAlias, branch) {
 
                     var filenameSplit = filename.split(/\//);
 
+                    var currentFolder = root;
+
                     for (var j = 0; j < filenameSplit.length - 1; j++) {
                         console.log("PATH: " + filenameSplit[j]);
                     }
@@ -564,11 +566,15 @@ function loadFileViewTable(repositoryAlias, branch) {
 }
 
 function renderFileViewTable(data) {
-    $('#fileTable').html(new EJS({url: webInterfacePrefix + 'templates/file_view_table.ejs'}).render(data));
+    $('#fileListContainer').html(new EJS({url: webInterfacePrefix + 'templates/file_view_table.ejs'}).render(data));
 
     // Clicking on a file and user
     $('.fileAndUser').click(function () {
         loadContentView(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'), $(this).data('comparetobranch'));
+    });
+
+    $('.fileFolderName').click(function () {
+        $(this).parent().find('> .fileFolderContent').slideToggle();
     });
 }
 

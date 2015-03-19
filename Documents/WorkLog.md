@@ -4,18 +4,24 @@
 
 #### TODO
 
+* Redesign icons
+* Webinterface: severity selector
+* Webinterface: bring back the filters
+* Webinterface: restyle the remaining features
+* Fix the json string detection for local plugin /localState
+* Have a setup system that setups something nice that you can show to people and test
+
 * user mgmt.: change password
 * mgmt: change repository url
-* line conflict (gonna be a lot of subtasks) (edit: started adding subtasks below)
-* think about file rename heuristics?
-* binary files don't get submitted? binary files handling generally
 * make sure session expiration works properly
-* find out how to find the best merge-base-file commit
-* API documentation
-* last fetch (stat -c %Y .git/FETCH_HEAD, http://stackoverflow.com/questions/2993902/how-do-i-check-the-date-and-time-of-the-latest-git-pull-that-was-executed)
-* comment the code more
-* reimplement that active branch thing with the new db syntax
 * dont rewrite files in the filestorage folder
+* User: email-address
+* Repository: project description
+* Clean up code in server
+* Write global tests
+* Write JUnit Tests
+* Deployment with maven?
+* Remove old origin fetches regularily!
 
 #### Done
 
@@ -52,10 +58,29 @@
 * package three way diff info in json object
 * display the 3 way diff in client
 * have a [conflict] checkbox in the line level
+* client: comment the code more
 * have a switch for showing line conflicts on a file level (we get the information from the server already? just now pipe all conflicts through the countconflicts mechanic)
 * log4j for logging
 * display file conflicts in file view as red
 * clean up code in client
+* api description first draft
+* line conflict (gonna be a lot of subtasks) (edit: started adding subtasks below)
+* reimplement that active branch thing with the new db syntax
+* GUI for the client
+* Client: When is the last time that CloudStudio accepted the change
+* Better error handling (client, webinterface, server)
+* Logout
+* Display active branch
+* Show only repositories you have permission to see
+* Set session ID as cookie, stay logged in
+* Icons
+* Webinterface: history, forward/back buttons
+* General webinterface overhaul
+* Webinterface: Titles for where you're at
+* Clean up code in the webinterface
+* Webinterface: Folder/package view
+* Webinterface: error overlay
+
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
