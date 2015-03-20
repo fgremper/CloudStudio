@@ -29,7 +29,8 @@ public class ClientMain {
 		}
 		*/
 		
-		boolean showGui = false;
+		boolean showGui = true;
+		if (args.length >= 2 && args[1].equals("--nogui")) showGui = false;
 		
 		// Load GUI
 		if (showGui) {

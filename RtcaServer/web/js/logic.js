@@ -524,6 +524,7 @@ function renderFileView(data) {
 }
 
 function loadFileViewTable(repositoryAlias, branch) {
+    showConflicts = true;
     sendApiRequest({
         name: 'fileAwareness',
         type: 'GET',

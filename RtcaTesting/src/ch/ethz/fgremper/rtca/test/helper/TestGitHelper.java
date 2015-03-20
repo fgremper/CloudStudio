@@ -51,6 +51,10 @@ public class TestGitHelper {
 		executeCommand("git clone " + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + "origin " + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
 	}
 	
+	public static void createFolder(String user, String folder) {
+		new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/" + folder).mkdir();
+	}
+	
 	public static void createOrModifyFile(String user, String filename) throws Exception {
 		String content = randomString();
 		System.out.println("[TestGitHelper] Creating file for user '" + user + "': " + filename);

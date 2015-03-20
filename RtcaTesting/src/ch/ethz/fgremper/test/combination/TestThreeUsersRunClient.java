@@ -11,30 +11,17 @@ public class TestThreeUsersRunClient {
 
 	@Test
 	public void test() throws Exception {
-
 		
-		String[] argsJohn = {"configJohn.xml"};
-		String[] argsDavid = {"configDavid.xml"};
-		String[] argsIsabelle = {"configIsabelle.xml"};
+		String[] argsJohn = {"configJohn.xml", "--nogui"};
+		String[] argsDavid = {"configDavid.xml", "--nogui"};
+		String[] argsIsabelle = {"configIsabelle.xml", "--nogui"};
 		
-		//while (true) {
-			ClientMain.main(argsJohn);
-			ClientMain.main(argsDavid);
-			ClientMain.main(argsIsabelle);
-			/*
-			
-			try {
-			    Thread.sleep(10000);
-			} catch (InterruptedException ex) {
-			    Thread.currentThread().interrupt();
-			}
-			
-		}
-		*/
-			
+		ClientMain.main(argsJohn);
+		ClientMain.main(argsDavid);
+		ClientMain.main(argsIsabelle);
 
-			PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
-			originUpdaterInterval.updateAll();
+		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
+		originUpdaterInterval.updateAll();
 			
 	}
 

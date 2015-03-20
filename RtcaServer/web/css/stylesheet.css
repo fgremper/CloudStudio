@@ -951,7 +951,7 @@ body {
 }
 
 #fileList .fileFolderName {
-    color: #808080;
+    //color: #808080;
     height: 37px;
     line-height: 37px;
     cursor: pointer;
@@ -961,6 +961,7 @@ body {
     background-size: 30px 30px;
     background-position: 10px center;
     background-repeat: no-repeat;
+    font-weight: 400;
 }
 
 #fileList .fileFolderName:hover {
@@ -968,12 +969,12 @@ body {
 }
 
 #fileList .fileFolderNameYellow {
-    color: rgba(240, 180, 0, 1);
+    //color: rgba(220, 160, 0, 1);
     background-image: url('/web/img/folder_yellow.png');
 }
 
 #fileList .fileFolderNameRed {
-    color: rgba(180, 0, 0, 1);
+    //color: rgba(200, 0, 20, 1);
     background-image: url('/web/img/folder_red.png');
 }
 
@@ -1002,13 +1003,23 @@ body {
     display: table-cell;
     width: 400px;
     vertical-align: middle;
-    font-weight: 400;
     box-sizing: border-box;
     padding: 0 20px;
     background-image: url('/web/img/file.png');
     background-size: 30px 30px;
     background-position: 10px center;
     background-repeat: no-repeat;
+    //color: #808080;
+}
+
+#fileList .fileFileNameYellow {
+    //color: rgba(220, 160, 0, 1);
+    background-image: url('/web/img/file_yellow.png');
+}
+
+#fileList .fileFileNameNameRed {
+    //color: rgba(200, 0, 20, 1);
+    background-image: url('/web/img/file_red.png');
 }
 
 #fileList .fileFileConflicts {
@@ -1139,7 +1150,7 @@ span.userYellow {
 
 span.userRed {
     border: 1px solid rgba(220, 0, 40, 1);
-    background-color: rgba(255, 0, 0, 0.5);
+    background-color: rgba(255, 0, 20, 0.5);
 }
 
 span.userClickable {

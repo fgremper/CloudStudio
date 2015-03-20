@@ -17,6 +17,9 @@ public class OriginUpdater {
 	private static final Logger log = LogManager.getLogger(OriginUpdater.class);
 	
 	public static void update(String repositoryAlias, String repositoryUrl) {
+		
+		if (repositoryUrl == null || repositoryUrl.equals("")) return;
+		
 		DatabaseConnection db = null;
 		try {
 			db = new DatabaseConnection();
@@ -59,7 +62,12 @@ public class OriginUpdater {
 			db.incRepositoryCloneCount(repositoryAlias);
 			db.commitTransaction();
 			
-			FileUtils.forceDelete(new File(repositoryOldOriginDirectory)); 
+			try {
+				FileUtils.forceDelete(new File(repositoryOldOriginDirectory));
+			}
+			catch (Exception e) {
+				// Old folder not deleted
+			}
 		}
 		catch (Exception e) {
 			e.printStackTrace();
