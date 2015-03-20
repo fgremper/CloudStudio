@@ -12,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ch.ethz.fgremper.rtca.test.helper.TestSettings;
+
 public class OriginUpdater {
 
 	private static final Logger log = LogManager.getLogger(OriginUpdater.class);
@@ -59,7 +61,7 @@ public class OriginUpdater {
 			db.incRepositoryCloneCount(repositoryAlias);
 			db.commitTransaction();
 			
-			FileUtils.forceDelete(new File(repositoryOldOriginDirectory)); 
+			FileUtils.cleanDirectory(new File(repositoryOldOriginDirectory)); 
 		}
 		catch (Exception e) {
 			e.printStackTrace();

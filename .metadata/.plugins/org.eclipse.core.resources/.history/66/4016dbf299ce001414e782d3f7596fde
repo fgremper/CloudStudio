@@ -25,21 +25,19 @@ public class OriginUpdater {
 			
 			log.info("Cloning repository \"" + repositoryAlias + "\": " + repositoryUrl);
 
-			int oldCount = db.getRepositoryCloneCount(repositoryAlias);
-			String repositoryNewOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (oldCount + 1);
-			String repositoryOldOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + oldCount;
+			String repositoryOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (db.getRepositoryCloneCount(repositoryAlias) + 1);
 			
 			// Create directory to clone repository in
-			File userDir = new File(repositoryNewOriginDirectory);
+			File userDir = new File(repositoryOriginDirectory);
 			userDir.mkdir();
 			FileUtils.cleanDirectory(userDir); 
 			
 			// Clone repository
-			executeCommand("git clone " + repositoryUrl + " " + repositoryNewOriginDirectory);
+			executeCommand("git clone " + repositoryUrl + " " + repositoryOriginDirectory);
 			
 			log.info("Reading repository \"" + repositoryAlias + "\"");
 			// Read repository information like we would normally
-			RepositoryReader repositoryReader = new RepositoryReader(repositoryNewOriginDirectory);
+			RepositoryReader repositoryReader = new RepositoryReader(repositoryOriginDirectory);
 			JSONObject updateObject = repositoryReader.getUpdateObject();
 			String inputJsonString = updateObject.toString();
 			log.info("JSON string: " + inputJsonString);
@@ -58,8 +56,6 @@ public class OriginUpdater {
 			
 			db.incRepositoryCloneCount(repositoryAlias);
 			db.commitTransaction();
-			
-			FileUtils.forceDelete(new File(repositoryOldOriginDirectory)); 
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -969,11 +969,12 @@ body {
 
 #fileList .fileFolderNameYellow {
     color: rgba(240, 180, 0, 1);
-    font-weight: 500;
+    background-image: url('/web/img/folder_yellow.png');
 }
 
 #fileList .fileFolderNameRed {
     color: rgba(180, 0, 0, 1);
+    background-image: url('/web/img/folder_red.png');
 }
 
 
@@ -992,9 +993,11 @@ body {
     border-top: 1px solid #e0e0e0;
 }
 
-#fileList div:first-child {
+/* thisdoesntworkhahah TODO */
+#fileList > div:first-child {
     border-top: 0;
 }
+
 #fileList .fileFileName {
     display: table-cell;
     width: 400px;
@@ -1135,7 +1138,7 @@ span.userYellow {
 }
 
 span.userRed {
-    border: 1px solid rgba(180, 0, 0, 1);
+    border: 1px solid rgba(220, 0, 40, 1);
     background-color: rgba(255, 0, 0, 0.5);
 }
 

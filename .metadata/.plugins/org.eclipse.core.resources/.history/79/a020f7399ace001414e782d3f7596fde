@@ -59,7 +59,7 @@ public class OriginUpdater {
 			db.incRepositoryCloneCount(repositoryAlias);
 			db.commitTransaction();
 			
-			FileUtils.forceDelete(new File(repositoryOldOriginDirectory)); 
+			FileUtils.cleanDirectory(new File(repositoryOldOriginDirectory)); 
 		}
 		catch (Exception e) {
 			e.printStackTrace();

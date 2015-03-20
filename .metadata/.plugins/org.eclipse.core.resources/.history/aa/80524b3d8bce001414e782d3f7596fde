@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import ch.ethz.fgremper.rtca.ClientMain;
-import ch.ethz.fgremper.rtca.PeriodicalAllOriginUpdater;
 
 public class TestThreeUsersRunClient {
 
@@ -31,11 +30,6 @@ public class TestThreeUsersRunClient {
 			
 		}
 		*/
-			
-
-			PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
-			originUpdaterInterval.updateAll();
-			
 	}
 
 }
