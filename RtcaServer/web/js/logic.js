@@ -21,7 +21,7 @@ var apiPrefix = '/api'
 
 
 
-var webInterfacePrefix = "/web/";
+var webInterfacePrefix = "/";
 
 
 

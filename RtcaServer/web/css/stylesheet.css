@@ -710,7 +710,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    //background: url('/web/img/splash.jpg') no-repeat;
+    //background: url('/img/splash.jpg') no-repeat;
     background-color: #386fcf;
     background-position: center center;
     background-size: cover;
@@ -775,7 +775,7 @@ body {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     border-radius: 2px;
     background-color: #ffffff;
-    background-image: url('/web/img/repository.png');
+    background-image: url('/img/repository.png');
     background-size: 36px 36px;
     background-position: 17px 14px;
     background-repeat: no-repeat;
@@ -889,7 +889,7 @@ body {
 #branchList tr.branchListItem td.branchListBranchName {
     font-size: 16px;
     font-weight: 400;
-    background-image: url('/web/img/branch.png');
+    background-image: url('/img/branch.png');
     background-size: 30px 30px;
     background-position: 20px center;
     background-repeat: no-repeat;
@@ -957,7 +957,7 @@ body {
     cursor: pointer;
     border-top: 1px solid #e0e0e0;
     transition: background-color 0.3s;
-    background-image: url('/web/img/folder.png');
+    background-image: url('/img/folder.png');
     background-size: 30px 30px;
     background-position: 10px center;
     background-repeat: no-repeat;
@@ -970,12 +970,12 @@ body {
 
 #fileList .fileFolderNameYellow {
     //color: rgba(220, 160, 0, 1);
-    background-image: url('/web/img/folder_yellow.png');
+    background-image: url('/img/folder_yellow.png');
 }
 
 #fileList .fileFolderNameRed {
     //color: rgba(200, 0, 20, 1);
-    background-image: url('/web/img/folder_red.png');
+    background-image: url('/img/folder_red.png');
 }
 
 
@@ -1005,7 +1005,7 @@ body {
     vertical-align: middle;
     box-sizing: border-box;
     padding: 0 20px;
-    background-image: url('/web/img/file.png');
+    background-image: url('/img/file.png');
     background-size: 30px 30px;
     background-position: 10px center;
     background-repeat: no-repeat;
@@ -1014,12 +1014,12 @@ body {
 
 #fileList .fileFileNameYellow {
     //color: rgba(220, 160, 0, 1);
-    background-image: url('/web/img/file_yellow.png');
+    background-image: url('/img/file_yellow.png');
 }
 
 #fileList .fileFileNameNameRed {
     //color: rgba(200, 0, 20, 1);
-    background-image: url('/web/img/file_red.png');
+    background-image: url('/img/file_red.png');
 }
 
 #fileList .fileFileConflicts {

@@ -4,27 +4,56 @@
 
 #### TODO
 
-* Fix the json string detection for local plugin /localState
-
-
-* Have a setup system that setups something nice that you can show to people and test
+[style]
+> * Not /web/ but /
 * Webinterface: bring back the filters
-* Redesign icons
+  * branches
+  * files
+  * content
 * Webinterface: severity selector
-* Webinterface: restyle the remaining features
-* restyle the content diff
 
-* user mgmt.: change password
-* mgmt: change repository url
-* make sure session expiration works properly
+[style additional -- just chores]
+* Webinterface: create repository
+* Webinterface: edit repository information
+  * delete user from repository
+  * show owner
+  * make owner
+  * add user to repository
+  * change repository url
+  * change project description
+  * delete repository
+* Webinterface: user management
+* webinterface: profile - username
+* Webinterface: branch view: last change of user!
+* webinterace: create new user!
+
+[small new server features]
+* change repository url
+* change repository project description
+* store last webinterface update
+
+[logic]
+* binary files detection
+* do big files work? (disable logging for this)
+* conflict view for uncommitted changes
+* conflict view without common ancestor
+
+[cool stuff that takes like 5 mins each]
+* make sure session expiration works properly -> 30 days
 * dont rewrite files in the filestorage folder
-* User: email-address
-* Repository: project description
+
+[cool stuff that should be easy but is possibly problematic]
+* re-enable database connection pool
+* list in gui sometimes bugs (swing)
+* still problems with fetching all branches in origin?
+* make sure pasting links works and login without session id is not problematic
+* sql case sensitivity of queries?!
+
+[big tasks]
 * Clean up code in server
 * Write global tests
 * Write JUnit Tests
 * Deployment with maven?
-* Remove old origin fetches regularily!
 
 #### Done
 
@@ -83,6 +112,11 @@
 * Clean up code in the webinterface
 * Webinterface: Folder/package view
 * Webinterface: error overlay
+* Fix the json string detection for local plugin /localState
+* Remove old origin fetches regularily!
+* Restyle the content diff
+* Redesign icons
+* Have a setup system that setups something nice that you can show to people and test
 
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)

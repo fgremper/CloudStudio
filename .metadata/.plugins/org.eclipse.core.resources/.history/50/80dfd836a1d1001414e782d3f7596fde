@@ -36,14 +36,14 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 		// actually, there should be a library to serve static content, no?
 		
 		String webInterfacePrefix = "/";
-		String pathToWebInterfaceFiles = "web/";
 		
 		if (requestMethod.equalsIgnoreCase("GET")) {
-			String requestedFile = uri.getPath().substring(webInterfacePrefix.length());
-			if (!requestedFile.startsWith("css/") && !requestedFile.startsWith("js/") && !requestedFile.startsWith("templates/") && !requestedFile.startsWith("img/")) requestedFile = "index.html";
+			String requestedFile = uri.getPath().substring(1);
+			if (!requestedFile.startsWith(webInterfacePrefix + "css/") && !requestedFile.startsWith(webInterfacePrefix + "js/") && !requestedFile.startsWith(webInterfacePrefix + "templates/") && !requestedFile.startsWith(webInterfacePrefix + "img/")) requestedFile = "web/index.html";
 			log.info("Looking for: " + requestedFile);
 			
-			File file = new File(pathToWebInterfaceFiles + requestedFile).getCanonicalFile();
+			String path = uri.getPath();
+			File file = new File(requestedFile).getCanonicalFile();
 
 			if (!file.isFile()) {
 				String response = "404 (Not Found)\n";
@@ -56,10 +56,10 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				
 				// Set content type
 				String mime = "text/html"; 
-				if (requestedFile.substring(requestedFile.length() - 3).equals(".js")) mime = "application/javascript";
-				if (requestedFile.substring(requestedFile.length() - 4).equals(".css")) mime = "text/css";
-				if (requestedFile.substring(requestedFile.length() - 4).equals(".jpg")) mime = "image/jpeg";
-				if (requestedFile.substring(requestedFile.length() - 4).equals(".png")) mime = "image/png";
+				if (path.substring(path.length() - 3).equals(".js")) mime = "application/javascript";
+				if (path.substring(path.length() - 4).equals(".css")) mime = "text/css";
+				if (path.substring(path.length() - 4).equals(".jpg")) mime = "image/jpeg";
+				if (path.substring(path.length() - 4).equals(".png")) mime = "image/png";
 
 				Headers h = exchange.getResponseHeaders();
 				h.set("Content-Type", mime);
