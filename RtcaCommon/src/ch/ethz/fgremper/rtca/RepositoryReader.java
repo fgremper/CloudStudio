@@ -74,15 +74,28 @@ public class RepositoryReader {
         // List of all commits we came along
         List<String> usedCommitIds = new LinkedList<String>();
         
+        List<String> usedBranchNames = new LinkedList<String>();
+        
         // Loop through all references
         for (Ref ref : refs) {
         	log.debug("Ref: " + ref.getName());
         	
         	// Is this a reference to a local branch?
-        	if (ref.getName().startsWith("refs/heads/")) {
+        	if (ref.getName().startsWith("refs/heads/") || ref.getName().startsWith("refs/remotes/origin/")) {
         		
         		// Get branch name
-        		String branchName = ref.getName().substring("ref/heads/".length() + 1);
+        		String branchName;
+        		
+        		if (ref.getName().startsWith("refs/heads/")) branchName = ref.getName().substring("ref/heads/".length() + 1);
+        		else branchName = ref.getName().substring("refs/remotes/origin/".length());
+        		
+        		System.out.println("BRAAAANCHNME: " + branchName);
+        		
+        		if (branchName.equals("HEAD")) continue;
+        		
+        		if (usedBranchNames.contains(branchName)) continue;
+        		usedBranchNames.add(branchName);
+        		
         		boolean isActiveBranch = ref.getName().equals(repository.getFullBranch());
         		
         		// Get variables necessary to do the following actions
@@ -209,7 +222,8 @@ public class RepositoryReader {
             
         }
 
-        log.debug("JSON String: " + updateObject.toString());
+        //Don't log this because the string can be really long.
+        //log.debug("JSON String: " + updateObject.toString());
         
 	}
 	

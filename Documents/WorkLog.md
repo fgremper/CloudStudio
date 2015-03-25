@@ -6,9 +6,10 @@
 
 [style]
 > * Not /web/ but /
-* Webinterface: bring back the filters
-  * branches
-  * files
+> * Webinterface: bring back the filters
+>  * branches
+>  * files
+* severity filter
   * content
 * Webinterface: severity selector
 
@@ -39,8 +40,8 @@
 * conflict view without common ancestor
 
 [cool stuff that takes like 5 mins each]
-* make sure session expiration works properly -> 30 days
-* dont rewrite files in the filestorage folder
+> * make sure session expiration works properly -> 30 days
+> * dont rewrite files in the filestorage folder
 
 [cool stuff that should be easy but is possibly problematic]
 * re-enable database connection pool

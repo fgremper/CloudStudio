@@ -82,7 +82,10 @@ public class DatabaseConnection {
 			
 			log.info("File: " + filename + " (sha: " + sha + ")");
 
-			FileUtils.writeStringToFile(new File(ServerConfig.getInstance().fileStorageDirectory + "/" + sha), content);
+			File file = new File(ServerConfig.getInstance().fileStorageDirectory + "/" + sha);
+			if (!file.exists()) {
+				FileUtils.writeStringToFile(file, content);
+			}
 
 			storeFile(repositoryAlias, username, filename, sha, branch, commit, committed);
 		}
@@ -275,7 +278,7 @@ public class DatabaseConnection {
 				branchUserObject.put("distanceFromOrigin", distance);
 			}
 
-			if (active.equals("true")) {
+			if (active != null && active.equals("true")) {
 				JSONObject activeUserObject = new JSONObject();
 				activeUserObject.put("username", username);
 				activeUserObject.put("lastUpdate", lastUpdate);
@@ -711,7 +714,7 @@ public class DatabaseConnection {
 	}
 	
 	public void persistSessionIdForUser(String sessionId, String username) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO usersessions (sessionid, username, expires) VALUES (?, ?, NOW() + INTERVAL 1 DAY)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO usersessions (sessionid, username, expires) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))");
 		stmt.setString(1, sessionId);
 		stmt.setString(2, username);
 		stmt.executeUpdate();
@@ -751,7 +754,7 @@ public class DatabaseConnection {
 	}
 
 	public String getUsername(String sessionId) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement("SELECT username FROM usersessions WHERE sessionid = ?");
+		PreparedStatement stmt = con.prepareStatement("SELECT username FROM usersessions WHERE sessionid = ? AND NOW() <= expires");
 		stmt.setString(1, sessionId);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {

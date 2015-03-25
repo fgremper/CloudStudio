@@ -59,6 +59,8 @@ public class TestThreeUsersInitialize {
 		TestGitHelper.createOrModifyFile("John", "test/foo.java");
 		TestGitHelper.createOrModifyFile("John", "docs/readme.txt");
 		
+		TestGitHelper.createBranch("John", "test_branch");
+		
 		TestGitHelper.commit("John");
 		
 		

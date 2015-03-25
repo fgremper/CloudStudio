@@ -8,10 +8,33 @@
 
 <div id="filterBox">
 	<div id="filterBoxBlock">
-		Filter users: <%= JSON.stringify(repositoryUsers) %>
+		Filter users:<br>
+
+		<select id="usersFilter" multiple>
+			<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
+			<% for (var i = 0; i < repositoryUsers.length; i++) { %>
+				<% if (repositoryUsers[i] == 'origin') continue; %>
+				<option value="<%= repositoryUsers[i] %>"<% if (selectedUsers.indexOf(repositoryUsers[i]) >= 0) { %> selected<% } %>><%= repositoryUsers[i] %></option>
+			<% } %>
+		</select>
+
 	</div>
 	<div id="filterBoxBlock">
-		Compare to: <%= JSON.stringify(repositoryBranches) %>
+		Compare to:<br>
+		<select id="compareToBranchFilter">
+			<% for (var i = 0; i < repositoryBranches.length; i++) { %>
+				<option value="<%= repositoryBranches[i] %>"<% if (repositoryBranches[i] == compareToBranch) { %> selected<% } %>><%= repositoryBranches[i] %></option>
+			<% } %>
+		</select>
+	</div>
+	<div id="filterBoxBlock">
+		<input type="checkbox" id="uncommittedFilter"<% if (showUncommitted) { %> checked <% } %>><label for="uncommittedFilter">View uncommitted files</label><br>
+		<input type="checkbox" id="conflictsFilter"<% if (showConflicts) { %> checked <% } %>><label for="conflictsFilter">View content conflicts</label>
+		<select id="severityFilter">
+			<option value="all">All</option>
+			<option value="file">File conflicts</option>
+			<option value="line">Line Conflicts</option>
+		</select>
 	</div>
 </div>
 

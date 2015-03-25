@@ -44,7 +44,8 @@ public class ApiHttpHandler implements HttpHandler {
         // Body
 		String body = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
         log.info("Incoming request: " + requestMethod + " " + uri.getPath());
-        log.info("Body: " + body);
+        //Don't log this because it can be really long
+        //log.info("Body: " + body);
 
 		// Variables
 		String response = null;
@@ -538,6 +539,7 @@ public class ApiHttpHandler implements HttpHandler {
 		catch (Exception e) {
 			error = e.getMessage();
 			log.error("Handling request error: " + e.getMessage());
+			e.printStackTrace();
 		}
 
 		// Close database connection

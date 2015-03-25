@@ -72,6 +72,16 @@ public class TestGitHelper {
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " commit -a -m " + user);
 	}
 
+	public static void checkoutBranch(String user, String branchName) throws Exception {
+		System.out.println("[TestGitHelper] Committing user " + user);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " checkout " + branchName);
+	}
+
+	public static void createBranch(String user, String branchName) throws Exception {
+		System.out.println("[TestGitHelper] Committing user " + user);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " branch " + branchName);
+	}
+
 	public static void pull(String user) throws Exception {
 		System.out.println("[TestGitHelper] Pulling as user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " pull");

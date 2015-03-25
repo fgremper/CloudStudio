@@ -1,27 +1,37 @@
-var activeRepository = undefined;
-var activeBranch = undefined;
+/*var navigation.repositoryAlias = undefined;
+var navigation.branch = undefined;
 var activeFile = undefined;
 var activeUser = undefined;
-var activeRepositoryUsers = undefined;
-var activeRepositoryBranches = undefined;
+var navigation.repositoryAliasUsers = undefined;
+var navigation.repositoryAliasBranches = undefined;
 var activeCompareToBranch = undefined;
 
 var selectedUsers = undefined;
 var showUncommitted = false;
 var showConflicts = false;
 var selectedAdditionalBranches = undefined;
-
 var conflictType = "INTER_BRANCH_CONFLICTS"
+*/
 
-var conflictType;
 
+/* VARIABLES */
+
+// Constants
+var API_PREFIX = '/api/'
+var WEB_INTERFACE_PREFIX = "/";
+
+// Global objects
 var login = {};
+var selection = {};
+var navigation = {};
 
-var apiPrefix = '/api'
 
 
 
-var webInterfacePrefix = "/";
+selection.selectedUsers = [];
+selection.showConflicts = false;
+selection.showUncommitted = false;
+
 
 
 
@@ -31,7 +41,7 @@ var webInterfacePrefix = "/";
 function sendApiRequest(requestObject) {
     requestObject.data.sessionId = login.sessionId;
     $.ajax({
-        url: apiPrefix + '/' + requestObject.name,
+        url: API_PREFIX + requestObject.name,
         type: requestObject.type,
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -108,10 +118,10 @@ function pushHistoryState(path) {
 
     // Don't push the state if it's the same URL as where we are now.
     // This would otherwise prevent the (history) forward button from working.
-    if (document.location.pathname == webInterfacePrefix + path) return;
+    if (document.location.pathname == WEB_INTERFACE_PREFIX + path) return;
 
     // Push the history state
-    history.pushState(null, "", webInterfacePrefix + path);
+    history.pushState(null, "", WEB_INTERFACE_PREFIX + path);
 
 }
 
@@ -128,20 +138,16 @@ function renderFromDocumentLocation() {
         loadRepositoryView();
     }
     else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && (params[2] == undefined || params[2] == "")) {
-        selectedUsers = [];
         loadBranchView(params[1]);
     }
     else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "")) {
-        selectedUsers = [];
-        showUncommitted = false;
-        showConflicts = false;
-        selectedAdditionalBranches = [];
-        activeRepository = params[1];
+        selection.compareToBranch = params[2];
         loadFileView(params[1], params[2]);
     }
     else {
         renderLoginView();
     }
+
 }
 
 
@@ -193,7 +199,7 @@ function renderLoginView() {
     pushHistoryState("");
 
     // Render template
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/login_view.ejs'}).render());
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/login_view.ejs'}).render());
 
     // Register login click event
     $('#submitLogin').click(function () {
@@ -239,6 +245,7 @@ function renderLoginView() {
 
     // Focus on the username input field
     $('#username').focus();
+
 }
 
 
@@ -247,7 +254,7 @@ function renderLoginView() {
 
 function loadRepositoryView() {
 
-    // Send api request
+    // Send API request
     sendApiRequest({
         name: 'repositories',
         type: 'GET',
@@ -271,11 +278,11 @@ function renderRepositoryView(data) {
     pushHistoryState("repositories");
 
     // Render template
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/repository_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/repository_view.ejs'}).render(data));
 
     // Clicking on a repository
     $('.repositoryListItem').click(function () {
-        selectedUsers = [];
+        selection.selectedUsers = [];
         loadBranchView($(this).data('alias'));
     });
 
@@ -355,7 +362,7 @@ function renderRepositoryView(data) {
 
 function loadBranchView(repositoryAlias) {
 
-    // Send api request
+    // Send API request
     sendApiRequest({
         name: 'repositoryInformation',
         type: 'GET',
@@ -364,45 +371,47 @@ function loadBranchView(repositoryAlias) {
             console.log("Get repository info. Success: " + JSON.stringify(data));
 
             // Set our active variables
-            activeRepository = repositoryAlias;
-            activeRepositoryUsers = data.repositoryUsers;
+            navigation.repositoryAlias = repositoryAlias;
 
             // Render branch view
-            renderBranchView({ login: login, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers });
+            renderBranchView({ login: login, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers });
         },
         error: function (data) {
             displayError('Branch Level Awareness', data.responseJSON);
         }
     });
+
 }
 
 function renderBranchView(data) {
 
-    // set state
-    pushHistoryState("repositories/" + activeRepository);
+    // Set state
+    pushHistoryState("repositories/" + navigation.repositoryAlias);
 
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/branch_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/branch_view.ejs'}).render(data));
 
     // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
 
-    /*
     // filter
     $('#usersFilter').change(function () {
-        selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
+        selection.selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
 
         // remove "":
-        var index = selectedUsers.indexOf("");
+        var index = selection.selectedUsers.indexOf("");
         if (index > -1) {
-            selectedUsers.splice(index, 1);
+            selection.selectedUsers.splice(index, 1);
         }
 
-        loadBranchViewTable(activeRepository);
+        loadBranchViewTable(navigation.repositoryAlias);
     });
+
+    /*
     $('select').chosen();
     */
 
-    loadBranchViewTable(activeRepository);
+    loadBranchViewTable(navigation.repositoryAlias);
+
 }
 
 
@@ -417,7 +426,7 @@ function loadBranchViewTable(repositoryAlias) {
             console.log("Get branch awareness. Success: " + JSON.stringify(data));
 
             // Render table
-            renderBranchViewTable({ branches: data.branches, repositoryAlias: repositoryAlias });
+            renderBranchViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, selectedUsers: selection.selectedUsers });
         },
         error: function (data) {
             displayError('Branch Level Awareness', data.responseJSON);
@@ -429,14 +438,12 @@ function loadBranchViewTable(repositoryAlias) {
 function renderBranchViewTable(data) {
 
     // Render template
-    $('#branchListContainer').html(new EJS({url: webInterfacePrefix + 'templates/branch_view_table.ejs'}).render(data));
+    $('#branchListContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/branch_view_table.ejs'}).render(data));
 
     // Click on a branch event
     $('.branchListItem').click(function () {
-        showUncommitted = false;
-        showConflicts = false;
-        selectedAdditionalBranches = [];
-        loadFileView(activeRepository, $(this).data('branch'));
+        selection.compareToBranch = $(this).data('branch');
+        loadFileView(navigation.repositoryAlias, $(this).data('branch'));
     });
 
 }
@@ -456,12 +463,11 @@ function loadFileView(repositoryAlias, branch) {
             console.log("Get repository info. Success: " + JSON.stringify(data));
 
             // Set active variables
-            activeBranch = branch;
-            activeRepositoryUsers = data.repositoryUsers;
-            activeRepositoryBranches = data.repositoryBranches;
+            navigation.repositoryAlias = repositoryAlias;
+            navigation.branch = branch;
 
             // Render
-            renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, repositoryBranches: data.repositoryBranches });
+            renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, repositoryBranches: data.repositoryBranches, compareToBranch: selection.compareToBranch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts });
         },
         error: function (data) {
             displayError('File Level Awareness', data.responseJSON);
@@ -474,14 +480,14 @@ function loadFileView(repositoryAlias, branch) {
 function renderFileView(data) {
 
     // Set state
-    pushHistoryState("repositories/" + activeRepository + "/" + activeBranch);
+    pushHistoryState("repositories/" + navigation.repositoryAlias + "/" + navigation.branch);
 
     // Render template
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/file_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/file_view.ejs'}).render(data));
 
     // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
-    $('.loadBranchView').click(function () { loadBranchView(activeRepository); });
+    $('.loadBranchView').click(function () { loadBranchView(navigation.repositoryAlias); });
 
 /*
     // filter
@@ -494,41 +500,38 @@ function renderFileView(data) {
             selectedUsers.splice(index, 1);
         }
 
-        loadFileViewTable(activeRepository, activeBranch);
+        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
-    $('#branchesFilter').change(function () {
-        selectedAdditionalBranches = $.map($('#branchesFilter option:selected'), function (o) { return o.value })
+*/
+    $('#compareToBranchFilter').change(function () {
+        selection.compareToBranch = $('#compareToBranchFilter').val();
 
-        // remove "":
-        var index = selectedAdditionalBranches.indexOf("");
-        if (index > -1) {
-            selectedAdditionalBranches.splice(index, 1);
-        }
-
-        loadFileViewTable(activeRepository, activeBranch);
+        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
+    
     $('#uncommittedFilter').change(function () {
-        showUncommitted = $('#uncommittedFilter').is(':checked');
+        selection.showUncommitted = $('#uncommittedFilter').is(':checked');
 
-        loadFileViewTable(activeRepository, activeBranch);
+        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
     $('#conflictsFilter').change(function () {
-        showConflicts = $('#conflictsFilter').is(':checked');
+        selection.showConflicts = $('#conflictsFilter').is(':checked');
 
-        loadFileViewTable(activeRepository, activeBranch);
+        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
+    /*
     $('select').chosen();
 */
 
-    loadFileViewTable(activeRepository, activeBranch);
+    loadFileViewTable(navigation.repositoryAlias, navigation.branch);
 }
 
 function loadFileViewTable(repositoryAlias, branch) {
-    showConflicts = true;
+
     sendApiRequest({
         name: 'fileAwareness',
         type: 'GET',
-        data: { repositoryAlias: repositoryAlias, branch: branch, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: branch },
+        data: { repositoryAlias: repositoryAlias, branch: branch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, compareToBranch: selection.compareToBranch },
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
 
@@ -568,11 +571,11 @@ function loadFileViewTable(repositoryAlias, branch) {
 function renderFileViewTable(data) {
 
 
-    $('#fileListContainer').html(new EJS({url: webInterfacePrefix + 'templates/file_view_table.ejs'}).render(data));
+    $('#fileListContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/file_view_table.ejs'}).render(data));
 
     // Clicking on a file and user
     $('.fileAndUser').click(function () {
-        loadContentView(activeRepository, activeBranch, $(this).data('filename'), $(this).data('username'), $(this).data('comparetobranch'));
+        loadContentView(navigation.repositoryAlias, navigation.branch, $(this).data('filename'), $(this).data('username'), $(this).data('comparetobranch'));
     });
 
     $('.fileFolderName').click(function () {
@@ -605,30 +608,30 @@ function loadContentView(repositoryAlias, branch, filename, username, compareToB
 function renderContentView(data) {
     
     // Set state
-    pushHistoryState("repositories/" + activeRepository + "/" + activeBranch + "/" + data.filename);
+    pushHistoryState("repositories/" + navigation.repositoryAlias + "/" + navigation.branch + "/" + data.filename);
 
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/content_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view.ejs'}).render(data));
 
     // navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
-    $('.loadBranchView').click(function () { loadBranchView(activeRepository); });
-    $('.loadFileView').click(function () { loadFileView(activeRepository, activeBranch); });
-    $('.loadContentView').click(function () { loadFileView(activeRepository, activeBranch); });
+    $('.loadBranchView').click(function () { loadBranchView(navigation.repositoryAlias); });
+    $('.loadFileView').click(function () { loadFileView(navigation.repositoryAlias, navigation.branch); });
+    $('.loadContentView').click(function () { loadFileView(navigation.repositoryAlias, navigation.branch); });
 
     /*
     $('#uncommittedFilter').change(function () {
         showUncommitted = $('#uncommittedFilter').is(':checked');
 
-        loadContentViewDiff(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch);
+        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, activeFile, activeUser, activeCompareToBranch);
     });
     $('#conflictsFilter').change(function () {
         showConflicts = $('#conflictsFilter').is(':checked');
 
-        loadContentViewDiff(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch);
+        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, activeFile, activeUser, activeCompareToBranch);
     });
     */
 
-    loadContentViewDiff(activeRepository, activeBranch, activeFile, activeUser, activeCompareToBranch);
+    loadContentViewDiff(navigation.repositoryAlias, navigation.branch, activeFile, activeUser, activeCompareToBranch);
 
 }
 
@@ -650,10 +653,10 @@ function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, c
 
 function renderContentViewDiff(data) {
     /*if (showConflicts) {
-        $('#contentDiffContainer').html(new EJS({url: webInterfacePrefix + 'templates/content_view_diff3.ejs'}).render(data));
+        $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff3.ejs'}).render(data));
     }
     else {*/
-        $('#contentDiffContainer').html(new EJS({url: webInterfacePrefix + 'templates/content_view_diff.ejs'}).render(data));
+        $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff.ejs'}).render(data));
     //}
 }
 
@@ -674,7 +677,7 @@ function renderCreateRepositoryView(data) {
     // set state
     pushHistoryState("createRepository");
 
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/create_repository_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/create_repository_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
@@ -724,7 +727,7 @@ function renderUsersView(data) {
     // set state
     pushHistoryState("users");
 
-    $('#content').html(new EJS({url: webInterfacePrefix + 'templates/users_view.ejs'}).render(data));
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/users_view.ejs'}).render(data));
 
     // header
     $('#headerLogo').click(loadRepositoryView);
