@@ -2,7 +2,7 @@
 	<table id="branchList">
 		<tr>
 			<th>Branch</th>
-			<th>Working On This Branch</th>
+			<th>Working On This Branch (Last Update)</th>
 			<th>Relationship To Origin</th>
 		</tr>
 
@@ -13,7 +13,7 @@
 				<td>
 					<% for (var j = 0; j < branches[i].activeUsers.length; j++) { %>
 
-						<span class="user"><%= branches[0].activeUsers[j] %></span>
+						<span class="user"><%= branches[0].activeUsers[j].username %> (<%= branches[0].activeUsers[j].lastUpdateDiff %>)</span>
 
 					<% } %>
 				</td>

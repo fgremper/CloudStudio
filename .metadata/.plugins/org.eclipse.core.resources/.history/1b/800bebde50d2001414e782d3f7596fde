@@ -299,14 +299,13 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				String repositoryUrl = (String) params.get("repositoryUrl");
-				String repositoryDescription = (String) params.get("repositoryDescription");
 
 				// Need to be administrator or creator
 				if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
 					db = new DatabaseConnection();
 					db.startTransaction();
 					String repositoryOwner = sessionUsername;
-					db.createRepository(repositoryAlias, repositoryUrl, repositoryOwner, repositoryDescription);
+					db.createRepository(repositoryAlias, repositoryUrl, repositoryOwner);
 					db.commitTransaction();
 					response = "{}";
 				}

@@ -24,9 +24,9 @@ public class TestThreeUsersInitialize {
 		db.addUser("John", "johnpw");
 		db.addUser("David", "davidpw");
 		db.addUser("Isabelle", "isabellepw");
-		db.createRepository("TestRepository", "/Users/novocaine/Documents/masterthesis/testsandpit/origin", "John", "just testing move along");
-		db.createRepository("HelloWorld", "", "John", "hey world, what's up");
-		db.createRepository("BankAccountDemo", "", "John", "This is the bank account demo");
+		db.addRepository("TestRepository", "/Users/novocaine/Documents/masterthesis/testsandpit/origin", "John");
+		db.addRepository("HelloWorld", "", "John");
+		db.addRepository("BankAccountDemo", "", "John");
 		db.addUserToRepository("John", "TestRepository");
 		db.addUserToRepository("David", "TestRepository");
 		db.addUserToRepository("Isabelle", "TestRepository");

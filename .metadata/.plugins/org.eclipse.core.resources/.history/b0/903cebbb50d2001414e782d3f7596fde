@@ -594,13 +594,12 @@ public class DatabaseConnection {
 		return repositoriesArray;
 	}
 	
-	public void createRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner, String repositoryDescription) throws SQLException {
+	public void createRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner) throws SQLException {
 		// Add repository
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, repositorydescription, clonecount) VALUES (?, ?, ?, ?, 0)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, clonecount) VALUES (?, ?, ?, 0)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
 		stmt.setString(3, repositoryOwner);
-		stmt.setString(4, repositoryDescription);
 		stmt.executeUpdate();
 	}
 	

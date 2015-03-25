@@ -600,7 +600,7 @@ public class DatabaseConnection {
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
 		stmt.setString(3, repositoryOwner);
-		stmt.setString(4, repositoryDescription);
+		stmt.setString(3, repositoryDescription);
 		stmt.executeUpdate();
 	}
 	

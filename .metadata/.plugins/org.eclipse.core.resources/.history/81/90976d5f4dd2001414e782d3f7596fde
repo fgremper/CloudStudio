@@ -215,14 +215,6 @@ public class DatabaseConnection {
 			String username = rs.getString("username");
 			String commit = rs.getString("commit");
 			String active = rs.getString("active");
-			int lastUpdateDiff = rs.getInt("lastupdatediff");
-			String lastUpdateDiffString;
-			if (lastUpdateDiff >= 60 * 60 * 24 * 7) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24 * 7)) + "w";
-			else if (lastUpdateDiff >= 60 * 60 * 24) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24)) + "d";
-			else if (lastUpdateDiff >= 60 * 60) lastUpdateDiffString = (lastUpdateDiff / (60 * 60)) + "h";
-			else if (lastUpdateDiff >= 60) lastUpdateDiffString = (lastUpdateDiff / (60)) + "m";
-			else lastUpdateDiffString = (lastUpdateDiff) + "s";
-			String lastUpdate = rs.getString("lastupdate");
 			String origincommit = rs.getString("origincommit");
 			String relation;
 			Integer distance = null;
@@ -275,13 +267,7 @@ public class DatabaseConnection {
 				branchUserObject.put("distanceFromOrigin", distance);
 			}
 
-			if (active.equals("true")) {
-				JSONObject activeUserObject = new JSONObject();
-				activeUserObject.put("username", username);
-				activeUserObject.put("lastUpdate", lastUpdate);
-				activeUserObject.put("lastUpdateDiff", lastUpdateDiffString);
-				branchObject.getJSONArray("activeUsers").put(activeUserObject);
-			}
+			if (active.equals("true")) branchObject.getJSONArray("activeUsers").put(username);
 			
 		}
 		
@@ -561,7 +547,7 @@ public class DatabaseConnection {
 	public JSONArray getRepositories(String myUsername) throws Exception {
 		// Statement to get all the repositories and users for your user permissions
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, repositories.repositorydescription, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ? ORDER BY repositories.repositoryalias");
+		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ? ORDER BY repositories.repositoryalias");
 		stmt.setString(1, myUsername);
 		stmt.setString(2, myUsername);
 		stmt.setString(3, myUsername);
@@ -574,7 +560,6 @@ public class DatabaseConnection {
 			String repositoryAlias = rs.getString("repositoryalias");
 			String repositoryUrl = rs.getString("repositoryurl");
 			String repositoryOwner = rs.getString("repositoryowner");
-			String repositoryDescription = rs.getString("repositorydescription");
 			String username = rs.getString("username");
 			if (!index.containsKey(repositoryAlias)) {
 				JSONObject repositoryObject = new JSONObject();
@@ -582,7 +567,6 @@ public class DatabaseConnection {
 				repositoryObject.put("repositoryAlias", repositoryAlias);
 				repositoryObject.put("repositoryUrl", repositoryUrl);
 				repositoryObject.put("repositoryOwner", repositoryOwner);
-				repositoryObject.put("repositoryDescription", repositoryDescription);
 				repositoryObject.put("users", new JSONArray());
 				repositoriesArray.put(repositoryObject);
 			}
@@ -594,13 +578,12 @@ public class DatabaseConnection {
 		return repositoriesArray;
 	}
 	
-	public void createRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner, String repositoryDescription) throws SQLException {
+	public void addRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner) throws SQLException {
 		// Add repository
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, repositorydescription, clonecount) VALUES (?, ?, ?, ?, 0)");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, clonecount) VALUES (?, ?, ?, 0)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
 		stmt.setString(3, repositoryOwner);
-		stmt.setString(4, repositoryDescription);
 		stmt.executeUpdate();
 	}
 	

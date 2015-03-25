@@ -14,7 +14,7 @@
 
 [style additional -- just chores]
 * Webinterface: create repository
-* Webinterface: edit repository information
+> * Webinterface: edit repository information
   * delete user from repository
   * show owner
   * make owner
@@ -24,13 +24,13 @@
   * delete repository
 * Webinterface: user management
 * webinterface: profile - username
-* Webinterface: branch view: last change of user!
+> * Webinterface: branch view: last change of user!
 * webinterace: create new user!
 
 [small new server features]
-* change repository url
+>* change repository url
 * change repository project description
-* store last webinterface update
+> * store last webinterface update
 
 [logic]
 * binary files detection
@@ -48,6 +48,9 @@
 * still problems with fetching all branches in origin?
 * make sure pasting links works and login without session id is not problematic
 * sql case sensitivity of queries?!
+
+[random]
+* cool cloudstudio logo
 
 [big tasks]
 * Clean up code in server

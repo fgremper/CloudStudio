@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;ch.ethz.fgremper.rtca.DatabaseConnection.addRepository(...)&apos; to &apos;createRepository&apos;&#x0A;- Original project: &apos;RtcaServer&apos;&#x0A;- Original element: &apos;ch.ethz.fgremper.rtca.DatabaseConnection.addRepository(...)&apos;&#x0A;- Renamed element: &apos;ch.ethz.fgremper.rtca.DatabaseConnection.createRepository(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;addRepository&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;ch.ethz.fgremper.rtca{DatabaseConnection.java[DatabaseConnection~addRepository~QString;~QString;~QString;" name="createRepository" references="true" stamp="1427220471210" version="1.0"/>
+</session>
