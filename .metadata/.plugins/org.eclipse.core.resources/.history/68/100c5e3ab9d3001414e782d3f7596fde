@@ -278,7 +278,6 @@ public class DatabaseConnection {
 				branchUserObject.put("distanceFromOrigin", distance);
 			}
 
-			// TODO why can active be null here?!
 			if (active != null && active.equals("true")) {
 				JSONObject activeUserObject = new JSONObject();
 				activeUserObject.put("username", username);

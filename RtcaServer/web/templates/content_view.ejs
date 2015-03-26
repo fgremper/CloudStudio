@@ -7,6 +7,14 @@
 </div>
 
 
+<div id="filterBox">
+	<div id="filterBoxBlock">
+		<input type="checkbox" id="uncommittedFilter"<% if (showUncommitted) { %> checked <% } %>><label for="uncommittedFilter">View uncommitted files</label><br>
+		<input type="checkbox" id="conflictsFilter"<% if (showConflicts) { %> checked <% } %>><label for="conflictsFilter">View content conflicts</label>
+	</div>
+</div>
+
+
 <div id="contentDiffContainer">
 
 </div>
@@ -14,36 +22,3 @@
 
 	<table id="diffTable">
 	</table>
-
-<!--
-<div id="header">
-	<div id="headerLogin">
-		Logged in as <strong><%= login.username %></strong>
-		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
-	</div>
-	<span id="headerLogo">CloudStudio</span>
-</div>
-<div id="navigationBar">
-	<span id="refresh">Refresh</span>
-	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <span class="loadFileView clickable"><%= branch %></span> &mdash; File: <strong><%= filename %></strong><% if (showUncommitted) { %> (uncommitted)<% } %></span>
-</div>
-<div id="view">
-
-	<table id="invisibleTable">
-		<tr>
-			<td>
-			</td>
-			<td>
-			</td>
-			<td>
-				<input type="checkbox" id="uncommittedFilter"<% if (showUncommitted) { %> checked <% } %>><label for="uncommittedFilter">View uncommitted files</label><br>
-				<input type="checkbox" id="conflictsFilter"<% if (showConflicts) { %> checked <% } %>><label for="conflictsFilter">View content conflicts</label>
-			</td>
-		</tr>
-	</table>
-
-	<table id="diffTable">
-	</table>
-
-</div>
--->

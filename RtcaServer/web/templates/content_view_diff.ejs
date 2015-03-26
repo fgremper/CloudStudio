@@ -1,13 +1,9 @@
+	<div id="contentDiffHeader">
+		<div>Me</div>
+		<div><span class="userSmall"><%= theirUsername %></span></div>
+	</div>
 
 	<table id="contentDiff">
-	<!--
-		<tr>
-			<td class="diffHeader diffNumberColumn">&nbsp;</td>
-			<td class="diffHeader">my file</td>
-			<td class="diffHeader diffNumberColumn">&nbsp;</td>
-			<td class="diffHeader"><%= theirUsername %>'s file</td>
-		</tr>
-	-->
 		<tr>
 			<td class="diffNumberColumn">
 				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>

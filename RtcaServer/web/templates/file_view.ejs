@@ -20,7 +20,7 @@
 
 	</div>
 	<div id="filterBoxBlock">
-		Compare to:<br>
+		Compare to branch:<br>
 		<select id="compareToBranchFilter">
 			<% for (var i = 0; i < repositoryBranches.length; i++) { %>
 				<option value="<%= repositoryBranches[i] %>"<% if (repositoryBranches[i] == compareToBranch) { %> selected<% } %>><%= repositoryBranches[i] %></option>
@@ -30,10 +30,13 @@
 	<div id="filterBoxBlock">
 		<input type="checkbox" id="uncommittedFilter"<% if (showUncommitted) { %> checked <% } %>><label for="uncommittedFilter">View uncommitted files</label><br>
 		<input type="checkbox" id="conflictsFilter"<% if (showConflicts) { %> checked <% } %>><label for="conflictsFilter">View content conflicts</label>
+	</div>
+	<div id="filterBoxBlock">
+		Severity filter:<br>
 		<select id="severityFilter">
-			<option value="all">All</option>
-			<option value="file">File conflicts</option>
-			<option value="line">Line Conflicts</option>
+			<option value="ALL"<% if (severityFilter == 'ALL') { %> selected <% } %>>All</option>
+			<option value="FILE_CONFLICT"<% if (severityFilter == 'FILE_CONFLICT') { %> selected <% } %>>File conflicts</option>
+			<option value="CONTENT_CONFLICT"<% if (severityFilter == 'CONTENT_CONFLICT') { %> selected <% } %>>Content Conflicts</option>
 		</select>
 	</div>
 </div>

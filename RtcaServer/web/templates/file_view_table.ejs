@@ -16,6 +16,18 @@
 	    	var filenameFile = filenameSplit.pop();
 	    %>
 
+    	<%
+    		var fileConflictType = "NO_CONFLICT";
+            for (var k = 0; k < files[i].users.length; k++) {
+                var conflictType = files[i].users[k].type;
+                if (conflictType == "CONTENT_CONFLICT") fileConflictType = "CONTENT_CONFLICT";
+                else if (conflictType == "FILE_CONFLICT" && fileConflictType != "CONTENT_CONFLICT") fileConflictType = "FILE_CONFLICT";
+            }
+
+            if (severityFilter == 'CONTENT_CONFLICT' && fileConflictType != 'CONTENT_CONFLICT') continue;
+            else if (severityFilter == 'FILE_CONFLICT' && (fileConflictType != 'CONTENT_CONFLICT' && fileConflictType != 'FILE_CONFLICT')) continue;
+        %>
+
 	    <% var closeFlag = false %>
 	    <% var rebuildFrom = currentPath.length; %>
 	    <% for (var j = 0; j < currentPath.length; j++) { %>
@@ -42,14 +54,6 @@
 
 	    <div class="fileFile">
 
-	    	<%
-	    		var fileConflictType = "NO_CONFLICT";
-                for (var k = 0; k < files[i].users.length; k++) {
-                    var conflictType = files[i].users[k].type;
-                    if (conflictType == "CONTENT_CONFLICT") fileConflictType = "CONTENT_CONFLICT";
-                    else if (conflictType == "FILE_CONFLICT" && fileConflictType != "CONTENT_CONFLICT") fileConflictType = "FILE_CONFLICT";
-                }
-            %>
 
 	    	<div class="fileFileName <% if (fileConflictType == 'FILE_CONFLICT') { %>fileFileNameYellow<% } else if (fileConflictType == 'CONTENT_CONFLICT') { %>fileFileNameRed<% } %>" style="padding-left: <%= (indent * 35 + 50) %>px; background-position: <%= (indent * 35 + 10) %>px center;""><%= filenameFile %></div>
 	    	<div class="fileFileConflicts">

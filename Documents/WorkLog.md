@@ -4,49 +4,28 @@
 
 #### TODO
 
-[style]
-> * Not /web/ but /
-> * Webinterface: bring back the filters
->  * branches
->  * files
-* severity filter
-  * content
-* Webinterface: severity selector
 
-[style additional -- just chores]
+
+
+* Webinterface: package responsible users
 * Webinterface: create repository
-> * Webinterface: edit repository information
-  * delete user from repository
-  * show owner
-  * make owner
-  * add user to repository
-  * change repository url
-  * change project description
-  * delete repository
+* Webinterface: repository (add, remove, adduser, removeuser, makeowner, changepositoryurl, changedescription, deleterepository)
 * Webinterface: user management
-* webinterface: profile - username
-> * Webinterface: branch view: last change of user!
-* webinterace: create new user!
+* Webinterface: profile?!
+* Webinterface: New user
 
-[small new server features]
->* change repository url
-* change repository project description
-> * store last webinterface update
+* change repository info (description, url) API
+* active branch = null what is that all about
 
 [logic]
 * binary files detection
 * do big files work? (disable logging for this)
 * conflict view for uncommitted changes
-* conflict view without common ancestor
-
-[cool stuff that takes like 5 mins each]
-> * make sure session expiration works properly -> 30 days
-> * dont rewrite files in the filestorage folder
+* conflict view without common ancestor -> empty file
 
 [cool stuff that should be easy but is possibly problematic]
 * re-enable database connection pool
 * list in gui sometimes bugs (swing)
-* still problems with fetching all branches in origin?
 * make sure pasting links works and login without session id is not problematic
 * sql case sensitivity of queries?!
 
@@ -121,6 +100,14 @@
 * Restyle the content diff
 * Redesign icons
 * Have a setup system that setups something nice that you can show to people and test
+* Not /web/ but /
+* Webinterface: bring back the filters
+* Webinterface: severity selector
+* Webinterface: branch view: last change of user!
+* store last webinterface update
+* make sure session expiration works properly -> 30 days
+* dont rewrite files in the filestorage folder
+* still problems with fetching all branches in origin?
 
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)

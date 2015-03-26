@@ -29,8 +29,9 @@ var navigation = {};
 
 
 selection.selectedUsers = [];
-selection.showConflicts = false;
+selection.showConflicts = true;
 selection.showUncommitted = false;
+selection.severityFilter = 'ALL';
 
 
 
@@ -129,7 +130,9 @@ function pushHistoryState(path) {
 function renderFromDocumentLocation() {
 
     var url = document.location.pathname;
-    var params = url.split(/\//).splice(2);
+    var params = url.split(/\//).splice(1);
+
+    console.log('YES');
 
     if (params[0] == "") {
         renderLoginView();
@@ -218,10 +221,10 @@ function renderLoginView() {
                     loadRepositoryView();
 
                     if ($('#rememberMe').is(':checked')) {
-                        setCookie("sessionId", login.sessionId, 10);
-                        setCookie("username", login.username, 10);
-                        setCookie("isCreator", login.isCreator, 10);
-                        setCookie("isAdmin", login.isAdmin, 10);
+                        setCookie("sessionId", login.sessionId, 30);
+                        setCookie("username", login.username, 30);
+                        setCookie("isCreator", login.isCreator, 30);
+                        setCookie("isAdmin", login.isAdmin, 30);
                     }
 
                 }
@@ -406,9 +409,7 @@ function renderBranchView(data) {
         loadBranchViewTable(navigation.repositoryAlias);
     });
 
-    /*
     $('select').chosen();
-    */
 
     loadBranchViewTable(navigation.repositoryAlias);
 
@@ -467,7 +468,7 @@ function loadFileView(repositoryAlias, branch) {
             navigation.branch = branch;
 
             // Render
-            renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, repositoryBranches: data.repositoryBranches, compareToBranch: selection.compareToBranch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts });
+            renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, repositoryBranches: data.repositoryBranches, compareToBranch: selection.compareToBranch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, severityFilter: selection.severityFilter });
         },
         error: function (data) {
             displayError('File Level Awareness', data.responseJSON);
@@ -489,20 +490,18 @@ function renderFileView(data) {
     $('.loadRepositoryView').click(loadRepositoryView);
     $('.loadBranchView').click(function () { loadBranchView(navigation.repositoryAlias); });
 
-/*
     // filter
     $('#usersFilter').change(function () {
-        selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
+        selection.selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
 
         // remove "":
-        var index = selectedUsers.indexOf("");
+        var index = selection.selectedUsers.indexOf("");
         if (index > -1) {
-            selectedUsers.splice(index, 1);
+            selection.selectedUsers.splice(index, 1);
         }
 
-        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
+         loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
-*/
     $('#compareToBranchFilter').change(function () {
         selection.compareToBranch = $('#compareToBranchFilter').val();
 
@@ -519,9 +518,15 @@ function renderFileView(data) {
 
         loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
-    /*
+    $('#severityFilter').change(function () {
+        selection.severityFilter = $('#severityFilter').val();
+
+        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
+    });
+    
+    
     $('select').chosen();
-*/
+
 
     loadFileViewTable(navigation.repositoryAlias, navigation.branch);
 }
@@ -535,8 +540,19 @@ function loadFileViewTable(repositoryAlias, branch) {
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
 
-            var pathConflicts = {};
 
+            if (selection.selectedUsers.length > 0) {
+                // filter users
+
+                for (var i = 0; i < data.files.length; i++) { 
+                    for (var k = data.files[i].users.length - 1; k >= 0; k--) {
+                        if (selection.selectedUsers.indexOf(data.files[i].users[k].username) < 0) data.files[i].users.splice(k, 1);
+                    }
+                }
+            }
+
+
+            var pathConflicts = {};
 
 
             for (var i = 0; i < data.files.length; i++) { 
@@ -560,7 +576,7 @@ function loadFileViewTable(repositoryAlias, branch) {
             }
 
             // Render
-            renderFileViewTable({ login: login, repositoryAlias: repositoryAlias, branch: branch, files: data.files, pathConflicts: pathConflicts });
+            renderFileViewTable({ login: login, repositoryAlias: repositoryAlias, branch: branch, files: data.files, pathConflicts: pathConflicts, severityFilter: selection.severityFilter });
         },
         error: function (data) {
             displayError('File Level Awareness', data.responseJSON);
@@ -598,10 +614,10 @@ function renderFileViewTable(data) {
 /* CONTENT LEVEL AWARENESS */
 
 function loadContentView(repositoryAlias, branch, filename, username, compareToBranch) {
-    activeFile = filename;
-    activeUser = username;
-    activeCompareToBranch = compareToBranch;
-    renderContentView({ repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: showUncommitted, showConflicts: showConflicts });
+    navigation.filename = filename;
+    navigation.username = username;
+    selection.compareToBranch = compareToBranch;
+    renderContentView({ repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts });
 }
 
 
@@ -618,46 +634,61 @@ function renderContentView(data) {
     $('.loadFileView').click(function () { loadFileView(navigation.repositoryAlias, navigation.branch); });
     $('.loadContentView').click(function () { loadFileView(navigation.repositoryAlias, navigation.branch); });
 
-    /*
+    
     $('#uncommittedFilter').change(function () {
-        showUncommitted = $('#uncommittedFilter').is(':checked');
+        selection.showUncommitted = $('#uncommittedFilter').is(':checked');
 
-        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, activeFile, activeUser, activeCompareToBranch);
+        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, navigation.filename, navigation.username, selection.compareToBranch);
     });
     $('#conflictsFilter').change(function () {
-        showConflicts = $('#conflictsFilter').is(':checked');
+        selection.showConflicts = $('#conflictsFilter').is(':checked');
 
-        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, activeFile, activeUser, activeCompareToBranch);
+        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, navigation.filename, navigation.username, selection.compareToBranch);
     });
-    */
+    
 
-    loadContentViewDiff(navigation.repositoryAlias, navigation.branch, activeFile, activeUser, activeCompareToBranch);
+    loadContentViewDiff(navigation.repositoryAlias, navigation.branch, navigation.filename, navigation.username, selection.compareToBranch);
 
 }
 
 function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, compareToBranch) {
-    sendApiRequest({
-        name: 'contentAwareness',
-        type: 'GET',
-        data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: showUncommitted, showConflicts: showConflicts, compareToBranch: compareToBranch },
-        success: function(data) {
-            console.log("Get content awareness. Success: " + JSON.stringify(data));
-            renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername, showUncommitted: showUncommitted, showConflicts: showConflicts });
-        },
-        error: function (data) {
-            alert('Something went wrong when trying to load line level awareness data.');
-        }
-    });
+    if (selection.showConflicts) {
+        sendApiRequest({
+            name: 'contentConflicts',
+            type: 'GET',
+            data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: selection.showUncommitted, compareToBranch: selection.compareToBranch },
+            success: function(data) {
+                console.log("Get content awareness. Success: " + JSON.stringify(data));
+                renderContentViewDiff3({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername });
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to load line level awareness data.');
+            }
+        });
+    }
+    else {
+        sendApiRequest({
+            name: 'contentAwareness',
+            type: 'GET',
+            data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: selection.showUncommitted, compareToBranch: selection.compareToBranch },
+            success: function(data) {
+                console.log("Get content awareness. Success: " + JSON.stringify(data));
+                renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername });
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to load line level awareness data.');
+            }
+        });
+    }
 }
 
 
 function renderContentViewDiff(data) {
-    /*if (showConflicts) {
-        $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff3.ejs'}).render(data));
-    }
-    else {*/
         $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff.ejs'}).render(data));
-    //}
+}
+
+function renderContentViewDiff3(data) {
+        $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff3.ejs'}).render(data));
 }
 
 
