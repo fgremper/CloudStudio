@@ -1,27 +1,18 @@
-<div id="header">
-	<div id="headerLogin">
-		Logged in as <strong><%= login.username %></strong>
-		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
-	</div>
-	<span id="headerLogo">CloudStudio</span>
-</div>
 <div id="navigationBar">
-	<span id="navigationLocation"><span class="loadRepositoryView clickable">All Repositories</span> &mdash; <strong>Create new repository</strong></span>
+	<div id="navigationBarLocation">Location: <span class="loadRepositoryView clickable">Repository Overview</span> &mdash; Repository: <strong>Create Repository</strong></div>
+	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
+</div>
+<div id="titleBar">
+	Create Repository
 </div>
 <div id="view">
 
-	<table id="invisibleTable">
-		<tr>
-			<td>
-				Repository alias:<br>
+				Repository Alias:<br>
 				<input id="repositoryAlias" type="text"><br><br>
-				URL to repository:
+				Description:<br>
+				<input id="repositoryDescription" type="text"><br><br>
+				URL to Repository:
 				<input id="repositoryUrl" type="text"><br><br>
-				<div id="submitCreateRepository" class="button">Create</div>
-			</td>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
+				<div id="submitCreateRepository" class="button">Create repository</div>
 
 </div>

@@ -88,8 +88,7 @@ public class ContentConflictGitReader {
 		        treeWalk.setRecursive(true);
 		
 		        // Iterate through the files (maybe some way to find it faster?)
-		        boolean ancestorFound = false;
-		        while (treeWalk.next() && !ancestorFound) {
+		        while (treeWalk.next()) {
 		        	if (treeWalk.getPathString().equals(filename)) {
 		        		log.info("found file");
 		        		
@@ -103,21 +102,12 @@ public class ContentConflictGitReader {
 		            	ancestorSha = DigestUtils.sha1Hex(ancestorFileContent).toString();
 		    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), ancestorFileContent);
 		
-		    			ancestorFound = true;
 		        	}
-		        }
-		        
-		        if (!ancestorFound) {
-
-	            	ancestorSha = DigestUtils.sha1Hex("").toString();
-	    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), "");
 		        }
         
 			}
 			else {
-				// No merge base found -> ancestor is empty
-            	ancestorSha = DigestUtils.sha1Hex("").toString();
-    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + ancestorSha), "");
+				// no merge base found! -> empty file or what is the plan?!!?
 			}
 		}
 		catch (Exception e) {

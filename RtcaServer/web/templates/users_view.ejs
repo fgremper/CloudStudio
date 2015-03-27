@@ -1,39 +1,41 @@
-<div id="header">
-	<div id="headerLogin">
-		Logged in as <strong><%= login.username %></strong>
-		<% if (login.isAdmin) { %> &mdash; <span id="manageUsers">Manage users</span><% } %>
-	</div>
-	<span id="headerLogo">CloudStudio</span>
-</div>
 <div id="navigationBar">
-	<span id="refresh">Refresh</span>
-	<span id="navigationLocation"><strong>User management</strong></span>
+	<div id="navigationBarLocation">Location: <span class="loadRepositoryView clickable">Repository Overview</span> &mdash; Repository: <strong>User Management</strong></div>
+	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
 </div>
-<div id="view">
-	<table id="userTable">
-	    <tr><th>Username</th><th>Administrator</th><th>Create repositories</th><th></th></tr>
+<div id="titleBar">
+	Create Repository
+</div>
+
+<div id="userListContainer">
+	<div id="userListHeader">
+		<div>Username</div>
+		<div>Administrator Priveleges</div>
+		<div>Creator Privileges</div>
+		<div>Joined</div>
+	</div>
+	<table id="userList">
 		<% for (var i = 0; i < users.length; i++) { %>
-		    <tr data-alias="<%= users[i]['username'] %>">
-		        <td><span class="user"><%= users[i]['username'] %> <span class="modify deleteUser" data-username="<%= users[i]['username'] %>">del</span></span></td>
+		    <tr data-alias="<%= users[i]['username'] %>" class="userListItem">
+		        <td><span class="user"><%= users[i]['username'] %></span> <span class="modify deleteUser" data-username="<%= users[i]['username'] %>">(Remove)</span></td>
 		        <td>
 		        	<% if (users[i]['isAdmin']) { %>
 	        			<strong>Yes</strong>
-	        			<span class="modify revokeUserAdmin" data-username="<%= users[i]['username'] %>">toggle</span>
+	        			<span class="modify revokeUserAdmin" data-username="<%= users[i]['username'] %>">(Toggle)</span>
         			<% } else { %>
         				No
-	        			<span class="modify makeUserAdmin" data-username="<%= users[i]['username'] %>">toggle</span>
+	        			<span class="modify makeUserAdmin" data-username="<%= users[i]['username'] %>">(Toggle)</span>
     				<% } %>
 				</td>
 		        <td>
 		        	<% if (users[i]['isCreator']) { %>
 	        			<strong>Yes</strong>
-	        			<span class="modify revokeUserCreator" data-username="<%= users[i]['username'] %>">toggle</span>
+	        			<span class="modify revokeUserCreator" data-username="<%= users[i]['username'] %>">(Toggle)</span>
         			<% } else { %>
         				No
-	        			<span class="modify makeUserCreator" data-username="<%= users[i]['username'] %>">toggle</span>
+	        			<span class="modify makeUserCreator" data-username="<%= users[i]['username'] %>">(Toggle)</span>
     				<% } %>
 				</td>
-				<td></td>
+				<td><%= users[i]['joinDate'] %></td>
 		    </tr>
 		<% } %>
 	</table>

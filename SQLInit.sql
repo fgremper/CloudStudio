@@ -15,6 +15,7 @@ CREATE TABLE users
 	passwordhash VARCHAR(255) NOT NULL,
 	isadmin VARCHAR(5) NOT NULL,
 	iscreator VARCHAR(5) NOT NULL,
+	joindate TIMESTAMP NOT NULL,
 	PRIMARY KEY (username)
 );
 

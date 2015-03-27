@@ -86,13 +86,14 @@ $(function () {
             isCreator: (getCookie("isCreator") == "true")
         };
 
-        // Look at URL to find out what to render
-        renderFromDocumentLocation();
     }
-    else {
+    /*else {
         // We're not logged in, render login view
         renderLoginView();
-    }
+    }*/
+
+    // Look at URL to find out what to render
+    renderFromDocumentLocation();
 
     // Render header bar
     renderHeaderBar();
@@ -132,10 +133,20 @@ function renderFromDocumentLocation() {
     var url = document.location.pathname;
     var params = url.split(/\//).splice(1);
 
-    console.log('YES');
-
     if (params[0] == "") {
-        renderLoginView();
+        if (login.sessionId == null) {
+            renderLoginView();
+        }
+        else {
+            loadRepositoryView();
+        }
+
+    }
+    else if (params[0] == "signup" && (params[1] == undefined || params[1] == "")) {
+        renderSignUpView();
+    }
+    else if (params[0] == "create" && (params[1] == undefined || params[1] == "")) {
+        loadCreateRepositoryView();
     }
     else if (params[0] == "repositories" && (params[1] == undefined || params[1] == "")) {
         loadRepositoryView();
@@ -161,24 +172,23 @@ function renderHeaderBar() {
 
     // Rendering the header HTML
     $('#headerBar').html('');
-    $('#headerBar').append('<div class="headerBarLeft">CloudStudio</div>');
+    $('#headerBar').append('<div id="headerLogo" class="headerBarLeft">CloudStudio</div>');
     if (login.sessionId != null) {
         $('#headerBar').append('<div class="headerBarRight" id="logout">Logout</div>');
-        if (login.isAdmin) { $('#headerBar').append('<div class="headerBarRight">Manage Users</div>'); }
-        $('#headerBar').append('<div class="headerBarRight">Profile</div>');
+        if (login.isAdmin) { $('#headerBar').append('<div id="headerManageUsers" class="headerBarRight">Manage Users</div>'); }
     }
     else {
-        $('#headerBar').append('<div class="headerBarRight">Sign Up</div>');
-        $('#headerBar').append('<div class="headerBarRight">Log In</div>');
+        $('#headerBar').append('<div id="headerSignUp" class="headerBarRight">Sign Up</div>');
+        $('#headerBar').append('<div id="headerLogIn" class="headerBarRight">Log In</div>');
     }
 
     // Clicking the logout button
     $('#logout').click(function () {
         // Delete the login cookies
-        setCookie("sessionId", login.sessionId, -1);
-        setCookie("username", login.username, -1);
-        setCookie("isCreator", login.isCreator, -1);
-        setCookie("isAdmin", login.isAdmin, -1);
+        setCookie("sessionId", null, -1);
+        setCookie("username", null, -1);
+        setCookie("isCreator", null, -1);
+        setCookie("isAdmin", null, -1);
 
         // Delete the login variable
         login = {};
@@ -190,6 +200,28 @@ function renderHeaderBar() {
         renderLoginView();
     });
 
+    $('#headerLogo').click(function () {
+
+        if (login.sessionId == null) {
+            renderLoginView();
+        }
+        else {
+            loadRepositoryView();
+        }
+    });
+
+    $('#headerSignUp').click(function () {
+        renderSignUpView();
+    });
+
+    $('#headerLogIn').click(function () {
+        renderLoginView();
+    });
+
+
+    $('#headerManageUsers').click(function () {
+        loadUsersView();
+    });
 }
 
 
@@ -253,6 +285,95 @@ function renderLoginView() {
 
 
 
+/* SIGN UP */
+
+function renderSignUpView() {
+    
+    // Push history state
+    pushHistoryState("signup");
+
+    // Render template
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/signup_view.ejs'}).render());
+
+    // Register login click event
+    $('#submitSignup').click(function () {
+        sendApiRequest({
+            name: 'createUser',
+            type: 'POST',
+            data: { username: $('#username').val(), password: $('#password').val() },
+            success: function(data) {
+                console.log("Sign Up. Success: " + JSON.stringify(data));
+
+                alert("Sign up success!");
+
+                renderLoginView();
+
+            },
+            error: function (data) {
+                displayError('Sign Up', data.responseJSON);
+            }
+        });
+    });
+
+    // Submit form when we press enter while we're in one of the input fields
+    $('#username, #password').keypress(function(e) {
+        if (e.which == 13 && !$('#errorOverlay').is(':visible')) {
+            $('#submitSignup').click();
+        }
+    });
+
+    // Focus on the username input field
+    $('#username').focus();
+
+}
+
+
+
+/* SIGN UP */
+
+function renderCreateRepository() {
+    
+    // Push history state
+    pushHistoryState("signup");
+
+    // Render template
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/signup_view.ejs'}).render());
+
+    // Register login click event
+    $('#submitSignup').click(function () {
+        sendApiRequest({
+            name: 'createUser',
+            type: 'POST',
+            data: { username: $('#username').val(), password: $('#password').val() },
+            success: function(data) {
+                console.log("Sign Up. Success: " + JSON.stringify(data));
+
+                alert("Sign up success!");
+
+                renderLoginView();
+
+            },
+            error: function (data) {
+                displayError('Sign Up', data.responseJSON);
+            }
+        });
+    });
+
+    // Submit form when we press enter while we're in one of the input fields
+    $('#username, #password').keypress(function(e) {
+        if (e.which == 13 && !$('#errorOverlay').is(':visible')) {
+            $('#submitSignup').click();
+        }
+    });
+
+    // Focus on the username input field
+    $('#username').focus();
+
+}
+
+
+
+
 /* REPOSITORY OVERIEW */
 
 function loadRepositoryView() {
@@ -289,9 +410,9 @@ function renderRepositoryView(data) {
         loadBranchView($(this).data('alias'));
     });
 
+    $('#createRepository').click(loadCreateRepositoryView);
     /*
     // content
-    $('#createRepository').click(loadCreateRepositoryView);
     $('.addUserToRepository').click(function (e) {
         var usernameToAdd = prompt('Enter user to add to repository "' + $(this).data('repositoryalias') + '":');
         if (usernameToAdd == null) return;
@@ -706,13 +827,9 @@ function loadCreateRepositoryView() {
 function renderCreateRepositoryView(data) {
 
     // set state
-    pushHistoryState("createRepository");
+    pushHistoryState("create");
 
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/create_repository_view.ejs'}).render(data));
-
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
 
     // navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
@@ -721,7 +838,7 @@ function renderCreateRepositoryView(data) {
         sendApiRequest({
             name: 'createRepository',
             type: 'POST',
-            data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val() },
+            data: { repositoryAlias: $('#repositoryAlias').val(), repositoryUrl: $('#repositoryUrl').val(), repositoryDescription: $('#repositoryDescription').val() },
             success: function(data) {
                 console.log("Create repository. Success: " + JSON.stringify(data));
 
@@ -737,7 +854,7 @@ function renderCreateRepositoryView(data) {
 
 /* USER MANAGEMENT VIEW */
 
-/*
+
 function loadUsersView() {
     sendApiRequest({
         name: 'users',
@@ -760,14 +877,8 @@ function renderUsersView(data) {
 
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/users_view.ejs'}).render(data));
 
-    // header
-    $('#headerLogo').click(loadRepositoryView);
-    $('#manageUsers').click(loadUsersView);
-
     // navigation bar
-    $('#refresh').click(loadUsersView);
-
-    $('.repository').click(function () {
+    $('.loadRepositoryView').click(function () {
         loadRepositoryView($(this).data('alias'));
     });
 
@@ -789,7 +900,7 @@ function renderUsersView(data) {
     });
     $('.makeUserAdmin').click(function (e) {
         sendApiRequest({
-            name: 'makeUserAdmin',
+            name: 'giveAdminPrivileges',
             type: 'POST',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
@@ -804,7 +915,7 @@ function renderUsersView(data) {
     });
     $('.revokeUserAdmin').click(function (e) {
         sendApiRequest({
-            name: 'revokeUserAdmin',
+            name: 'revokeAdminPrivileges',
             type: 'POST',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
@@ -819,7 +930,7 @@ function renderUsersView(data) {
     });
     $('.makeUserCreator').click(function (e) {
         sendApiRequest({
-            name: 'makeUserCreator',
+            name: 'giveCreatorPrivileges',
             type: 'POST',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
@@ -834,7 +945,7 @@ function renderUsersView(data) {
     });
     $('.revokeUserCreator').click(function (e) {
         sendApiRequest({
-            name: 'revokeUserCreator',
+            name: 'revokeCreatorPrivileges',
             type: 'POST',
             data: { username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
@@ -852,15 +963,13 @@ function renderUsersView(data) {
 
 
 
-*/
-
 
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();
     d.setTime(d.getTime() + (exdays*24*60*60*1000));
     var expires = "expires="+d.toUTCString();
-    document.cookie = cname + "=" + cvalue + "; " + expires;
+    document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";
 }
 
 function getCookie(cname) {

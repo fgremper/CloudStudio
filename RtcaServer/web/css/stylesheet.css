@@ -10,14 +10,13 @@ textarea, input { outline: none; }
 
 
 /* view */
-
+/*
 #view {
     margin: 0 20px;
-}
-
+}*/
 
 /* header */
-
+/*
 #header {
     background-color: #f6f6f6;
     border-bottom: 1px solid #b0b0b0;
@@ -59,7 +58,7 @@ textarea, input { outline: none; }
     color: #f6f6f6;
 }
 
-
+*/
 /* nagivation bar */
 
 /*
@@ -191,7 +190,7 @@ textarea, input { outline: none; }
 
 
 /* repository table */
-
+/*
 
 #repositoryTable {
     width: 100%;
@@ -263,7 +262,7 @@ textarea, input { outline: none; }
 
 
 /* branch */
-
+/*
 #branchTable {
     width: 100%;
     table-layout: fixed;
@@ -332,7 +331,7 @@ textarea, input { outline: none; }
 
 
 /* file */
-
+/*
 
 #fileTable {
     width: 100%;
@@ -404,7 +403,7 @@ textarea, input { outline: none; }
 
 
 /* users */
-
+/*
 #userTable {
     width: 100%;
     table-layout: fixed;
@@ -459,7 +458,7 @@ textarea, input { outline: none; }
 
 
 /* 33% */
-
+/*
 #invisibleTable {
     width: 1000px;
     table-layout: fixed;
@@ -493,7 +492,7 @@ textarea, input { outline: none; }
 }
 
 /* utility */
-
+/*
 span.ellipsis {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -711,9 +710,28 @@ body {
     right: 0;
     bottom: 0;
     //background: url('/img/splash.jpg') no-repeat;
-    background-color: #386fcf;
+    background-color: #c0e2fa;
     background-position: center center;
     background-size: cover;
+}
+
+#loginFooter {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 27px 20px 20px 20px;
+    color: rgba(0, 0, 0, 0.5);
+    line-height: 150%;
+    text-align: center;
+}
+
+#loginFooter a {
+    color: #386fcf;
+}
+
+#loginFooter a:hover {
+    text-decoration: none;
 }
 
 #loginBrand {
@@ -722,14 +740,59 @@ body {
     left: 0;
     right: 0;
     text-align: center;
-    color: #ffffff;
+    color: #404040;
     margin-top: -200px;
-    font-weight: 600;
-    font-size: 100px;
+    font-weight: 400;
+    font-size: 50px;
     text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 #loginBox {
+    width: 400px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -90px;
+    margin-left: -200px;
+    background-color: #ffffff;
+    padding: 24px 26px;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+
+#loginBox p {
+    margin: 5px 0;
+}
+
+/* signup */
+
+#signupSplash {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #d0d0d0;
+    background-position: center center;
+    background-size: cover;
+}
+
+#signupBrand {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: #404040;
+    margin-top: -180px;
+    font-weight: 300;
+    font-size: 40px;
+    text-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+}
+
+#signupBox {
     width: 400px;
     position: absolute;
     top: 50%;
@@ -744,7 +807,7 @@ body {
 }
 
 
-#loginBox p {
+#signupBox p {
     margin: 5px 0;
 }
 
@@ -763,7 +826,7 @@ body {
 
 #repositoryList div.repositoryListItem {
     width: 100%;
-    display: inline-block;;
+    display: inline-block;
 }
 
 #repositoryList div.repositoryListBlock {
@@ -811,24 +874,40 @@ body {
     color: rgba(0, 0, 0, 0.5);
 }
 
+#createRepository {
+    margin: 0 0 20px 20px;
+}
 /* filter box */
 
 #filterBox {
-    padding: 3px 10px 2px 10px;
+    padding: 0 10px;
     background-color: #e0e0e0;
     border-bottom: 1px solid #d0d0d0;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
 }
 
-#filterBoxBlock {
-    padding: 4px 10px;
+#filterBox .filterBoxBlock {
+    padding: 7px 10px 0px 10px;
     width: 300px;
     display: inline-block;
     font-size: 12px;
-    color: #808080;
-    text-transform: uppercase;
+    color: #404040;
+    line-height: 15px;
+    height: 50px;
 }
-#filterBoxBlock select {
+
+#filterBox .filterBoxCompareTo {
+    width: 150px;
+}
+
+#filterBox .filterBoxCheckboxes {
+    font-size: 13px;
+    width: 200px;
+    line-height: 16px;
+}
+
+
+#filterBox .filterBoxBlock select {
     width: 100%;
 }
 
@@ -860,7 +939,6 @@ body {
 
 #branchListHeader div {
     display: table-cell;
-    width: 400px;
     vertical-align: middle;
     box-sizing: border-box;
     padding: 0 20px;
@@ -1161,6 +1239,55 @@ body {
 
 
 
+/* branch list */
+
+#userListContainer {
+    margin: 10px 20px 20px 20px;
+}
+
+#userList {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-bottom: 1px solid #b0b0b0;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    border-top: 2px solid #386fcf;
+}
+
+#userListHeader {
+    width: 100%;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    padding: 0;
+    border-spacing: 0;
+}
+
+#userListHeader div {
+    display: table-cell;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 0 20px;
+    color: #808080;
+    height: 40px;
+}
+
+#userList tr.userListItem {
+    background-color: #ffffff;
+    border-top: 1px solid #b0b0b0;
+    border-left: 1px solid #b0b0b0;
+    border-right: 1px solid #b0b0b0;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+#userList tr.userListItem td {
+    padding: 2px 20px;
+}
+
+
+
 /* user labels */
 
 span.userSmall {
@@ -1230,6 +1357,20 @@ input[type=text]:focus, input[type=password]:focus {
 :-ms-input-placeholder { font-weight: 300; } /* ie */
 input:-moz-placeholder { font-weight: 300; }
 
+#view {
+    line-height: 20px;
+    margin: 20px;
+}
+
+span.modify {
+    color: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+span.modify:hover {
+    color: rgba(0, 0, 0, 0.6);
+}
 
 div.button {
     display: inline-block;

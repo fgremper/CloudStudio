@@ -30,6 +30,10 @@
 
 </div>
 
+<% if (login.isAdmin || login.isCreator) { %>
+	<div id="createRepository" class="button">Create new repository</div>
+<% } %>
+<!--
 <div id="view">
 	<table id="repositoryTable">
 	    <tr><th>Alias</th><th>URL</th><th>Owner</th><th>Users</th></tr>
@@ -54,3 +58,4 @@
 		<div id="createRepository">Create repository</div>
 	<% } %>
 </div>
+-->

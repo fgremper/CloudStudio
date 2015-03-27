@@ -7,36 +7,32 @@
 
 
 
-* Webinterface: package responsible users
-* Webinterface: create repository
+>* Webinterface: create repository
+>* Webinterface: New user
+> * Webinterface: user management
+> * conflict view for uncommitted changes
+> * conflict view without common ancestor -> empty file
 * Webinterface: repository (add, remove, adduser, removeuser, makeowner, changepositoryurl, changedescription, deleterepository)
-* Webinterface: user management
 * Webinterface: profile?!
-* Webinterface: New user
-
+* Webinterface: package responsible users
 * change repository info (description, url) API
-* active branch = null what is that all about
 
 [logic]
-* binary files detection
-* do big files work? (disable logging for this)
-* conflict view for uncommitted changes
-* conflict view without common ancestor -> empty file
 
 [cool stuff that should be easy but is possibly problematic]
+* binary files detection
+* do big files work? (disable logging for this)
 * re-enable database connection pool
 * list in gui sometimes bugs (swing)
-* make sure pasting links works and login without session id is not problematic
 * sql case sensitivity of queries?!
+* active branch = null what is that all about
 
 [random]
-* cool cloudstudio logo
+* cool cloudstudio logo :O :O :O
 
-[big tasks]
+[finalizing]
 * Clean up code in server
-* Write global tests
-* Write JUnit Tests
-* Deployment with maven?
+* testing
 
 #### Done
 

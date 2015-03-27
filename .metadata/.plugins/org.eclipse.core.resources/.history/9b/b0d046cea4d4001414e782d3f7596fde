@@ -129,12 +129,7 @@ public class RepositoryReader {
 		            
 		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
 		            List<String> downstreamCommits = new LinkedList<String>();
-
-	            	JSONObject dc2 = new JSONObject();
-	            	dc2.put("commit", commitId);
-	            	dc2.put("distance", 0);
-	            	downstreamCommitsObject.put(dc2);
-	            	
+		            
 		            HashMap<RevCommit, Integer> distance = new HashMap<RevCommit, Integer>();
 		            if (commit.getParents() != null) { 
 		            	todoCommits.addAll(Arrays.asList(commit.getParents()));

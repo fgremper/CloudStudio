@@ -78,7 +78,7 @@ public class ApiHttpHandler implements HttpHandler {
 			}
 
 			// Get users request
-			else if (apiName.equals("users") && requestMethod.equalsIgnoreCase("get")) {
+			else if (apiName.equals("repositories") && requestMethod.equalsIgnoreCase("get")) {
 				
 				// We need to be admin to retrieve this information
 				if (db.isUserAdmin(sessionUsername)) {

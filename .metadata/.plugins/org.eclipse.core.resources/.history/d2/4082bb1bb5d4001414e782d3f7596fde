@@ -620,18 +620,16 @@ public class DatabaseConnection {
 	public JSONArray getUsers() throws Exception {
 		JSONArray usersArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users");
+		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator FROM users");
 		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
 			String username = rs.getString("username");
 			String isAdmin = rs.getString("isadmin");
 			String isCreator = rs.getString("iscreator");
-			String joinDate = rs.getString("joindate");
 			JSONObject userObject = new JSONObject();
 			userObject.put("username", username);
 			userObject.put("isAdmin", isAdmin.equals("true"));
 			userObject.put("isCreator", isCreator.equals("true"));
-			userObject.put("joinDate", joinDate);
 			usersArray.put(userObject);
 		}
 		
