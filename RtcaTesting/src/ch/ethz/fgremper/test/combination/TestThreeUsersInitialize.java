@@ -16,42 +16,20 @@ public class TestThreeUsersInitialize {
 	public void test() throws Exception {
 
 		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
 		
-		db.startTransaction();
-		db.resetDatabase();
-		db.addUser("Admin", "1234");
-		db.makeUserAdmin("admin");
-		db.addUser("John", "johnpw");
-		db.addUser("David", "davidpw");
-		db.addUser("Isabelle", "isabellepw");
-		db.createRepository("TestRepository", "/Users/novocaine/Documents/masterthesis/testsandpit/origin", "John", "just testing move along");
-		db.createRepository("HelloWorld", "", "John", "hey world, what's up");
-		db.createRepository("BankAccountDemo", "", "John", "This is the bank account demo");
-		db.addUserToRepository("John", "TestRepository");
-		db.addUserToRepository("David", "TestRepository");
-		db.addUserToRepository("Isabelle", "TestRepository");
-		db.commitTransaction();
-		
-		// setup scenario
-		
-		System.out.println("[Test] Setting up scenario in sandpit");
-		
-		TestGitHelper.clearSandpit();
-		
-		TestGitHelper.createOrigin();
-		
-		TestGitHelper.createUser("John");
-		TestGitHelper.cloneOrigin("John");
-		TestGitHelper.createUser("David");
-		TestGitHelper.cloneOrigin("David");
-		TestGitHelper.createUser("Isabelle");
-		TestGitHelper.cloneOrigin("Isabelle");
+		TestGitHelper.setupTest();
 
+		
+		
 		TestGitHelper.createFolder("John", "main");
 		TestGitHelper.createFolder("John", "main/v1");
 		TestGitHelper.createFolder("John", "main/v2");
 		TestGitHelper.createFolder("John", "test");
 		TestGitHelper.createFolder("John", "docs");
+		
+		TestGitHelper.writeContentToFile("John", "justafileconflict.txt", "one\ntwo\nthree\nfour\nfive");
+		TestGitHelper.writeContentToFile("John", "acontentconflict.txt", "one\ntwo\nthree\nfour\nfive");
 
 		TestGitHelper.createOrModifyFile("John", "main/v1/main.java");
 		TestGitHelper.createOrModifyFile("John", "main/v2/main.java");
@@ -73,6 +51,15 @@ public class TestThreeUsersInitialize {
 		TestGitHelper.commit("David");
 		
 
+
+		TestGitHelper.writeContentToFile("John", "justafileconflict.txt", "one\nJohn added this.\ntwo\nthree\nfour\nfive");
+		TestGitHelper.writeContentToFile("John", "acontentconflict.txt", "one\ntwo\nthree changed by john\nfour\nfive");
+
+
+		TestGitHelper.writeContentToFile("David", "justafileconflict.txt", "one\ntwo\nthree\nfour\nDavid added this.\nfive");
+		TestGitHelper.writeContentToFile("David", "acontentconflict.txt", "one\ntwo\nthree changed by david\nfour\nfive");
+
+		
 		TestGitHelper.createOrModifyFile("David", "test/foo.java");
 		TestGitHelper.commit("David");
 		
@@ -82,18 +69,22 @@ public class TestThreeUsersInitialize {
 
 		
 
-		String[] argsJohn = {"configJohn.xml", "--nogui"};
-		String[] argsDavid = {"configDavid.xml", "--nogui"};
-		String[] argsIsabelle = {"configIsabelle.xml", "--nogui"};
-		
-		ClientMain.main(argsJohn);
-		ClientMain.main(argsDavid);
-		ClientMain.main(argsIsabelle);
+		TestGitHelper.writeContentToFile("John", "justafileconflict.txt", "one\nJohn added this. And changed it again without committing.\ntwo\nthree\nfour\nfive");
+		TestGitHelper.writeContentToFile("John", "acontentconflict.txt", "one\ntwo\nthree changed by john uncommitted\nfour\nfive");
 
-		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
-		originUpdaterInterval.updateAll();
-			
+
+		TestGitHelper.writeContentToFile("David", "justafileconflict.txt", "one\ntwo\nthree\nfour\nDavid added this. And changed it again without committing.\nfive");
+		TestGitHelper.writeContentToFile("David", "acontentconflict.txt", "one\ntwo\nthree changed by david uncommitted\nfour\nfive");
+
+		TestGitHelper.writeContentToFile("David", "madeanewfilelol.txt", "hey\nwhats\nup");
+
+				
+
 		
+		
+		TestGitHelper.runPlugins();
+		
+		db.closeConnection();
 	}
 
 }

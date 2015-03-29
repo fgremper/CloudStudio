@@ -1,0 +1,101 @@
+package ch.ethz.fgremper.test.combination;
+
+import static org.junit.Assert.*;
+import junit.framework.Assert;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.Test;
+
+import ch.ethz.fgremper.rtca.DatabaseConnection;
+import ch.ethz.fgremper.rtca.test.helper.TestGitHelper;
+
+public class BranchLevelAwarenessTest {
+
+	
+	public JSONObject findItem(JSONArray array, String key, String value) throws Exception {
+		for (int i = 0; i < array.length(); i++) {
+			if (array.getJSONObject(i).getString(key).equals(value)) return array.getJSONObject(i);
+		}
+		return null;
+	}
+	
+	@Test
+	public void test() throws Exception {
+		
+
+		DatabaseConnection db = new DatabaseConnection();
+		
+		db.getConnection();
+
+		JSONObject responseObject;
+		JSONArray branchesArray;
+		JSONObject branchObject;
+		
+		// Setup default state
+		TestGitHelper.setupTest();
+		TestGitHelper.runPlugins();
+		
+		// Test default state
+		responseObject = db.getBranchLevelAwareness("TestRepository");
+		branchesArray = responseObject.getJSONArray("branches");
+		assertEquals(1, branchesArray.length());
+		branchObject = branchesArray.getJSONObject(0);
+
+		assertEquals(3, branchObject.getJSONArray("activeUsers").length());
+		assertEquals(3, branchObject.getJSONArray("users").length());
+		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
+		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
+		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		
+		// Setup John 1 ahead
+		TestGitHelper.createOrModifyFile("John", "default.txt");
+		TestGitHelper.commit("John");
+		TestGitHelper.runPlugins();
+
+		// Test John 1 ahead
+		responseObject = db.getBranchLevelAwareness("TestRepository");
+		branchesArray = responseObject.getJSONArray("branches");
+		assertEquals(1, branchesArray.length());
+		branchObject = branchesArray.getJSONObject(0);
+		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
+		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
+		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		
+		System.out.println("ISABELLE: " + findItem(branchObject.getJSONArray("users"), "username", "John"));
+		
+		
+
+		if (true) return;
+		
+		TestGitHelper.createOrModifyFile("John", "default.txt");
+		TestGitHelper.commit("John");
+		TestGitHelper.push("John");
+		TestGitHelper.runPlugins();
+		
+		
+		
+		
+		
+		// John 2 ahead
+		System.out.println("JOHN 2 AHEAD");
+		System.out.println(db.getBranchLevelAwareness("TestRepository").toString());
+		
+		
+
+		TestGitHelper.createOrModifyFile("Isabelle", "default.txt");
+		TestGitHelper.commit("Isabelle");
+		TestGitHelper.push("Isabelle");
+		TestGitHelper.runPlugins();
+		
+		// Isabelle 1 ahead
+		System.out.println("JOHN 2 AHEAD");
+		System.out.println(db.getBranchLevelAwareness("TestRepository").toString());
+		
+		
+		
+		
+				
+	}
+
+}

@@ -27,13 +27,17 @@ public class DatabaseConnection {
 	
 	Connection con = null;
 
-	public DatabaseConnection() throws Exception {
+	public DatabaseConnection() {
 		// con = DatabaseConnectionPool.getInstance().getConnection();
+	}
+
+	public void getConnection() throws Exception {
     	ServerConfig serverConfig = ServerConfig.getInstance();
         Class.forName(serverConfig.dbDriverClass);
         con = DriverManager.getConnection(serverConfig.dbJdbcUrl, serverConfig.dbUser, serverConfig.dbPassword);
-	}
 
+	}
+	
 	/* UTILITY */
 	
 	public void startTransaction() throws SQLException {
@@ -48,9 +52,14 @@ public class DatabaseConnection {
 		con.rollback();
 	}
 	
-	public void closeConnection() throws SQLException {
-		if (con != null) {
-			con.close();
+	public void closeConnection() {
+		try {
+			if (con != null) {
+				con.close();
+			}
+		}
+		catch (Exception e) {
+			
 		}
 	}
 
@@ -203,8 +212,6 @@ public class DatabaseConnection {
 		
 		PreparedStatement stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("BranchAwareness"));
 
-		log.info("READ CONTENTS: " + SqlQueryReader.getInstance().getQuery("BranchAwareness"));
-		
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryAlias);
 		stmt.setString(3, repositoryAlias);

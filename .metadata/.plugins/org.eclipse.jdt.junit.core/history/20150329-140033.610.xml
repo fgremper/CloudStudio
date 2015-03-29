@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="FileLevelAwarenessTest" project="RtcaTesting" tests="2" started="2" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.ethz.fgremper.test.combination.FileLevelAwarenessTest" time="4.933">
+    <testcase name="testBranchCompare" classname="ch.ethz.fgremper.test.combination.FileLevelAwarenessTest" time="3.666"/>
+    <testcase name="testBranchInternal" classname="ch.ethz.fgremper.test.combination.FileLevelAwarenessTest" time="1.267"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,83 @@
+package ch.ethz.fgremper.test.combination;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import ch.ethz.fgremper.rtca.ClientMain;
+import ch.ethz.fgremper.rtca.DatabaseConnection;
+import ch.ethz.fgremper.rtca.PeriodicalAllOriginUpdater;
+import ch.ethz.fgremper.rtca.test.helper.TestDBHelper;
+import ch.ethz.fgremper.rtca.test.helper.TestGitHelper;
+
+public class TestThreeUsersInitialize {
+
+	@Test
+	public void test() throws Exception {
+
+		DatabaseConnection db = new DatabaseConnection();
+		
+db.getConnection();
+
+TestGitHelper.setupTest();
+
+		db.createRepository("HelloWorld", "", "John", "hey world, what's up");
+		db.createRepository("BankAccountDemo", "", "John", "This is the bank account demo");
+		db.addUserToRepository("John", "TestRepository");
+		db.addUserToRepository("David", "TestRepository");
+		db.addUserToRepository("Isabelle", "TestRepository");
+		db.commitTransaction();
+		
+		// setup scenario
+		
+		System.out.println("[Test] Setting up scenario in sandpit");
+		
+		TestGitHelper.clearSandpit();
+		
+		TestGitHelper.createOrigin();
+		
+		TestGitHelper.createUser("John");
+		TestGitHelper.cloneOrigin("John");
+		TestGitHelper.createUser("David");
+		TestGitHelper.cloneOrigin("David");
+		TestGitHelper.createUser("Isabelle");
+		TestGitHelper.cloneOrigin("Isabelle");
+
+		TestGitHelper.createFolder("John", "main");
+		TestGitHelper.createFolder("John", "main/v1");
+		TestGitHelper.createFolder("John", "main/v2");
+		TestGitHelper.createFolder("John", "test");
+		TestGitHelper.createFolder("John", "docs");
+
+		TestGitHelper.createOrModifyFile("John", "main/v1/main.java");
+		TestGitHelper.createOrModifyFile("John", "main/v2/main.java");
+		TestGitHelper.createOrModifyFile("John", "main/v2/feature.java");
+		TestGitHelper.createOrModifyFile("John", "test/foo.java");
+		TestGitHelper.createOrModifyFile("John", "docs/readme.txt");
+		
+		TestGitHelper.createBranch("John", "test_branch");
+		
+		TestGitHelper.commit("John");
+		
+		
+		TestGitHelper.push("John");
+
+		TestGitHelper.pull("David");
+		TestGitHelper.pull("Isabelle");
+		
+		TestGitHelper.createOrModifyFile("David", "main/v2/main.java");
+		TestGitHelper.commit("David");
+		
+
+		TestGitHelper.createOrModifyFile("David", "test/foo.java");
+		TestGitHelper.commit("David");
+		
+
+		TestGitHelper.createOrModifyFile("John", "test/foo.java");
+		TestGitHelper.commit("John");
+
+		TestGitHelper.runPlugins();
+		
+	}
+
+}

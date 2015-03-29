@@ -20,9 +20,9 @@ public class OriginUpdater {
 		
 		if (repositoryUrl == null || repositoryUrl.equals("")) return;
 		
-		DatabaseConnection db = null;
+		DatabaseConnection db = new DatabaseConnection();
 		try {
-			db = new DatabaseConnection();
+			db.getConnection();
 			
 			String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
 			
@@ -74,14 +74,7 @@ public class OriginUpdater {
 		}
 		
 		// Close database connection
-		try {
-			if (db != null) {
 				db.closeConnection();
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 	
 	public static void executeCommand(String consoleInput) throws Exception {

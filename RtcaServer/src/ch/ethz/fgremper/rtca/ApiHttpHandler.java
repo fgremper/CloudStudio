@@ -51,11 +51,11 @@ public class ApiHttpHandler implements HttpHandler {
 		String response = null;
 		String error = null;
 
-		DatabaseConnection db = null;
+		DatabaseConnection db = new DatabaseConnection();;
 		try {
 			
 			// Get database connection
-			db = new DatabaseConnection();
+			db.getConnection();
 
 			String sessionId = null;
 			String sessionUsername = null;
@@ -544,15 +544,8 @@ public class ApiHttpHandler implements HttpHandler {
 		}
 
 		// Close database connection
-		try {
-			if (db != null) {
-				db.closeConnection();
-			}
-		}
-		catch (SQLException e) {
-			// Do nothing
-		}
-		
+		db.closeConnection();
+				
 		if (response != null) {
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
 		}

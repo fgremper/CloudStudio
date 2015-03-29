@@ -7,6 +7,18 @@
 	Repository Overview
 </div>
 
+
+	<% if (login.isAdmin || login.isCreator) { %>
+<div id="filterBox">
+	<div class="filterBoxBlock">
+		<div id="createRepository" class="button">Create new repository</div>
+	</div>
+	
+		<div class="clear"></div>
+</div>
+
+	<% } %>
+
 <div id="repositoryList">
 
 	<% for (var i = 0; i < repositories.length; i++) { %>
@@ -30,9 +42,6 @@
 
 </div>
 
-<% if (login.isAdmin || login.isCreator) { %>
-	<div id="createRepository" class="button">Create new repository</div>
-<% } %>
 <!--
 <div id="view">
 	<table id="repositoryTable">
@@ -54,8 +63,5 @@
 		    </tr>
 		<% } %>
 	</table>
-	<% if (login.isAdmin || login.isCreator) { %>
-		<div id="createRepository">Create repository</div>
-	<% } %>
 </div>
 -->

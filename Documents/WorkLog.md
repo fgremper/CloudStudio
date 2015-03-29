@@ -7,6 +7,105 @@
 
 
 
+
+tests
+
+* test branch commit level
+
+  * 3 users
+
+  create repository, update everything
+
+  A make a commit
+  -> 1 in front
+
+  A make a commit
+  -> 2 in front
+
+  B make a commit
+  -> 1 in front
+
+  A push
+  -> equal, C is behind 2, B is fork
+
+  B commit -> bigger fork diff
+
+  C commit -> fork
+
+
+  * branches:
+
+  create a new branch -> it's local
+  make a commit with it -> it's green
+  -> everyone else has it "not checked out"
+  everyone else pull (all?) -> all up to date
+
+  * test branches
+
+  same thing as above but with a new branch
+
+
+
+
+
+* test file level stuff
+
+from now it's just snapshot
+
+ABC
+
+  * file level conflict
+
+  A edits a file -> file level conflict (uncommitted)
+  B pulls -> no more conflict (uncommitted)
+
+  no problems here for committed
+
+  * same thing with uncommitted
+
+  this should be almost the easiest part
+
+
+
+* test line level stuff
+
+
+
+  * line level count stuff
+
+  the important thing is that we have the right ancestor
+
+    so we make a normal branch thing
+
+    and look if it works
+
+  
+
+  for uncommitted stuff:
+
+    both change the file in the same commit
+
+    one changes the file in a later commit
+
+    both change the file in a later commit
+
+
+  both change the file and there's no actual conflict but just different lines in the same text file
+
+
+
+
+  and then we can test the functionality of the diff standalone
+
+
+
+
+
+
+
+
+
+
 >* Webinterface: create repository
 >* Webinterface: New user
 > * Webinterface: user management

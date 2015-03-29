@@ -7,8 +7,8 @@
 </div>
 
 <div id="filterBox">
-	<div class="filterBoxBlock">
-		
+	<div class="filterBoxBlock filterBoxUserFilter">
+
 		Filter users:<br>
 		<select id="usersFilter" multiple>
 			<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
@@ -17,8 +17,10 @@
 				<option value="<%= repositoryUsers[i] %>"<% if (selectedUsers.indexOf(repositoryUsers[i]) >= 0) { %> selected<% } %>><%= repositoryUsers[i] %></option>
 			<% } %>
 		</select>
+		
 
 	</div>
+	<div class="clear"></div>
 </div>
 
 <div id="branchListContainer"></div>

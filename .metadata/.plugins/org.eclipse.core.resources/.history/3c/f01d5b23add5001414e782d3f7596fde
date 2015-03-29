@@ -1,0 +1,28 @@
+package ch.ethz.fgremper.test.combination;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import ch.ethz.fgremper.rtca.DatabaseConnection;
+import ch.ethz.fgremper.rtca.test.helper.TestGitHelper;
+
+public class BranchLevelAwarenessTest {
+
+	@Test
+	public void test() throws Exception {
+		TestGitHelper.setupTest();
+		
+		TestGitHelper.runPlugins();
+		
+		DatabaseConnection db = new DatabaseConnection();
+		
+		db.getConnection();
+		
+		System.out.println(db.getBranchLevelAwareness("TestRepository"));
+		
+		
+		
+	}
+
+}

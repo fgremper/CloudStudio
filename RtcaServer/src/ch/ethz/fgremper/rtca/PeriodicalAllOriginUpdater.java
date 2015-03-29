@@ -37,13 +37,13 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 	
 	public void updateAll() {
 		
-		DatabaseConnection db = null;
+		DatabaseConnection db = new DatabaseConnection();
 		
 		JSONArray repositoriesArray;
 		
 		// Reading all repositories from database
 		try {
-			db = new DatabaseConnection();
+			db.getConnection();
 			repositoriesArray = db.getAllRepositories();
 		}
 		catch (Exception e) {
@@ -52,15 +52,8 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 		}
 
 		// Close database connection
-		try {
-			if (db != null) {
 				db.closeConnection();
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+				
 		// Go through all the repositories and clone them
 		for (int i = 0; i < repositoriesArray.length(); i++) {
 			try {

@@ -33,26 +33,50 @@ public class ContentConflictGitReader {
 	public ContentConflictGitReader(String repositoryAlias, String branch, String filename, String sessionUsername, String compareToBranch, String theirUsername, boolean showUncommitted) {
 
 
-		DatabaseConnection db = null;
+		DatabaseConnection db = new DatabaseConnection();
 		try {
 			// Get database connection
-			db = new DatabaseConnection();
+			db.getConnection();
+			
 			
 			mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
 		 	theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
+
+		 	
+		 	if (mySha == null) {
+
+		 		mySha = DigestUtils.sha1Hex("").toString();
+    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + mySha), "");
+		 	}
+		 	
+		 	if (theirSha == null) {
+
+		 		theirSha = DigestUtils.sha1Hex("").toString();
+    			FileUtils.writeStringToFile(new File(fileStorageDirectory + "/" + theirSha), "");
+		 	}
+		 	
+		 	
+		 	
+		 	/*
+			String myFileContent;
+			if (mySha != null) {
+				myFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted)), "UTF-8");
+			}
+			else {
+				myFileContent = "";
+			}
+			*/
+			String myCommitId = db.getCommitForBranchAndFile(repositoryAlias, sessionUsername, branch, filename);
 			
 			
 			
-			String commit1 = db.getCommitForBranchAndFile(repositoryAlias, sessionUsername, branch, filename);
-			log.info("C1: " + commit1);
-			String myFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted)), "UTF-8");
-			log.info("Content: " + myFileContent);
-			String commit2 = db.getCommitForBranchAndFile(repositoryAlias, theirUsername, compareToBranch, filename);
-			log.info("C2: " + commit2);
+			String theirCommitId = db.getCommitForBranchAndFile(repositoryAlias, theirUsername, compareToBranch, filename);
+			/*log.info("C2: " + theirCommitId);
 			String theirFileContent = FileUtils.readFileToString(new File(fileStorageDirectory + "/" + db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted)), "UTF-8");
 			log.info("Content: " + theirFileContent);
-			String mergeBaseCommitId = db.getMergeBaseCommitId(repositoryAlias, commit1, commit2);
-			log.info("MC: " + mergeBaseCommitId);
+			log.info("MC: " + mergeBaseCommitId);*/
+			
+			String mergeBaseCommitId = db.getMergeBaseCommitId(repositoryAlias, myCommitId, theirCommitId);
 			
 			if (mergeBaseCommitId != null) {
 				// get origin storage dir
@@ -125,15 +149,7 @@ public class ContentConflictGitReader {
 		}
 
 		// Close database connection
-		try {
-			if (db != null) {
 				db.closeConnection();
-			}
-		}
-		catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
 		
 	}
 	

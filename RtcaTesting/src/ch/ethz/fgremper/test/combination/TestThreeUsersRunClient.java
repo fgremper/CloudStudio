@@ -20,6 +20,8 @@ public class TestThreeUsersRunClient {
 		ClientMain.main(argsDavid);
 		ClientMain.main(argsIsabelle);
 
+		
+		
 		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
 		originUpdaterInterval.updateAll();
 			
