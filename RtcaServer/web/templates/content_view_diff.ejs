@@ -7,7 +7,7 @@
 		<tr>
 			<td class="diffNumberColumn">
 				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].myType != 'pad' && content[i].myType != 'modifiedpad') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
+					<% if (content[i].myType != 'PAD' && content[i].myType != 'MODIFIED_PAD') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
 					<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
 				<% } %>
 			</td>
@@ -15,9 +15,9 @@
 			<td>
 				<div class="diffBox">
 				<% for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].myType == 'add') { %><div class="diffLine diffAdd">
-					<% } else if (content[i].myType == 'pad') { %><div class="diffLine diffPad">
-					<% } else if (content[i].myType == 'modified' || content[i].myType == 'modifiedpad') { %><div class="diffLine diffModify">
+					<% if (content[i].myType == 'INSERT') { %><div class="diffLine diffAdd">
+					<% } else if (content[i].myType == 'PAD') { %><div class="diffLine diffPad">
+					<% } else if (content[i].myType == 'MODIFIED' || content[i].myType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
 					<% } else { %><div class="diffLine"><% } %>
 						<%= content[i].myContent %>&nbsp;
 					</div>
@@ -27,7 +27,7 @@
 
 			<td class="diffNumberColumn">
 				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].theirType != 'pad' && content[i].theirType != 'modifiedpad') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
+					<% if (content[i].theirType != 'PAD' && content[i].theirType != 'MODIFIED_PAD') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
 					<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
 				<% } %>
 			</td>
@@ -35,9 +35,9 @@
 			<td>
 				<div class="diffBox">
 				<% for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].theirType == 'add') { %><div class="diffLine diffAdd">
-					<% } else if (content[i].theirType == 'pad') { %><div class="diffLine diffPad">
-					<% } else if (content[i].theirType == 'modified' || content[i].theirType == 'modifiedpad') { %><div class="diffLine diffModify">
+					<% if (content[i].theirType == 'INSERT') { %><div class="diffLine diffAdd">
+					<% } else if (content[i].theirType == 'PAD') { %><div class="diffLine diffPad">
+					<% } else if (content[i].theirType == 'MODIFIED' || content[i].theirType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
 					<% } else { %><div class="diffLine"><% } %>
 						<%= content[i].theirContent %>&nbsp;
 					</div>

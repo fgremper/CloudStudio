@@ -210,7 +210,7 @@ public class ContentLevelConflictTest {
 
         gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
 		
-        assertEquals((Integer) 0, gitReader.countConflicts());
+        assertEquals((Integer) 1, gitReader.countConflicts());
         diffLineArray = gitReader.diff();
         assertEquals(5, diffLineArray.length());
         assertEquals("MODIFIED", diffLineArray.getJSONObject(1).getString("myType"));

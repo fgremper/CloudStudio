@@ -4,137 +4,30 @@
 
 #### TODO
 
-
-
-
-
-tests
-
-* test branch commit level
-
-  * 3 users
-
-  create repository, update everything
-
-  A make a commit
-  -> 1 in front
-
-  A make a commit
-  -> 2 in front
-
-  B make a commit
-  -> 1 in front
-
-  A push
-  -> equal, C is behind 2, B is fork
-
-  B commit -> bigger fork diff
-
-  C commit -> fork
-
-
-  * branches:
-
-  create a new branch -> it's local
-  make a commit with it -> it's green
-  -> everyone else has it "not checked out"
-  everyone else pull (all?) -> all up to date
-
-  * test branches
-
-  same thing as above but with a new branch
-
-
-
-
-
-* test file level stuff
-
-from now it's just snapshot
-
-ABC
-
-  * file level conflict
-
-  A edits a file -> file level conflict (uncommitted)
-  B pulls -> no more conflict (uncommitted)
-
-  no problems here for committed
-
-  * same thing with uncommitted
-
-  this should be almost the easiest part
-
-
-
-* test line level stuff
-
-
-
-  * line level count stuff
-
-  the important thing is that we have the right ancestor
-
-    so we make a normal branch thing
-
-    and look if it works
-
-  
-
-  for uncommitted stuff:
-
-    both change the file in the same commit
-
-    one changes the file in a later commit
-
-    both change the file in a later commit
-
-
-  both change the file and there's no actual conflict but just different lines in the same text file
-
-
-
-
-  and then we can test the functionality of the diff standalone
-
-
-
-
-
-
-
-
-
-
->* Webinterface: create repository
->* Webinterface: New user
-> * Webinterface: user management
-> * conflict view for uncommitted changes
-> * conflict view without common ancestor -> empty file
+[small design tasks]
+* cool cloudstudio logo :O :O :O
 * Webinterface: repository (add, remove, adduser, removeuser, makeowner, changepositoryurl, changedescription, deleterepository)
 * Webinterface: profile?!
 * Webinterface: package responsible users
-* change repository info (description, url) API
+* change repository info (description, url) webinterface & API
 
-[logic]
-
-[cool stuff that should be easy but is possibly problematic]
-* binary files detection
-* do big files work? (disable logging for this)
-* re-enable database connection pool
+[remaining logic stuff]
+* test with big files
+* binary files detection!
+* re-enable database connection pool, maybe use the apache library
 * list in gui sometimes bugs (swing)
 * sql case sensitivity of queries?!
 * active branch = null what is that all about
 
-[random]
-* cool cloudstudio logo :O :O :O
-
 [finalizing]
-* Clean up code in server
-* testing
+* clean up code in server
+* make sure we cover the 50% test coverage (or whatever we had on the project plan)
+* no more absolute paths
+* how do we build it? maven? eclipse?
 
 #### Done
 
+(started doing this official task list somewhere halfway through the project...)
 * database connection pool
 * user mgmt.: change repository owner
 * web interface: encapsulate request in a function
@@ -203,6 +96,14 @@ ABC
 * make sure session expiration works properly -> 30 days
 * dont rewrite files in the filestorage folder
 * still problems with fetching all branches in origin?
+* test branch commit level
+* test file level
+* test content level stuff
+* Webinterface: create repository
+* Webinterface: New user
+* Webinterface: user management
+* conflict view for uncommitted changes
+* conflict view without common ancestor -> empty file
 
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)

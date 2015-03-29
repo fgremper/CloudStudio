@@ -21,7 +21,7 @@ public class ContentLevelConflictTest {
 
 	
 	@Test
-	public void testCorrectFileContentAndConflictCount()  throws Exception {
+	public void testFileConflict()  throws Exception {
 
 
 		// Database connection
@@ -168,61 +168,6 @@ public class ContentLevelConflictTest {
 		db.closeConnection();
 
 	}
-	
-	
-
-	@Test
-	public void testCorrectConflictDetection()  throws Exception {
-
-
-		// Database connection
-		DatabaseConnection db = new DatabaseConnection();
-		db.getConnection();
-
-		// Objects
-		ContentConflictGitReader gitReader;
-		JSONArray diffLineArray;
-		
-		// Setup default state
-		TestGitHelper.setupTest();
-
-		TestGitHelper.writeContentToFile("John", "default.txt", "one\ntwo\nthree\nfour\nfive");
-		TestGitHelper.commit("John");
-		TestGitHelper.push("John");
-		TestGitHelper.pull("David");
-		TestGitHelper.writeContentToFile("John", "default.txt", "one\ntwo\nCHANGED BY JOHN\nfour\nfive");
-		TestGitHelper.writeContentToFile("David", "default.txt", "one\ntwo\nCHANGED BY DAVID\nfour\nfive");
-        TestGitHelper.runPlugins();
-
-        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
-		
-        assertEquals((Integer) 1, gitReader.countConflicts());
-        diffLineArray = gitReader.diff();
-        assertEquals(5, diffLineArray.length());
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(2).getString("myType"));
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(2).getString("theirType"));
-
-        
-
-		TestGitHelper.writeContentToFile("John", "default.txt", "one\nCHANGED BY JOHN\nthree\nfour\nfive");
-		TestGitHelper.writeContentToFile("David", "default.txt", "one\ntwo\nthree\nCHANGED BY DAVID\nfive");
-        TestGitHelper.runPlugins();
-
-        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
-		
-        assertEquals((Integer) 0, gitReader.countConflicts());
-        diffLineArray = gitReader.diff();
-        assertEquals(5, diffLineArray.length());
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(1).getString("myType"));
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(3).getString("theirType"));
-
-        
-        
-		db.closeConnection();
-
-	}
-	
-	
 	
 	
 	

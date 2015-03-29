@@ -198,26 +198,11 @@ public class ContentLevelConflictTest {
 		
         assertEquals((Integer) 1, gitReader.countConflicts());
         diffLineArray = gitReader.diff();
-        assertEquals(5, diffLineArray.length());
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(2).getString("myType"));
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(2).getString("theirType"));
+        assertEquals(7, diffLineArray.length());
+        /*assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("david content", diffLineArray.getJSONObject(0).getString("theirContent"));*/
 
-        
-
-		TestGitHelper.writeContentToFile("John", "default.txt", "one\nCHANGED BY JOHN\nthree\nfour\nfive");
-		TestGitHelper.writeContentToFile("David", "default.txt", "one\ntwo\nthree\nCHANGED BY DAVID\nfive");
-        TestGitHelper.runPlugins();
-
-        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
-		
-        assertEquals((Integer) 0, gitReader.countConflicts());
-        diffLineArray = gitReader.diff();
-        assertEquals(5, diffLineArray.length());
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(1).getString("myType"));
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(3).getString("theirType"));
-
-        
-        
 		db.closeConnection();
 
 	}

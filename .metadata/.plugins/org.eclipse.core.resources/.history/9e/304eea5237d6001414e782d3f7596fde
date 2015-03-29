@@ -82,7 +82,7 @@ public class SideBySideThreeWayDiff {
 	    for (int i = 0; i < 3; i++) {
 			fileContentType.add(new LinkedList<String>());
 	    	for (int j = 0; j < fileContent.get(i).size(); j++) {
-	    		fileContentType.get(i).add("UNCHANGED");
+	    		fileContentType.get(i).add("unchanged");
 	    	}
 	    }
 

@@ -40,8 +40,8 @@ public class SideBySideDiff {
 	    List<String> myType = new LinkedList<String>();
 	    List<String> theirType = new LinkedList<String>();
 	    for (int i = 0; i < myContent.size(); i++) {
-	    	myType.add("UNCHANGED");
-	    	theirType.add("UNCHANGED");
+	    	myType.add("unchanged");
+	    	theirType.add("unchanged");
 	    }
 	    
 	    // After adding lines, position references from the patch shift by some offset
@@ -67,22 +67,22 @@ public class SideBySideDiff {
 	    		for (int i = 0; i < maxLines; i++) {
 	    			if (i < myLines.size()) {
 	    				// My content is already right, no need to change anything, just set it as 'modified'
-		    			myType.set(pos, "MODIFIED");
+		    			myType.set(pos, "modified");
 		    			// If we have more lines than them, set their content to empty strings
 		    			if (i < theirLines.size()) {
 			    			theirContent.set(pos, theirLines.get(i));
-			    			theirType.set(pos, "MODIFIED");
+			    			theirType.set(pos, "modified");
 		    			}
 		    			else {
 			    			theirContent.set(pos, "");
-			    			theirType.set(pos, "MODIFIED_PAD");
+			    			theirType.set(pos, "modifiedpad");
 		    			}
 	    			}
 	    			// They have more lines than me, we need to add new empty lines for me and their lines
 	    			else {
-		    			myType.add(pos, "MODIFIED_PAD");
+		    			myType.add(pos, "modifiedpad");
 		    			myContent.add(pos, "");
-		    			theirType.add(pos, "MODIFIED");
+		    			theirType.add(pos, "modified");
 		    			theirContent.add(pos, theirLines.get(i));
 	    			}
 	    			pos++;
@@ -96,9 +96,9 @@ public class SideBySideDiff {
 	    		// Do all the necessary changes to content and type
 	    		for (String line : (List<String>) delta.getOriginal().getLines()) {
 	    			myContent.set(pos, line);
-	    			myType.set(pos, "INSERT");
+	    			myType.set(pos, "add");
 	    			theirContent.set(pos, "");
-	    			theirType.set(pos, "PAD");
+	    			theirType.set(pos, "pad");
 	    			pos++;
 	    		}
 	    		
@@ -111,9 +111,9 @@ public class SideBySideDiff {
 	    		// Do all the necessary changes to content and type
 	    		for (String line : (List<String>) delta.getRevised().getLines()) {
 	    			theirContent.add(pos, line);
-	    			theirType.add(pos, "INSERT");
+	    			theirType.add(pos, "add");
 	    			myContent.add(pos, "");
-	    			myType.add(pos, "PAD");
+	    			myType.add(pos, "pad");
 	    			pos++;
 	    			offset++;
 	    		}
