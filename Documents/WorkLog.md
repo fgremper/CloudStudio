@@ -6,15 +6,11 @@
 
 TODO today:
 
-clean up the code and do comments
-UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!!
--> changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
-enforce [A-Za-z0-9 ]+ on usernames and repository names
+>> clean up the code and do comments
+>> changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
 write api document
 write tests
-test no common ancestor
-
-build with maven
+>> test for no common ancestor
 
 TODO tomorrow:
 
@@ -22,14 +18,17 @@ fix db pool
 fix sql case sensitiviity
 fix active branch == null?! except if I do it today
 fix ejs bracket bug
+enforce [A-Za-z0-9 ]+ on usernames and repository names
 
 TODO friday
 
 add the remaining interface functionality, clean up interface
 gui explanation at the bottom (or question mark somewhere)
+UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!!
 
 TODO saturday
 
+build with maven
 click around and test :) all satisfactory? :>
 
 TODO sunday

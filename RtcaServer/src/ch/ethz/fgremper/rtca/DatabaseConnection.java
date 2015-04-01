@@ -673,10 +673,10 @@ public class DatabaseConnection {
 				repositoryObject.put("users", new JSONArray());
 				repositoriesArray.put(repositoryObject);
 			}
-			else {
-				// Just add the user to a repository we already have in the list
-				index.get(repositoryAlias).getJSONArray("users").put(username);
-			}
+
+			// Add the user to the repository
+			index.get(repositoryAlias).getJSONArray("users").put(username);
+
 		}
 		
 		return repositoriesArray;

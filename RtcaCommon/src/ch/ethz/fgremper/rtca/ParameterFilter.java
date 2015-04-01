@@ -15,8 +15,9 @@ import com.sun.net.httpserver.Filter;
 import com.sun.net.httpserver.HttpExchange;
 
 /**
+ * 
  * Parses the requested URI for parameters
- * @author Fabian Gremper
+ * 
  */
 public class ParameterFilter extends Filter {
 
@@ -28,7 +29,7 @@ public class ParameterFilter extends Filter {
     @Override
     public void doFilter(HttpExchange exchange, Chain chain) throws IOException {
         parseGetParameters(exchange);
-        if (exchange.getRequestHeaders().get("Content-Type").size() > 0 && !exchange.getRequestHeaders().get("Content-Type").get(0).equals("application/json")) {
+        if (exchange.getRequestHeaders().get("Content-Type") != null && exchange.getRequestHeaders().get("Content-Type").size() > 0 && !exchange.getRequestHeaders().get("Content-Type").get(0).equals("application/json")) {
         	parsePostParameters(exchange);
         }
         chain.doFilter(exchange);

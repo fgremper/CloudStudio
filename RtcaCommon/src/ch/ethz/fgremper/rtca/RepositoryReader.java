@@ -26,8 +26,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
+ * 
  * Uses JGit to read a local git repository.
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class RepositoryReader {
 
@@ -36,9 +39,13 @@ public class RepositoryReader {
 	private JSONObject updateObject;
 	
 	/**
+	 * 
 	 * Reads a local git repository and builds an update JSON object to send to the RTCA server.
+	 * 
 	 * @param localPath path to the local git repository
+	 * 
 	 * @throws Exception
+	 * 
 	 */
 	public RepositoryReader(String localPath) throws Exception {
 		
@@ -85,17 +92,24 @@ public class RepositoryReader {
         		
         		// Get branch name
         		String branchName;
+        		if (ref.getName().startsWith("refs/heads/")) {
+        			branchName = ref.getName().substring("ref/heads/".length() + 1);
+        		}
+        		else {
+        			branchName = ref.getName().substring("refs/remotes/origin/".length());
+        		}
         		
-        		if (ref.getName().startsWith("refs/heads/")) branchName = ref.getName().substring("ref/heads/".length() + 1);
-        		else branchName = ref.getName().substring("refs/remotes/origin/".length());
-        		
-        		System.out.println("BRAAAANCHNME: " + branchName);
-        		
+        		// Skip "HEAD"
         		if (branchName.equals("HEAD")) continue;
         		
-        		if (usedBranchNames.contains(branchName)) continue;
+        		// Only use a branch once (we get it twice maybe because we have a reference
+        		// from refs/heads and one from refs/remotes/origin.
+        		if (usedBranchNames.contains(branchName)) {
+        			continue;
+        		}
         		usedBranchNames.add(branchName);
         		
+        		// Active branche? (currently checked out)
         		boolean isActiveBranch = ref.getName().equals(repository.getFullBranch());
         		
         		// Get variables necessary to do the following actions
@@ -126,37 +140,43 @@ public class RepositoryReader {
 		            commitObject.put("downstreamCommits", downstreamCommitsObject);
 		            commitHistory.put(commitObject);
 
-		            
 		            List<RevCommit> todoCommits = new LinkedList<RevCommit>();
 		            List<String> downstreamCommits = new LinkedList<String>();
 
-	            	JSONObject dc2 = new JSONObject();
-	            	dc2.put("commit", commitId);
-	            	dc2.put("distance", 0);
-	            	downstreamCommitsObject.put(dc2);
-	            	
-		            HashMap<RevCommit, Integer> distance = new HashMap<RevCommit, Integer>();
+		            // Put current commit in commit history with distance 0.
+		            // This is necessary for some queries concerning uncommitted files in the server.
+	            	JSONObject downstreamCommit = new JSONObject();
+	            	downstreamCommit.put("commit", commitId);
+	            	downstreamCommit.put("distance", 0);
+	            	downstreamCommitsObject.put(downstreamCommit);
+
+	            	// Put all direct parents of a commit into the todo list
+		            HashMap<RevCommit, Integer> todoCommitsDistance = new HashMap<RevCommit, Integer>();
 		            if (commit.getParents() != null) { 
 		            	todoCommits.addAll(Arrays.asList(commit.getParents()));
-		            	for (RevCommit c : Arrays.asList(commit.getParents())) {
-		            		distance.put(c, 1);
+		            	for (RevCommit revCommit : Arrays.asList(commit.getParents())) {
+		            		todoCommitsDistance.put(revCommit, 1);
 		            	}
 		            }
+		            
+		            // Handle all commits and their parents from the todo list until it's empty
+		            // (we traversed the whole graph)
 		            while (!todoCommits.isEmpty()) {
 		            	RevCommit pop = todoCommits.remove(0);
 		            	RevCommit currentCommit = walk.parseCommit(pop.getId());
-		            	Integer distanceToCurrentCommit = distance.get(pop);
+		            	Integer distanceToCurrentCommit = todoCommitsDistance.get(pop);
 	            		
+		            	// Handle commit we haven't handled before
 		            	if (!downstreamCommits.contains(currentCommit.getName())) {
 			            	downstreamCommits.add(currentCommit.getName());
-			            	JSONObject dc = new JSONObject();
-			            	dc.put("commit", currentCommit.getName());
-			            	dc.put("distance", distanceToCurrentCommit);
-			            	downstreamCommitsObject.put(dc);
+			            	downstreamCommit = new JSONObject();
+			            	downstreamCommit.put("commit", currentCommit.getName());
+			            	downstreamCommit.put("distance", distanceToCurrentCommit);
+			            	downstreamCommitsObject.put(downstreamCommit);
 				            if (currentCommit.getParents() != null) {
 				            	todoCommits.addAll(Arrays.asList(currentCommit.getParents()));
-				            	for (RevCommit c : Arrays.asList(currentCommit.getParents())) {
-				            		distance.put(c, distanceToCurrentCommit + 1);
+				            	for (RevCommit revCommit : Arrays.asList(currentCommit.getParents())) {
+				            		todoCommitsDistance.put(revCommit, distanceToCurrentCommit + 1);
 				            	}
 				            }
 		            	}
@@ -229,14 +249,16 @@ public class RepositoryReader {
             
         }
 
-        //Don't log this because the string can be really long.
-        //log.debug("JSON String: " + updateObject.toString());
+        // log.debug("JSON String: " + updateObject.toString()); // Don't log this because the string can be really long.
         
 	}
 	
 	/**
+	 * 
 	 * Get the JSON object created by the reader to send to the RTCA server as local git state.
+	 * 
 	 * @return JSON object to send to the RTCA server
+	 * 
 	 */
 	public JSONObject getUpdateObject() {
 		return updateObject;

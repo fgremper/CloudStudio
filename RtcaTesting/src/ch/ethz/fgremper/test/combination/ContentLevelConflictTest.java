@@ -222,7 +222,41 @@ public class ContentLevelConflictTest {
 
 	}
 	
-	
+
+	@Test
+	public void testNoCommonAncestor()  throws Exception {
+
+		// Database connection
+		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
+
+		// Objects
+		ContentConflictGitReader gitReader;
+		JSONArray diffLineArray;
+		
+		// Setup default state
+		TestGitHelper.setupTest();
+
+		TestGitHelper.writeContentToFile("John", "new.txt", "john content");
+		TestGitHelper.commit("John");
+		
+		TestGitHelper.writeContentToFile("David", "new.txt", "david content");
+		TestGitHelper.commit("David");
+
+		TestGitHelper.runPlugins();
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "new.txt", "John", "master", "David", true);
+
+        assertEquals((Integer) 1, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("david content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+		db.closeConnection();
+
+	}
 	
 	
 	
