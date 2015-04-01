@@ -3,8 +3,11 @@ package ch.ethz.fgremper.rtca;
 import org.apache.commons.configuration.XMLConfiguration;
 
 /**
+ * 
  * Server configuration.
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class ServerConfig {
 	

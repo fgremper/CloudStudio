@@ -5,7 +5,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * 
  * Reads the RTCA client configuration.
+ * 
  * @author Fabian Gremper
  */
 public class ClientConfigReader {
@@ -15,9 +17,12 @@ public class ClientConfigReader {
 	private ClientConfig config = new ClientConfig();
 	
 	/**
+	 * 
 	 * Reads the RTCA client configuration.
+	 * 
 	 * @param configFilename Filename of the config XML
 	 * @throws Exception
+	 * 
 	 */
 	public ClientConfigReader(String configFilename) throws Exception {
 		
@@ -65,7 +70,9 @@ public class ClientConfigReader {
 	}
 	
 	/**
+	 * 
 	 * @return the filled out ClientConfig object
+	 * 
 	 */
 	public ClientConfig getConfig() {
 		return config;

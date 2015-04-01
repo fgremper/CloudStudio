@@ -16,17 +16,22 @@ import difflib.DiffUtils;
 import difflib.Patch;
 
 /**
+ * 
  * Utility class to provide side-by-side comparison of two files
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class SideBySideDiff {
 
 	/**
 	 * Side by side diff of two files
+	 * 
 	 * @param original line array of original file
 	 * @param revised line array of revised file
+	 * 
 	 * @return JSON array which for every line has an object with the keys myContent, myType, theirContent, theirType
-	 * @throws Exception
+	 *
 	 */
 	@SuppressWarnings("unchecked")
 	public static JSONArray diff(List<String> original, List<String> revised) throws Exception {

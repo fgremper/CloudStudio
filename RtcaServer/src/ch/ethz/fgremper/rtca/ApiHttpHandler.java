@@ -1,5 +1,6 @@
 package ch.ethz.fgremper.rtca;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URI;
@@ -21,10 +22,26 @@ import sun.net.www.protocol.http.HttpURLConnection;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+/**
+ * 
+ * Handle API requests over HTTP
+ * 
+ * @author Fabian Gremper
+ * 
+ */
 public class ApiHttpHandler implements HttpHandler {
 
 	private static final Logger log = LogManager.getLogger(ApiHttpHandler.class);
 	
+	String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
+
+	/**
+	 * 
+	 * Handle HTTP exchange
+	 * 
+	 * @see com.sun.net.httpserver.HttpHandler#handle(com.sun.net.httpserver.HttpExchange)
+	 * 
+	 */
 	@SuppressWarnings("unchecked")
 	public void handle(HttpExchange exchange) throws IOException {
 		
@@ -44,23 +61,25 @@ public class ApiHttpHandler implements HttpHandler {
         // Body
 		String body = IOUtils.toString(exchange.getRequestBody(), "UTF-8");
         log.info("Incoming request: " + requestMethod + " " + uri.getPath());
-        //Don't log this because it can be really long
-        //log.info("Body: " + body);
+        // log.info("Body: " + body); // This body can contain all the file contents and be really long
 
-		// Variables
+		// Response variables
 		String response = null;
 		String error = null;
 
-		DatabaseConnection db = new DatabaseConnection();;
+		DatabaseConnection db = new DatabaseConnection();
 		try {
 			
 			// Get database connection
 			db.getConnection();
 
+			// Get session ID and session username
 			String sessionId = null;
 			String sessionUsername = null;
 			sessionId = (String) params.get("sessionId");
-			if (sessionId != null) sessionUsername = db.getUsername(sessionId);
+			if (sessionId != null) {
+				sessionUsername = db.getUsername(sessionId);
+			}
 			
 			/* GET REQUESTS */
 			
@@ -112,7 +131,7 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				
 				// Need to be admin or have repository access
-				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					response = db.getBranchLevelAwareness(repositoryAlias).toString();
 				}
 				else {
@@ -132,44 +151,51 @@ public class ApiHttpHandler implements HttpHandler {
 				boolean showUncommitted = ((String) params.get("showUncommitted")).equalsIgnoreCase("true");
 				
 				// Need to be admin or have repository access
-				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					JSONObject responseObject = db.getFileLevelAwareness(repositoryAlias, sessionUsername, branch, compareToBranch, showUncommitted, showConflicts);
 					
 					// If we show conflicts, go through all of the items and check the ones with file conflicts for line conflicts
 					if (showConflicts) {
-						/*
-						JSONArray branches = responseObject.getJSONArray("branches");
-						for (int i = 0; i < branches.length(); i++) {
-							JSONObject branchObject = branches.getJSONObject(i);*/
-							//compareToBranch = responseObject.getString("branch");
-							JSONArray fileArray = responseObject.getJSONArray("files");
-							for (int j = 0; j < fileArray.length(); j++) {
-								JSONObject conflict = fileArray.getJSONObject(j);
-								String filename = conflict.getString("filename");
-								JSONArray users = conflict.getJSONArray("users");
-								for (int k = 0; k < users.length(); k++) {
-									JSONObject user = users.getJSONObject(k);
+						
+						// Go through all the files
+						JSONArray fileArray = responseObject.getJSONArray("files");
+						
+						for (int j = 0; j < fileArray.length(); j++) {
+							
+							JSONObject conflict = fileArray.getJSONObject(j);
+							String filename = conflict.getString("filename");
+							JSONArray users = conflict.getJSONArray("users");
+							
+							// Go through all the users
+							for (int k = 0; k < users.length(); k++) {
+								
+								JSONObject user = users.getJSONObject(k);
+								
+								// File conflict?
+								if (user.getString("type").equals("FILE_CONFLICT")) {
 									
-									// File conflict?
-									if (user.getString("type").equals("FILE_CONFLICT")) {
-										String theirUsername = user.getString("username");
-										
-										// Look up the ancestor file in the git repository
-							            ContentConflictGitReader gitReader = new ContentConflictGitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
+									String theirUsername = user.getString("username");
+									
+									// Look up the ancestor file in the git repository
+						            ContentConflictGitReader gitReader = new ContentConflictGitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
 
-							            // If there are content conflicts, put this instead
-							            int lineConflicts = gitReader.countConflicts();
-							            if (lineConflicts > 0) {
-							            	user.put("type", "CONTENT_CONFLICT");
-							            	user.put("conflictCount", lineConflicts);
-							            }
-										
-									}
+						            // If there are content conflicts, put "CONTENT_CONFLICT" instead
+						            int lineConflicts = gitReader.countConflicts();
+						            if (lineConflicts > 0) {
+						            	user.put("type", "CONTENT_CONFLICT");
+						            	user.put("conflictCount", lineConflicts);
+						            }
+									
 								}
+								
 							}
-						//}
+							
+						}
+
 					}
+					
 					response = responseObject.toString();
+					
 				}
 				else {
 					throw new Exception("No repository access");
@@ -177,7 +203,6 @@ public class ApiHttpHandler implements HttpHandler {
 				
 			}
 			
-
 			// Get content level awareness
 			else if (apiName.equals("contentAwareness") && requestMethod.equalsIgnoreCase("get")) {
 				
@@ -187,39 +212,37 @@ public class ApiHttpHandler implements HttpHandler {
 				String compareToBranch = (String) params.get("compareToBranch");
 				String theirUsername = (String) params.get("theirUsername");
 				String filename = (String) params.get("filename");
-				List<String> selectedAdditionalBranches = (List<String>) params.get("selectedAdditionalBranches");
-				if (selectedAdditionalBranches == null) selectedAdditionalBranches = new ArrayList<String>();
 				boolean showUncommitted = ((String) params.get("showUncommitted")).equalsIgnoreCase("true");
 				
 				// Need to be admin or have repository access
-				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					
-					String fileStorageDirectory = ServerConfig.getInstance().fileStorageDirectory;
-						
+					// Get file SHAs
 					String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
 					String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
 
-					JSONObject responseObject = new JSONObject();
-					
 					List<String> myContent;
 					List<String> theirContent;
 					
+					// Get my file content
 					if (mySha != null) {
-				        myContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + mySha);
+				        myContent = SideBySideDiff.fileToLines(fileStorageDirectory + File.separator + mySha);
 					}
 					else {
 						myContent = new LinkedList<String>();
 					}
-
+					
+					// Get their file content
 					if (theirSha != null) {
-				        theirContent = SideBySideDiff.fileToLines(fileStorageDirectory + "/" + theirSha);
+				        theirContent = SideBySideDiff.fileToLines(fileStorageDirectory + File.separator + theirSha);
 					}
 					else {
 						theirContent = new LinkedList<String>();
 					}
-					
+
+					// Set response
+					JSONObject responseObject = new JSONObject();
 					responseObject.put("content", SideBySideDiff.diff(myContent, theirContent));
-					
 					response = responseObject.toString();
 
 				}
@@ -238,15 +261,16 @@ public class ApiHttpHandler implements HttpHandler {
 				String compareToBranch = (String) params.get("compareToBranch");
 				String theirUsername = (String) params.get("theirUsername");
 				String filename = (String) params.get("filename");
-				List<String> selectedAdditionalBranches = (List<String>) params.get("selectedAdditionalBranches");
-				if (selectedAdditionalBranches == null) selectedAdditionalBranches = new ArrayList<String>();
 				boolean showUncommitted = ((String) params.get("showUncommitted")).equalsIgnoreCase("true");
 				
 				// Need to be admin or have repository access
-				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					
+					// Get content conflicts
 		            ContentConflictGitReader gitReader = new ContentConflictGitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
-					JSONObject responseObject = new JSONObject();
+					
+		            // Set reponse
+		            JSONObject responseObject = new JSONObject();
 					responseObject.put("content", gitReader.diff());
 					response = responseObject.toString();
 		            
@@ -285,6 +309,7 @@ public class ApiHttpHandler implements HttpHandler {
 					responseObject.put("sessionId", newSessionId);
 					responseObject.put("username", username);
 					
+					// Set response
 					response = responseObject.toString();
 					
 				}
@@ -304,12 +329,16 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator or creator
 				if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					String repositoryOwner = sessionUsername;
 					db.createRepository(repositoryAlias, repositoryUrl, repositoryOwner, repositoryDescription);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("Insufficient privileges");
@@ -325,11 +354,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					db.deleteRepository(repositoryAlias);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("Insufficient privileges");
@@ -346,11 +379,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					db.addUserToRepository(username, repositoryAlias);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("Insufficient privileges");
@@ -367,11 +404,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					db = new DatabaseConnection();
+					
+					// Execute database action
 					db.startTransaction();
 					db.deleteUserFromRepository(username, repositoryAlias);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("Insufficient privileges");
@@ -387,7 +428,6 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator or repository owner
 				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					db = new DatabaseConnection();
 					db.startTransaction();
 					db.modifyRepositoryOwner(repositoryAlias, username);
 					db.commitTransaction();
@@ -406,9 +446,14 @@ public class ApiHttpHandler implements HttpHandler {
 				String username = (String) params.get("username");
 				String password = (String) params.get("password");
 
+				// Execute database action
+				db.startTransaction();
 				db.addUser(username, password);
-				
+				db.commitTransaction();
+
+				// Set response
 				response = "{}";
+				
 			}
 			
 			// Delete user
@@ -419,11 +464,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
-					db = new DatabaseConnection();
+					
+					// Execute database action
 					db.startTransaction();
 					db.deleteUser(username);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("No administrator privileges");
@@ -439,11 +488,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					db.makeUserAdmin(username);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("No administrator privileges");
@@ -459,11 +512,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					db.revokeUserAdmin(username);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("No administrator privileges");
@@ -479,11 +536,15 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					db.makeUserCreator(username);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("No administrator privileges");
@@ -499,19 +560,21 @@ public class ApiHttpHandler implements HttpHandler {
 
 				// Need to be administrator
 				if (db.isUserAdmin(sessionUsername)) {
-					db = new DatabaseConnection();
+
+					// Execute database action
 					db.startTransaction();
 					db.revokeUserCreator(username);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("No administrator privileges");
 				}
 				
 			}
-			
-			/* ALSO POST BUT THE ONLY ONE THAT ACCESSES POST DATA */
 			
 			// Set local git state request
 			else if (apiName.equals("localState") && requestMethod.equalsIgnoreCase("post")) {
@@ -520,10 +583,15 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				
 				if (db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+					
+					// Execute database action
 					db.startTransaction();
 					db.setEntireUserGitState(body, sessionUsername, repositoryAlias);
 					db.commitTransaction();
+					
+					// Set response
 					response = "{}";
+					
 				}
 				else {
 					throw new Exception("No access to repository");
@@ -545,11 +613,18 @@ public class ApiHttpHandler implements HttpHandler {
 
 		// Close database connection
 		db.closeConnection();
-				
+		
+		// Send response
 		if (response != null) {
+			
+			// Successful call
+			log.info("Sending response: " + response);
 			exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, response.length());
+			
 		}
 		else {
+			
+			// Error
 			response = "{}";
 			try {
 				JSONObject errorObject = new JSONObject();
@@ -557,11 +632,12 @@ public class ApiHttpHandler implements HttpHandler {
 				response = errorObject.toString();
 			}
 			catch (JSONException e) {
-				// Don't see how this can happen, we're just putting stuff into an object
+				// Don't see how this can happen, we're just putting Strings into a JSON object
 			}
-			exchange.sendResponseHeaders(500, response.length());
+			log.info("Sending error response: " + response);
+			exchange.sendResponseHeaders(HttpURLConnection.HTTP_BAD_REQUEST, response.length());
+			
 		}
-		log.info("Sending response: " + response);
 		OutputStream os = exchange.getResponseBody();
 		os.write(response.getBytes());
 		os.close();

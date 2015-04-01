@@ -628,6 +628,13 @@ body {
     float: right;
 }
 
+#headerBar #headerLogo {
+    background-image: url('/img/cloudstudio.png');
+    background-size: 30px 30px;
+    background-position: 20px 10px;
+    background-repeat: no-repeat;
+    padding-left: 62px;
+}
 /* content */
 
 #content {

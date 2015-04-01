@@ -22,89 +22,89 @@ public class TestGitHelper {
 		String user = "origin";
 		
 		// make folder
-		File userDir = new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
+		File userDir = new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 		userDir.mkdir();
 		
 		// git init
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " init");
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " init");
 
 		// create default file
-		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/default.txt"), "default content");
+		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/default.txt"), "default content");
 		
 		// git add
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " add default.txt");
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " add default.txt");
 
 		// git commit
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " commit -m first_commit");
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " commit -m first_commit");
 		
 		// make bare repo
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " config --bool core.bare true");
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " config --bool core.bare true");
 
 		// delete file
-		new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/default.txt").delete();
+		new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/default.txt").delete();
 	}
 	
 	public static void createUser(String user) throws Exception {
 		System.out.println("[TestGitHelper] Creating user directory: " + user);
-		File userDir = new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
+		File userDir = new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 		userDir.mkdir();	
 	}
 	
 	public static void cloneOrigin(String user) throws Exception {
 		System.out.println("[TestGitHelper] Clone from origin for user " + user);
-		executeCommand("git clone " + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + "origin " + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
+		executeCommand("git clone " + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "origin " + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 	}
 	
 	public static void createFolder(String user, String folder) {
-		new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/" + folder).mkdir();
+		new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + File.separator + folder).mkdir();
 	}
 	
 	public static void createOrModifyFile(String user, String filename) throws Exception {
 		String content = randomString();
 		System.out.println("[TestGitHelper] Creating file for user '" + user + "': " + filename);
-		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/" + filename), content);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " add " + filename);
+		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + File.separator + filename), content);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " add " + filename);
 	}
 
 	public static void writeContentToFile(String user, String filename, String content) throws Exception {
 		System.out.println("[TestGitHelper] Creating file for user '" + user + "': " + filename);
-		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/" + filename), content);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " add " + filename);
+		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + File.separator + filename), content);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " add " + filename);
 	}
 	
 	public static void deleteFile(String user, String filename) throws Exception {
 		System.out.println("[TestGitHelper] Deleting file for user '" + user + "': " + filename);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " rm -f " + filename);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " rm -f " + filename);
 	}
 
 	public static void commit(String user) throws Exception {
 		System.out.println("[TestGitHelper] Committing user " + user);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " commit -a -m " + user);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " commit -a -m " + user);
 	}
 
 	public static void checkoutBranch(String user, String branchName) throws Exception {
 		System.out.println("[TestGitHelper] Committing user " + user);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " checkout " + branchName);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " checkout " + branchName);
 	}
 
 	public static void createBranch(String user, String branchName) throws Exception {
 		System.out.println("[TestGitHelper] Committing user " + user);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " branch " + branchName);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " branch " + branchName);
 	}
 
 	public static void pull(String user) throws Exception {
 		System.out.println("[TestGitHelper] Pulling as user " + user);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " pull --all");
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " pull --all");
 	}
 
 	public static void push(String user) throws Exception {
 		System.out.println("[TestGitHelper] Pushing as user " + user);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " push --all");
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " push --all");
 	}
 
 	public static void merge(String user, String branch) throws Exception {
 		System.out.println("[TestGitHelper] Merging as user " + user);
-		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user + " merge " + branch);
+		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " merge " + branch);
 	}
 	
 	public static String randomString() {

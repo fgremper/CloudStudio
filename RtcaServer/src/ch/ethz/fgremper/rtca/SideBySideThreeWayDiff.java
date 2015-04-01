@@ -16,20 +16,26 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
+ * 
  * Utility class to provide side-by-side comparison of three files
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class SideBySideThreeWayDiff {
 
 	private static final Logger log = LogManager.getLogger(SideBySideThreeWayDiff.class);
 	
 	/**
+	 * 
 	 * Find the number of conflicting blocks in a three way file comparison
+	 * 
 	 * @param fileName1 my file
 	 * @param fileName2 base file
 	 * @param fileName3 their file
+	 * 
 	 * @return number of conflict blocks
-	 * @throws Exception
+	 * 
 	 */
 	public static int countConflicts(String fileName1, String fileName2, String fileName3) throws Exception {
 		
@@ -61,13 +67,15 @@ public class SideBySideThreeWayDiff {
 	}
 
 	/**
+	 * 
 	 * Create side-by-side-by-side displayable view for three files
 	 * @param fileName1 my file
 	 * @param fileName2 base file
 	 * @param fileName3 their file
+	 * 
 	 * @return JSON array of lines, where every line is an object with the keys myContent,
 	 * baseContent, theirContent, myType, baseType, theirType
-	 * @throws Exception
+	 * 
 	 */
 	public static JSONArray diff(String fileName1, String fileName2, String fileName3) throws Exception {
 
@@ -195,9 +203,13 @@ public class SideBySideThreeWayDiff {
 	}
 	
 	/**
+	 * 
 	 * Reads a file into a list of lines
+	 * 
 	 * @param filename filename of the file to read
+	 * 
 	 * @return list of lines
+	 * 
 	 */
 	public static List<String> fileToLines(String filename) {
         List<String> lines = new LinkedList<String>();

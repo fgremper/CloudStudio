@@ -12,25 +12,36 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+/**
+ * 
+ * Clone the origin from the repository URL and write the information to the database.
+ * 
+ * @author Fabian Gremper
+ *
+ */
 public class OriginUpdater {
 
 	private static final Logger log = LogManager.getLogger(OriginUpdater.class);
+
+	private static final String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
 	
 	public static void update(String repositoryAlias, String repositoryUrl) {
 		
+		// Don't have a repository URL? Don't try to fetch it.
 		if (repositoryUrl == null || repositoryUrl.equals("")) return;
 		
 		DatabaseConnection db = new DatabaseConnection();
 		try {
-			db.getConnection();
 			
-			String originStorageDirectory = ServerConfig.getInstance().originStorageDirectory;
+			// Get connection.
+			db.getConnection();
 			
 			log.info("Cloning repository \"" + repositoryAlias + "\": " + repositoryUrl);
 
+			// Get directories of old a new origin location
 			int oldCount = db.getRepositoryCloneCount(repositoryAlias);
-			String repositoryNewOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (oldCount + 1);
-			String repositoryOldOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + oldCount;
+			String repositoryNewOriginDirectory = originStorageDirectory + File.separator + repositoryAlias + "." + (oldCount + 1);
+			String repositoryOldOriginDirectory = originStorageDirectory + File.separator + repositoryAlias + "." + oldCount;
 			
 			// Create directory to clone repository in
 			File userDir = new File(repositoryNewOriginDirectory);
@@ -39,9 +50,9 @@ public class OriginUpdater {
 			
 			// Clone repository
 			executeCommand("git clone " + repositoryUrl + " " + repositoryNewOriginDirectory);
-			
-			log.info("Reading repository \"" + repositoryAlias + "\"");
+
 			// Read repository information like we would normally
+			log.info("Reading repository \"" + repositoryAlias + "\"");
 			RepositoryReader repositoryReader = new RepositoryReader(repositoryNewOriginDirectory);
 			JSONObject updateObject = repositoryReader.getUpdateObject();
 			String inputJsonString = updateObject.toString();
@@ -50,18 +61,15 @@ public class OriginUpdater {
 			// Inserting into database
 			log.info("Doing database stuff");
 			db.startTransaction();
-			
-			// Create database user if it doesn't exist
-			// This can throw an exception if the user already exists
-			try { db.addUserToRepository("origin", repositoryAlias); }
-			catch (Exception e) { }
-
 			db.setEntireUserGitState(inputJsonString, "origin", repositoryAlias);
 			db.commitTransaction();
 			
+			// Everything was successful, let's increment the counter
+			db.startTransaction();
 			db.incRepositoryCloneCount(repositoryAlias);
 			db.commitTransaction();
 			
+			// And delete the old repository directory
 			try {
 				FileUtils.forceDelete(new File(repositoryOldOriginDirectory));
 			}
@@ -74,10 +82,18 @@ public class OriginUpdater {
 		}
 		
 		// Close database connection
-				db.closeConnection();
+		db.closeConnection();
+		
 	}
 	
-	public static void executeCommand(String consoleInput) throws Exception {
+	/**
+	 * 
+	 * Execute console command.
+	 * 
+	 * @param consoleInput
+	 * 
+	 */
+	private static void executeCommand(String consoleInput) throws Exception {
 		log.info("Executing: " + consoleInput);
 		Process p = Runtime.getRuntime().exec(consoleInput);
 		p.waitFor();

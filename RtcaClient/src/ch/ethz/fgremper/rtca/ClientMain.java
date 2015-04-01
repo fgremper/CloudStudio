@@ -5,17 +5,24 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 /**
+ * 
  * RTCA client main class.
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class ClientMain {
 
 	private static final Logger log = LogManager.getLogger(ClientMain.class);
     
 	/**
+	 * 
 	 * Run the RTCA client.
+	 * 
 	 * @param args Filename of config XML can be specified as first argument (default is "config.xml")
+	 * 
 	 * @throws Exception
+	 * 
 	 */
 	public static void main(String[] args) {
 		

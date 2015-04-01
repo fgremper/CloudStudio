@@ -8,8 +8,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
+ * 
  * Periodically calls the OriginUpdater.
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class PeriodicalAllOriginUpdater implements Runnable {
 
@@ -17,7 +20,13 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 	
 	private int originUpdateInterval = ServerConfig.getInstance().originUpdateInterval;
 	
+	/**
+	 * 
+	 * Periodically run updateAll()
+	 * 
+	 */
 	public void run() {
+		
 		while (true) {
 			
 			// Update origins
@@ -33,8 +42,14 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 			    Thread.currentThread().interrupt();
 			}
 		}
+		
 	}
 	
+	/**
+	 * 
+	 * Go through all the repositories and call the OriginUpdater.
+	 * 
+	 */
 	public void updateAll() {
 		
 		DatabaseConnection db = new DatabaseConnection();
@@ -52,7 +67,7 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 		}
 
 		// Close database connection
-				db.closeConnection();
+		db.closeConnection();
 				
 		// Go through all the repositories and clone them
 		for (int i = 0; i < repositoriesArray.length(); i++) {
@@ -63,8 +78,7 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 				OriginUpdater.update(repositoryAlias, repositoryUrl);
 			}
 			catch (Exception e) {
-				//log.error("Error reading repository \"" + repositoryObject.getString("repositoryAlias"));
-				return;
+				// Error reading a repository
 			}
 		}
 	}

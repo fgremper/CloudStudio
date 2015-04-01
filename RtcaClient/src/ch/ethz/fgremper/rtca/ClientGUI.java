@@ -25,8 +25,11 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
+ * 
  * Rendering the GUI with Swing
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class ClientGUI {
 
@@ -54,27 +57,37 @@ public class ClientGUI {
     private static boolean forceUpdate = false;
     
     /**
+     * 
      * Sets the force update value. When this is true the main loop will skip waiting and
      * execute the next update immediately.
+     * 
      * @param value
+     * 
      */
     public static void setForceUpdate(boolean value) {
     	forceUpdate = value;
     }
     
     /**
+     * 
      * Get the force update value.
+     * 
      * @return
+     * 
      */
     public static boolean getForceUpdate() {
     	return forceUpdate;
     }
     
     /**
+     * 
      * Adds a message to the GUI log and scrolls down
+     * 
      * @param logString
+     * 
      */
     public static void addLogMessage(String logString) {
+    	
     	// Add log message
     	logModel.addElement(logString);
 
@@ -82,10 +95,13 @@ public class ClientGUI {
         // JScrollBar vertical = logScrollPane.getVerticalScrollBar();
         // vertical.setValue(vertical.getMaximum());
         // logList.ensureIndexIsVisible(logModel.size() - 1);
+    	
     }
 
     /**
+     * 
      * Set the traffic light to green if it's not orange or red.
+     * 
      */
     public static void setStatusGreen() {
     	if (trafficLabelGreen != null && trafficLabelYellow != null && trafficLabelRed != null && errorLevel == 0) {
@@ -97,7 +113,9 @@ public class ClientGUI {
     }
 
     /**
+     * 
      * Sets the traffic light to orange if it's not red.
+     * 
      */
     public static void setStatusYellow() {
     	if (trafficLabelGreen != null && trafficLabelYellow != null && trafficLabelRed != null && errorLevel <= 1) {
@@ -109,7 +127,9 @@ public class ClientGUI {
     }
 
     /**
+     * 
      * Sets the traffic light to red.
+     * 
      */
     public static void setStatusRed() {
     	if (trafficLabelGreen != null && trafficLabelYellow != null && trafficLabelRed != null && errorLevel <= 2) {
@@ -121,14 +141,18 @@ public class ClientGUI {
     }
     
     /**
+     * 
      * Sets the last update timestamp to now. GUI will show the difference in seconds.
+     * 
      */
     public static void setLastUpdate() {
     	lastUpdate = System.currentTimeMillis();
     }
 
     /**
+     * 
      * Update the last update JLabel in the GUI.
+     * 
      */
     public static void refreshLastUpdate() {
     	if (lastUpdate != 0) {
@@ -138,31 +162,42 @@ public class ClientGUI {
     }
 
     /**
+     * 
      * Set the status text.
+     * 
      * @param text
+     * 
      */
     public static void setStatus(String text) {
         statusText.setText(text);
     }
 
     /**
+     * 
      * Set the monitoring text in the GUI.
+     * 
      * @param text
+     * 
      */
     public static void setMonitoringText(String text) {
         monitoringText.setText(text);
     }
     
     /**
+     * 
      * Updates the progress bar as sort of percentage. Value needs to be between 0 and 10000.
+     * 
      * @param value
+     * 
      */
     public static void setTimeTillNextUpdate(int value) {
     	updateProgressBar.setValue(value);
     }
     
     /**
-     * Great the GUI elements.
+     * 
+     * Create the GUI elements.
+     * 
      */
     public static void createGuiContents() {
 
@@ -239,7 +274,9 @@ public class ClientGUI {
     }
     
     /**
+     * 
      * Create the JFrame (window) and add the all the GUI elements.
+     * 
      */
     public static void createAndShowGUI() {
     	

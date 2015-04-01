@@ -1,5 +1,6 @@
 package ch.ethz.fgremper.rtca;
 
+import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 
@@ -9,6 +10,13 @@ import org.apache.logging.log4j.Logger;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * 
+ * Main server routine. Runs the PeriodicalAllOriginUpdater and the HTTP server.
+ * 
+ * @author Fabian Gremper
+ *
+ */
 public class ServerMain {
 
 	private static final Logger log = LogManager.getLogger(ServerMain.class);
@@ -58,7 +66,7 @@ public class ServerMain {
 		context.getFilters().add(new ParameterFilter());
 		
 		// Web interface handler
-		server.createContext("/", new WebInterfaceHttpHandler());
+		server.createContext(File.separator, new WebInterfaceHttpHandler());
 		
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();

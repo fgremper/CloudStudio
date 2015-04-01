@@ -12,20 +12,27 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * 
  * Communication with the RTCA server.
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class HttpClient {
 
 	private static final Logger log = LogManager.getLogger(HttpClient.class);
 	
 	/**
+	 * 
 	 * Sends login request to the RTCA server and returns session ID.
+	 * 
 	 * @param serverUrl RTCA server URL
 	 * @param username username
 	 * @param password password
 	 * @return session ID
+	 * 
 	 * @throws Exception
+	 * 
 	 */
 	public String login(String serverUrl, String username, String password) throws Exception {
 
@@ -46,7 +53,7 @@ public class HttpClient {
 		log.debug("Response code: " + responseCode);
 
 		// Login successful?
-		if (responseCode == 200) {
+		if (responseCode == HttpURLConnection.HTTP_OK) {
 			
 			// Response text
 			String response = IOUtils.toString(con.getInputStream(), "UTF-8");
@@ -86,10 +93,14 @@ public class HttpClient {
 	}
 	
 	/**
+	 * 
 	 * Send the entire local git state of a single git repository to the RTCA server.
+	 * 
 	 * @param serverUrl RTCA server URL
 	 * @param body JSON string provided by the RepositoryReader
+	 * 
 	 * @throws Exception
+	 * 
 	 */
 	public void sendGitState(String serverUrl, String sessionId, String repositoryAlias, String body) throws Exception {
 
@@ -116,7 +127,7 @@ public class HttpClient {
 		log.debug("Response code: " + responseCode);
 
 		// Not successful?
-		if (responseCode != 200) {
+		if (responseCode != HttpURLConnection.HTTP_OK) {
 
 			// Response text
 			String response = IOUtils.toString(con.getErrorStream(), "UTF-8");

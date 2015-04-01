@@ -30,7 +30,7 @@ public class RepositoryReaderTest {
 		
 		System.out.println("[Test] Running client for user john");
 		
-		RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + "john");
+		RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "john");
 		String jsonString = repositoryReader.getJsonString();
 		
 		System.out.println("[Test] JSON String: " + jsonString);

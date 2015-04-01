@@ -18,8 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
+ * 
  * Connection to the MySQL database.
+ * 
  * @author Fabian Gremper
+ * 
  */
 public class DatabaseConnection {
 
@@ -27,10 +30,11 @@ public class DatabaseConnection {
 	
 	Connection con = null;
 
-	public DatabaseConnection() {
-		// con = DatabaseConnectionPool.getInstance().getConnection();
-	}
-
+	/**
+	 * 
+	 * Get a connection from the JDBC driver.
+	 * 
+	 */
 	public void getConnection() throws Exception {
     	ServerConfig serverConfig = ServerConfig.getInstance();
         Class.forName(serverConfig.dbDriverClass);
@@ -38,20 +42,38 @@ public class DatabaseConnection {
 
 	}
 	
-	/* UTILITY */
-	
+	/**
+	 * 
+	 * Start a transaction.
+	 *
+	 */
 	public void startTransaction() throws SQLException {
 		con.setAutoCommit(false);
 	}
 
+	/**
+	 * 
+	 * Commit a transaction.
+	 * 
+	 */
 	public void commitTransaction() throws SQLException {
 		con.commit();
 	}
 
+	/**
+	 * 
+	 * Rollback a transaction.
+	 *
+	 */
 	public void rollbackTransaction() throws SQLException {
 		con.rollback();
 	}
 	
+	/**
+	 * 
+	 * Close connection if it's open
+	 * 
+	 */
 	public void closeConnection() {
 		try {
 			if (con != null) {
@@ -59,12 +81,19 @@ public class DatabaseConnection {
 			}
 		}
 		catch (Exception e) {
-			
+			// Do nothing
 		}
 	}
 
-	/* UPDATE FROM CLIENT CYCLE */
-	
+	/**
+	 * 
+	 * Reset and refresh the user state for a repository and user directly from the JSON data.
+	 * 
+	 * @param inputJsonString
+	 * @param username
+	 * @param repositoryAlias
+	 *
+	 */
 	public void setEntireUserGitState(String inputJsonString, String username, String repositoryAlias) throws Exception {
 
 		JSONObject setLocalGitStateObject = new JSONObject(inputJsonString);
@@ -78,7 +107,7 @@ public class DatabaseConnection {
 		// We're replacing all we know about what we know about this users git state, so delete every thing first
 		deleteAllRepositoryUserInformation(repositoryAlias, username);
 
-		// Read information in and store files to database and filesystem
+		// Read file information in and store files to database and filesystem
 		for (int i = 0; i < fileArray.length(); i++) {
 			JSONObject fileObject = fileArray.getJSONObject(i);
 
@@ -91,12 +120,15 @@ public class DatabaseConnection {
 			
 			log.info("File: " + filename + " (sha: " + sha + ")");
 
-			File file = new File(ServerConfig.getInstance().fileStorageDirectory + "/" + sha);
+			// Only write file contents if they don't exist yet
+			File file = new File(ServerConfig.getInstance().fileStorageDirectory + File.separator + sha);
 			if (!file.exists()) {
 				FileUtils.writeStringToFile(file, content);
 			}
 
+			// Store the file in the database
 			storeFile(repositoryAlias, username, filename, sha, branch, commit, committed);
+			
 		}
 
 		// Read in commit history and store it to database
@@ -122,6 +154,14 @@ public class DatabaseConnection {
 
 	}
 	
+	/**
+	 * 
+	 * Delete all data for a user and repository.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * 
+	 */
 	public void deleteAllRepositoryUserInformation(String repositoryAlias, String username) throws SQLException {
 		PreparedStatement stmt;
 		
@@ -144,8 +184,20 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Add a user file to the database.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * @param filename
+	 * @param sha
+	 * @param branch
+	 * @param commit
+	 * @param committed
+	 * 
+	 */
 	public void storeFile(String repositoryAlias, String username, String filename, String sha, String branch, String commit, String committed) throws SQLException {
-		// Store file information
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO files (repositoryalias, username, filename, sha, branch, commit, committed) VALUES (?, ?, ?, ?, ?, ?, ?)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, username);
@@ -157,6 +209,17 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Add a branch for a user to the database.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * @param branch
+	 * @param commit
+	 * @param active
+	 * 
+	 */
 	public void storeBranches(String repositoryAlias, String username, String branch, String commit, String active) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO branches (repositoryalias, username, branch, commit, active, lastupdate) VALUES (?, ?, ?, ?, ?, NOW())");
 		stmt.setString(1, repositoryAlias);
@@ -167,7 +230,18 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Add downstream commits and distances for a certain commit and user.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * @param commit
+	 * @param downstreamCommits
+	 * 
+	 */
 	public void storeCommitHistory(String repositoryAlias, String username, String commit, JSONArray downstreamCommits) throws Exception {
+		
 		// Statement to insert a single commit/downstreamcommit pair
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO commithistory (repositoryalias, username, commit, downstreamcommit, distance) VALUES (?, ?, ?, ?, ?)");
 		stmt.setString(1, repositoryAlias);
@@ -181,8 +255,15 @@ public class DatabaseConnection {
 			stmt.setInt(5, downstreamCommit.getInt("distance"));
 			stmt.executeUpdate();
 		}
+		
 	}
-
+	
+	/**
+	 * 
+	 * Remove all table contents from the database.
+	 * This is used for testing.
+	 * 
+	 */
 	public void resetDatabase() throws SQLException {
 		// Remove all columns from all tables
 		PreparedStatement stmt;
@@ -200,12 +281,21 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 		stmt = con.prepareStatement("DELETE FROM users");
 		stmt.executeUpdate();
+		
 		// Add origin user
 		stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator) VALUES ('origin', 'origin', 'false', 'false')");
 		stmt.executeUpdate();
 	}
 	
+	/**
+	 * 
+	 * Retrieve branch level awareness JSON object for a repository.
+	 * 
+	 * @param repositoryAlias
+	 * 
+	 */
 	public JSONObject getBranchLevelAwareness(String repositoryAlias) throws Exception {
+		
 		JSONObject responseObject = new JSONObject();
 		
 		JSONArray branchesArray = new JSONArray();
@@ -219,7 +309,10 @@ public class DatabaseConnection {
 		
 		ResultSet rs = stmt.executeQuery();
 		
+		// Map branch names to branch objects if we created them already
 		HashMap<String, JSONObject> index = new HashMap<String, JSONObject>();
+		
+		// Loop through all the branch/user pairs
 		while (rs.next()) {
 			String branch = rs.getString("branch");
 			String username = rs.getString("username");
@@ -239,6 +332,7 @@ public class DatabaseConnection {
 			
 			Integer d = null;
 			
+			// What is the relationship between the origin and the user for a certain branch
 			if (commit == null) {
 				relation = "NOT_CHECKED_OUT";
 			}
@@ -265,7 +359,9 @@ public class DatabaseConnection {
 			}
 			
 			JSONObject branchObject;
+			
 			if (!index.containsKey(branch)) {
+				// We don't have the branch object yet
 				branchObject = new JSONObject();
 				branchesArray.put(branchObject);
 				index.put(branch, branchObject);
@@ -274,9 +370,11 @@ public class DatabaseConnection {
 				branchObject.put("activeUsers", new JSONArray());
 			}
 			else {
+				// We already have the branch object
 				branchObject = index.get(branch);
 			}
 			
+			// Add the user and information to the branch object
 			JSONObject branchUserObject = new JSONObject();
 			branchObject.getJSONArray("users").put(branchUserObject);
 			branchUserObject.put("username", username);
@@ -286,6 +384,8 @@ public class DatabaseConnection {
 			}
 
 			// TODO why can active be null here?!
+			// Is this the active branch of a user?
+			// Also store the last update information in here
 			if (active != null && active.equals("true")) {
 				JSONObject activeUserObject = new JSONObject();
 				activeUserObject.put("username", username);
@@ -299,8 +399,19 @@ public class DatabaseConnection {
 		responseObject.put("branches", branchesArray);
 		
 		return responseObject;
+		
 	}
 	
+	/**
+	 * 
+	 * Returns the distance from a commit to another if it is directly downstream of it.
+	 * If it is not, return null.
+	 * 
+	 * @param repositoryAlias
+	 * @param commit1
+	 * @param commit2
+	 * 
+	 */
 	public Integer branchCommitIsInHistoryOfBranchCommit(String repositoryAlias, String commit1, String commit2) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("SELECT distance FROM commithistory WHERE commit = ? AND downstreamcommit = ? AND repositoryalias = ?");
 
@@ -317,7 +428,15 @@ public class DatabaseConnection {
 		}
 	}
 	
-
+	/**
+	 * 
+	 * Minimum distance to travel from a commit to another in the commit graph.
+	 * 
+	 * @param repositoryAlias
+	 * @param commit1
+	 * @param commit2
+	 * 
+	 */
 	public Integer distanceForCommitsToSeeEachOther(String repositoryAlias, String commit1, String commit2) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("SELECT MIN(b1.distance + b2.distance) AS mindistance FROM commithistory AS b1 CROSS JOIN commithistory AS b2 WHERE b1.commit = ? AND b2.commit = ? AND b1.downstreamcommit = b2.downstreamcommit AND b1.repositoryalias = ? AND b2.repositoryalias = ?");
 
@@ -335,7 +454,17 @@ public class DatabaseConnection {
 		}
 	}
 	
-
+	/**
+	 * 
+	 * Retrieve the SHA of a file.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * @param branch
+	 * @param filename
+	 * @param showUncommitted
+	 * 
+	 */
 	public String getFileSha(String repositoryAlias, String username, String branch, String filename, boolean showUncommitted) throws Exception {
 		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
 		
@@ -356,43 +485,26 @@ public class DatabaseConnection {
 		}
 	}
 
-	public JSONObject getFileLevelAwareness(String repositoryAlias, String username, String branch, String additionalBranch, boolean showUncommitted, boolean showConflicts) throws Exception {
+	/**
+	 * 
+	 * Get file level awareness response object.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * @param branch
+	 * @param compareToBranch
+	 * @param showUncommitted
+	 * @param showConflicts
+	 * 
+	 */
+	public JSONObject getFileLevelAwareness(String repositoryAlias, String username, String branch, String compareToBranch, boolean showUncommitted, boolean showConflicts) throws Exception {
 		
-		/*String repositoryAlias = getConflictsObject.getString("repositoryAlias");
-		String branch = getConflictsObject.getString("branch");
-		boolean showUncommitted = getConflictsObject.getBoolean("showUncommitted");
-		JSONArray selectedAdditionalBranches = getConflictsObject.getJSONArray("selectedAdditionalBranches");
-		*/
-
 		String showUncommittedString = showUncommitted ? "uncommitted" : "committed";
-		
-		
-		/*
+			
 		JSONObject responseObject = new JSONObject();
-		JSONArray branchesArray = new JSONArray();
-		responseObject.put("branches", branchesArray);
 		
-		PreparedStatement stmt;
-		
-		JSONObject branchObject = new JSONObject();
-		branchesArray.put(branchObject);
-		branchObject.put("branch", branch);
-		
-		stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
-		
-		/* 
-		1 my user
-		2 committed
-		3 branch
-		4 repositoryalias
-		5 repositoryalias
-		6 repository alias
-		7 their branch <-- not anymore
-		8 committed
-		9 their branch
-		10 repository
-		*/
-		/*
+		PreparedStatement stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
+
 		stmt.setString(1, username);
 		stmt.setString(2, showUncommittedString);
 		stmt.setString(3, branch);
@@ -400,131 +512,75 @@ public class DatabaseConnection {
 		stmt.setString(5, repositoryAlias);
 		stmt.setString(6, repositoryAlias);
 		stmt.setString(7, showUncommittedString);
-		stmt.setString(8, branch);
+		stmt.setString(8, compareToBranch);
 		stmt.setString(9, repositoryAlias);
-		
-		ResultSet rs = stmt.executeQuery();
+
 		HashMap<String, JSONObject> fileMap = new HashMap<String, JSONObject>();
-		JSONArray conflictList = new JSONArray();
+		JSONArray fileList = new JSONArray();
+		
+		// Pairs of my file version with file version of other user (for all users)
+		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
+			
+			// Read fields
 			String filename = rs.getString("filename");
 			String mySha = rs.getString("mysha");
 			String theirUsername = rs.getString("theirusername");
 			String theirSha = rs.getString("theirsha");
 			
-			JSONObject conflict;
+			JSONObject file;
 			if (!fileMap.containsKey(filename)) {
-				conflict = new JSONObject();
-				fileMap.put(filename, conflict);
-				conflictList.put(conflict);
-				conflict.put("filename", filename);
-				conflict.put("users", new JSONArray());
+				// We don't have the file in the list yet
+				file = new JSONObject();
+				fileMap.put(filename, file);
+				fileList.put(file);
+				file.put("filename", filename);
+				file.put("users", new JSONArray());
 			}
 			else {
-				conflict = fileMap.get(filename);
+				// We already have the file in the list
+				file = fileMap.get(filename);
 			}
 			
-			JSONArray conflictUsers = conflict.getJSONArray("users");
+			// Fill information about the user we compare the file to
+			JSONArray users = file.getJSONArray("users");
 			JSONObject user = new JSONObject();
-			conflictUsers.put(user);
+			users.put(user);
 			
+			// Username
 			user.put("username", theirUsername);
-			
+
+			// Conflict type
 			String conflictType;
 			if (mySha == null && theirSha != null) conflictType = "FILE_CONFLICT"; //new
 			else if (mySha != null && theirSha == null) conflictType = "FILE_CONFLICT"; //delete
-			else if (mySha == null && theirSha == null) conflictType = "EQUAL"; //inexistent
-			else if (mySha.equals(theirSha)) conflictType = "EQUAL"; //equal
+			else if (mySha == null && theirSha == null) conflictType = "NO_CONFLICT"; //inexistent
+			else if (mySha.equals(theirSha)) conflictType = "NO_CONFLICT"; //equal
 			else conflictType = "FILE_CONFLICT"; //conflict
 			
 			user.put("type", conflictType);
 			
 		}
-		branchObject.put("files", conflictList);
+		responseObject.put("files", fileList);
 		
-		*/
-		
-			
-			
-			JSONObject branchObject = new JSONObject();
-			branchObject.put("branch", additionalBranch);
-			
-			PreparedStatement stmt = con.prepareStatement(SqlQueryReader.getInstance().getQuery("FileAwareness"));
-			
-			/* 
-			1 my user
-			2 committed
-			3 branch
-			4 repositoryalias
-			5 repositoryalias
-			6 repository alias
-			7 their branch <-- not anymore
-			8 committed
-			9 their branch
-			10 repository
-			*/
-
-			stmt.setString(1, username);
-			stmt.setString(2, showUncommittedString);
-			stmt.setString(3, branch);
-			stmt.setString(4, repositoryAlias);
-			stmt.setString(5, repositoryAlias);
-			stmt.setString(6, repositoryAlias);
-			stmt.setString(7, showUncommittedString);
-			stmt.setString(8, additionalBranch);
-			stmt.setString(9, repositoryAlias);
-
-			ResultSet rs = stmt.executeQuery();
-			HashMap<String, JSONObject> fileMap = new HashMap<String, JSONObject>();
-			JSONArray conflictList = new JSONArray();
-			while (rs.next()) {
-				String filename = rs.getString("filename");
-				String mySha = rs.getString("mysha");
-				String theirUsername = rs.getString("theirusername");
-				String theirSha = rs.getString("theirsha");
-				
-				JSONObject conflict;
-				if (!fileMap.containsKey(filename)) {
-					conflict = new JSONObject();
-					fileMap.put(filename, conflict);
-					conflictList.put(conflict);
-					conflict.put("filename", filename);
-					conflict.put("users", new JSONArray());
-				}
-				else {
-					conflict = fileMap.get(filename);
-				}
-				
-				JSONArray conflictUsers = conflict.getJSONArray("users");
-				JSONObject user = new JSONObject();
-				conflictUsers.put(user);
-				
-				user.put("username", theirUsername);
-
-				String conflictType;
-				if (mySha == null && theirSha != null) conflictType = "FILE_CONFLICT"; //new
-				else if (mySha != null && theirSha == null) conflictType = "FILE_CONFLICT"; //delete
-				else if (mySha == null && theirSha == null) conflictType = "NO_CONFLICT"; //inexistent
-				else if (mySha.equals(theirSha)) conflictType = "NO_CONFLICT"; //equal
-				else conflictType = "FILE_CONFLICT"; //conflict
-				
-				user.put("type", conflictType);
-				
-			}
-			branchObject.put("files", conflictList);
-		
-		return branchObject;
+		return responseObject;
 	}
 	
-	/* REPOSITORY MANAGEMENT */
-	
+	/**
+	 * 
+	 * Retrieve repository information.
+	 * This is used for the filters in the interface.
+	 * 
+	 * @param repositoryAlias
+	 * 
+	 */
 	public String getRepositoryInformation(String repositoryAlias) throws Exception {
+
+		ResultSet rs;
+		
 		// Get users from repository
 		JSONArray repositoryUsers = new JSONArray();
-		ResultSet rs;		
-		PreparedStatement getRepositoryUsersStmt = con.prepareStatement(
-			"SELECT DISTINCT username FROM useraccess WHERE repositoryalias = ?"
-		);
+		PreparedStatement getRepositoryUsersStmt = con.prepareStatement("SELECT DISTINCT username FROM useraccess WHERE repositoryalias = ?");
 		getRepositoryUsersStmt.setString(1, repositoryAlias);
 		rs = getRepositoryUsersStmt.executeQuery();
 		while (rs.next()) {
@@ -533,23 +589,29 @@ public class DatabaseConnection {
 
 		// Get branches from repository
 		JSONArray repositoryBranches = new JSONArray();
-		PreparedStatement getRepositoryBranchesStmt = con.prepareStatement(
-			"SELECT DISTINCT branch FROM files WHERE repositoryalias = ?"
-		);
+		PreparedStatement getRepositoryBranchesStmt = con.prepareStatement("SELECT DISTINCT branch FROM files WHERE repositoryalias = ?");
 		getRepositoryBranchesStmt.setString(1, repositoryAlias);
 		rs = getRepositoryBranchesStmt.executeQuery();
 		while (rs.next()) {
 			repositoryBranches.put(rs.getString("branch"));
 		}
-		JSONObject responseObject = new JSONObject();
 		
-		// Add to and return object
+		// Response object
+		JSONObject responseObject = new JSONObject();
 		responseObject.put("repositoryUsers", repositoryUsers);
 		responseObject.put("repositoryBranches", repositoryBranches);
 		return responseObject.toString();
+		
 	}
 
+	/**
+	 * 
+	 * Get all repositories.
+	 * Used by the origin updater.
+	 * 
+	 */
 	public JSONArray getAllRepositories() throws Exception {
+		
 		// Statement to get all the repositories
 		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositoryalias, repositoryurl FROM repositories");
 		
@@ -567,27 +629,41 @@ public class DatabaseConnection {
 		}
 		
 		return repositoriesArray;
+		
 	}
 	
+	/**
+	 * 
+	 * Retrieve all repositories and information a certain user has access to.
+	 * 
+	 * @param myUsername
+	 * 
+	 */
 	public JSONArray getRepositories(String myUsername) throws Exception {
-		// Statement to get all the repositories and users for your user permissions
 		
+		// Statement to get all the repositories and users for your user permissions
 		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, repositories.repositorydescription, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ? ORDER BY repositories.repositoryalias");
 		stmt.setString(1, myUsername);
 		stmt.setString(2, myUsername);
 		stmt.setString(3, myUsername);
 		
-		// Put the results into a JSON array
+
 		JSONArray repositoriesArray = new JSONArray();
-		ResultSet rs = stmt.executeQuery();
 		HashMap<String, JSONObject> index = new HashMap<String, JSONObject>();
+		
+		// Loop through all the repository/user pairs
+		ResultSet rs = stmt.executeQuery();
 		while (rs.next()) {
+			
+			// Read fields
 			String repositoryAlias = rs.getString("repositoryalias");
 			String repositoryUrl = rs.getString("repositoryurl");
 			String repositoryOwner = rs.getString("repositoryowner");
 			String repositoryDescription = rs.getString("repositorydescription");
 			String username = rs.getString("username");
+			
 			if (!index.containsKey(repositoryAlias)) {
+				// We don't have the repository yet
 				JSONObject repositoryObject = new JSONObject();
 				index.put(repositoryAlias, repositoryObject);
 				repositoryObject.put("repositoryAlias", repositoryAlias);
@@ -597,16 +673,27 @@ public class DatabaseConnection {
 				repositoryObject.put("users", new JSONArray());
 				repositoriesArray.put(repositoryObject);
 			}
-			if (username != null) {
+			else {
+				// Just add the user to a repository we already have in the list
 				index.get(repositoryAlias).getJSONArray("users").put(username);
 			}
 		}
 		
 		return repositoriesArray;
+		
 	}
 	
+	/**
+	 * 
+	 * Create a new repository.
+	 * 
+	 * @param repositoryAlias
+	 * @param repositoryUrl
+	 * @param repositoryOwner
+	 * @param repositoryDescription
+	 * 
+	 */
 	public void createRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner, String repositoryDescription) throws SQLException {
-		// Add repository
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, repositorydescription, clonecount) VALUES (?, ?, ?, ?, 0)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
@@ -615,6 +702,13 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 	
+	/**
+	 * 
+	 * Delete a repository.
+	 * 
+	 * @param repositoryAlias
+	 * 
+	 */
 	public void deleteRepository(String repositoryAlias) throws SQLException {		
 		// Delete repository
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM repositories WHERE repositoryalias = ?");
@@ -622,13 +716,21 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 	
-	/* USER MANAGEMENT */
-
+	/**
+	 * 
+	 * Get information for all the users.
+	 * 
+	 * @return List of users and information
+	 * 
+	 */
 	public JSONArray getUsers() throws Exception {
+		
 		JSONArray usersArray = new JSONArray();
 		
 		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users");
 		ResultSet rs = stmt.executeQuery();
+		
+		// Loop through all the users and fill array
 		while (rs.next()) {
 			String username = rs.getString("username");
 			String isAdmin = rs.getString("isadmin");
@@ -645,46 +747,100 @@ public class DatabaseConnection {
 		return usersArray;
 	}
 	
+	/**
+	 * 
+	 * Add a new user to the database.
+	 * 
+	 * @param username
+	 * @param password
+	 * 
+	 */
 	public void addUser(String username, String password) throws SQLException {
+		
 		// Hash the password
 		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();
 
+		// Write the user to database.
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator, joindate) VALUES (?, ?, 'false', 'false', NOW())");
 		stmt.setString(1, username);
 		stmt.setString(2, passwordHash);
 		stmt.executeUpdate();
+		
 	}
 	
+	/**
+	 * 
+	 * Delete a user.
+	 * 
+	 * @param username
+	 * 
+	 */
 	public void deleteUser(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM users WHERE username = ?");
 		stmt.setString(1, username);
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Give a user admin privileges.
+	 * 
+	 * @param username
+	 * 
+	 */
 	public void makeUserAdmin(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("UPDATE users SET isadmin = 'true' WHERE username = ?");
 		stmt.setString(1, username);
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Revoke a user's administrator privileges.
+	 * 
+	 * @param username
+	 * 
+	 */
 	public void revokeUserAdmin(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("UPDATE users SET isadmin = 'false' WHERE username = ?");
 		stmt.setString(1, username);
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Give a user repository creation rights.
+	 * 
+	 * @param username
+	 * 
+	 */
 	public void makeUserCreator(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("UPDATE users SET iscreator = 'true' WHERE username = ?");
 		stmt.setString(1, username);
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Revoke a user's rights to create repositories.
+	 * 
+	 * @param username
+	 * 
+	 */
 	public void revokeUserCreator(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("UPDATE users SET iscreator = 'false' WHERE username = ?");
 		stmt.setString(1, username);
 		stmt.executeUpdate();
 	}
 	
+	/**
+	 * 
+	 * Modify the owner of a repository.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * 
+	 */
 	public void modifyRepositoryOwner(String repositoryAlias, String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("UPDATE repositories SET repositoryowner = ? WHERE repositoryalias = ?");
 		stmt.setString(1, username);
@@ -692,6 +848,14 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Add a user to a repository.
+	 * 
+	 * @param username
+	 * @param repositoryAlias
+	 * 
+	 */
 	public void addUserToRepository(String username, String repositoryAlias) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO useraccess (username, repositoryalias) VALUES (?, ?)");
 		stmt.setString(1, username);
@@ -699,13 +863,31 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 
+	/**
+	 * 
+	 * Remove a user from a repository.
+	 * 
+	 * @param username
+	 * @param repositoryAlias
+	 * 
+	 */
 	public void deleteUserFromRepository(String username, String repositoryAlias) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("DELETE FROM useraccess WHERE username = ? AND repositoryalias = ?");
 		stmt.setString(1, username);
 		stmt.setString(2, repositoryAlias);
 		stmt.executeUpdate();
 	}
-		
+	
+	/**
+	 * 
+	 * Check whether login credentials are correct. If they are, return a new session ID. Otherwise return null.
+	 * 
+	 * @param username
+	 * @param password
+	 * 
+	 * @return new session ID (success) or null (error)
+	 * 
+	 */
 	public String getNewSessionIdForCorrectLogin(String username, String password) throws SQLException {
 		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();
 
@@ -723,6 +905,14 @@ public class DatabaseConnection {
 		}
 	}
 	
+	/**
+	 * 
+	 * Persist new session ID for a user.
+	 * 
+	 * @param sessionId
+	 * @param username
+	 * 
+	 */
 	public void persistSessionIdForUser(String sessionId, String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO usersessions (sessionid, username, expires) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))");
 		stmt.setString(1, sessionId);
@@ -730,8 +920,14 @@ public class DatabaseConnection {
 		stmt.executeUpdate();
 	}
 	
-	/* AUTHORIZATION CHECKS */
-	
+	/**
+	 * 
+	 * Checks whether a user has access to a repository.
+	 * 
+	 * @param username
+	 * @param repositoryAlias
+	 * 
+	 */
 	public boolean doesUserHaveRepositoryAccess(String username, String repositoryAlias) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM useraccess WHERE username = ? AND repositoryalias = ?");
 		stmt.setString(1, username);
@@ -740,6 +936,13 @@ public class DatabaseConnection {
 		return rs.next();
 	}
 
+	/**
+	 * 
+	 * Does a user have administrator privileges?
+	 * 
+	 * @param username
+	 * 
+	 */
 	public boolean isUserAdmin(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? and isadmin = 'true'");
 		stmt.setString(1, username);
@@ -747,6 +950,13 @@ public class DatabaseConnection {
 		return rs.next();
 	}
 
+	/**
+	 * 
+	 * Does a user have repository creation rights?
+	 * 
+	 * @param username
+	 * 
+	 */
 	public boolean isUserCreator(String username) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? and iscreator = 'true'");
 		stmt.setString(1, username);
@@ -754,6 +964,14 @@ public class DatabaseConnection {
 		return rs.next();
 	}
 
+	/**
+	 * 
+	 * Is the user the owner of a repository?
+	 * 
+	 * @param username
+	 * @param repositoryAlias
+	 * 
+	 */
 	public boolean isUserRepositoryOwner(String username, String repositoryAlias) throws SQLException {
 		if (username == null) return false;
 		PreparedStatement stmt = con.prepareStatement("SELECT repositoryowner FROM repositories WHERE repositoryowner = ? AND repositoryalias = ?");
@@ -763,6 +981,15 @@ public class DatabaseConnection {
 		return rs.next();
 	}
 
+	/**
+	 * 
+	 * Retrieve the username for a session ID
+	 * 
+	 * @param sessionId
+	 * 
+	 * @return username
+	 * 
+	 */
 	public String getUsername(String sessionId) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM usersessions WHERE sessionid = ? AND NOW() <= expires");
 		stmt.setString(1, sessionId);
@@ -775,6 +1002,13 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * 
+	 * Returns the counter for the local clones of a repository.
+	 * 
+	 * @param repositoryAlias
+	 * 
+	 */
 	public int getRepositoryCloneCount(String repositoryAlias) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("SELECT clonecount FROM repositories WHERE repositoryalias = ?");
 		stmt.setString(1, repositoryAlias);
@@ -787,12 +1021,28 @@ public class DatabaseConnection {
 		}
 	}
 
+	/**
+	 * 
+	 * Increase the counter for the local clone of a repository.
+	 * 
+	 * @param repositoryAlias
+	 * 
+	 */
 	public void incRepositoryCloneCount(String repositoryAlias) throws Exception {
 		PreparedStatement stmt = con.prepareStatement("UPDATE repositories SET clonecount = clonecount + 1 WHERE repositoryalias = ?");
 		stmt.setString(1, repositoryAlias);
 		stmt.executeUpdate();
 	}
 	
+	/**
+	 * 
+	 * Find the common ancestor commit for two commits with the shortest distance
+	 * 
+	 * @param repositoryAlias
+	 * @param commit1
+	 * @param commit2
+	 * 
+	 */
 	public String getMergeBaseCommitId(String repositoryAlias, String commit1, String commit2) throws SQLException {
 
 		PreparedStatement stmt = con.prepareStatement("SELECT b1.downstreamcommit, (b1.distance + b2.distance) AS totaldistance FROM commithistory AS b1 CROSS JOIN commithistory AS b2 WHERE b1.commit = ? AND b2.commit = ? AND b1.downstreamcommit = b2.downstreamcommit AND b1.repositoryalias = ? AND b2.repositoryalias = ? ORDER BY totaldistance ASC");
@@ -812,6 +1062,16 @@ public class DatabaseConnection {
 		
 	}
 	
+	/**
+	 * 
+	 * Retrieve the commit ID for a branch and file and user.
+	 * 
+	 * @param repositoryAlias
+	 * @param username
+	 * @param branch
+	 * @param filename
+	 * 
+	 */
 	public String getCommitForBranchAndFile(String repositoryAlias, String username, String branch, String filename) throws SQLException {
 
 		PreparedStatement stmt = con.prepareStatement("SELECT commit FROM files WHERE repositoryalias = ? AND username = ? AND branch = ? AND filename = ? AND (committed = 'committed' OR committed = 'both')");
@@ -828,10 +1088,18 @@ public class DatabaseConnection {
 		else {
 			return null;
 		}
+		
 	}
 	
-	/* THE RANDOM STRING FUNCTION FOR SESSION IDS */
 	
+	/**
+	 * 
+	 * Generate random hex string.
+	 * Used to create new session ID.
+	 * 
+	 * @param numchars length of the random string
+	 * 
+	 */
 	private String getRandomHexString(int numchars){
         Random r = new Random();
         StringBuffer sb = new StringBuffer();

@@ -7,6 +7,13 @@ import java.sql.SQLException;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * 
+ * Database connection pool.
+ * 
+ * @author Fabian Gremper
+ *
+ */
 public class DatabaseConnectionPool {
 
     private static DatabaseConnectionPool datasource;

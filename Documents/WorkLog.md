@@ -4,20 +4,54 @@
 
 #### TODO
 
+TODO today:
+
+clean up the code and do comments
+UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!!
+-> changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
+enforce [A-Za-z0-9 ]+ on usernames and repository names
+write api document
+write tests
+test no common ancestor
+
+build with maven
+
+TODO tomorrow:
+
+fix db pool
+fix sql case sensitiviity
+fix active branch == null?! except if I do it today
+fix ejs bracket bug
+
+TODO friday
+
+add the remaining interface functionality, clean up interface
+gui explanation at the bottom (or question mark somewhere)
+
+TODO saturday
+
+click around and test :) all satisfactory? :>
+
+TODO sunday
+
+send to martin
+
+
 [small design tasks]
-* cool cloudstudio logo :O :O :O
+> * cool cloudstudio logo :O :O :O
 * Webinterface: repository (add, remove, adduser, removeuser, makeowner, changepositoryurl, changedescription, deleterepository)
 * Webinterface: profile?!
 * Webinterface: package responsible users
 * change repository info (description, url) webinterface & API
 
-[remaining logic stuff]
+[remaining stuff to fix]
 * test with big files
 * binary files detection!
 * re-enable database connection pool, maybe use the apache library
 * list in gui sometimes bugs (swing)
 * sql case sensitivity of queries?!
 * active branch = null what is that all about
+* ejs bracket bug?
 
 [finalizing]
 * clean up code in server

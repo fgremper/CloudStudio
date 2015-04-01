@@ -51,7 +51,7 @@ public class SimpleShaConflictTest {
 		
 			System.out.println("[Test] Running plugin for user " + user);
 			
-			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
+			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 			String jsonString = repositoryReader.getJsonString();
 			
 			System.out.println("[Test] JSON String: " + jsonString);
@@ -114,7 +114,7 @@ public class SimpleShaConflictTest {
 		
 			System.out.println("[Test] Running plugin for user " + user);
 			
-			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
+			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 			String jsonString = repositoryReader.getJsonString();
 			
 			System.out.println("[Test] JSON String: " + jsonString);
@@ -184,7 +184,7 @@ public class SimpleShaConflictTest {
 		
 			System.out.println("[Test] Running plugin for user " + user);
 			
-			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + "/" + user);
+			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 			String jsonString = repositoryReader.getJsonString();
 			
 			System.out.println("[Test] JSON String: " + jsonString);
