@@ -17,17 +17,20 @@ Log into CloudStudio with your username and password. Returns a session ID that 
 ### Parameters
 
 Parameter name | Description
--------------- | -----------
+-------------- | ---------------------------------------------------------------------
 username       | Your username
 password       | Your password
 
 ### Example
 
+#### Request
 ```
 curl "http://cloudstudio:7330/api/login" \
   --data "username=John" \
   --data "password=burgers"
 ```
+
+#### Response:
 ```
 {  
    "sessionId": "f40309335f82e044fa04c6f267aa62fd",
