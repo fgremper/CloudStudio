@@ -32,7 +32,7 @@ public class DatabaseConnection {
 
 	/**
 	 * 
-	 * Get a connection from the database pool.
+	 * Get a connection from the JDBC driver.
 	 * 
 	 */
 	public void getConnection() throws Exception {

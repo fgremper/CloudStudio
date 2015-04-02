@@ -32,11 +32,14 @@ public class DatabaseConnection {
 
 	/**
 	 * 
-	 * Get a connection from the database pool.
+	 * Get a connection from the JDBC driver.
 	 * 
 	 */
 	public void getConnection() throws Exception {
-        con = DatabaseConnectionPool.getInstance().getConnection();
+    	ServerConfig serverConfig = ServerConfig.getInstance();
+        Class.forName(serverConfig.dbDriverClass);
+        con = DatabaseConnectionPool.getInstance().getConnection(serverConfig.dbJdbcUrl, serverConfig.dbUser, serverConfig.dbPassword);
+
 	}
 	
 	/**

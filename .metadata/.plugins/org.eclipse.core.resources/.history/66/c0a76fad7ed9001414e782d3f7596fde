@@ -19,11 +19,6 @@ public class DatabaseConnectionPool {
     private static DatabaseConnectionPool datasource;
     private ComboPooledDataSource cpds;
 
-    /**
-     * 
-     * Setup C3P0 with settings from server config
-     * 
-     */
     private DatabaseConnectionPool() throws IOException, SQLException, PropertyVetoException {
     	
     	ServerConfig serverConfig = ServerConfig.getInstance();
@@ -42,14 +37,8 @@ public class DatabaseConnectionPool {
 
     }
 
-    /**
-     * 
-     * Access the data source (singleton pattern)
-     * 
-     * @return datasource
-     * 
-     */
     public static DatabaseConnectionPool getInstance() throws IOException, SQLException, PropertyVetoException {
+    	
         if (datasource == null) {
             datasource = new DatabaseConnectionPool();
             return datasource;
@@ -59,11 +48,6 @@ public class DatabaseConnectionPool {
         
     }
 
-    /**
-     * 
-     * Get a database connection
-     * 
-     */
     public Connection getConnection() throws SQLException {
         return this.cpds.getConnection();
     }

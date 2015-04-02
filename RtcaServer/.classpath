@@ -13,10 +13,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="../jar/mchange-commons-java-0.2.9.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/diffutils-1.2.1.jar"/>
-	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/c3p0-0.9.5.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/org.eclipse.jgit-3.5.2.201411120430-r.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/log4j-api-2.2.jar"/>
 	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/log4j-core-2.2.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/RtcaCommon"/>
+	<classpathentry kind="lib" path="/Users/novocaine/Documents/masterthesis/workspace/jar/c3p0-0.9.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

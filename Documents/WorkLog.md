@@ -18,7 +18,8 @@ TODO tomorrow:
 > fix active branch is null
 > fix a bug with empty files where the diff3 output isn't in order
 > fix ejs bracket bug
-fix db pool
+fix db pool -> seems to work now... maybe i had a leak somewhere
+fix swing gui list bug
 
 TODO friday
 
@@ -29,6 +30,7 @@ UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!!
 TODO saturday
 
 build with maven
+no more absolute paths
 documentation on how to setup (README)
 click around and test :) all satisfactory? :>
 
@@ -36,28 +38,6 @@ TODO sunday
 
 send to martin
 
-
-[small design tasks]
-> * cool cloudstudio logo :O :O :O
-* Webinterface: repository (add, remove, adduser, removeuser, makeowner, changepositoryurl, changedescription, deleterepository)
-* Webinterface: profile?!
-* Webinterface: package responsible users
-* change repository info (description, url) webinterface & API
-
-[remaining stuff to fix]
-* test with big files
-* binary files detection!
-* re-enable database connection pool, maybe use the apache library
-* list in gui sometimes bugs (swing)
-* sql case sensitivity of queries?!
-* active branch = null what is that all about
-* ejs bracket bug?
-
-[finalizing]
-* clean up code in server
-* make sure we cover the 50% test coverage (or whatever we had on the project plan)
-* no more absolute paths
-* how do we build it? maven? eclipse?
 
 #### Done
 
