@@ -8,17 +8,17 @@ TODO today:
 
 >> clean up the code and do comments
 >> changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
-write api document
+>> write api document
 write tests
 >> test for no common ancestor
 
 TODO tomorrow:
 
+> fix sql case sensitiviity
+> fix active branch is null
+> fix a bug with empty files where the diff3 output isn't in order
+> fix ejs bracket bug
 fix db pool
-fix sql case sensitiviity
-fix active branch == null?! except if I do it today
-fix ejs bracket bug
-enforce [A-Za-z0-9 ]+ on usernames and repository names
 
 TODO friday
 

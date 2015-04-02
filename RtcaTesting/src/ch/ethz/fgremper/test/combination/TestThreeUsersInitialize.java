@@ -30,6 +30,7 @@ public class TestThreeUsersInitialize {
 		
 		TestGitHelper.writeContentToFile("John", "justafileconflict.txt", "one\ntwo\nthree\nfour\nfive");
 		TestGitHelper.writeContentToFile("John", "acontentconflict.txt", "one\ntwo\nthree\nfour\nfive");
+		TestGitHelper.writeContentToFile("John", "xmltest.txt", "<one>this</one>");
 
 		TestGitHelper.createOrModifyFile("John", "main/v1/main.java");
 		TestGitHelper.createOrModifyFile("John", "main/v2/main.java");

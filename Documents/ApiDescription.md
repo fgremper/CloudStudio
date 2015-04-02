@@ -810,9 +810,9 @@ repositoryAlias       | Repository alias
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/revokeCreatorPrivileges?sessionId=YOUR_SESSION_ID&repositoryAlias=HelloWorld"
+curl "http://cloudstudio:7330/api/localState?sessionId=YOUR_SESSION_ID&repositoryAlias=HelloWorld"
   -H "Content-Type: application/json"
-  -d ""
+  -d "TODO"
 ```
 
 ###### Response

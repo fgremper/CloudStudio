@@ -4,3 +4,6 @@
 1427905881995	Rename local variable 'conflictList'
 1427905912538	Rename local variable 'conflict'
 1427906014694	Rename local variable 'conflictUsers'
+1427993522863	Rename method 'getNewSessionIdForCorrectLogin'
+1427993579081	Rename local variable 'newSessionId'
+1427993672048	Rename method 'persistSessionIdForUser'

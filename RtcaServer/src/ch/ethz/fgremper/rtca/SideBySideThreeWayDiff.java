@@ -118,6 +118,8 @@ public class SideBySideThreeWayDiff {
 		}
 		int maxLength = 0;
 		
+		int blocksCounter = 0;
+		
 		// Go through the diff3 output
 		while ((line = reader.readLine()) != null) {
 			
@@ -141,8 +143,10 @@ public class SideBySideThreeWayDiff {
 				maxLength = Math.max(maxLength, (m.group(4) != null ? (Integer.parseInt(m.group(4)) - Integer.parseInt(m.group(2)) + 1) : 1));
 				blockType.set(fileNum, m.group(5));
 				
+				blocksCounter++;
+				
 				// Last file? End of block, time to process
-				if (fileNum == 2) {
+				if (blocksCounter == 3) {
 					
 					// For all files, process the block information, meaning set type to modified, pad
 					// or modifiedpad where necessary and inserting empty lines to the content where
@@ -179,6 +183,7 @@ public class SideBySideThreeWayDiff {
 							}
 						}
 					}
+					blocksCounter = 0;
 				}
 				
 			}

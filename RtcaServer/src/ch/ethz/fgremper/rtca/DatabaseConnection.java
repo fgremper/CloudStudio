@@ -383,7 +383,6 @@ public class DatabaseConnection {
 				branchUserObject.put("distanceFromOrigin", distance);
 			}
 
-			// TODO why can active be null here?!
 			// Is this the active branch of a user?
 			// Also store the last update information in here
 			if (active != null && active.equals("true")) {
@@ -880,15 +879,15 @@ public class DatabaseConnection {
 	
 	/**
 	 * 
-	 * Check whether login credentials are correct. If they are, return a new session ID. Otherwise return null.
+	 * Check whether login credentials are correct. If they are, return the username (in correct case). Otherwise return null.
 	 * 
 	 * @param username
 	 * @param password
 	 * 
-	 * @return new session ID (success) or null (error)
+	 * @return username (success) or null (error)
 	 * 
 	 */
-	public String getNewSessionIdForCorrectLogin(String username, String password) throws SQLException {
+	public String getUsernameForCorrectLogin(String username, String password) throws SQLException {
 		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();
 
 		PreparedStatement stmt = con.prepareStatement("SELECT username FROM users WHERE username = ? AND passwordhash = ?");		
@@ -896,8 +895,8 @@ public class DatabaseConnection {
 		stmt.setString(2, passwordHash);
 		ResultSet rs = stmt.executeQuery();
 		if (rs.next()) {
-			// User/pass correct -> create a new session
-			return getRandomHexString(32);
+			// User/pass correct
+			return rs.getString("username");
 		}
 		else {
 			// User/pass doesn't exist
@@ -907,17 +906,21 @@ public class DatabaseConnection {
 	
 	/**
 	 * 
-	 * Persist new session ID for a user.
+	 * Create and persist new session ID for a user.
 	 * 
 	 * @param sessionId
 	 * @param username
 	 * 
 	 */
-	public void persistSessionIdForUser(String sessionId, String username) throws SQLException {
+	public String createAndPersistSessionIdForUser(String username) throws SQLException {
+		String newSessionId = getRandomHexString(32);
+		
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO usersessions (sessionid, username, expires) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 30 DAY))");
-		stmt.setString(1, sessionId);
+		stmt.setString(1, newSessionId);
 		stmt.setString(2, username);
 		stmt.executeUpdate();
+		
+		return newSessionId;
 	}
 	
 	/**

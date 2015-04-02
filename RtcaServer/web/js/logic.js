@@ -87,10 +87,6 @@ $(function () {
         };
 
     }
-    /*else {
-        // We're not logged in, render login view
-        renderLoginView();
-    }*/
 
     // Look at URL to find out what to render
     renderFromDocumentLocation();

@@ -151,7 +151,7 @@ public class ContentConflictGitReader {
 			}
 			else {
 				// No common merge found
-            	ancestorSha = DigestUtils.sha1Hex("").toString();
+            	ancestorSha = emptySha;
             	createEmptyFile();
 			}
 		}
@@ -172,6 +172,16 @@ public class ContentConflictGitReader {
 	 * 
 	 */
 	public JSONArray diff() throws Exception {
+		
+		// If there has been a jgit error, the ancestorSha is null
+		// Just so we don't display anything at all, set the ancestor sha to an empty file
+		// A case where jgit can fail is when the closest merge commit is in a commit that hasn't been
+		// pushed to the origin
+		if (ancestorSha == null) {
+        	ancestorSha = emptySha;
+        	createEmptyFile();
+		}
+
 		if (mySha != null && theirSha != null && ancestorSha != null) {
 			return SideBySideThreeWayDiff.diff(fileStorageDirectory + File.separator + mySha, fileStorageDirectory + File.separator + ancestorSha, fileStorageDirectory + File.separator + theirSha);
 		}
@@ -192,7 +202,8 @@ public class ContentConflictGitReader {
 			return SideBySideThreeWayDiff.countConflicts(fileStorageDirectory + File.separator + mySha, fileStorageDirectory + File.separator + ancestorSha, fileStorageDirectory + File.separator + theirSha);
 		}
 		else {
-			throw new Exception("Not all file SHAs set");
+			// If in doubt, don't display a content conflict
+			return 0;
 		}
 	}
 	

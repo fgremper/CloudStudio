@@ -291,23 +291,23 @@ public class ApiHttpHandler implements HttpHandler {
 				String password = (String) params.get("password");
 
 				// Request new session ID from database
-				String newSessionId = db.getNewSessionIdForCorrectLogin(username, password);
+				String loginUsername = db.getUsernameForCorrectLogin(username, password);
 
-				if (newSessionId != null) {
+				if (loginUsername != null) {
 				
 					// Initialize response object
 					JSONObject responseObject = new JSONObject();
 					
 					// Persist session ID
 					db.startTransaction();
-					db.persistSessionIdForUser(newSessionId, username);
+					String newSessionId = db.createAndPersistSessionIdForUser(loginUsername);
 					db.commitTransaction();
 
 					// Create user object
 					responseObject.put("isAdmin", db.isUserAdmin(username));
 					responseObject.put("isCreator", db.isUserCreator(username));
 					responseObject.put("sessionId", newSessionId);
-					responseObject.put("username", username);
+					responseObject.put("username", loginUsername);
 					
 					// Set response
 					response = responseObject.toString();
