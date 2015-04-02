@@ -6,7 +6,7 @@ The CloudStudio API exposes an interface to access and manipulate CloudStudio re
 
 Requests to the CloudStudio API have to use either the GET or POST method. GET requests are used for functions that do not change the state of the database. POST requests are used for functions that make changes to the database.
 
-The content type of requests to the CloudStudio API must be "application/x-www-form-urlencoded". The response has content type "application/json". This asynchronism allows to provide parameters for both GET and POST requests similarly and still retrieve comprehensive JSON objects, and is used by many widely used APIs (e.g. SoundCloud).
+The content type of requests to the CloudStudio API must be `application/x-www-form-urlencoded`. The response has content type `application/json. This asynchronism allows to provide parameters for both GET and POST requests similarly and still retrieve comprehensive JSON objects, and is used by many widely used APIs (e.g. SoundCloud).
 
 ## /api/login
 
@@ -14,24 +14,24 @@ Method: POST
 
 Log into CloudStudio with your username and password. Returns a session ID that will be required for further API calls, as well as the username and user privileges.
 
-### Parameters
+#### Parameters
 
 Parameter name | Description
--------------- | ---------------------------------------------------------------------
+-------------- | -----------
 username       | Your username
 password       | Your password
 
-### Example
+#### Example
 
-#### Request
-```
+###### Request
+```bash
 curl "http://cloudstudio:7330/api/login" \
   --data "username=John" \
   --data "password=burgers"
 ```
 
-#### Response:
-```
+###### Response:
+```json
 {  
    "sessionId": "f40309335f82e044fa04c6f267aa62fd",
    "username": "John",
