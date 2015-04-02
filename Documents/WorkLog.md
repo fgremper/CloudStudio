@@ -9,7 +9,7 @@ TODO today:
 >> clean up the code and do comments
 >> changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
 >> write api document
-write tests
+write tests (not done yet)
 >> test for no common ancestor
 
 TODO tomorrow:
@@ -29,6 +29,7 @@ UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!!
 TODO saturday
 
 build with maven
+documentation on how to setup (README)
 click around and test :) all satisfactory? :>
 
 TODO sunday
