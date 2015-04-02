@@ -9,7 +9,7 @@ The CloudStudio API exposes an interface to access and manipulate CloudStudio re
 
 Requests to the CloudStudio API have to use either the GET or POST method. GET requests are used for functions that do not change the state of the database. POST requests are used for functions that make changes to the database.
 
-The content type of requests to the CloudStudio API must be `application/x-www-form-urlencoded`. The response has content type `application/json. This asynchronism allows to provide parameters for both GET and POST requests similarly and still retrieve comprehensive JSON objects, and is used by many widely used APIs (e.g. SoundCloud).
+The content type of requests to the CloudStudio API must be `application/x-www-form-urlencoded`. The response has content type `application/json`. This asynchronism allows to provide parameters for both GET and POST requests similarly and still retrieve comprehensive JSON objects, and is used by many widely used APIs (e.g. SoundCloud).
 
 
 
@@ -282,17 +282,82 @@ curl "http://cloudstudio:7330/api/fileAwareness?
          "users": [  
             {  
                "username": "David",
-               "type":"NO_CONFLICT"
+               "type": "NO_CONFLICT"
             },
             {  
                "username": "Isabelle",
-               "type":"FILE_CONFLICT"
+               "type": "FILE_CONFLICT"
             },
             {  
                "username": "John",
-               "type":"NO_CONFLICT"
+               "type": "NO_CONFLICT"
             }
          ]
+      }
+   ]
+}
+```
+
+
+
+## /api/contentAwareness
+
+Method: GET
+
+Compares two files directly to each other.
+
+The response contains a line-by-line comparison designed to be easily displayable in a side-by-side view.
+
+For each line, a type is set as follows:
+
+Type                  | Description
+--------------------- | ------------------------------------------
+UNCHANGED             | No changes have been made to this line.
+INSERT                | This line has been inserted.
+MODIFIED              | This line has been modified.
+PAD                   | Padding for the lines to line up nicely.
+MODIFIED_PAD          | Padding for two modified blocks to line up nicely.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+filename              | Filename
+branch                | Your branch
+theirUsername         | Branch you want to compare to
+compareToBranch       | User you want to compare to
+showUncommitted       | If true, also take into account changes that have not been locally committed yet.
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/contentAwareness?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=BankAccountDemo&
+  filename=README&
+  branch=master&
+  compareToBranch=master&
+  theirUsername=David
+  showUncommitted=false"
+```
+
+###### Response
+```json{  
+   "content": [  
+      {  
+         "myContent": "Welcome to BankAccountDemo!",
+         "myType": "UNCHANGED",
+         "theirContent": "Welcome to BankAccountDemo!",
+         "theirType": "UNCHANGED"
+      },
+      {  
+         "myContent": "Original first line.",
+         "myType": "PAD",
+         "theirContent": "This is a project dealing with banks and accounts.",
+         "theirType": "INSERT"
       }
    ]
 }
@@ -305,13 +370,11 @@ curl "http://cloudstudio:7330/api/fileAwareness?
 
 
 
-
-
-#### Error handling
+## Error handling
 
 An erroneous request results in a status code 400 (Bad Request) response. The response data is a JSON object as always and contains and error message.
 
-Example
+#### Example
 
 ###### Response
 ```json
