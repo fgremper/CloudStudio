@@ -450,8 +450,7 @@ curl "http://cloudstudio:7330/api/createRepository?
 
 ###### Response
 ```json
-{
-}
+{}
 ```
 
 
@@ -475,18 +474,317 @@ repositoryAlias       | Repository alias
 ```bash
 curl "http://cloudstudio:7330/api/deleteRepository?
   sessionId=YOUR_SESSION_ID&
-  repositoryAlias=HelloWorld&
+  repositoryAlias=HelloWorld"
 ```
 
 ###### Response
 ```json
-{
-}
+{}
 ```
 
 
 
 
+
+## /api/addUserToRepository
+
+Method: POST
+
+Adds a user to a repository. Must be repository owner or administrator.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/addUserToRepository?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=HelloWorld&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+
+
+## /api/removeUserFromRepository
+
+Method: POST
+
+Removes a user from a repository. Must be repository owner or administrator.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/removeUserFromRepository?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=HelloWorld&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+## /api/modifyRepositoryOwner
+
+Method: POST
+
+Sets a new repository owner. Must be repository owner or administrator.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | New repository owner
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/modifyRepositoryOwner?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=HelloWorld&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+
+## /api/createUser
+
+Method: POST
+
+Creates a new user.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+password              | New password
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/createUser?
+  sessionId=YOUR_SESSION_ID&
+  username=David&
+  password=penguins"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+## /api/deleteUser
+
+Method: POST
+
+Removes a user. Requires administrator privileges.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/deleteUser?
+  sessionId=YOUR_SESSION_ID&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+## /api/giveAdminPrivileges
+
+Method: POST
+
+Give administrator privileges to a user. Requires administrator privileges.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/giveAdminPrivileges?
+  sessionId=YOUR_SESSION_ID&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+## /api/revokeAdminPrivileges
+
+Method: POST
+
+Revoke a user's administrator privileges. Requires administrator privileges.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/revokeAdminPrivileges?
+  sessionId=YOUR_SESSION_ID&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+
+## /api/giveCreatorPrivileges
+
+Method: POST
+
+Give repository creation privileges to a user. Requires administrator privileges.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/giveCreatorPrivileges?
+  sessionId=YOUR_SESSION_ID&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+## /api/revokeCreatorPrivileges
+
+Method: POST
+
+Revoke a user's repository creation privileges. Requires administrator privileges.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+username              | Username
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/revokeCreatorPrivileges?
+  sessionId=YOUR_SESSION_ID&
+  username=David"
+```
+
+###### Response
+```json
+{}
+```
 
 
 
