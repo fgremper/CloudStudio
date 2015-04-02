@@ -32,8 +32,8 @@ password              | Your password
 ###### Request
 ```bash
 curl "http://cloudstudio:7330/api/login" \
-  --data "username=John" \
-  --data "password=burgers"
+  -d "username=John" \
+  -d "password=burgers"
 ```
 
 ###### Response
@@ -779,6 +779,40 @@ username              | Username
 curl "http://cloudstudio:7330/api/revokeCreatorPrivileges?
   sessionId=YOUR_SESSION_ID&
   username=David"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
+
+## /api/localState
+
+Method: POST
+
+Update the server with the user's git repository information for a single repository. This operation is used by the client periodically.
+
+For this operation only, repository data needs to be sent as `application/json`.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/revokeCreatorPrivileges?sessionId=YOUR_SESSION_ID&repositoryAlias=HelloWorld"
+  -H "Content-Type: application/json"
+  -d ""
 ```
 
 ###### Response
