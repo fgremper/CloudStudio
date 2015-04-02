@@ -269,7 +269,7 @@ curl "http://cloudstudio:7330/api/fileAwareness?
             },
             {  
                "username": "Isabelle",
-               "type": "CONTENT_CONFLICT"
+               "type": "NO_CONFLICT"
             },
             {  
                "username": "John",
@@ -286,7 +286,7 @@ curl "http://cloudstudio:7330/api/fileAwareness?
             },
             {  
                "username": "Isabelle",
-               "type": "FILE_CONFLICT"
+               "type": "CONTENT_CONFLICT"
             },
             {  
                "username": "John",
@@ -345,7 +345,8 @@ curl "http://cloudstudio:7330/api/contentAwareness?
 ```
 
 ###### Response
-```json{  
+```json
+{  
    "content": [  
       {  
          "myContent": "Welcome to BankAccountDemo!",
@@ -354,7 +355,7 @@ curl "http://cloudstudio:7330/api/contentAwareness?
          "theirType": "UNCHANGED"
       },
       {  
-         "myContent": "Original first line.",
+         "myContent": "",
          "myType": "PAD",
          "theirContent": "This is a project dealing with banks and accounts.",
          "theirType": "INSERT"
@@ -362,6 +363,129 @@ curl "http://cloudstudio:7330/api/contentAwareness?
    ]
 }
 ```
+
+
+
+
+## /api/contentConflict
+
+Method: GET
+
+Compares two files and the nearest common ancestor to each other.
+
+The response contains a line-by-line comparison designed to be easily displayable in a side-by-side view.
+
+For each line, a type is set as follows:
+
+Type                  | Description
+--------------------- | ------------------------------------------
+UNCHANGED             | No changes have been made to this line.
+MODIFIED              | This line has been modified.
+PAD                   | Padding for the lines to line up nicely.
+MODIFIED_PAD          | Padding for two modified blocks to line up nicely.
+
+By definition, a conflict occurs when all three lines have been modified or only the common ancestor has been modified.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+filename              | Filename
+branch                | Your branch
+theirUsername         | Branch you want to compare to
+compareToBranch       | User you want to compare to
+showUncommitted       | If true, also take into account changes that have not been locally committed yet.
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/contentAwareness?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=BankAccountDemo&
+  filename=src/java/Main.java&
+  branch=master&
+  compareToBranch=master&
+  theirUsername=Isabelle&
+  showUncommitted=false"
+```
+
+###### Response
+```json
+{  
+   TODO
+}
+```
+
+
+
+
+## /api/createRepository
+
+Method: POST
+
+Creates a new repository and sets its owner to yourself. Repository creation rights are required for this operation.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+repositoryUrl         | URL to the remote, e.g. GitHub
+repositoryDescription | A short description
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/createRepository?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=HelloWorld&
+  repositoryUrl=https://github.com/foo/helloworld&
+  repositoryDescription=This is a Hello World project."
+```
+
+###### Response
+```json
+{
+}
+```
+
+
+
+## /api/deleteRepository
+
+Method: POST
+
+Deletes a repository. You need to be administrator or the repository owner for this operation.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/deleteRepository?
+  sessionId=YOUR_SESSION_ID&
+  repositoryAlias=HelloWorld&
+```
+
+###### Response
+```json
+{
+}
+```
+
+
+
 
 
 
