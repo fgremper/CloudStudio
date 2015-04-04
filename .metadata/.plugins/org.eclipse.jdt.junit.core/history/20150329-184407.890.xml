@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ContentLevelConflictTest" project="RtcaTesting" tests="1" started="1" failures="0" errors="0" ignored="0">
-  <testsuite name="ch.ethz.fgremper.test.combination.ContentLevelConflictTest" time="1.761">
-    <testcase name="testTakingTheRightFiles" classname="ch.ethz.fgremper.test.combination.ContentLevelConflictTest" time="1.761"/>
-  </testsuite>
-</testrun>

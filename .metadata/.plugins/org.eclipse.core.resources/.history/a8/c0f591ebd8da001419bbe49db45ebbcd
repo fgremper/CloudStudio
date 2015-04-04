@@ -696,7 +696,7 @@ public class DatabaseConnection {
 		}
 		
 		JSONObject responseObject = new JSONObject();
-		responseObject.put("repositories", repositoriesArray);
+		responseObject.put("repositories", repositoriesArray)
 		
 		return responseObject;
 		
@@ -744,7 +744,10 @@ public class DatabaseConnection {
 	 */
 	public JSONObject getUsers() throws Exception {
 		
+		JSONObject responseObject = new JSONObject();
+		
 		JSONArray usersArray = new JSONArray();
+		responseObject.put("users", usersArray);
 		
 		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users");
 		ResultSet rs = stmt.executeQuery();
@@ -762,11 +765,8 @@ public class DatabaseConnection {
 			userObject.put("joinDate", joinDate);
 			usersArray.put(userObject);
 		}
-
-		JSONObject responseObject = new JSONObject();
-		responseObject.put("users", usersArray);
-		return responseObject;
 		
+		return responseObject;
 	}
 	
 	/**

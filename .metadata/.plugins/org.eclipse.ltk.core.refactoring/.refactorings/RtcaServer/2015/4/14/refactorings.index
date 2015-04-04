@@ -7,3 +7,5 @@
 1427993522863	Rename method 'getNewSessionIdForCorrectLogin'
 1427993579081	Rename local variable 'newSessionId'
 1427993672048	Rename method 'persistSessionIdForUser'
+1428157665071	Rename local variable 'getRepositoryBranchesStmt'
+1428158105766	Rename local variable 'lastUpdateDiffString'

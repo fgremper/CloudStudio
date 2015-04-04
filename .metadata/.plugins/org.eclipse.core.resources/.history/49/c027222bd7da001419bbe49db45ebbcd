@@ -591,31 +591,11 @@ public class DatabaseConnection {
 		while (rs.next()) {
 			repositoryBranches.put(rs.getString("branch"));
 		}
-
-		// Get branches from repository
-		String lastOriginUpdate = "unknown";
-		int lastOriginUpdateDiff;
-		String lastOriginUpdateDiffString = "unknown";
-		
-		PreparedStatement getLastOriginUpdateStmt = con.prepareStatement("SELECT time_to_sec(timediff(now(), lastupdate)) AS lastupdatediff, lastupdate FROM branches WHERE repositoryalias = ? and username = 'origin'");
-		getLastOriginUpdateStmt.setString(1, repositoryAlias);
-		rs = getLastOriginUpdateStmt.executeQuery();
-		if (rs.next()) {
-			lastOriginUpdate = rs.getString("lastupdate");
-			lastOriginUpdateDiff = rs.getInt("lastupdatediff");
-			if (lastOriginUpdateDiff >= 60 * 60 * 24 * 7) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24 * 7)) + "w";
-			else if (lastOriginUpdateDiff >= 60 * 60 * 24) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24)) + "d";
-			else if (lastOriginUpdateDiff >= 60 * 60) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60)) + "h";
-			else if (lastOriginUpdateDiff >= 60) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60)) + "m";
-			else lastOriginUpdateDiffString = (lastOriginUpdateDiff) + "s";
-		}
 		
 		// Response object
 		JSONObject responseObject = new JSONObject();
 		responseObject.put("repositoryUsers", repositoryUsers);
 		responseObject.put("repositoryBranches", repositoryBranches);
-		responseObject.put("lastOriginUpdate", lastOriginUpdate);
-		responseObject.put("lastOriginUpdateDiff", lastOriginUpdateDiffString);
 		return responseObject.toString();
 		
 	}
@@ -655,7 +635,7 @@ public class DatabaseConnection {
 	 * @param myUsername
 	 * 
 	 */
-	public JSONObject getRepositories(String myUsername) throws Exception {
+	public JSONArray getRepositories(String myUsername) throws Exception {
 		
 		// Statement to get all the repositories and users for your user permissions
 		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, repositories.repositorydescription, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ? ORDER BY repositories.repositoryalias");
@@ -695,10 +675,7 @@ public class DatabaseConnection {
 
 		}
 		
-		JSONObject responseObject = new JSONObject();
-		responseObject.put("repositories", repositoriesArray);
-		
-		return responseObject;
+		return repositoriesArray;
 		
 	}
 	
@@ -742,7 +719,7 @@ public class DatabaseConnection {
 	 * @return List of users and information
 	 * 
 	 */
-	public JSONObject getUsers() throws Exception {
+	public JSONArray getUsers() throws Exception {
 		
 		JSONArray usersArray = new JSONArray();
 		
@@ -762,11 +739,8 @@ public class DatabaseConnection {
 			userObject.put("joinDate", joinDate);
 			usersArray.put(userObject);
 		}
-
-		JSONObject responseObject = new JSONObject();
-		responseObject.put("users", usersArray);
-		return responseObject;
 		
+		return usersArray;
 	}
 	
 	/**

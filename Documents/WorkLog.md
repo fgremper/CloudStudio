@@ -18,14 +18,15 @@ TODO tomorrow:
 > fix active branch is null
 > fix a bug with empty files where the diff3 output isn't in order
 > fix ejs bracket bug
-fix db pool -> seems to work now... maybe i had a leak somewhere
+> fix db pool -> seems to work now... maybe i had a leak somewhere (pretty sure I did)
 fix swing gui list bug
 
 TODO friday
 
 add the remaining interface functionality, clean up interface
 gui explanation at the bottom (or question mark somewhere)
-UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!!
+UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!! -> put it into repository information lastOriginUpdate
+do sorting for all queries
 
 TODO saturday
 

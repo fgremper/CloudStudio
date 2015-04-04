@@ -615,7 +615,7 @@ public class DatabaseConnection {
 		responseObject.put("repositoryUsers", repositoryUsers);
 		responseObject.put("repositoryBranches", repositoryBranches);
 		responseObject.put("lastOriginUpdate", lastOriginUpdate);
-		responseObject.put("lastOriginUpdateDiff", lastOriginUpdateDiffString);
+		responseObject.put("lastOriginUpdateDiff", lastOriginUpdateDiff);
 		return responseObject.toString();
 		
 	}
@@ -655,7 +655,7 @@ public class DatabaseConnection {
 	 * @param myUsername
 	 * 
 	 */
-	public JSONObject getRepositories(String myUsername) throws Exception {
+	public JSONArray getRepositories(String myUsername) throws Exception {
 		
 		// Statement to get all the repositories and users for your user permissions
 		PreparedStatement stmt = con.prepareStatement("SELECT DISTINCT repositories.repositoryalias, repositories.repositoryurl, repositories.repositoryowner, repositories.repositorydescription, useraccess.username FROM repositories LEFT OUTER JOIN useraccess ON repositories.repositoryalias = useraccess.repositoryalias WHERE EXISTS (SELECT users.username FROM users WHERE users.username = ? AND users.isadmin = 'true') OR EXISTS (SELECT useraccess.username FROM useraccess WHERE useraccess.username = ? AND useraccess.repositoryalias = repositories.repositoryalias) OR repositories.repositoryowner = ? ORDER BY repositories.repositoryalias");
@@ -695,10 +695,7 @@ public class DatabaseConnection {
 
 		}
 		
-		JSONObject responseObject = new JSONObject();
-		responseObject.put("repositories", repositoriesArray);
-		
-		return responseObject;
+		return repositoriesArray;
 		
 	}
 	
@@ -742,7 +739,7 @@ public class DatabaseConnection {
 	 * @return List of users and information
 	 * 
 	 */
-	public JSONObject getUsers() throws Exception {
+	public JSONArray getUsers() throws Exception {
 		
 		JSONArray usersArray = new JSONArray();
 		
@@ -762,11 +759,8 @@ public class DatabaseConnection {
 			userObject.put("joinDate", joinDate);
 			usersArray.put(userObject);
 		}
-
-		JSONObject responseObject = new JSONObject();
-		responseObject.put("users", usersArray);
-		return responseObject;
 		
+		return usersArray;
 	}
 	
 	/**

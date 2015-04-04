@@ -3,34 +3,36 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="439" key="DIALOG_WIDTH"/>
 		<item value="356" key="DIALOG_Y_ORIGIN"/>
-		<item value="970" key="DIALOG_X_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="970" key="DIALOG_X_ORIGIN"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="true" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="login" key="selection"/>
+		<item value="List" key="selection"/>
 		<list key="findhistory">
+			<item value="list"/>
+			<item value="jpanel"/>
+			<item value="dataSource"/>
+			<item value="TODO"/>
+			<item value="active"/>
 			<item value="login"/>
-			<item value="localState"/>
-			<item value="auth"/>
-			<item value="branchaw"/>
-			<item value="branch"/>
-			<item value="&quot;auth&quot;"/>
-			<item value="&lt;String&gt;"/>
-			<item value="§"/>
+			<item value="fileAwareness"/>
+			<item value="getReposi"/>
 		</list>
 		<list key="replacehistory">
+			<item value="&quot;UNCHANGED&quot;"/>
+			<item value="&quot;INSERT&quot;"/>
+			<item value="&quot;PAD&quot;"/>
+			<item value="&quot;MODIFIED_PAD&quot;"/>
+			<item value="&quot;MODIFIED&quot;"/>
 			<item value=".debug"/>
 			<item value="log.info(&quot;"/>
 			<item value="?"/>
-			<item value="TestSettings.SANDPIT_DIRECTORY_PATH + &quot;/&quot;"/>
-			<item value="ConfigReader(&quot;config.xml&quot;)"/>
-			<item value="commithistory"/>
 		</list>
 	</section>
 </section>

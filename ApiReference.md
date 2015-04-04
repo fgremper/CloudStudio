@@ -71,22 +71,24 @@ curl "http://cloudstudio:7330/api/repositories?
 
 ###### Response
 ```json
-[  
-   {  
-      "repositoryAlias": "BankAccountDemo",
-      "repositoryDescription": "Dealing with banks and accounts.",
-      "repositoryUrl": "https://github.com/foo/bankaccountdemo",
-      "repositoryOwner": "John",
-      "users": [
-         "David",
-         "Isabelle",
-         "John"
-      ],
-   },
-   {
-      (...)
-   }
-]
+{
+   "repositories": [  
+      {  
+         "repositoryAlias": "BankAccountDemo",
+         "repositoryDescription": "Dealing with banks and accounts.",
+         "repositoryUrl": "https://github.com/foo/bankaccountdemo",
+         "repositoryOwner": "John",
+         "users": [
+            "David",
+            "Isabelle",
+            "John"
+         ],
+      },
+      {
+         (...)
+      }
+   ]
+}
 ```
 
 
@@ -96,7 +98,7 @@ curl "http://cloudstudio:7330/api/repositories?
 
 Method: GET
 
-Retrieves a list of user and branches for a given repository.
+Retrieves a list of user and branches for a given repository. Also returns a the last time the origin has been updated.
 
 #### Parameters
 
@@ -125,7 +127,9 @@ curl "http://localhost:7330/api/repositoryInformation?
    "repositoryBranches": [  
       "master",
       "test_branch"
-   ]
+   ],
+   "lastOriginUpdate": "2015-03-27 23:09:32.0",
+   "lastOriginUpdateDiff": "1m"
 }
 ```
 
@@ -419,6 +423,61 @@ curl "http://cloudstudio:7330/api/contentAwareness?
 }
 ```
 
+
+
+
+
+## /api/users
+
+Method: GET
+
+Retrieves a list of all users, their privileges and the date they created the account. Must be administrator to perform this operation.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/users?
+  sessionId=YOUR_SESSION_ID"
+```
+
+###### Response
+```json
+{  
+   "users": [  
+      {  
+         "username": "Admin",
+         "joinDate": "2015-02-01 16:23:12.0",
+         "isAdmin": true,
+         "isCreator": true,
+      },
+      {  
+         "username": "David",
+         "joinDate": "2015-03-02 23:01:57.0",
+         "isAdmin": false,
+         "isCreator": true,
+      },
+      {  
+         "username": "Isabelle",
+         "joinDate": "2015-03-07 11:23:01.0",
+         "isAdmin": false,
+         "isCreator": false,
+      },
+      {  
+         "username": "John",
+         "joinDate": "2015-03-16 10:13:41.0",
+         "isAdmin": false,
+         "isCreator": true,
+      },
+   ]
+}
+```
 
 
 

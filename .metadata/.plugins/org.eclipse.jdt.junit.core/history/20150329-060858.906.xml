@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="BranchLevelAwarenessTest" project="RtcaTesting" tests="2" started="2" failures="0" errors="0" ignored="0">
-  <testsuite name="ch.ethz.fgremper.test.combination.BranchLevelAwarenessTest" time="4.087">
-    <testcase name="testRelationWithOrigin" classname="ch.ethz.fgremper.test.combination.BranchLevelAwarenessTest" time="2.807"/>
-    <testcase name="testBranch" classname="ch.ethz.fgremper.test.combination.BranchLevelAwarenessTest" time="1.28"/>
-  </testsuite>
-</testrun>

@@ -383,7 +383,7 @@ function loadRepositoryView() {
             console.log("Load overview. Success: " + JSON.stringify(data));
 
             //Render
-            renderRepositoryView({ login: login, repositories: data });
+            renderRepositoryView({ login: login, repositories: data.repositories });
         },
         error: function (data) {
             displayError('Repository Overview', data.responseJSON);
@@ -858,7 +858,7 @@ function loadUsersView() {
         data: { },
         success: function(data) {
             console.log("Load users. Success: " + JSON.stringify(data));
-            renderUsersView({ users: data, login: login });
+            renderUsersView({ users: data.users, login: login });
         },
         error: function (data) {
             alert('Something went wrong when trying to load the list of users.');
