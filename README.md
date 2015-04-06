@@ -82,7 +82,7 @@ This is a sample server configuration:
     <dbDriverClass>com.mysql.jdbc.Driver</dbDriverClass>
     <dbJdbcUrl>jdbc:mysql://localhost/cloudstudio</dbJdbcUrl>
     <dbUser>dbadmin</dbUser>
-    <dbPassword></dbPassword>
+    <dbPassword>1234</dbPassword>
     <dbMinPoolSize>5</dbMinPoolSize>
     <dbAcquireIncrement>5</dbAcquireIncrement>
     <dbMaxPoolSize>20</dbMaxPoolSize>
@@ -109,6 +109,8 @@ fileStorageDirectory      | The database only stores file hashes. The file conte
 originStorageDirectory    | A clone of the remote repository is stored in this directory for all projects.
 passwordSalt              | Salt for the password hash
 originUpdateInterval      | How often to update remote repositories (in seconds)
+
+Run `SQLInit.sql` to initialize the database.
 
 #### API Reference
 
