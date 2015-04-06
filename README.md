@@ -109,3 +109,7 @@ fileStorageDirectory      | The database only stores file hashes. The file conte
 originStorageDirectory    | A clone of the remote repository is stored in this directory for all projects.
 passwordSalt              | Salt for the password hash
 originUpdateInterval      | How often to update remote repositories (in seconds)
+
+#### API Reference
+
+See [here](https://github.com/fgremper/CloudStudio/blob/master/ApiReference.md) for the API documentation.
