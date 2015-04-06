@@ -322,7 +322,7 @@ public class DatabaseConnection {
 			else if (lastUpdateDiff >= 60 * 60) lastUpdateDiffString = (lastUpdateDiff / (60 * 60)) + "h";
 			else if (lastUpdateDiff >= 60) lastUpdateDiffString = (lastUpdateDiff / (60)) + "m";
 			else lastUpdateDiffString = (lastUpdateDiff) + "s";
-			String lastUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+			String lastUpdate = rs.getString("lastupdate");
 			String origincommit = rs.getString("origincommit");
 			String relation;
 			Integer distance = null;
@@ -600,7 +600,7 @@ public class DatabaseConnection {
 		getLastOriginUpdateStmt.setString(1, repositoryAlias);
 		rs = getLastOriginUpdateStmt.executeQuery();
 		if (rs.next()) {
-			lastOriginUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+			lastOriginUpdate = rs.getTime("lastupdate").toString();
 			lastOriginUpdateDiff = rs.getInt("lastupdatediff");
 			if (lastOriginUpdateDiff >= 60 * 60 * 24 * 7) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24 * 7)) + "w";
 			else if (lastOriginUpdateDiff >= 60 * 60 * 24) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24)) + "d";
@@ -798,7 +798,7 @@ public class DatabaseConnection {
 		
 		JSONArray usersArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users WHERE username <> 'origin'");
+		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users");
 		ResultSet rs = stmt.executeQuery();
 		
 		// Loop through all the users and fill array
@@ -806,7 +806,7 @@ public class DatabaseConnection {
 			String username = rs.getString("username");
 			String isAdmin = rs.getString("isadmin");
 			String isCreator = rs.getString("iscreator");
-			String joinDate = rs.getString("joindate").substring(0, rs.getString("joindate").length() - 2);
+			String joinDate = rs.getString("joindate");
 			JSONObject userObject = new JSONObject();
 			userObject.put("username", username);
 			userObject.put("isAdmin", isAdmin.equals("true"));

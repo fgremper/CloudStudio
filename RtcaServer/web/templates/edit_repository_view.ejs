@@ -1,0 +1,44 @@
+<div id="navigationBar">
+	<div id="navigationBarLocation">Location: <span class="loadRepositoryView clickable">Repository Overview</span> &mdash; <strong>Edit Repository</strong></div>
+	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
+</div>
+<div id="titleBar">
+	Edit Repository Information
+</div>
+<div id="view">
+
+				<p>Repository Alias:<br>
+				<input id="repositoryAlias" type="text" value="<%= repositoryAlias %>" disabled></p>
+				<p>Description:<br>
+				<input id="repositoryDescription" type="text" value="<%= repositoryDescription %>"></p>
+				<p>URL to Repository:
+				<input id="repositoryUrl" type="text" value="<%= repositoryUrl %>"></p>
+				<p>
+				<div id="submitEditRepository" class="button">Update repository information</div>
+				</p>
+				<br>
+
+			<h2>Users</h2>
+			<p>
+		        <% for (var j = 0; j < repositoryUsers.length; j++) { %>
+		        	<span class="user userClickable deleteUserFromRepository" data-username="<%= repositoryUsers[j] %>"><%= repositoryUsers[j] %></span>
+		        <% } %>
+	        </p>
+<p><input class="shortInput inline" type="text" id="newUser" placeholder="New user">
+	        <div id="addUserToRepository" class="button inline buttonShort">Add user to repository</div></p>
+
+				<br>
+
+			<h2>Repository Owner</h2>
+			<p><span class="user"><%= repositoryOwner %></span></p>
+
+<p>
+	        <input class="shortInput inline" type="text" id="newOwner" placeholder="New repository owner">
+	        <div id="modifyRepositoryOwner" class="button inline buttonShort">Change owner</div></p>
+
+				<br>
+
+			<h2>Delete</h2>
+	        <p><div id="deleteRepository" class="button">Delete this repository</div></p>
+
+</div>

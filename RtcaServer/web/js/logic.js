@@ -171,6 +171,7 @@ function renderHeaderBar() {
     $('#headerBar').append('<div id="headerLogo" class="headerBarLeft">CloudStudio</div>');
     if (login.sessionId != null) {
         $('#headerBar').append('<div class="headerBarRight" id="logout">Logout</div>');
+        $('#headerBar').append('<div class="headerBarRight" id="profile">Profile</div>');
         if (login.isAdmin) { $('#headerBar').append('<div id="headerManageUsers" class="headerBarRight">Manage Users</div>'); }
     }
     else {
@@ -217,6 +218,10 @@ function renderHeaderBar() {
 
     $('#headerManageUsers').click(function () {
         loadUsersView();
+    });
+
+    $('#profile').click(function () {
+        loadProfileView();
     });
 }
 
@@ -370,6 +375,24 @@ function renderCreateRepository() {
 
 
 
+function loadProfileView() {
+    renderProfileView({ login: login });
+}
+
+function renderProfileView(data) {
+    
+    // Push history state
+    pushHistoryState("profile");
+
+    // Render template
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/profile_view.ejs'}).render(data));
+
+
+}
+
+
+
+
 /* REPOSITORY OVERIEW */
 
 function loadRepositoryView() {
@@ -407,6 +430,12 @@ function renderRepositoryView(data) {
     });
 
     $('#createRepository').click(loadCreateRepositoryView);
+
+    $('.editRepository').click(function (e) {
+        loadEditRepositoryView($(this).parent().parent().data('alias'));
+        e.stopPropagation();
+    });
+
     /*
     // content
     $('.addUserToRepository').click(function (e) {
@@ -478,6 +507,121 @@ function renderRepositoryView(data) {
 
 
 
+
+
+function loadEditRepositoryView(repositoryAlias) {
+
+    // Send API request
+    sendApiRequest({
+        name: 'repositoryInformation',
+        type: 'GET',
+        data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
+        success: function(data) {
+            console.log("Load edit repository. Success: " + JSON.stringify(data));
+
+            //Render
+            renderEditRepositoryView({ login: login, repositoryAlias: data.repositoryAlias, repositoryDescription: data.repositoryDescription, repositoryUrl: data.repositoryUrl, repositoryUsers: data.repositoryUsers, repositoryOwner: data.repositoryOwner });
+        },
+        error: function (data) {
+            displayError('Edit Repository', data.responseJSON);
+        }
+    });
+
+}
+
+function renderEditRepositoryView(data) {
+
+    // set state
+    pushHistoryState("edit");
+
+    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/edit_repository_view.ejs'}).render(data));
+
+    // navigation bar
+    $('.loadRepositoryView').click(loadRepositoryView);
+    
+    $('#submitEditRepository').click(function () {
+        sendApiRequest({
+            name: 'setRepositoryInformation',
+            type: 'POST',
+            data: { repositoryAlias: $('#repositoryAlias').val(), repositoryDescription: $('#repositoryDescription').val(), repositoryUrl: $('#repositoryUrl').val() },
+            success: function(data) {
+                console.log("Update repository. Success: " + JSON.stringify(data));
+
+                loadEditRepositoryView($('#repositoryAlias').val());
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to edit a repository.');
+            }
+        });
+    });
+
+    $('#addUserToRepository').click(function (e) {
+        sendApiRequest({
+            name: 'addUserToRepository',
+            type: 'POST',
+            data: { repositoryAlias: $('#repositoryAlias').val(), username: $('#newUser').val(), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Add repository. Success: " + JSON.stringify(data));
+                loadEditRepositoryView($('#repositoryAlias').val());
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to add a user to the repository.');
+            }
+        });
+        e.stopPropagation();
+    });
+
+    $('.deleteUserFromRepository').click(function (e) {
+        sendApiRequest({
+            name: 'removeUserFromRepository',
+            type: 'POST',
+            data: { repositoryAlias: $('#repositoryAlias').val(), username: $(this).data('username'), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Delete user from repository. Success: " + JSON.stringify(data));
+                loadEditRepositoryView($('#repositoryAlias').val());
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to delete a user from the repository.');
+            }
+        });
+        e.stopPropagation();
+    });
+
+    $('#deleteRepository').click(function (e) {
+        sendApiRequest({
+            name: 'deleteRepository',
+            type: 'POST',
+            data: { repositoryAlias: $('#repositoryAlias').val(), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Delete repository. Success: " + JSON.stringify(data));
+                loadRepositoryView();
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to delete a repository.');
+            }
+        });
+        e.stopPropagation();
+    });
+    $('#modifyRepositoryOwner').click(function (e) {
+        sendApiRequest({
+            name: 'modifyRepositoryOwner',
+            type: 'POST',
+            data: { repositoryAlias: $('#repositoryAlias').val(), username: $('#newOwner').val(), sessionId: login.sessionId },
+            success: function(data) {
+                console.log("Modify repository owner. Success: " + JSON.stringify(data));
+                loadEditRepositoryView($('#repositoryAlias').val());
+            },
+            error: function (data) {
+                alert('Something went wrong when trying to modify the repository owner.');
+            }
+        });
+        e.stopPropagation();
+    });
+}
+
+
+
+
 /* BRANCH LEVEL AWARENESS */
 
 function loadBranchView(repositoryAlias) {
@@ -494,7 +638,7 @@ function loadBranchView(repositoryAlias) {
             navigation.repositoryAlias = repositoryAlias;
 
             // Render branch view
-            renderBranchView({ login: login, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers });
+            renderBranchView({ login: login, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, lastOriginUpdateDiff: data.lastOriginUpdateDiff });
         },
         error: function (data) {
             displayError('Branch Level Awareness', data.responseJSON);

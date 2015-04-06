@@ -798,7 +798,7 @@ public class DatabaseConnection {
 		
 		JSONArray usersArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users WHERE username <> 'origin'");
+		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users");
 		ResultSet rs = stmt.executeQuery();
 		
 		// Loop through all the users and fill array

@@ -119,6 +119,10 @@ curl "http://localhost:7330/api/repositoryInformation?
 ###### Response
 ```json
 {  
+
+   "repositoryAlias": "BankAccountDemo",
+   "repositoryDescription": "Dealing with banks and accounts.",
+   "repositoryUrl": "https://github.com/foo/bankaccountdemo",
    "repositoryUsers": [  
       "David",
       "Isabelle",
@@ -128,7 +132,7 @@ curl "http://localhost:7330/api/repositoryInformation?
       "master",
       "test_branch"
    ],
-   "lastOriginUpdate": "2015-03-27 23:09:32.0",
+   "lastOriginUpdate": "2015-03-27 23:09:32",
    "lastOriginUpdateDiff": "1m"
 }
 ```
@@ -185,12 +189,12 @@ curl "http://localhost:7330/api/branchAwareness?
          "activeUsers": [  
             {  
                "username": "David",
-               "lastUpdate": "2015-03-27 20:10:03.0",
+               "lastUpdate": "2015-03-27 20:10:03",
                "lastUpdateDiff": "3h"
             },
             {  
                "username": "John",
-               "lastUpdate": "2015-03-27 21:33:41.0",
+               "lastUpdate": "2015-03-27 21:33:41",
                "lastUpdateDiff": "2h"
             }
          ],
@@ -453,25 +457,25 @@ curl "http://cloudstudio:7330/api/users?
    "users": [  
       {  
          "username": "Admin",
-         "joinDate": "2015-02-01 16:23:12.0",
+         "joinDate": "2015-02-01 16:23:12",
          "isAdmin": true,
          "isCreator": true,
       },
       {  
          "username": "David",
-         "joinDate": "2015-03-02 23:01:57.0",
+         "joinDate": "2015-03-02 23:01:57",
          "isAdmin": false,
          "isCreator": true,
       },
       {  
          "username": "Isabelle",
-         "joinDate": "2015-03-07 11:23:01.0",
+         "joinDate": "2015-03-07 11:23:01",
          "isAdmin": false,
          "isCreator": false,
       },
       {  
          "username": "John",
-         "joinDate": "2015-03-16 10:13:41.0",
+         "joinDate": "2015-03-16 10:13:41",
          "isAdmin": false,
          "isCreator": true,
       },

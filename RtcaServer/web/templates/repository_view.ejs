@@ -25,13 +25,16 @@
 
 	<div class="repositoryListItem" data-alias="<%= repositories[i]['repositoryAlias'] %>">
 		<div class="repositoryListBlock">
+			<span class="editRepository">Edit</span>
 			<h1><%= repositories[i]['repositoryAlias'] %></h1>
 			<div class="description"><%= repositories[i]['repositoryDescription'] %></div>
-			<h2>Repository URL</h2>
+			<h2>URL to Repository</h2>
 			<p><%= repositories[i]['repositoryUrl'] %></p>
 			<h2>Users</h2>
 			<p>
+				<span class="userSmall userOwner"><%= repositories[i].repositoryOwner %></span>
 		        <% for (var j = 0; j < repositories[i]['users'].length; j++) { %>
+		        	<% if (repositories[i]['users'][j] == repositories[i].repositoryOwner) continue; %>
 		        	<span class="userSmall"><%= repositories[i]['users'][j] %></span>
 		        <% } %>
 	        </p>

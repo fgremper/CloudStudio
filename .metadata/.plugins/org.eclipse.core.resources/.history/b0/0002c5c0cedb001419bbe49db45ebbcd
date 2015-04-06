@@ -347,7 +347,7 @@ public class ApiHttpHandler implements HttpHandler {
 			}
 
 			// Set repository information
-			else if (apiName.equals("setRepositoryInformation") && requestMethod.equalsIgnoreCase("post")) {
+			else if (apiName.equals("createRepository") && requestMethod.equalsIgnoreCase("post")) {
 
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");
@@ -359,7 +359,8 @@ public class ApiHttpHandler implements HttpHandler {
 
 					// Execute database action
 					db.startTransaction();
-					db.updateRepositoryInformation(repositoryAlias, repositoryDescription, repositoryUrl);
+					String repositoryOwner = sessionUsername;
+					db.createRepository(repositoryAlias, repositoryUrl, repositoryOwner, repositoryDescription);
 					db.commitTransaction();
 					
 					// Set response

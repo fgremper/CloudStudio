@@ -346,32 +346,6 @@ public class ApiHttpHandler implements HttpHandler {
 				
 			}
 
-			// Set repository information
-			else if (apiName.equals("setRepositoryInformation") && requestMethod.equalsIgnoreCase("post")) {
-
-				// Get parameters
-				String repositoryAlias = (String) params.get("repositoryAlias");
-				String repositoryUrl = (String) params.get("repositoryUrl");
-				String repositoryDescription = (String) params.get("repositoryDescription");
-
-				// Need to be administrator or creator
-				if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
-
-					// Execute database action
-					db.startTransaction();
-					db.updateRepositoryInformation(repositoryAlias, repositoryDescription, repositoryUrl);
-					db.commitTransaction();
-					
-					// Set response
-					response = "{}";
-					
-				}
-				else {
-					throw new Exception("Insufficient privileges");
-				}
-				
-			}
-
 			// Delete repository
 			else if (apiName.equals("deleteRepository") && requestMethod.equalsIgnoreCase("post")) {
 				

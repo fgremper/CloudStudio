@@ -322,7 +322,7 @@ public class DatabaseConnection {
 			else if (lastUpdateDiff >= 60 * 60) lastUpdateDiffString = (lastUpdateDiff / (60 * 60)) + "h";
 			else if (lastUpdateDiff >= 60) lastUpdateDiffString = (lastUpdateDiff / (60)) + "m";
 			else lastUpdateDiffString = (lastUpdateDiff) + "s";
-			String lastUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+			String lastUpdate = rs.getString("lastupdate");
 			String origincommit = rs.getString("origincommit");
 			String relation;
 			Integer distance = null;
@@ -600,7 +600,7 @@ public class DatabaseConnection {
 		getLastOriginUpdateStmt.setString(1, repositoryAlias);
 		rs = getLastOriginUpdateStmt.executeQuery();
 		if (rs.next()) {
-			lastOriginUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+			lastOriginUpdate = rs.getString("lastupdate");
 			lastOriginUpdateDiff = rs.getInt("lastupdatediff");
 			if (lastOriginUpdateDiff >= 60 * 60 * 24 * 7) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24 * 7)) + "w";
 			else if (lastOriginUpdateDiff >= 60 * 60 * 24) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24)) + "d";
@@ -612,13 +612,11 @@ public class DatabaseConnection {
 		String repositoryUrl = null;
 		String repositoryDescription = null;
 		String repositoryAliasRead = null;
-		String repositoryOwner = null;
-		PreparedStatement repositoryInformationStmt = con.prepareStatement("SELECT repositoryalias, repositoryowner, repositoryurl, repositorydescription FROM repositories WHERE repositoryalias = ?");
+		PreparedStatement repositoryInformationStmt = con.prepareStatement("SELECT repositoryalias, repositoryurl, repositorydescription FROM repositories WHERE repositoryalias = ?");
 		repositoryInformationStmt.setString(1, repositoryAlias);	
 		rs = repositoryInformationStmt.executeQuery();
 		if (rs.next()) {
 			repositoryAliasRead = rs.getString("repositoryalias");
-			repositoryOwner = rs.getString("repositoryowner");
 			repositoryDescription = rs.getString("repositorydescription");
 			repositoryUrl = rs.getString("repositoryurl");
 		}
@@ -630,7 +628,6 @@ public class DatabaseConnection {
 		responseObject.put("lastOriginUpdate", lastOriginUpdate);
 		responseObject.put("lastOriginUpdateDiff", lastOriginUpdateDiffString);
 		responseObject.put("repositoryAlias", repositoryAliasRead);
-		responseObject.put("repositoryOwner", repositoryOwner);
 		responseObject.put("repositoryDescription", repositoryDescription);
 		responseObject.put("repositoryUrl", repositoryUrl);
 		return responseObject.toString();
@@ -647,28 +644,8 @@ public class DatabaseConnection {
 	public void updateRepositoryInformation(String repositoryAlias, String repositoryDescription, String repositoryUrl) throws SQLException {
 		PreparedStatement repositoryInformationStmt = con.prepareStatement("UPDATE repositories SET repositorydescription = ?, repositoryurl = ? WHERE repositoryalias = ?");
 		repositoryInformationStmt.setString(1, repositoryDescription);	
-		repositoryInformationStmt.setString(2, repositoryUrl);	
-		repositoryInformationStmt.setString(3, repositoryAlias);	
-		repositoryInformationStmt.executeUpdate();
-	}
-	
-	/**
-	 * 
-	 * Change password for user.
-	 * 
-	 * @param repositoryAlias
-	 * 
-	 */
-	public void changePassword(String username, String newPassword) throws SQLException {
-		
-		// Hash the password
-		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + newPassword).toString();
-
-		// Update password
-		PreparedStatement stmt = con.prepareStatement("UPDATE users SET password = ? WHERE username = ?");
-		stmt.setString(1, username);
-		stmt.setString(2, passwordHash);
-		stmt.executeUpdate();	
+		repositoryInformationStmt.setString(1, repositoryUrl);	
+		repositoryInformationStmt.setString(1, repositoryAlias);	
 		
 	}
 
@@ -798,7 +775,7 @@ public class DatabaseConnection {
 		
 		JSONArray usersArray = new JSONArray();
 		
-		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users WHERE username <> 'origin'");
+		PreparedStatement stmt = con.prepareStatement("SELECT username, isadmin, iscreator, joindate FROM users");
 		ResultSet rs = stmt.executeQuery();
 		
 		// Loop through all the users and fill array
@@ -806,7 +783,7 @@ public class DatabaseConnection {
 			String username = rs.getString("username");
 			String isAdmin = rs.getString("isadmin");
 			String isCreator = rs.getString("iscreator");
-			String joinDate = rs.getString("joindate").substring(0, rs.getString("joindate").length() - 2);
+			String joinDate = rs.getString("joindate");
 			JSONObject userObject = new JSONObject();
 			userObject.put("username", username);
 			userObject.put("isAdmin", isAdmin.equals("true"));

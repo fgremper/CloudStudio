@@ -347,7 +347,7 @@ public class ApiHttpHandler implements HttpHandler {
 			}
 
 			// Set repository information
-			else if (apiName.equals("setRepositoryInformation") && requestMethod.equalsIgnoreCase("post")) {
+			else if (apiName.equals("createRepository") && requestMethod.equalsIgnoreCase("post")) {
 
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");

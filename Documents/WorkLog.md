@@ -24,13 +24,12 @@ fix swing gui list bug
 TODO friday
 
 add the remaining interface functionality, clean up interface
+>> UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!! -> put it into repository information lastOriginUpdate
 gui explanation at the bottom (or question mark somewhere)
-UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!! -> put it into repository information lastOriginUpdate
-do sorting for all queries
+build with maven ?!!?
 
 TODO saturday
 
-build with maven
 no more absolute paths
 documentation on how to setup (README)
 click around and test :) all satisfactory? :>
