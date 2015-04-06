@@ -23,16 +23,29 @@ fix swing gui list bug
 
 TODO friday
 
-add the remaining interface functionality, clean up interface
+> add the remaining interface functionality, clean up interface
 >> UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!! -> put it into repository information lastOriginUpdate
-gui explanation at the bottom (or question mark somewhere)
-build with maven ?!!?
 
 TODO saturday
 
-no more absolute paths
-documentation on how to setup (README)
+>> * hide unused titles branch view
+* build with maven
+* no more absolute paths
+* documentation on how to setup (README)
+* who is responsible for package conflicts!
+* favicon (@home)
+* go through webinterface and look through
+* clean up intendation and look
+* error msgs for sho
+* welcome after signup!
+
+
+
+* maybe have the view expanded after going back (expansion selection is a map with all objects to visible flags)
+
+
 click around and test :) all satisfactory? :>
+gui explanation at the bottom (or question mark somewhere) -> external help
 
 TODO sunday
 

@@ -11,6 +11,8 @@
 			<tr class="branchListItem" data-branch="<%= branches[i]['branch'] %>">
 				<td class="branchListBranchName"><%= branches[i]['branch'] %></td>
 				<td>
+
+
 					<% for (var j = 0; j < branches[i].activeUsers.length; j++) { %>
 
 						<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].activeUsers[j].username) < 0) continue; %>
@@ -19,64 +21,79 @@
 					<% } %>
 				</td>
 				<td>
-					<h1>Up to date</h1>
-					<p>
+
+					<% var echoTitle = false; %>
+
+					
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 
 							<% if (branches[i].users[j].relationWithOrigin == 'EQUAL') { %>
 								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+
+								<% if (!echoTitle) { %><h1>Up to date</h1><p><% } %>
+								<% echoTitle = true %>
 								<span class="user userGreen"><%= branches[0].users[j].username %></span>
 							<% } %>
 
 						<% } %>
-					</p>
+					<% if (echoTitle) { %></p><% } %>
 
-					<h1>Behind origin</h1>
-					<p>
+					<% var echoTitle = false; %>
+
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 							<% if (branches[i].users[j].relationWithOrigin == 'BEHIND') { %>
 								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+								<% if (!echoTitle) { %><h1>Behind origin</h1><p><% } %>
+								<% echoTitle = true %>
 								<span class="user userRed"><%= branches[0].users[j].username %></span>
 							<% } %>
 
 						<% } %>
-					</p>
-					<h1>Made new commits</h1>
-					<p>
+					<% if (echoTitle) { %></p><% } %>
+
+					<% var echoTitle = false; %>
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 							<% if (branches[i].users[j].relationWithOrigin == 'AHEAD' || branches[i].users[j].relationWithOrigin == 'FORK') { %>
 								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+								<% if (!echoTitle) { %><h1>Made new commits</h1><p><% } %>
+								<% echoTitle = true %>
 								<span class="user userYellow"><%= branches[0].users[j].username %> (<% if (branches[i].users[j].relationWithOrigin == 'AHEAD') { %>+<% } else { %>&plusmn;<% } %><%= branches[0].users[j].distanceFromOrigin %>)</span>
 							<% } %>
 
 						<% } %>
 					</p>
-					<h1>Local branch</h1>
-					<p>
+					<% if (echoTitle) { %></p><% } %>
+
+					<% var echoTitle = false; %>
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 							<% if (branches[i].users[j].relationWithOrigin == 'LOCAL_BRANCH') { %>
 								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+								<% if (!echoTitle) { %><h1>Up to date</h1><p><% } %>
+								<% echoTitle = true %>
 								<span class="user"><%= branches[0].users[j].username %></span>
 							<% } %>
 
 						<% } %>
 					</p>
-					<h1>Not checked out</h1>
-					<p>
+					<% if (echoTitle) { %></p><% } %>
+
+					<% var echoTitle = false; %>
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 
 							<% if (branches[i].users[j].relationWithOrigin == 'NOT_CHECKED_OUT') { %>
 								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+								<% if (!echoTitle) { %><h1>Not fetched</h1><p><% } %>
+								<% echoTitle = true %>
 								<span class="user"><%= branches[0].users[j].username %></span>
 							<% } %>
 
 						<% } %>
-					</p>
+					<% if (echoTitle) { %></p><% } %>
 				</td>
 			</tr>
 

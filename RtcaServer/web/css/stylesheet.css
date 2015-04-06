@@ -9,7 +9,8 @@ textarea, input { outline: none; }
 
 
 
-/* view */
+/* 
+ */
 /*
 #view {
     margin: 0 20px;
@@ -857,6 +858,7 @@ body {
 }
 
 
+
 #repositoryList div.repositoryListBlock span.userOwner {
     color: rgba(255, 255, 255, 1);
     border: 0;
@@ -1383,6 +1385,16 @@ span.userClickable:hover {
     background-color: #c0e2fa;
 }
 
+
+span.userClickableRed {
+    transition: background-color 0.1s, border-color 0.1s;
+    cursor: pointer;
+}
+span.userClickableRed:hover {
+    border: 1px solid rgba(220, 0, 40, 1);
+    background-color: rgba(255, 0, 20, 0.5);
+    text-decoration: line-through;
+}
 /* input */
 
 
@@ -1396,6 +1408,7 @@ input[type=text], input[type=password] {
     padding: 10px;
     font-family: Helvetica, Arial, sans-serif;
     border-radius: 3px;
+    font-weight: 400;
 }
 
 input[type=text]:focus, input[type=password]:focus {
@@ -1407,8 +1420,14 @@ input[type=text]:focus, input[type=password]:focus {
     display: inline-block;
 }
 
-input[type=text].shortInput {
+input.shortInput {
     width: 200px;
+}
+
+.smallGreyText {
+    font-weight: 300;
+    font-size: 12px;
+    color: #808080;
 }
 
 ::-webkit-input-placeholder { font-weight: 300; }
@@ -1419,6 +1438,9 @@ input:-moz-placeholder { font-weight: 300; }
 #view {
     line-height: 20px;
     margin: 20px;
+}
+#view h2 {
+    margin-top: 27px;
 }
 
 span.modify {
@@ -1437,7 +1459,7 @@ span.modify:hover {
     color: #ffffff;
 }
 
-div.button {
+div.button, span.button {
     display: inline-block;
     border: 1px solid #b0b0b0;
     font-size: 16px;
@@ -1448,13 +1470,13 @@ div.button {
     font-weight: 400;
     color: #404040;
 }
-div.button.buttonHighlight, div.button:hover {
+div.button.buttonHighlight, div.button:hover, span.button.buttonHighlight, span.button:hover {
     background-image: linear-gradient(#386fcf 1%, #386fcf 100%);
     border: 1px solid #386fcf;
     color: #ffffff;
 }
 
-div.buttonShort {
+span.button {
     padding: 8px 10px;
 }
 
@@ -1481,4 +1503,11 @@ span.no {
     border-radius: 100px;
     padding: 5px;
     display: inline-block;
+}
+
+span.userOwnerBig {
+    color: rgba(255, 255, 255, 1);
+    border: 0;
+    padding: 8px 13px;
+    background-color: rgba(0, 0, 0, 0.4);
 }

@@ -16,29 +16,29 @@
 				<p>
 				<div id="submitEditRepository" class="button">Update repository information</div>
 				</p>
-				<br>
 
-			<h2>Users</h2>
+
+			<h2>Users <span class="smallGreyText">(click on a user to remove)</span></h2>
 			<p>
 		        <% for (var j = 0; j < repositoryUsers.length; j++) { %>
-		        	<span class="user userClickable deleteUserFromRepository" data-username="<%= repositoryUsers[j] %>"><%= repositoryUsers[j] %></span>
+		        	<span class="user userClickableRed deleteUserFromRepository" data-username="<%= repositoryUsers[j] %>"><%= repositoryUsers[j] %></span>
 		        <% } %>
 	        </p>
 <p><input class="shortInput inline" type="text" id="newUser" placeholder="New user">
-	        <div id="addUserToRepository" class="button inline buttonShort">Add user to repository</div></p>
+	        <span id="addUserToRepository" class="button">Add user to repository</span></p>
 
-				<br>
+
 
 			<h2>Repository Owner</h2>
-			<p><span class="user"><%= repositoryOwner %></span></p>
+			<p><span class="user userOwnerBig"><%= repositoryOwner %></span></p>
 
 <p>
 	        <input class="shortInput inline" type="text" id="newOwner" placeholder="New repository owner">
-	        <div id="modifyRepositoryOwner" class="button inline buttonShort">Change owner</div></p>
+	        <span id="modifyRepositoryOwner" class="button">Change owner</span></p>
 
-				<br>
+
 
 			<h2>Delete</h2>
-	        <p><div id="deleteRepository" class="button">Delete this repository</div></p>
+	        <p><span id="deleteRepository" class="button">Delete this repository</span></p>
 
 </div>
