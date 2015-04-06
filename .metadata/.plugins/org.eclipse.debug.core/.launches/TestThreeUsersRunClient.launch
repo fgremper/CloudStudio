@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.junit.launchconfig">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/RtcaTesting/src/ch/ethz/fgremper/test/combination/TestThreeUsersRunClient.java"/>
+<listEntry value="/CSTesting/src/ch/ethz/fgremper/cloudstudio/testing/combination/TestThreeUsersRunClient.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
@@ -11,6 +11,6 @@
 <stringAttribute key="org.eclipse.jdt.junit.TESTNAME" value=""/>
 <stringAttribute key="org.eclipse.jdt.junit.TEST_KIND" value="org.eclipse.jdt.junit.loader.junit4"/>
 <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_START_ON_FIRST_THREAD" value="true"/>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ch.ethz.fgremper.test.combination.TestThreeUsersRunClient"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RtcaTesting"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ch.ethz.fgremper.cloudstudio.testing.combination.TestThreeUsersRunClient"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CSTesting"/>
 </launchConfiguration>

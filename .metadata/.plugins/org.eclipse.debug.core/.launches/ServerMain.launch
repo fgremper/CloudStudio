@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.jdt.launching.localJavaApplication">
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/RtcaServer/src/ch/ethz/fgremper/rtca/ServerMain.java"/>
+<listEntry value="/CSServer/src/ch/ethz/fgremper/cloudstudio/server/ServerMain.java"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="1"/>
 </listAttribute>
-<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ch.ethz.fgremper.rtca.ServerMain"/>
-<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="RtcaServer"/>
+<stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="ch.ethz.fgremper.cloudstudio.server.ServerMain"/>
+<stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="CSServer"/>
 </launchConfiguration>

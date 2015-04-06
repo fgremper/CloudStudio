@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="../jar/java-json.jar"/>
+	<classpathentry kind="lib" path="../jar/mysql-connector-java-5.1.34-bin.jar"/>
+	<classpathentry kind="lib" path="../jar/commons-codec-1.10.jar"/>
+	<classpathentry kind="lib" path="../jar/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="../jar/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="../jar/commons-configuration-1.10.jar"/>
+	<classpathentry kind="lib" path="../jar/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="../jar/commons-logging-1.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="../jar/mchange-commons-java-0.2.9.jar"/>
+	<classpathentry kind="lib" path="../jar/diffutils-1.2.1.jar"/>
+	<classpathentry kind="lib" path="../jar/org.eclipse.jgit-3.5.2.201411120430-r.jar"/>
+	<classpathentry kind="lib" path="../jar/log4j-api-2.2.jar"/>
+	<classpathentry kind="lib" path="../jar/log4j-core-2.2.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CSCommon"/>
+	<classpathentry kind="lib" path="../jar/c3p0-0.9.5.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
