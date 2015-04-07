@@ -7,5 +7,6 @@
 	<classpathentry kind="lib" path="../jar/java-json.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CSClient"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CSCommon"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

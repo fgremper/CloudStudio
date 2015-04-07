@@ -26,36 +26,41 @@ public class ServerMain {
 	private static int port = ServerConfig.getInstance().serverPort;
 
 	public static void main(String[] args) throws Exception {
-
-		/*
 		
-		log.info("Server started.");
-		
-        try {
+		log.info("Starting server...");
 
+		// Create admin account if it doens't exist
+		if (ServerConfig.getInstance().createAdminUser) {
+			
     		DatabaseConnection db = new DatabaseConnection();
     		
-    		db.startTransaction();
-    		db.addUser("admin", "1234");
-    		db.makeUserAdmin("admin");
-    		db.commitTransaction();
-    		
-        }
-        catch (Exception e) {
-        	// nothing
-        }
+	        try {
+	        	
+	        	db.getConnection();
+	    		
+	    		db.startTransaction();
+	    		db.addUser("Admin", "1234");
+	    		db.makeUserAdmin("Admin");
+	    		db.commitTransaction();
+	    		
+	    		log.info("Admin user created");
+	    		
+	        }
+	        catch (Exception e) {
+	        	// nothing
+	        }
         
-        */
-        
-		/*
+		}
 		
 		// Periodically origin updater
-		log.info("Starting periodical origin updater...");
-		
-		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
-		new Thread(originUpdaterInterval).start();
+		if (ServerConfig.getInstance().enableOriginUpdate) {
+			
+			log.info("Starting periodical origin updater...");
+			
+			PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
+			new Thread(originUpdaterInterval).start();
 
-		*/
+		}
 		
 		// HTTP server
 		

@@ -36,8 +36,10 @@ public class ServerConfig {
 	// Hash salt
 	public String passwordSalt;
 
-	// Origin update interval
+	// Settings
 	public int originUpdateInterval;
+	public boolean enableOriginUpdate;
+	public boolean createAdminUser;
 	
 	public ServerConfig() {
 		
@@ -68,9 +70,11 @@ public class ServerConfig {
 			// Read salt
 			passwordSalt = xmlConfig.getString("passwordSalt");
 
-			// Origin update interval
+			// Settings
 			originUpdateInterval = Integer.parseInt(xmlConfig.getString("originUpdateInterval"));
-			
+			enableOriginUpdate = xmlConfig.getString("enableOriginUpdate").equals("true");
+			createAdminUser = xmlConfig.getString("createAdminUser").equals("true");
+
 		}
 		catch (Exception e) {
 			e.printStackTrace();

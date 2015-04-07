@@ -90,7 +90,9 @@ This is a sample server configuration:
     <fileStorageDirectory>path/to/filestorage</fileStorageDirectory>
     <originStorageDirectory>path/to/origins</originStorageDirectory>
     <passwordSalt>GXSBML0EGjOMfqPzsznUCkK8ENP3lmOX</passwordSalt>
+    <enableOriginUpdater>true</enableOriginUpdater>
     <originUpdateInterval>300</originUpdateInterval>
+    <createAdminUser>true</createAdminUser>
 </config>
 ```
 
@@ -108,7 +110,9 @@ dbMaxStatements           | C3P0 parameter: maximum database statements
 fileStorageDirectory      | The database only stores file hashes. The file contents to the hashes are stored in this directory.
 originStorageDirectory    | A clone of the remote repository is stored in this directory for all projects.
 passwordSalt              | Salt for the password hash
+enableOriginUpdater       | Periodically fetch all remote repositories ("true" or "false")
 originUpdateInterval      | How often to update remote repositories (in seconds)
+createAdminUser           | Create an administrator with username "Admin" and password "1234" if it doesn't exist ("true" or "false")
 
 Run `SQLInit.sql` to initialize the database (MySQL).
 

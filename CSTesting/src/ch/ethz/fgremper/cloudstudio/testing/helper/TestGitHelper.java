@@ -3,10 +3,14 @@ package ch.ethz.fgremper.cloudstudio.testing.helper;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.json.JSONObject;
 
 import ch.ethz.fgremper.cloudstudio.client.ClientMain;
+import ch.ethz.fgremper.cloudstudio.common.RepositoryReader;
 import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
 import ch.ethz.fgremper.cloudstudio.server.PeriodicalAllOriginUpdater;
 
@@ -160,18 +164,24 @@ public class TestGitHelper {
 	}
 	
 	public static void runPlugins() throws Exception {
-
-
-		String[] argsJohn = {"configJohn.xml", "--nogui"};
-		String[] argsDavid = {"configDavid.xml", "--nogui"};
-		String[] argsIsabelle = {"configIsabelle.xml", "--nogui"};
 		
-		ClientMain.main(argsJohn);
-		ClientMain.main(argsDavid);
-		ClientMain.main(argsIsabelle);
+		List<String> users = new LinkedList<String>();
+		users.add("John");
+		users.add("David");
+		users.add("Isabelle");
+		users.add("origin");
+		
+		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
 
-		PeriodicalAllOriginUpdater originUpdaterInterval = new PeriodicalAllOriginUpdater();
-		originUpdaterInterval.updateAll();
-			
+		db.startTransaction();
+		for (String user : users) {
+			RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
+            db.setEntireUserGitState(repositoryReader.getUpdateObject().toString(), user, "TestRepository");
+		}
+		db.commitTransaction();
+
+		db.closeConnection();
+		
 	}
 }
