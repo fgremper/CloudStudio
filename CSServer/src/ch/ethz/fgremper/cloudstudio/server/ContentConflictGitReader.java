@@ -2,7 +2,6 @@ package ch.ethz.fgremper.cloudstudio.server;
 
 import java.io.File;
 import java.io.InputStream;
-import java.sql.SQLException;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -18,7 +17,6 @@ import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 /**
  * 

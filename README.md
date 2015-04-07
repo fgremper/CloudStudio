@@ -28,11 +28,11 @@ Import the 4 folders `CSClient`, `CSServer`, `CSCommon` and `CSTesting` as exist
 
 ##### 3. Build JAR
 
-Go to File → Export → Java → JAR file.
+Go to File → Export → Java → Runnable JAR file.
 
-To build the client JAR, select CSClient and CSCommon. To build the server JAR, select CSServer and CSCommon. In this step you can also set the output directory for the generated JAR file.
+Under _Launch configuration_, select ClientMain to build the client JAR. To build the server JAR, select ServerMain. Under _Library handling_, select _Package required libraries into generated JAR_.
 
-Click Next twice. Select "Generate the manifest file" and select the Main class (ClientMain or ServerMain).
+Select the export destionation and click _Finish_.
 
 ##### 4. Run
 
@@ -65,7 +65,7 @@ A sample configuration file looks like this:
             <localPath>/path/to/your/local/repository</localPath>
         </repository>
     </repositories>
-    <resubmitInterval>300</resubmitInterval> <!-- in seconds; if 0 it only submits once -->
+    <resubmitInterval>300</resubmitInterval> <!-- in seconds -->
 </config>
 ```
 
@@ -110,7 +110,7 @@ originStorageDirectory    | A clone of the remote repository is stored in this d
 passwordSalt              | Salt for the password hash
 originUpdateInterval      | How often to update remote repositories (in seconds)
 
-Run `SQLInit.sql` to initialize the database.
+Run `SQLInit.sql` to initialize the database (MySQL).
 
 #### API Reference
 

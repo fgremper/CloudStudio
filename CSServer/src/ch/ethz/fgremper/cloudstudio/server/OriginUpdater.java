@@ -3,13 +3,10 @@ package ch.ethz.fgremper.cloudstudio.server;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
-import java.sql.SQLException;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ch.ethz.fgremper.cloudstudio.common.RepositoryReader;

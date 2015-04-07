@@ -29,15 +29,19 @@ TODO friday
 TODO saturday
 
 >> * hide unused titles branch view
-* build with maven
-* no more absolute paths
-* documentation on how to setup (README)
+>>* build with maven
+>>* no more absolute paths
+>>* documentation on how to setup (README)
 * who is responsible for package conflicts!
 * favicon (@home)
+
+
 * go through webinterface and look through
 * clean up intendation and look
 * error msgs for sho
+* change password
 * welcome after signup!
+* first run create admin account
 
 
 

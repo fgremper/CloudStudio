@@ -2,12 +2,10 @@ package ch.ethz.fgremper.cloudstudio.server;
 
 import java.io.File;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -316,13 +314,16 @@ public class DatabaseConnection {
 			String commit = rs.getString("commit");
 			String active = rs.getString("active");
 			int lastUpdateDiff = rs.getInt("lastupdatediff");
-			String lastUpdateDiffString;
-			if (lastUpdateDiff >= 60 * 60 * 24 * 7) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24 * 7)) + "w";
-			else if (lastUpdateDiff >= 60 * 60 * 24) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24)) + "d";
-			else if (lastUpdateDiff >= 60 * 60) lastUpdateDiffString = (lastUpdateDiff / (60 * 60)) + "h";
-			else if (lastUpdateDiff >= 60) lastUpdateDiffString = (lastUpdateDiff / (60)) + "m";
-			else lastUpdateDiffString = (lastUpdateDiff) + "s";
-			String lastUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+			String lastUpdateDiffString = "unknown";
+			String lastUpdate = "unknown";
+			if (rs.getString("lastupdate") != null) {
+				lastUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+				if (lastUpdateDiff >= 60 * 60 * 24 * 7) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24 * 7)) + "w";
+				else if (lastUpdateDiff >= 60 * 60 * 24) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24)) + "d";
+				else if (lastUpdateDiff >= 60 * 60) lastUpdateDiffString = (lastUpdateDiff / (60 * 60)) + "h";
+				else if (lastUpdateDiff >= 60) lastUpdateDiffString = (lastUpdateDiff / (60)) + "m";
+				else lastUpdateDiffString = (lastUpdateDiff) + "s";
+			}
 			String origincommit = rs.getString("origincommit");
 			String relation;
 			Integer distance = null;
@@ -600,13 +601,15 @@ public class DatabaseConnection {
 		getLastOriginUpdateStmt.setString(1, repositoryAlias);
 		rs = getLastOriginUpdateStmt.executeQuery();
 		if (rs.next()) {
-			lastOriginUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
-			lastOriginUpdateDiff = rs.getInt("lastupdatediff");
-			if (lastOriginUpdateDiff >= 60 * 60 * 24 * 7) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24 * 7)) + "w";
-			else if (lastOriginUpdateDiff >= 60 * 60 * 24) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24)) + "d";
-			else if (lastOriginUpdateDiff >= 60 * 60) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60)) + "h";
-			else if (lastOriginUpdateDiff >= 60) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60)) + "m";
-			else lastOriginUpdateDiffString = (lastOriginUpdateDiff) + "s";
+			if (rs.getString("lastupdate") != null) {
+				lastOriginUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
+				lastOriginUpdateDiff = rs.getInt("lastupdatediff");
+				if (lastOriginUpdateDiff >= 60 * 60 * 24 * 7) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24 * 7)) + "w";
+				else if (lastOriginUpdateDiff >= 60 * 60 * 24) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60 * 24)) + "d";
+				else if (lastOriginUpdateDiff >= 60 * 60) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60 * 60)) + "h";
+				else if (lastOriginUpdateDiff >= 60) lastOriginUpdateDiffString = (lastOriginUpdateDiff / (60)) + "m";
+				else lastOriginUpdateDiffString = (lastOriginUpdateDiff) + "s";
+			}
 		}
 		
 		String repositoryUrl = null;

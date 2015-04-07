@@ -31,12 +31,13 @@ import org.apache.logging.log4j.Logger;
  * @author Fabian Gremper
  * 
  */
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class ClientGUI {
 
 	private static final Logger log = LogManager.getLogger(ClientGUI.class);
 
     private static DefaultListModel logModel;
-    private static JList logList;
+	private static JList logList;
     private static JScrollPane logScrollPane;
     private static JLabel trafficLabelGreen;
     private static JLabel trafficLabelYellow;
@@ -86,7 +87,7 @@ public class ClientGUI {
      * @param logString
      * 
      */
-    public static void addLogMessage(String logString) {
+	public static void addLogMessage(String logString) {
     	
     	// Add log message
     	logModel.addElement(logString);
@@ -211,13 +212,13 @@ public class ClientGUI {
         
         // Init traffic light images
         try {
-	        BufferedImage trafficImageGreen = ImageIO.read(new File("TrafficGreen.png"));
+	        BufferedImage trafficImageGreen = ImageIO.read(ClientGUI.class.getResourceAsStream("TrafficGreen.png"));
 	        trafficLabelGreen = new JLabel(new ImageIcon(trafficImageGreen));
 	        trafficLabelGreen.setBounds(15, 15, 120, 120);
-	        BufferedImage trafficImageYellow = ImageIO.read(new File("TrafficYellow.png"));
+	        BufferedImage trafficImageYellow = ImageIO.read(ClientGUI.class.getResourceAsStream("TrafficYellow.png"));
 	        trafficLabelYellow = new JLabel(new ImageIcon(trafficImageYellow));
 	        trafficLabelYellow.setBounds(15, 15, 120, 120);
-	        BufferedImage trafficImageRed = ImageIO.read(new File("TrafficRed.png"));
+	        BufferedImage trafficImageRed = ImageIO.read(ClientGUI.class.getResourceAsStream("TrafficRed.png"));
 	        trafficLabelRed = new JLabel(new ImageIcon(trafficImageRed));
 	        trafficLabelRed.setBounds(15, 15, 120, 120);
 	        setStatusGreen();
