@@ -1,8 +1,9 @@
 package ch.ethz.fgremper.cloudstudio.server;
 
+import java.io.File;
 import java.util.HashMap;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 
 /**
  * 
@@ -37,7 +38,7 @@ public class SqlQueryReader {
 		else {
 			try {
 				// Read file contents and store them in the cache
-				String content = IOUtils.toString(SqlQueryReader.class.getResourceAsStream(queryName + ".sql"), "UTF-8");
+				String content = FileUtils.readFileToString(new File(queryName + ".sql"), "UTF-8");
 				cache.put(queryName, content);
 				return content;
 			}

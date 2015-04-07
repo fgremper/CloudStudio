@@ -58,7 +58,7 @@ A sample configuration file looks like this:
 <config>
     <username>John</username>
     <password>burgers</password>
-    <serverUrl>http://cloudstudio.se.inf.ethz.ch:7330</serverUrl> <!-- don't put a dash at the end -->
+    <serverUrl>http://cloudstudio.ethz.ch:7330</serverUrl> <!-- don't put a dash at the end -->
     <repositories>
         <repository>
             <alias>RepositoryAliasOnCloudStudio</alias>
