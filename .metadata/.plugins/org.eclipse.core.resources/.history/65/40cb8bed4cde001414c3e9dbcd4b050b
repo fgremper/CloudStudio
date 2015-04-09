@@ -40,7 +40,6 @@ public class ServerConfig {
 	public int originUpdateInterval;
 	public boolean enableOriginUpdate;
 	public boolean createAdminUser;
-	public boolean useDatabasePool;
 	
 	public ServerConfig() {
 		

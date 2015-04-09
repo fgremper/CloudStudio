@@ -129,33 +129,37 @@ function renderFromDocumentLocation() {
     var url = document.location.pathname;
     var params = url.split(/\//).splice(1);
 
-    if (params[0] == "") {
-        if (login.sessionId == null) {
-            renderLoginView();
+    if (login.sessionId == null) {
+
+        if (params[0] == "signup" && (params[1] == undefined || params[1] == "")) {
+            renderSignUpView();
+        }
+        else {
+                renderLoginView();
+
+        }
+
+
+    }
+    else {
+
+        if (params[0] == "create" && (params[1] == undefined || params[1] == "")) {
+            loadCreateRepositoryView();
+        }
+        else if (params[0] == "repositories" && (params[1] == undefined || params[1] == "")) {
+            loadRepositoryView();
+        }
+        else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && (params[2] == undefined || params[2] == "")) {
+            loadBranchView(params[1]);
+        }
+        else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "")) {
+            selection.compareToBranch = params[2];
+            loadFileView(params[1], params[2]);
         }
         else {
             loadRepositoryView();
         }
 
-    }
-    else if (params[0] == "signup" && (params[1] == undefined || params[1] == "")) {
-        renderSignUpView();
-    }
-    else if (params[0] == "create" && (params[1] == undefined || params[1] == "")) {
-        loadCreateRepositoryView();
-    }
-    else if (params[0] == "repositories" && (params[1] == undefined || params[1] == "")) {
-        loadRepositoryView();
-    }
-    else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && (params[2] == undefined || params[2] == "")) {
-        loadBranchView(params[1]);
-    }
-    else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "")) {
-        selection.compareToBranch = params[2];
-        loadFileView(params[1], params[2]);
-    }
-    else {
-        renderLoginView();
     }
 
 }
@@ -305,9 +309,12 @@ function renderSignUpView() {
             success: function(data) {
                 console.log("Sign Up. Success: " + JSON.stringify(data));
 
-                alert("Sign up success!");
+                
+                $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/signup_view_successful.ejs'}).render());
 
-                renderLoginView();
+                $('#gotoLogin').click(function () {
+                    renderLoginView();
+                });
 
             },
             error: function (data) {
@@ -332,45 +339,6 @@ function renderSignUpView() {
 
 /* SIGN UP */
 
-function renderCreateRepository() {
-    
-    // Push history state
-    pushHistoryState("signup");
-
-    // Render template
-    $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/signup_view.ejs'}).render());
-
-    // Register login click event
-    $('#submitSignup').click(function () {
-        sendApiRequest({
-            name: 'createUser',
-            type: 'POST',
-            data: { username: $('#username').val(), password: $('#password').val() },
-            success: function(data) {
-                console.log("Sign Up. Success: " + JSON.stringify(data));
-
-                alert("Sign up success!");
-
-                renderLoginView();
-
-            },
-            error: function (data) {
-                displayError('Sign Up', data.responseJSON);
-            }
-        });
-    });
-
-    // Submit form when we press enter while we're in one of the input fields
-    $('#username, #password').keypress(function(e) {
-        if (e.which == 13 && !$('#errorOverlay').is(':visible')) {
-            $('#submitSignup').click();
-        }
-    });
-
-    // Focus on the username input field
-    $('#username').focus();
-
-}
 
 
 
@@ -387,6 +355,30 @@ function renderProfileView(data) {
     // Render template
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/profile_view.ejs'}).render(data));
 
+    $('#submitChangePassword').click(function () {
+
+        sendApiRequest({
+            name: 'changePassword',
+            type: 'POST',
+            data: { sessionId: login.sessionId, newPassword: $('#newPassword').val() },
+            success: function(data) {
+                console.log("Sign Up. Success: " + JSON.stringify(data));
+
+                
+                $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/profile_view_pwchanged.ejs'}).render());
+
+            },
+            error: function (data) {
+                displayError('Sign Up', data.responseJSON);
+            }
+        });
+
+    });
+    $('#newPassword').keypress(function(e) {
+        if (e.which == 13) {
+            $('#submitChangePassword').click();
+        }
+    });
 
 }
 

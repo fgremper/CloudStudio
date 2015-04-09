@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import ch.ethz.fgremper.cloudstudio.client.ClientMain;
 import ch.ethz.fgremper.cloudstudio.common.RepositoryReader;
 import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
-import ch.ethz.fgremper.cloudstudio.server.OriginUpdater;
 import ch.ethz.fgremper.cloudstudio.server.PeriodicalAllOriginUpdater;
 
 public class TestGitHelper {
@@ -154,7 +153,7 @@ public class TestGitHelper {
 		db.addUser("David", "davidpw");
 		db.addUser("Isabelle", "isabellepw");
 		
-		db.createRepository("TestRepository", TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "origin", "John", "Verifying CloudStudio correctness");
+		db.createRepository("TestRepository", "/Users/novocaine/Documents/masterthesis/testsandpit/origin", "John", "just testing move along");
 		db.addUserToRepository("John", "TestRepository");
 		db.addUserToRepository("David", "TestRepository");
 		db.addUserToRepository("Isabelle", "TestRepository");
@@ -170,6 +169,7 @@ public class TestGitHelper {
 		users.add("John");
 		users.add("David");
 		users.add("Isabelle");
+		users.add("origin");
 		
 		DatabaseConnection db = new DatabaseConnection();
 		db.getConnection();
@@ -183,7 +183,5 @@ public class TestGitHelper {
 
 		db.closeConnection();
 		
-		OriginUpdater.update("TestRepository", TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "origin");
-
 	}
 }

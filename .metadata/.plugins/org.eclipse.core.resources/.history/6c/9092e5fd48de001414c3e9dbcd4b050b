@@ -394,7 +394,7 @@ public class ApiHttpHandler implements HttpHandler {
 				
 			}
 
-			// Change password
+			// Delete repository
 			else if (apiName.equals("changePassword") && requestMethod.equalsIgnoreCase("post")) {
 				
 				// Get parameters

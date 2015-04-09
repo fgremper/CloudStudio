@@ -154,7 +154,7 @@ public class TestGitHelper {
 		db.addUser("David", "davidpw");
 		db.addUser("Isabelle", "isabellepw");
 		
-		db.createRepository("TestRepository", TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "origin", "John", "Verifying CloudStudio correctness");
+		db.createRepository("TestRepository", "/Users/novocaine/Documents/masterthesis/testsandpit/origin", "John", "just testing move along");
 		db.addUserToRepository("John", "TestRepository");
 		db.addUserToRepository("David", "TestRepository");
 		db.addUserToRepository("Isabelle", "TestRepository");

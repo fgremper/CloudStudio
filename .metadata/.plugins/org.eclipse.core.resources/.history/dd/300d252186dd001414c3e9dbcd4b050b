@@ -18,6 +18,4 @@
     <passwordSalt>heyoiamthesaltwhatisupwithyou</passwordSalt>
     
     <originUpdateInterval>10</originUpdateInterval>
-    <enableOriginUpdate>false</enableOriginUpdate>
-    <createAdminUser>true</createAdminUser>
 </config>

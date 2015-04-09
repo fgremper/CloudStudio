@@ -394,22 +394,6 @@ public class ApiHttpHandler implements HttpHandler {
 				
 			}
 
-			// Change password
-			else if (apiName.equals("changePassword") && requestMethod.equalsIgnoreCase("post")) {
-				
-				// Get parameters
-				String newPassword = (String) params.get("newPassword");
-
-				// Execute database action
-				db.startTransaction();
-				db.changePassword(sessionUsername, newPassword);
-				db.commitTransaction();
-				
-				// Set response
-				response = "{}";
-				
-			}
-
 			// Add user to repository
 			else if (apiName.equals("addUserToRepository") && requestMethod.equalsIgnoreCase("post")) {
 

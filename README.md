@@ -90,7 +90,7 @@ This is a sample server configuration:
     <fileStorageDirectory>path/to/filestorage</fileStorageDirectory>
     <originStorageDirectory>path/to/origins</originStorageDirectory>
     <passwordSalt>GXSBML0EGjOMfqPzsznUCkK8ENP3lmOX</passwordSalt>
-    <enableOriginUpdater>true</enableOriginUpdater>
+    <enableOriginUpdate>true</enableOriginUpdate>
     <originUpdateInterval>300</originUpdateInterval>
     <createAdminUser>true</createAdminUser>
 </config>
@@ -104,13 +104,13 @@ dbJdbcUrl                 | Database URL
 dbUser                    | Database username
 dbPassword                | Database password
 dbMinPoolSize             | C3P0 paramater: minimum pool size
-dbAcquireIncrement        | C3P0 paramater: aquire increment
+dbAcquireIncrement        | C3P0 paramater: acquire increment
 dbMaxPoolSize             | C3P0 parameter: maximum pool size
 dbMaxStatements           | C3P0 parameter: maximum database statements
 fileStorageDirectory      | The database only stores file hashes. The file contents to the hashes are stored in this directory.
 originStorageDirectory    | A clone of the remote repository is stored in this directory for all projects.
 passwordSalt              | Salt for the password hash
-enableOriginUpdater       | Periodically fetch all remote repositories ("true" or "false")
+enableOriginUpdate        | Periodically fetch all remote repositories ("true" or "false")
 originUpdateInterval      | How often to update remote repositories (in seconds)
 createAdminUser           | Create an administrator with username "Admin" and password "1234" if it doesn't exist ("true" or "false")
 
