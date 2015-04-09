@@ -20,4 +20,6 @@
     <originUpdateInterval>10</originUpdateInterval>
     <enableOriginUpdate>false</enableOriginUpdate>
     <createAdminUser>true</createAdminUser>
+    <useDatabasePool>false</useDatabasePool>
+    <giveCreatorPrivilegesOnSignUp>true</giveCreatorPrivilegesOnSignUp>
 </config>

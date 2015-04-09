@@ -113,7 +113,7 @@ public class ApiHttpHandler implements HttpHandler {
 				// Get parameters
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				
-				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias)) {
+				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
 					response = db.getRepositoryInformation(repositoryAlias);
 				}
 				else {
@@ -332,6 +332,7 @@ public class ApiHttpHandler implements HttpHandler {
 					db.startTransaction();
 					String repositoryOwner = sessionUsername;
 					db.createRepository(repositoryAlias, repositoryUrl, repositoryOwner, repositoryDescription);
+					db.addUserToRepository(sessionUsername, repositoryAlias);
 					db.commitTransaction();
 					
 					// Set response
@@ -352,9 +353,9 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryUrl = (String) params.get("repositoryUrl");
 				String repositoryDescription = (String) params.get("repositoryDescription");
 
-				// Need to be administrator or creator
-				if (db.isUserAdmin(sessionUsername) || db.isUserCreator(sessionUsername)) {
-
+				// Need to be admin or repository owner
+				if (db.isUserAdmin(sessionUsername) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
+					
 					// Execute database action
 					db.startTransaction();
 					db.updateRepositoryInformation(repositoryAlias, repositoryDescription, repositoryUrl);

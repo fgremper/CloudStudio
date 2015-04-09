@@ -1511,3 +1511,16 @@ span.userOwnerBig {
     padding: 8px 13px;
     background-color: rgba(0, 0, 0, 0.4);
 }
+
+.emptyView {
+    font-size: 16px;
+    color: #808080;
+}
+
+#repositoryList .emptyView {
+    padding: 10px;
+}
+
+#branchListContainer .emptyView, #fileListContainer .emptyView {
+    padding-top: 10px;
+}

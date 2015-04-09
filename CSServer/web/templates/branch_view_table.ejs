@@ -1,3 +1,12 @@
+
+
+	<% if (branches.length == 0) { %>
+
+		<div class="emptyView">There are no branches in this repository yet.</div>
+
+	<% } else { %>
+
+
 	<div id="branchListHeader">
 
 			<div>Branch</div>
@@ -39,7 +48,7 @@
 						<% } %>
 					<% if (echoTitle) { %></p><% } %>
 
-					<% var echoTitle = false; %>
+					<% echoTitle = false; %>
 
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
@@ -53,7 +62,7 @@
 						<% } %>
 					<% if (echoTitle) { %></p><% } %>
 
-					<% var echoTitle = false; %>
+					<% echoTitle = false; %>
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 							<% if (branches[i].users[j].relationWithOrigin == 'AHEAD' || branches[i].users[j].relationWithOrigin == 'FORK') { %>
@@ -67,7 +76,7 @@
 					</p>
 					<% if (echoTitle) { %></p><% } %>
 
-					<% var echoTitle = false; %>
+					<% echoTitle = false; %>
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 							<% if (branches[i].users[j].relationWithOrigin == 'LOCAL_BRANCH') { %>
@@ -81,7 +90,7 @@
 					</p>
 					<% if (echoTitle) { %></p><% } %>
 
-					<% var echoTitle = false; %>
+					<% echoTitle = false; %>
 						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 
@@ -100,3 +109,5 @@
     	<% } %>
 
 	</table>
+
+	<% } %>

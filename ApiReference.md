@@ -142,6 +142,41 @@ curl "http://localhost:7330/api/repositoryInformation?
 
 
 
+## /api/setRepositoryInformation
+
+Method: POST
+
+Updates repository information. You need to be administrator or repository owner.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+repositoryAlias       | Repository alias
+repositoryDescription | Description for repository
+repositoryUrl         | URL to remote repository
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/setRepositoryInformation" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "repositoryAlias=HelloWorld" \
+  -d "repositoryDescription=This is a Hello World project." \
+  -d "repositoryUrl=https://github.com/foo/helloworld"
+```
+
+###### Response
+```json
+{}
+```
+
+
+
+
+
 
 ## /api/branchAwareness
 
@@ -504,11 +539,11 @@ repositoryDescription | A short description
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/createRepository?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=HelloWorld&
-  repositoryUrl=https://github.com/foo/helloworld&
-  repositoryDescription=This is a Hello World project."
+curl "http://cloudstudio:7330/api/createRepository" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "repositoryAlias=HelloWorld" \
+  -d "repositoryDescription=This is a Hello World project." \
+  -d "repositoryUrl=https://github.com/foo/helloworld"
 ```
 
 ###### Response
@@ -535,9 +570,9 @@ repositoryAlias       | Repository alias
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/deleteRepository?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=HelloWorld"
+curl "http://cloudstudio:7330/api/deleteRepository" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "repositoryAlias=HelloWorld"
 ```
 
 ###### Response
@@ -567,10 +602,10 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/addUserToRepository?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=HelloWorld&
-  username=David"
+curl "http://cloudstudio:7330/api/addUserToRepository" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "repositoryAlias=HelloWorld" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -603,10 +638,10 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/removeUserFromRepository?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=HelloWorld&
-  username=David"
+curl "http://cloudstudio:7330/api/removeUserFromRepository" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "repositoryAlias=HelloWorld" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -637,10 +672,10 @@ username              | New repository owner
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/modifyRepositoryOwner?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=HelloWorld&
-  username=David"
+curl "http://cloudstudio:7330/api/modifyRepositoryOwner" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "repositoryAlias=HelloWorld" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -673,10 +708,10 @@ password              | New password
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/createUser?
-  sessionId=YOUR_SESSION_ID&
-  username=David&
-  password=penguins"
+curl "http://cloudstudio:7330/api/createUser" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "username=David" \
+  -d "password=penguins"
 ```
 
 ###### Response
@@ -707,9 +742,9 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/deleteUser?
-  sessionId=YOUR_SESSION_ID&
-  username=David"
+curl "http://cloudstudio:7330/api/deleteUser" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -717,6 +752,36 @@ curl "http://cloudstudio:7330/api/deleteUser?
 {}
 ```
 
+
+
+
+
+## /api/deleteUser
+
+Method: POST
+
+Changes a users password.
+
+#### Parameters
+
+Parameter name        | Description
+--------------------- | ------------------------------------------
+sessionId             | Your session ID
+newPassword           | New password
+
+#### Example
+
+###### Request
+```bash
+curl "http://cloudstudio:7330/api/changePassword" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "newPassword=polarbears"
+```
+
+###### Response
+```json
+{}
+```
 
 
 
@@ -739,9 +804,9 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/giveAdminPrivileges?
-  sessionId=YOUR_SESSION_ID&
-  username=David"
+curl "http://cloudstudio:7330/api/giveAdminPrivileges" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -772,9 +837,9 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/revokeAdminPrivileges?
-  sessionId=YOUR_SESSION_ID&
-  username=David"
+curl "http://cloudstudio:7330/api/revokeAdminPrivileges" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -806,9 +871,9 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/giveCreatorPrivileges?
-  sessionId=YOUR_SESSION_ID&
-  username=David"
+curl "http://cloudstudio:7330/api/giveCreatorPrivileges" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "username=David"
 ```
 
 ###### Response
@@ -839,9 +904,9 @@ username              | Username
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/revokeCreatorPrivileges?
-  sessionId=YOUR_SESSION_ID&
-  username=David"
+curl "http://cloudstudio:7330/api/revokeCreatorPrivileges" \
+  -d "sessionId=YOUR_SESSION_ID" \
+  -d "username=David"
 ```
 
 ###### Response

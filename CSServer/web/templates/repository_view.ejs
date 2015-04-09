@@ -19,52 +19,44 @@
 
 	<% } %>
 
+
+
 <div id="repositoryList">
 
-	<% for (var i = 0; i < repositories.length; i++) { %>
 
-	<div class="repositoryListItem" data-alias="<%= repositories[i]['repositoryAlias'] %>">
-		<div class="repositoryListBlock">
-			<span class="editRepository">Edit</span>
-			<h1><%= repositories[i]['repositoryAlias'] %></h1>
-			<div class="description"><%= repositories[i]['repositoryDescription'] %></div>
-			<h2>URL to Repository</h2>
-			<p><%= repositories[i]['repositoryUrl'] %></p>
-			<h2>Users</h2>
-			<p>
-				<span class="userSmall userOwner"><%= repositories[i].repositoryOwner %></span>
-		        <% for (var j = 0; j < repositories[i]['users'].length; j++) { %>
-		        	<% if (repositories[i]['users'][j] == repositories[i].repositoryOwner) continue; %>
-		        	<span class="userSmall"><%= repositories[i]['users'][j] %></span>
-		        <% } %>
-	        </p>
-		</div>
-	</div>
 
-	<% } %>
+	<% if (repositories.length == 0) { %>
 
-</div>
+		<div class="emptyView">There are no repositories visible to you at the moment.</div>
 
-<!--
-<div id="view">
-	<table id="repositoryTable">
-	    <tr><th>Alias</th><th>URL</th><th>Owner</th><th>Users</th></tr>
+	<% } else { %>
+
+
+
 		<% for (var i = 0; i < repositories.length; i++) { %>
-		    <tr class="repository clickable" data-alias="<%= repositories[i]['repositoryAlias'] %>">
-		        <td><span class="blue"><%= repositories[i]['repositoryAlias'] %></span><% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %> <span class="modify deleteRepository" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>">del</span><% } %></td>
-		        <td><span class="ellipsis"><%= repositories[i]['repositoryUrl'] %></span></td>
-		        <td>
-		        	<span class="user"><%= repositories[i]['repositoryOwner'] %></span>
-		        	<% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %> <span class="modify modifyRepositoryOwner" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>">change</span><% } %>
-	        	</td>
-		        <td>
+
+		<div class="repositoryListItem" data-alias="<%= repositories[i]['repositoryAlias'] %>">
+			<div class="repositoryListBlock">
+				<span class="editRepository">Edit</span>
+				<h1><%= repositories[i]['repositoryAlias'] %></h1>
+				<div class="description"><% if (repositories[i]['repositoryDescription'] == null || repositories[i]['repositoryDescription'] == "") { %>(no description)<% } else { %><%= repositories[i]['repositoryDescription'] %><% } %></div>
+				<h2>URL to Repository</h2>
+				<p><% if (repositories[i]['repositoryUrl'] == null || repositories[i]['repositoryUrl'] == "") { %>(empty)<% } else { %><%= repositories[i]['repositoryUrl'] %><% } %></p>
+				<h2>Users</h2>
+				<p>
+					<span class="userSmall userOwner"><%= repositories[i].repositoryOwner %></span>
 			        <% for (var j = 0; j < repositories[i]['users'].length; j++) { %>
-			        	<span class="user"><%= repositories[i]['users'][j] %><% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %> <span class="modify deleteUserFromRepository" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>" data-username="<%= repositories[i]['users'][j] %>">del</span><% } %></span>
+			        	<% if (repositories[i]['users'][j] == repositories[i].repositoryOwner) continue; %>
+			        	<span class="userSmall"><%= repositories[i]['users'][j] %></span>
 			        <% } %>
-		        	<% if (login.isAdmin || login.username == repositories[i]['repositoryOwner']) { %><span class="modify addUserToRepository" data-repositoryalias="<%= repositories[i]['repositoryAlias'] %>">add</span><% } %>
-		        </td>
-		    </tr>
+		        </p>
+			</div>
+		</div>
+
 		<% } %>
-	</table>
+
+	<% } %>
+
 </div>
--->
+
+

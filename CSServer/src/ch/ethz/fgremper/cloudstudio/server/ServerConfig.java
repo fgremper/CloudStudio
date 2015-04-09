@@ -41,6 +41,7 @@ public class ServerConfig {
 	public boolean enableOriginUpdate;
 	public boolean createAdminUser;
 	public boolean useDatabasePool;
+	public boolean giveCreatorPrivilegesOnSignUp;
 	
 	public ServerConfig() {
 		
@@ -75,7 +76,8 @@ public class ServerConfig {
 			originUpdateInterval = Integer.parseInt(xmlConfig.getString("originUpdateInterval"));
 			enableOriginUpdate = xmlConfig.getString("enableOriginUpdate") != null && xmlConfig.getString("enableOriginUpdate").equals("true");
 			createAdminUser = xmlConfig.getString("createAdminUser") != null && xmlConfig.getString("createAdminUser").equals("true");
-			useDatabasePool = xmlConfig.getString("useDatabasePool") != null && xmlConfig.getString("createAdminUser").equals("true");
+			useDatabasePool = xmlConfig.getString("useDatabasePool") != null && xmlConfig.getString("useDatabasePool").equals("true");
+			giveCreatorPrivilegesOnSignUp = xmlConfig.getString("giveCreatorPrivilegesOnSignUp") != null && xmlConfig.getString("giveCreatorPrivilegesOnSignUp").equals("true");
 
 		}
 		catch (Exception e) {

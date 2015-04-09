@@ -83,6 +83,7 @@ This is a sample server configuration:
     <dbJdbcUrl>jdbc:mysql://localhost/cloudstudio</dbJdbcUrl>
     <dbUser>dbadmin</dbUser>
     <dbPassword>1234</dbPassword>
+    <useDatabasePool>true</useDatabasePool>
     <dbMinPoolSize>5</dbMinPoolSize>
     <dbAcquireIncrement>5</dbAcquireIncrement>
     <dbMaxPoolSize>20</dbMaxPoolSize>
@@ -93,26 +94,29 @@ This is a sample server configuration:
     <enableOriginUpdate>true</enableOriginUpdate>
     <originUpdateInterval>300</originUpdateInterval>
     <createAdminUser>true</createAdminUser>
+    <giveCreatorPrivilegesOnSignUp>true</giveCreatorPrivilegesOnSignUp>
 </config>
 ```
 
-Parameter name            | Description
-------------------------- | --------------------------------
-serverPort                | Port for the HTTP server hosting the API and the Web Interface
-dbDriverClass             | JDBC driver
-dbJdbcUrl                 | Database URL
-dbUser                    | Database username
-dbPassword                | Database password
-dbMinPoolSize             | C3P0 paramater: minimum pool size
-dbAcquireIncrement        | C3P0 paramater: acquire increment
-dbMaxPoolSize             | C3P0 parameter: maximum pool size
-dbMaxStatements           | C3P0 parameter: maximum database statements
-fileStorageDirectory      | The database only stores file hashes. The file contents to the hashes are stored in this directory.
-originStorageDirectory    | A clone of the remote repository is stored in this directory for all projects.
-passwordSalt              | Salt for the password hash
-enableOriginUpdate        | Periodically fetch all remote repositories ("true" or "false")
-originUpdateInterval      | How often to update remote repositories (in seconds)
-createAdminUser           | Create an administrator with username "Admin" and password "1234" if it doesn't exist ("true" or "false")
+Parameter name                | Description
+----------------------------- | --------------------------------
+serverPort                    | Port for the HTTP server hosting the API and the Web Interface
+dbDriverClass                 | JDBC driver
+dbJdbcUrl                     | Database URL
+dbUser                        | Database username
+dbPassword                    | Database password
+useDatabasePool               | Enable C3P0 database pooling ("true" or "false")
+dbMinPoolSize                 | C3P0 paramater: minimum pool size
+dbAcquireIncrement            | C3P0 paramater: acquire increment
+dbMaxPoolSize                 | C3P0 parameter: maximum pool size
+dbMaxStatements               | C3P0 parameter: maximum database statements
+fileStorageDirectory          | The database only stores file hashes. The file contents to the hashes are stored in this directory.
+originStorageDirectory        | A clone of the remote repository is stored in this directory for all projects.
+passwordSalt                  | Salt for the password hash
+enableOriginUpdate            | Periodically fetch all remote repositories ("true" or "false")
+originUpdateInterval          | How often to update remote repositories (in seconds)
+createAdminUser               | Create an administrator with username "Admin" and password "1234" if it doesn't exist on server start ("true" or "false")
+giveCreatorPrivilegesOnSignUp | Automatically give repository creation privileges when a new user is created ("true" or "false")
 
 Run `SQLInit.sql` to initialize the database (MySQL).
 

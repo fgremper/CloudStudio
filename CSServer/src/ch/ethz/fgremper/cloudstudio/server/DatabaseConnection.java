@@ -35,7 +35,7 @@ public class DatabaseConnection {
 	 * 
 	 */
 	public void getConnection() throws Exception {
-		if (false) {
+		if (ServerConfig.getInstance().useDatabasePool) {
 			con = DatabaseConnectionPool.getInstance().getConnection();
 		}
 		else {
@@ -673,8 +673,8 @@ public class DatabaseConnection {
 
 		// Update password
 		PreparedStatement stmt = con.prepareStatement("UPDATE users SET passwordhash = ? WHERE username = ?");
-		stmt.setString(1, username);
-		stmt.setString(2, passwordHash);
+		stmt.setString(1, passwordHash);
+		stmt.setString(2, username);
 		stmt.executeUpdate();	
 		
 	}
@@ -750,7 +750,9 @@ public class DatabaseConnection {
 			}
 
 			// Add the user to the repository
-			index.get(repositoryAlias).getJSONArray("users").put(username);
+			if (username != null) {
+				index.get(repositoryAlias).getJSONArray("users").put(username);
+			}
 
 		}
 		
@@ -842,9 +844,10 @@ public class DatabaseConnection {
 		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();
 
 		// Write the user to database.
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator, joindate) VALUES (?, ?, 'false', 'false', NOW())");
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO users (username, passwordhash, isadmin, iscreator, joindate) VALUES (?, ?, 'false', ?, NOW())");
 		stmt.setString(1, username);
 		stmt.setString(2, passwordHash);
+		stmt.setString(3, ServerConfig.getInstance().giveCreatorPrivilegesOnSignUp ? "true" : "false");
 		stmt.executeUpdate();
 		
 	}
