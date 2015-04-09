@@ -2,7 +2,7 @@
 
 #### Introduction
 
-CloudStudio delivers real-time status information about users collaborating on a project using Git and can detect conflicts early on.
+CloudStudio delivers real-time awareness information about users collaborating on a project using Git and can detect conflicts early on.
 
 #### Structure
 

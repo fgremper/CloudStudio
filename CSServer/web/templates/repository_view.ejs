@@ -29,7 +29,9 @@
 
 		<div class="repositoryListItem" data-alias="<%= repositories[i]['repositoryAlias'] %>">
 			<div class="repositoryListBlock">
-				<span class="editRepository">Edit</span>
+				<% if (login.isAdmin || repositories[i]['repositoryOwner'] == login.username) { %>
+					<span class="editRepository">Edit</span>
+				<% } %>
 				<h1><%= repositories[i]['repositoryAlias'] %></h1>
 				<div class="description"><% if (repositories[i]['repositoryDescription'] == null || repositories[i]['repositoryDescription'] == "") { %>(no description)<% } else { %><%= repositories[i]['repositoryDescription'] %><% } %></div>
 				<h2>URL to Repository</h2>

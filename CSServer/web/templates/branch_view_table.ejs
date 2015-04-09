@@ -5,10 +5,9 @@
 <% } else { %>
 
 	<div id="branchListHeader">
-
-			<div>Branch</div>
-			<div>Working On This Branch (Last Update)</div>
-			<div>Relationship To Origin</div>
+		<div>Branch</div>
+		<div>Working On This Branch (Last Update)</div>
+		<div>Relationship To Origin</div>
 	</div>
 	<table id="branchList">
 
@@ -44,7 +43,7 @@
 							<% if (!echoTitle) { %><h1>Up to date</h1><p><% } %>
 							<% echoTitle = true %>
 
-							<span class="user userGreen"><%= branches[0].users[j].username %></span>
+							<span class="user userGreen"><%= branches[i].users[j].username %></span>
 
 						<% } %>
 
@@ -63,7 +62,7 @@
 							<% if (!echoTitle) { %><h1>Behind origin</h1><p><% } %>
 							<% echoTitle = true %>
 
-							<span class="user userRed"><%= branches[0].users[j].username %></span>
+							<span class="user userRed"><%= branches[i].users[j].username %></span>
 
 						<% } %>
 
@@ -82,7 +81,7 @@
 							<% if (!echoTitle) { %><h1>Made new commits</h1><p><% } %>
 							<% echoTitle = true %>
 
-							<span class="user userYellow"><%= branches[0].users[j].username %> (<% if (branches[i].users[j].relationWithOrigin == 'AHEAD') { %>+<% } else { %>&plusmn;<% } %><%= branches[0].users[j].distanceFromOrigin %>)</span>
+							<span class="user userYellow"><%= branches[i].users[j].username %> (<% if (branches[i].users[j].relationWithOrigin == 'AHEAD') { %>+<% } else { %>&plusmn;<% } %><%= branches[i].users[j].distanceFromOrigin %>)</span>
 
 						<% } %>
 
@@ -101,7 +100,7 @@
 							<% if (!echoTitle) { %><h1>Local branch</h1><p><% } %>
 							<% echoTitle = true %>
 
-							<span class="user"><%= branches[0].users[j].username %></span>
+							<span class="user"><%= branches[i].users[j].username %></span>
 
 						<% } %>
 
@@ -118,7 +117,7 @@
 							<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
 							<% if (!echoTitle) { %><h1>Not fetched</h1><p><% } %>
 							<% echoTitle = true %>
-							<span class="user"><%= branches[0].users[j].username %></span>
+							<span class="user"><%= branches[i].users[j].username %></span>
 
 						<% } %>
 

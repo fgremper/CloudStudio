@@ -19,7 +19,7 @@
 		</select>
 	</div>
 	<div class="filterBoxBlock filterBoxLastOriginUpdate">
-		Last origin update: <%= lastOriginUpdateDiff %> ago
+		Last origin update: <% if (lastOriginUpdateDiff == "never") { %>never<% } else { %><%= lastOriginUpdateDiff %> ago<% } %>
 	</div>
 	<div class="clear"></div>
 </div>

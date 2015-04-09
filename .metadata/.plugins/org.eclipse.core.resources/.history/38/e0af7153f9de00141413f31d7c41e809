@@ -322,8 +322,8 @@ public class DatabaseConnection {
 			String commit = rs.getString("commit");
 			String active = rs.getString("active");
 			int lastUpdateDiff = rs.getInt("lastupdatediff");
-			String lastUpdateDiffString = "never";
-			String lastUpdate = "";
+			String lastUpdateDiffString = "unknown";
+			String lastUpdate = "unknown";
 			if (rs.getString("lastupdate") != null) {
 				lastUpdate = rs.getString("lastupdate").substring(0, rs.getString("lastupdate").length() - 2);
 				if (lastUpdateDiff >= 60 * 60 * 24 * 7) lastUpdateDiffString = (lastUpdateDiff / (60 * 60 * 24 * 7)) + "w";
@@ -601,7 +601,7 @@ public class DatabaseConnection {
 		}
 
 		// Get branches from repository
-		String lastOriginUpdate = "";
+		String lastOriginUpdate = "never";
 		int lastOriginUpdateDiff;
 		String lastOriginUpdateDiffString = "never";
 		

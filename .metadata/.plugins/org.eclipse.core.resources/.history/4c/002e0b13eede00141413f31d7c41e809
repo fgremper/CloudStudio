@@ -159,8 +159,8 @@ public class BranchLevelAwarenessTest {
 		assertEquals(3, masterBranchObject.getJSONArray("activeUsers").length());
 		assertEquals(0, newBranchObject.getJSONArray("activeUsers").length());
 		assertEquals("LOCAL_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
 		// Setup checking out the branch
 		TestGitHelper.checkoutBranch("John", "new_branch");
@@ -176,8 +176,8 @@ public class BranchLevelAwarenessTest {
 		assertEquals(2, masterBranchObject.getJSONArray("activeUsers").length());
 		assertEquals(1, newBranchObject.getJSONArray("activeUsers").length());
 		assertEquals("LOCAL_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
 		// Setup new commit
 		TestGitHelper.push("John");
@@ -193,8 +193,8 @@ public class BranchLevelAwarenessTest {
 		assertEquals(2, masterBranchObject.getJSONArray("activeUsers").length());
 		assertEquals(1, newBranchObject.getJSONArray("activeUsers").length());
 		assertEquals("EQUAL", findItem(newBranchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
 
 		// Setup new commit
@@ -212,8 +212,8 @@ public class BranchLevelAwarenessTest {
 		assertEquals(2, masterBranchObject.getJSONArray("activeUsers").length());
 		assertEquals(1, newBranchObject.getJSONArray("activeUsers").length());
 		assertEquals("AHEAD", findItem(newBranchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
 
 		// Setup new commit
@@ -231,7 +231,7 @@ public class BranchLevelAwarenessTest {
 		assertEquals(1, newBranchObject.getJSONArray("activeUsers").length());
 		assertEquals("AHEAD", findItem(newBranchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
 		assertEquals("EQUAL", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
-		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
+		assertEquals("NOT_CHECKED_OUT", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
 		
 		

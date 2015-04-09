@@ -16,6 +16,7 @@ selection.severityFilter = 'ALL';
 
 
 
+
 /* UTILITY FUNCTIONS */
 
 // Send an API request
@@ -44,6 +45,7 @@ function displayError(module, errorMessage) {
 
 // Display an error overlay and give the data
 function displayErrorFromApiFail(module, data) {
+    console.log(data);
     if (data != undefined && data.responseJSON != undefined && data.responseJSON.error != undefined) {
         displayError(module, data.responseJSON.error);
     }
@@ -115,7 +117,7 @@ function renderFromDocumentLocation() {
     var url = document.location.pathname;
     var params = url.split(/\//).splice(1);
 
-    // User is logged in
+    // User is not logged in
     if (login.sessionId == null) {
 
         if (params[0] == "signup" && (params[1] == undefined || params[1] == "")) {
@@ -126,11 +128,20 @@ function renderFromDocumentLocation() {
         }
     }
 
-    // User is not logged in
+    // User is logged in
     else {
 
         if (params[0] == "create" && (params[1] == undefined || params[1] == "")) {
             loadCreateRepositoryView();
+        }
+        else if (params[0] == "edit" && !(params[1] == undefined || params[1] == "") && (params[2] == undefined || params[2] == "")) {
+            loadEditRepositoryView(params[1]);
+        }
+        else if (params[0] == "profile" && (params[1] == undefined || params[1] == "")) {
+            loadProfileView();
+        }
+        else if (params[0] == "users" && (params[1] == undefined || params[1] == "")) {
+            loadUsersView();
         }
         else if (params[0] == "repositories" && (params[1] == undefined || params[1] == "")) {
             loadRepositoryView();
@@ -138,9 +149,12 @@ function renderFromDocumentLocation() {
         else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && (params[2] == undefined || params[2] == "")) {
             loadBranchView(params[1]);
         }
-        else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "")) {
+        else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "") && (params[3] == undefined || params[3] == "")) {
             selection.compareToBranch = params[2];
             loadFileView(params[1], params[2]);
+        }
+        else if (params[0] == "repositories" && !(params[1] == undefined || params[1] == "") && !(params[2] == undefined || params[2] == "") && !(params[3] == undefined || params[3] == "") && !(params[4] == undefined || params[4] == "") && !(params[5] == undefined || params[5] == "")) {  
+            loadContentView(params[1], params[2], params.slice(5).join('/'), params[4], params[3]);
         }
         else {
             loadRepositoryView();
@@ -258,7 +272,7 @@ function renderLoginView() {
 
                 }
                 else {
-                    displayError('Login', { error: 'No session ID reveived' });
+                    displayError('Login', 'No session ID reveived');
                 }
 
             },
@@ -346,6 +360,7 @@ function renderProfileView(data) {
     // Render template
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/profile_view.ejs'}).render(data));
 
+    // Submit button
     $('#submitChangePassword').click(function () {
 
         sendApiRequest({
@@ -413,8 +428,10 @@ function renderRepositoryView(data) {
         loadBranchView($(this).data('alias'));
     });
 
+    // Create repository button
     $('#createRepository').click(loadCreateRepositoryView);
 
+    // Click to edit repository
     $('.editRepository').click(function (e) {
         loadEditRepositoryView($(this).parent().parent().data('alias'));
         e.stopPropagation();
@@ -451,13 +468,14 @@ function loadEditRepositoryView(repositoryAlias) {
 function renderEditRepositoryView(data) {
 
     // Set state
-    pushHistoryState("edit");
+    pushHistoryState("edit/" + data.repositoryAlias);
 
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/edit_repository_view.ejs'}).render(data));
 
     // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
     
+    // Click submit edit repository info button
     $('#submitEditRepository').click(function () {
         sendApiRequest({
             name: 'setRepositoryInformation',
@@ -592,7 +610,7 @@ function renderBranchView(data) {
     // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
 
-    // filter
+    // Filter
     $('#usersFilter').change(function () {
         selection.selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
 
@@ -785,7 +803,6 @@ function loadFileViewTable(repositoryAlias, branch) {
 
 function renderFileViewTable(data) {
 
-
     $('#fileListContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/file_view_table.ejs'}).render(data));
 
     // Clicking on a file and user
@@ -802,10 +819,10 @@ function renderFileViewTable(data) {
             $('.fileFolderContent').slideUp();
         }
         else {
-
             $('.fileFolderContent').slideDown();
         }
     });
+
 }
 
 
@@ -813,20 +830,26 @@ function renderFileViewTable(data) {
 /* CONTENT LEVEL AWARENESS */
 
 function loadContentView(repositoryAlias, branch, filename, username, compareToBranch) {
+    console.log('FILENAME: ' + filename);   
     navigation.filename = filename;
     navigation.username = username;
+    navigation.repositoryAlias = repositoryAlias;
+    navigation.branch = branch;
     selection.compareToBranch = compareToBranch;
     renderContentView({ repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts });
 }
 
 function renderContentView(data) {
+console.log('RENDER');
+    console.log(data);
     
     // Set state
-    pushHistoryState("repositories/" + navigation.repositoryAlias + "/" + navigation.branch + "/" + data.filename);
+    pushHistoryState("repositories/" + navigation.repositoryAlias + "/" + navigation.branch + "/" + selection.compareToBranch + "/" + data.username + "/" + data.filename);
 
+    // Render
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view.ejs'}).render(data));
 
-    // navigation bar
+    // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
     $('.loadBranchView').click(function () { loadBranchView(navigation.repositoryAlias); });
     $('.loadFileView').click(function () { loadFileView(navigation.repositoryAlias, navigation.branch); });
@@ -905,9 +928,10 @@ function renderCreateRepositoryView(data) {
     // set state
     pushHistoryState("create");
 
+    // Render
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/create_repository_view.ejs'}).render(data));
 
-    // navigation bar
+    // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
     
     $('#submitCreateRepository').click(function () {
@@ -925,6 +949,7 @@ function renderCreateRepositoryView(data) {
             }
         });
     });
+
 }
 
 
@@ -947,17 +972,18 @@ function loadUsersView() {
 
 function renderUsersView(data) {
 
-    // set state
+    // Set state
     pushHistoryState("users");
 
+    // Render
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/users_view.ejs'}).render(data));
 
-    // navigation bar
+    // Navigation bar
     $('.loadRepositoryView').click(function () {
         loadRepositoryView($(this).data('alias'));
     });
 
-    // content
+    // Hooks
     $('.deleteUser').click(function (e) {
         sendApiRequest({
             name: 'deleteUser',
@@ -1033,7 +1059,9 @@ function renderUsersView(data) {
         });
         e.stopPropagation();
     });
+
 }
+
 
 
 
@@ -1057,4 +1085,3 @@ function getCookie(cname) {
     }
     return null;
 }
-

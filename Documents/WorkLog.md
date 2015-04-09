@@ -4,9 +4,10 @@
 
 #### TODO
 
-* go through webinterface and look through
-* clean up intendation and look
-* error msgs for sho
+>>* clean up webinterface code
+>>* error msgs 
+>> go over once more and do the comments right
+>> correct url parsing for everything
 
 * who is responsible for package conflicts!
 

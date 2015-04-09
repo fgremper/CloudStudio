@@ -947,6 +947,6 @@ span.userOwnerBig {
     padding: 10px;
 }
 
-#branchListContainer .emptyView, #fileListContainer .emptyView {
+#branchListContainer .emptyView, #fileListContainer .emptyView, #contentDiffContainer .emptyView {
     padding-top: 10px;
 }
