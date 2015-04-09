@@ -2,6 +2,7 @@
 	<div id="navigationBarLocation">Location: <span class="loadRepositoryView clickable">Repository Overview</span> &mdash; Repository: <span class="loadBranchView clickable"><%= repositoryAlias %></span> &mdash; Branch: <strong><%= branch %></strong></div>
 	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
 </div>
+
 <div id="titleBar">
 	File Level Awareness
 </div>
@@ -9,7 +10,6 @@
 <div id="filterBox">
 	<div class="filterBoxBlock filterBoxUserFilter">
 		Filter users:<br>
-
 		<select id="usersFilter" multiple>
 			<option<% if (selectedUsers.length == 0) { %> selected<% } %>></option>
 			<% for (var i = 0; i < repositoryUsers.length; i++) { %>

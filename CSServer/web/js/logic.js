@@ -1,19 +1,3 @@
-/*var navigation.repositoryAlias = undefined;
-var navigation.branch = undefined;
-var activeFile = undefined;
-var activeUser = undefined;
-var navigation.repositoryAliasUsers = undefined;
-var navigation.repositoryAliasBranches = undefined;
-var activeCompareToBranch = undefined;
-
-var selectedUsers = undefined;
-var showUncommitted = false;
-var showConflicts = false;
-var selectedAdditionalBranches = undefined;
-var conflictType = "INTER_BRANCH_CONFLICTS"
-*/
-
-
 /* VARIABLES */
 
 // Constants
@@ -24,10 +8,6 @@ var WEB_INTERFACE_PREFIX = "/";
 var login = {};
 var selection = {};
 var navigation = {};
-
-
-
-
 selection.selectedUsers = [];
 selection.showConflicts = true;
 selection.showUncommitted = false;
@@ -53,20 +33,26 @@ function sendApiRequest(requestObject) {
 }
 
 // Display an error overlay
-function displayError(module, errorObject) {
-
-    if (errorObject == undefined) { errorObject = {} };
-    var errorMessage = errorObject.error;
-    if (errorMessage == undefined || errorMessage == "") errorMessage = "An error occured";
-
+function displayError(module, errorMessage) {
     $('#errorOverlayTitle').text(module + ' Error');
     $('#errorOverlayDescription').text(errorMessage);
     $('#errorOverlay').show();
     $('#errorOverlayClose').click(function () {
         $('#errorOverlay').hide();
     });
-
 }
+
+// Display an error overlay and give the data
+function displayErrorFromApiFail(module, data) {
+    if (data != undefined && data.responseJSON != undefined && data.responseJSON.error != undefined) {
+        displayError(module, data.responseJSON.error);
+    }
+    else {
+        displayError(module, "Unknown error");
+    }
+}
+
+
 
 
 
@@ -129,18 +115,18 @@ function renderFromDocumentLocation() {
     var url = document.location.pathname;
     var params = url.split(/\//).splice(1);
 
+    // User is logged in
     if (login.sessionId == null) {
 
         if (params[0] == "signup" && (params[1] == undefined || params[1] == "")) {
             renderSignUpView();
         }
         else {
-                renderLoginView();
-
+            renderLoginView();
         }
-
-
     }
+
+    // User is not logged in
     else {
 
         if (params[0] == "create" && (params[1] == undefined || params[1] == "")) {
@@ -163,6 +149,8 @@ function renderFromDocumentLocation() {
     }
 
 }
+
+
 
 
 
@@ -209,6 +197,7 @@ function renderHeaderBar() {
         else {
             loadRepositoryView();
         }
+
     });
 
     $('#headerSignUp').click(function () {
@@ -219,7 +208,6 @@ function renderHeaderBar() {
         renderLoginView();
     });
 
-
     $('#headerManageUsers').click(function () {
         loadUsersView();
     });
@@ -227,7 +215,10 @@ function renderHeaderBar() {
     $('#profile').click(function () {
         loadProfileView();
     });
+
 }
+
+
 
 
 
@@ -248,6 +239,7 @@ function renderLoginView() {
             type: 'POST',
             data: { username: $('#username').val(), password: $('#password').val() },
             success: function(data) {
+
                 console.log("Login. Success: " + JSON.stringify(data));
 
                 login = data;
@@ -271,7 +263,7 @@ function renderLoginView() {
 
             },
             error: function (data) {
-                displayError('Login', data.responseJSON);
+                displayErrorFromApiFail('Login', data);
             }
         });
     });
@@ -307,8 +299,8 @@ function renderSignUpView() {
             type: 'POST',
             data: { username: $('#username').val(), password: $('#password').val() },
             success: function(data) {
-                console.log("Sign Up. Success: " + JSON.stringify(data));
 
+                console.log("Sign Up. Success: " + JSON.stringify(data));
                 
                 $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/signup_view_successful.ejs'}).render());
 
@@ -318,7 +310,7 @@ function renderSignUpView() {
 
             },
             error: function (data) {
-                displayError('Sign Up', data.responseJSON);
+                displayErrorFromApiFail('Sign Up', data);
             }
         });
     });
@@ -337,11 +329,10 @@ function renderSignUpView() {
 
 
 
-/* SIGN UP */
 
 
 
-
+/* PROFILE */
 
 function loadProfileView() {
     renderProfileView({ login: login });
@@ -362,20 +353,20 @@ function renderProfileView(data) {
             type: 'POST',
             data: { sessionId: login.sessionId, newPassword: $('#newPassword').val() },
             success: function(data) {
+
                 console.log("Sign Up. Success: " + JSON.stringify(data));
 
-                
                 $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/profile_view_pwchanged.ejs'}).render());
 
             },
             error: function (data) {
-                displayError('Sign Up', data.responseJSON);
+                displayErrorFromApiFail('Profile', data);
             }
         });
 
     });
     $('#newPassword').keypress(function(e) {
-        if (e.which == 13) {
+        if (e.which == 13 && !$('#errorOverlay').is(':visible')) {
             $('#submitChangePassword').click();
         }
     });
@@ -395,13 +386,14 @@ function loadRepositoryView() {
         type: 'GET',
         data: { sessionId: login.sessionId },
         success: function(data) {
+
             console.log("Load overview. Success: " + JSON.stringify(data));
 
-            //Render
             renderRepositoryView({ login: login, repositories: data.repositories });
+
         },
         error: function (data) {
-            displayError('Repository Overview', data.responseJSON);
+            displayErrorFromApiFail('Repository Overview', data);
         }
     });
 
@@ -428,78 +420,12 @@ function renderRepositoryView(data) {
         e.stopPropagation();
     });
 
-    /*
-    // content
-    $('.addUserToRepository').click(function (e) {
-        var usernameToAdd = prompt('Enter user to add to repository "' + $(this).data('repositoryalias') + '":');
-        if (usernameToAdd == null) return;
-        sendApiRequest({
-            name: 'addUserToRepository',
-            type: 'POST',
-            data: { repositoryAlias: $(this).data('repositoryalias'), username: usernameToAdd, sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Add repository. Success: " + JSON.stringify(data));
-                loadRepositoryView();
-            },
-            error: function (data) {
-                alert('Something went wrong when trying to add a user to the repository.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.deleteUserFromRepository').click(function (e) {
-        sendApiRequest({
-            name: 'deleteUserFromRepository',
-            type: 'POST',
-            data: { repositoryAlias: $(this).data('repositoryalias'), username: $(this).data('username'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Delete user from repository. Success: " + JSON.stringify(data));
-                loadRepositoryView();
-            },
-            error: function (data) {
-                alert('Something went wrong when trying to delete a user from the repository.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.deleteRepository').click(function (e) {
-        sendApiRequest({
-            name: 'deleteRepository',
-            type: 'POST',
-            data: { repositoryAlias: $(this).data('repositoryalias'), sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Delete repository. Success: " + JSON.stringify(data));
-                loadRepositoryView();
-            },
-            error: function (data) {
-                alert('Something went wrong when trying to delete a repository.');
-            }
-        });
-        e.stopPropagation();
-    });
-    $('.modifyRepositoryOwner').click(function (e) {
-        var newRepositoryOwner = prompt('Enter new owner for repository "' + $(this).data('repositoryalias') + '":');
-        if (newRepositoryOwner == null) return;
-        sendApiRequest({
-            name: 'modifyRepositoryOwner',
-            type: 'POST',
-            data: { repositoryAlias: $(this).data('repositoryalias'), username: newRepositoryOwner, sessionId: login.sessionId },
-            success: function(data) {
-                console.log("Modify repository owner. Success: " + JSON.stringify(data));
-                loadRepositoryView();
-            },
-            error: function (data) {
-                alert('Something went wrong when trying to modify the repository owner.');
-            }
-        });
-        e.stopPropagation();
-    });
-    */
 }
 
 
 
 
+/* EDIT REPOSITORY */
 
 function loadEditRepositoryView(repositoryAlias) {
 
@@ -509,13 +435,14 @@ function loadEditRepositoryView(repositoryAlias) {
         type: 'GET',
         data: { sessionId: login.sessionId, repositoryAlias: repositoryAlias },
         success: function(data) {
+
             console.log("Load edit repository. Success: " + JSON.stringify(data));
 
-            //Render
             renderEditRepositoryView({ login: login, repositoryAlias: data.repositoryAlias, repositoryDescription: data.repositoryDescription, repositoryUrl: data.repositoryUrl, repositoryUsers: data.repositoryUsers, repositoryOwner: data.repositoryOwner });
+
         },
         error: function (data) {
-            displayError('Edit Repository', data.responseJSON);
+            displayErrorFromApiFail('Edit Repository', data);
         }
     });
 
@@ -523,12 +450,12 @@ function loadEditRepositoryView(repositoryAlias) {
 
 function renderEditRepositoryView(data) {
 
-    // set state
+    // Set state
     pushHistoryState("edit");
 
     $('#content').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/edit_repository_view.ejs'}).render(data));
 
-    // navigation bar
+    // Navigation bar
     $('.loadRepositoryView').click(loadRepositoryView);
     
     $('#submitEditRepository').click(function () {
@@ -537,12 +464,14 @@ function renderEditRepositoryView(data) {
             type: 'POST',
             data: { repositoryAlias: $('#repositoryAlias').val(), repositoryDescription: $('#repositoryDescription').val(), repositoryUrl: $('#repositoryUrl').val() },
             success: function(data) {
+
                 console.log("Update repository. Success: " + JSON.stringify(data));
 
                 loadEditRepositoryView($('#repositoryAlias').val());
+
             },
             error: function (data) {
-                alert('Something went wrong when trying to edit a repository.');
+                displayErrorFromApiFail('Edit Repository', data);
             }
         });
     });
@@ -553,11 +482,14 @@ function renderEditRepositoryView(data) {
             type: 'POST',
             data: { repositoryAlias: $('#repositoryAlias').val(), username: $('#newUser').val(), sessionId: login.sessionId },
             success: function(data) {
-                console.log("Add repository. Success: " + JSON.stringify(data));
+
+                console.log("Add user to repository. Success: " + JSON.stringify(data));
+
                 loadEditRepositoryView($('#repositoryAlias').val());
+
             },
             error: function (data) {
-                alert('Something went wrong when trying to add a user to the repository.');
+                displayErrorFromApiFail('Edit Repository', data);
             }
         });
         e.stopPropagation();
@@ -569,11 +501,14 @@ function renderEditRepositoryView(data) {
             type: 'POST',
             data: { repositoryAlias: $('#repositoryAlias').val(), username: $(this).data('username'), sessionId: login.sessionId },
             success: function(data) {
+
                 console.log("Delete user from repository. Success: " + JSON.stringify(data));
+
                 loadEditRepositoryView($('#repositoryAlias').val());
+
             },
             error: function (data) {
-                alert('Something went wrong when trying to delete a user from the repository.');
+                displayErrorFromApiFail('Edit Repository', data);
             }
         });
         e.stopPropagation();
@@ -585,26 +520,33 @@ function renderEditRepositoryView(data) {
             type: 'POST',
             data: { repositoryAlias: $('#repositoryAlias').val(), sessionId: login.sessionId },
             success: function(data) {
+
                 console.log("Delete repository. Success: " + JSON.stringify(data));
+
                 loadRepositoryView();
+
             },
             error: function (data) {
-                alert('Something went wrong when trying to delete a repository.');
+                displayErrorFromApiFail('Edit Repository', data);
             }
         });
         e.stopPropagation();
     });
+
     $('#modifyRepositoryOwner').click(function (e) {
         sendApiRequest({
             name: 'modifyRepositoryOwner',
             type: 'POST',
             data: { repositoryAlias: $('#repositoryAlias').val(), username: $('#newOwner').val(), sessionId: login.sessionId },
             success: function(data) {
+
                 console.log("Modify repository owner. Success: " + JSON.stringify(data));
+
                 loadEditRepositoryView($('#repositoryAlias').val());
+
             },
             error: function (data) {
-                alert('Something went wrong when trying to modify the repository owner.');
+                displayErrorFromApiFail('Edit Repository', data);
             }
         });
         e.stopPropagation();
@@ -631,9 +573,10 @@ function loadBranchView(repositoryAlias) {
 
             // Render branch view
             renderBranchView({ login: login, repositoryAlias: repositoryAlias, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, lastOriginUpdateDiff: data.lastOriginUpdateDiff });
+        
         },
         error: function (data) {
-            displayError('Branch Level Awareness', data.responseJSON);
+            displayErrorFromApiFail('Branch Level Awareness', data);
         }
     });
 
@@ -653,7 +596,7 @@ function renderBranchView(data) {
     $('#usersFilter').change(function () {
         selection.selectedUsers = $.map($('#usersFilter option:selected'), function (o) { return o.value })
 
-        // remove "":
+        // remove "" because that's what we get when nothing is selected:
         var index = selection.selectedUsers.indexOf("");
         if (index > -1) {
             selection.selectedUsers.splice(index, 1);
@@ -667,7 +610,6 @@ function renderBranchView(data) {
     loadBranchViewTable(navigation.repositoryAlias);
 
 }
-
 
 function loadBranchViewTable(repositoryAlias) {
 
@@ -683,7 +625,7 @@ function loadBranchViewTable(repositoryAlias) {
             renderBranchViewTable({ branches: data.branches, repositoryAlias: repositoryAlias, selectedUsers: selection.selectedUsers });
         },
         error: function (data) {
-            displayError('Branch Level Awareness', data.responseJSON);
+            displayErrorFromApiFail('Branch Level Awareness', data);
         }
     });
 
@@ -724,12 +666,15 @@ function loadFileView(repositoryAlias, branch) {
             renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, repositoryBranches: data.repositoryBranches, compareToBranch: selection.compareToBranch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, severityFilter: selection.severityFilter });
         },
         error: function (data) {
-            displayError('File Level Awareness', data.responseJSON);
+            displayErrorFromApiFail('File Level Awareness', data);
         }
     });
 }
 
 
+
+
+/* FILE LEVEL AWARENESS */
 
 function renderFileView(data) {
 
@@ -766,6 +711,7 @@ function renderFileView(data) {
 
         loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
+
     $('#conflictsFilter').change(function () {
         selection.showConflicts = $('#conflictsFilter').is(':checked');
 
@@ -780,8 +726,8 @@ function renderFileView(data) {
     
     $('select').chosen();
 
-
     loadFileViewTable(navigation.repositoryAlias, navigation.branch);
+
 }
 
 function loadFileViewTable(repositoryAlias, branch) {
@@ -793,10 +739,8 @@ function loadFileViewTable(repositoryAlias, branch) {
         success: function(data) {
             console.log("Get file awareness. Success: " + JSON.stringify(data));
 
-
+            // Filter users
             if (selection.selectedUsers.length > 0) {
-                // filter users
-
                 for (var i = 0; i < data.files.length; i++) { 
                     for (var k = data.files[i].users.length - 1; k >= 0; k--) {
                         if (selection.selectedUsers.indexOf(data.files[i].users[k].username) < 0) data.files[i].users.splice(k, 1);
@@ -804,20 +748,22 @@ function loadFileViewTable(repositoryAlias, branch) {
                 }
             }
 
-
+            // Setup path conflicts, which tells you what conflict type a folder has
             var pathConflicts = {};
 
-
+            // For all files
             for (var i = 0; i < data.files.length; i++) { 
 
                 var filenameSplit = data.files[i].filename.split(/\//);
                 
+                // For all subpaths this path (e.g. foo, foo/bar, foo/bar/shazam for foo/bar/shazam)
                 for (var j = 0; j < filenameSplit.length - 1; j++) {
 
                     var filenamePath = filenameSplit.slice(0, j + 1).join('/');
 
                     if (pathConflicts[filenamePath] == undefined) pathConflicts[filenamePath] = "NO_CONFLICT";
 
+                    // For all users, if the current conflict is more severe than the maximum severity on this path, set it to this severity
                     for (var k = 0; k < data.files[i].users.length; k++) {
                         var conflictType = data.files[i].users[k].type;
                         if (conflictType == "CONTENT_CONFLICT") pathConflicts[filenamePath] = "CONTENT_CONFLICT";
@@ -832,7 +778,7 @@ function loadFileViewTable(repositoryAlias, branch) {
             renderFileViewTable({ login: login, repositoryAlias: repositoryAlias, branch: branch, files: data.files, pathConflicts: pathConflicts, severityFilter: selection.severityFilter });
         },
         error: function (data) {
-            displayError('File Level Awareness', data.responseJSON);
+            displayErrorFromApiFail('File Level Awareness', data);
         }
     });
 }
@@ -872,7 +818,6 @@ function loadContentView(repositoryAlias, branch, filename, username, compareToB
     selection.compareToBranch = compareToBranch;
     renderContentView({ repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts });
 }
-
 
 function renderContentView(data) {
     
@@ -915,7 +860,7 @@ function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, c
                 renderContentViewDiff3({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername });
             },
             error: function (data) {
-                alert('Something went wrong when trying to load line level awareness data.');
+                displayErrorFromApiFail('Content Level Awareness', data);
             }
         });
     }
@@ -929,19 +874,18 @@ function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, c
                 renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername });
             },
             error: function (data) {
-                alert('Something went wrong when trying to load line level awareness data.');
+                displayErrorFromApiFail('Content Level Awareness', data);
             }
         });
     }
 }
 
-
 function renderContentViewDiff(data) {
-        $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff.ejs'}).render(data));
+    $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff.ejs'}).render(data));
 }
 
 function renderContentViewDiff3(data) {
-        $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff3.ejs'}).render(data));
+    $('#contentDiffContainer').html(new EJS({url: WEB_INTERFACE_PREFIX + 'templates/content_view_diff3.ejs'}).render(data));
 }
 
 
@@ -977,7 +921,7 @@ function renderCreateRepositoryView(data) {
                 loadRepositoryView();
             },
             error: function (data) {
-                alert('Something went wrong when trying to create a repository.');
+                displayErrorFromApiFail('Create Repository', data);
             }
         });
     });
@@ -985,7 +929,6 @@ function renderCreateRepositoryView(data) {
 
 
 /* USER MANAGEMENT VIEW */
-
 
 function loadUsersView() {
     sendApiRequest({
@@ -997,7 +940,7 @@ function loadUsersView() {
             renderUsersView({ users: data.users, login: login });
         },
         error: function (data) {
-            alert('Something went wrong when trying to load the list of users.');
+            displayErrorFromApiFail('User Management', data);
         }
     });
 }
@@ -1025,7 +968,7 @@ function renderUsersView(data) {
                 loadUsersView();
             },
             error: function (data) {
-                alert('Something went wrong when trying to delete a user.');
+                displayErrorFromApiFail('User Management', data);
             }
         });
         e.stopPropagation();
@@ -1040,7 +983,7 @@ function renderUsersView(data) {
                 loadUsersView();
             },
             error: function (data) {
-                alert('Something went wrong when trying to make a user admin.');
+                displayErrorFromApiFail('User Management', data);
             }
         });
         e.stopPropagation();
@@ -1055,7 +998,7 @@ function renderUsersView(data) {
                 loadUsersView();
             },
             error: function (data) {
-                alert('Something went wrong when trying to revoke a users admin privileges.');
+                displayErrorFromApiFail('User Management', data);
             }
         });
         e.stopPropagation();
@@ -1070,7 +1013,7 @@ function renderUsersView(data) {
                 loadUsersView();
             },
             error: function (data) {
-                alert('Something went wrong when trying to give a user repository creator privileges.');
+                displayErrorFromApiFail('User Management', data);
             }
         });
         e.stopPropagation();
@@ -1085,7 +1028,7 @@ function renderUsersView(data) {
                 loadUsersView();
             },
             error: function (data) {
-                alert('Something went wrong when trying to remove a users creator privileges.');
+                displayErrorFromApiFail('User Management', data);
             }
         });
         e.stopPropagation();
@@ -1095,7 +1038,7 @@ function renderUsersView(data) {
 
 
 
-
+/* COOKIE HELPER FUNCITONS */
 
 function setCookie(cname, cvalue, exdays) {
     var d = new Date();

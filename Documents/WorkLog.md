@@ -4,55 +4,16 @@
 
 #### TODO
 
-
->> clean up the code and do comments
->> changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
->> write api document
-write tests (not done yet)
->> test for no common ancestor
-
-
-> fix sql case sensitiviity
-> fix active branch is null
-> fix a bug with empty files where the diff3 output isn't in order
-> fix ejs bracket bug
-> fix db pool -> seems to work now... maybe i had a leak somewhere (pretty sure I did)
-
-> add the remaining interface functionality, clean up interface
->> UPDATE LAST BRANCH ORIGIN UPDATE VIEW!!!!!!!!! -> put it into repository information lastOriginUpdate
-
-
->> * hide unused titles branch view
->>* build with maven
->>* no more absolute paths
->>* documentation on how to setup (README)
->>* 2 more settings: enableoriginupdater, create admin account
->>* favicon (@home)
-
-
->>* change password
->> * first run create admin account
->>* welcome after signup!
-
->>* run tests without server running (short circuit without http handler)
-
 * go through webinterface and look through
 * clean up intendation and look
 * error msgs for sho
 
 * who is responsible for package conflicts!
 
-* add 3 new parameters to doc and debug that config read works
-* changepw, setrepositoryinformation to api ref
-
-
-click around and test :) all satisfactory? :>
-gui explanation at the bottom (or question mark somewhere) -> external help
-
-TODO sunday
-
-send to martin
-
+* click around and test :) all satisfactory? :>
+* gui explanation at the bottom (or question mark somewhere) -> external help?
+* thursday: write this vs. old cloudstudio part before meeting on fri and discuss it then
+* tests for coverage
 
 #### Done
 
@@ -133,7 +94,30 @@ send to martin
 * Webinterface: user management
 * conflict view for uncommitted changes
 * conflict view without common ancestor -> empty file
-
+* clean up the code and do comments
+* changed errors to 400 (from 500) still everything OK (cause 500 is deprecated)
+* write api document
+* write branch, file, content test scenarios
+* test for no common ancestor
+* fix sql case sensitiviity
+* fix active branch is null
+* fix a bug with empty files where the diff3 output isn't in order
+* fix ejs bracket bug
+* fix db pool -> seems to work now... maybe i had a leak somewhere (pretty sure I did)
+* add the remaining interface functionality, clean up interface
+* update last branch origin update view -> put it into repository information lastOriginUpdate
+* hide unused titles branch view
+* build with maven
+* no more absolute paths
+* documentation on how to setup (README)
+* 2 more settings: enableoriginupdater, create admin account
+* favicon 
+* change password
+* first run create admin account
+* welcome after signup!
+* run tests without server running (short circuit without http handler)
+* add 3 new parameters to doc and debug that config read works
+* changepw, setrepositoryinformation to api ref
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 

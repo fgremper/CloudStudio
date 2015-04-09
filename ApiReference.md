@@ -193,7 +193,7 @@ AHEAD                      | The user has made commits and is directly ahead of 
 BEHIND                     | New commits have been pushed to the origin and the user is directly behind.
 FORK                       | The user has made commits but new commits have been pushed to the origin in the meantime.
 LOCAL_BRANCH               | This branch is a local branch for the user.
-NOT_CHECKED_OUT            | This branch hasn’t been checked out by the user.
+REMOTE_BRANCH              | This branch only exists on the remote but not on the user's local repository.
 
 For the relationships AHEAD, BEHIND and FORK a distance specifies the shortest distance between the current commit for the client and the origin.
 
@@ -263,7 +263,7 @@ curl "http://localhost:7330/api/branchAwareness?
 
 Method: GET
 
-Retrieves file level awareness information for a repository and branch. All your files in a branch are compared to every other users’ files in the same or specified branch.
+Retrieves file level awareness information for a repository and branch. All your files in a branch are compared to every other users' files in the same or specified branch.
 
 For every user a conflict type is set to either NO_CONFLICT, FILE_CONFLICT, CONTENT_CONFLICT.
 

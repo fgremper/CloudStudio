@@ -340,7 +340,7 @@ public class DatabaseConnection {
 			
 			// What is the relationship between the origin and the user for a certain branch
 			if (commit == null) {
-				relation = "REMOTE_BRANCH";
+				relation = "NOT_CHECKED_OUT";
 			}
 			else if (origincommit == null) {
 				relation = "LOCAL_BRANCH";
@@ -773,21 +773,13 @@ public class DatabaseConnection {
 	 * @param repositoryDescription
 	 * 
 	 */
-	public void createRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner, String repositoryDescription) throws Exception {
-		
-		// repositoryAlias needs to be >= 1 char
-		if (repositoryAlias == null || repositoryAlias.length() < 1) {
-			throw new Exception("Repository alias too short.");
-		}
-		
-		// Execute statement
+	public void createRepository(String repositoryAlias, String repositoryUrl, String repositoryOwner, String repositoryDescription) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement("INSERT INTO repositories (repositoryalias, repositoryurl, repositoryowner, repositorydescription, clonecount) VALUES (?, ?, ?, ?, 0)");
 		stmt.setString(1, repositoryAlias);
 		stmt.setString(2, repositoryUrl);
 		stmt.setString(3, repositoryOwner);
 		stmt.setString(4, repositoryDescription);
 		stmt.executeUpdate();
-		
 	}
 	
 	/**
@@ -846,12 +838,7 @@ public class DatabaseConnection {
 	 * @param password
 	 * 
 	 */
-	public void addUser(String username, String password) throws Exception {
-		
-		// Username needs to be >= 1 char
-		if (username == null || username.length() < 1) {
-			throw new Exception("Username too short.");
-		}
+	public void addUser(String username, String password) throws SQLException {
 		
 		// Hash the password
 		String passwordHash = DigestUtils.sha1Hex(ServerConfig.getInstance().passwordSalt + password).toString();

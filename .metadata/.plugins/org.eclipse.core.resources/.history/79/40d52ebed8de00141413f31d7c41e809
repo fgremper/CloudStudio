@@ -340,7 +340,7 @@ public class DatabaseConnection {
 			
 			// What is the relationship between the origin and the user for a certain branch
 			if (commit == null) {
-				relation = "REMOTE_BRANCH";
+				relation = "NOT_CHECKED_OUT";
 			}
 			else if (origincommit == null) {
 				relation = "LOCAL_BRANCH";
@@ -777,7 +777,7 @@ public class DatabaseConnection {
 		
 		// repositoryAlias needs to be >= 1 char
 		if (repositoryAlias == null || repositoryAlias.length() < 1) {
-			throw new Exception("Repository alias too short.");
+			throw new Exception("repositoryAlias too short.");
 		}
 		
 		// Execute statement

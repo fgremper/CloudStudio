@@ -1,11 +1,8 @@
+<% if (branches.length == 0) { %>
 
+	<div class="emptyView">There are no branches in this repository yet.</div>
 
-	<% if (branches.length == 0) { %>
-
-		<div class="emptyView">There are no branches in this repository yet.</div>
-
-	<% } else { %>
-
+<% } else { %>
 
 	<div id="branchListHeader">
 
@@ -18,7 +15,10 @@
 		<% for (var i = 0; i < branches.length; i++) { %>
 
 			<tr class="branchListItem" data-branch="<%= branches[i]['branch'] %>">
-				<td class="branchListBranchName"><%= branches[i]['branch'] %></td>
+
+				<td class="branchListBranchName">
+					<%= branches[i]['branch'] %>
+				</td>
 				<td>
 
 
@@ -28,86 +28,110 @@
 						<span class="user"><%= branches[i].activeUsers[j].username %> (<%= branches[i].activeUsers[j].lastUpdateDiff %>)</span>
 
 					<% } %>
+
 				</td>
 				<td>
 
 					<% var echoTitle = false; %>
 
-					
-						<% for (var j = 0; j < branches[i].users.length; j++) { %>
+					<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
 
-							<% if (branches[i].users[j].relationWithOrigin == 'EQUAL') { %>
-								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+						<% if (branches[i].users[j].relationWithOrigin == 'EQUAL') { %>
 
-								<% if (!echoTitle) { %><h1>Up to date</h1><p><% } %>
-								<% echoTitle = true %>
-								<span class="user userGreen"><%= branches[0].users[j].username %></span>
-							<% } %>
+							<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+
+							<% if (!echoTitle) { %><h1>Up to date</h1><p><% } %>
+							<% echoTitle = true %>
+
+							<span class="user userGreen"><%= branches[0].users[j].username %></span>
 
 						<% } %>
+
+					<% } %>
+
 					<% if (echoTitle) { %></p><% } %>
 
 					<% echoTitle = false; %>
 
-						<% for (var j = 0; j < branches[i].users.length; j++) { %>
+					<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
-							<% if (branches[i].users[j].relationWithOrigin == 'BEHIND') { %>
-								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
-								<% if (!echoTitle) { %><h1>Behind origin</h1><p><% } %>
-								<% echoTitle = true %>
-								<span class="user userRed"><%= branches[0].users[j].username %></span>
-							<% } %>
+						<% if (branches[i].users[j].relationWithOrigin == 'BEHIND') { %>
+
+							<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+
+							<% if (!echoTitle) { %><h1>Behind origin</h1><p><% } %>
+							<% echoTitle = true %>
+
+							<span class="user userRed"><%= branches[0].users[j].username %></span>
 
 						<% } %>
+
+					<% } %>
+
 					<% if (echoTitle) { %></p><% } %>
 
 					<% echoTitle = false; %>
-						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
-							<% if (branches[i].users[j].relationWithOrigin == 'AHEAD' || branches[i].users[j].relationWithOrigin == 'FORK') { %>
-								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
-								<% if (!echoTitle) { %><h1>Made new commits</h1><p><% } %>
-								<% echoTitle = true %>
-								<span class="user userYellow"><%= branches[0].users[j].username %> (<% if (branches[i].users[j].relationWithOrigin == 'AHEAD') { %>+<% } else { %>&plusmn;<% } %><%= branches[0].users[j].distanceFromOrigin %>)</span>
-							<% } %>
+					<% for (var j = 0; j < branches[i].users.length; j++) { %>
+
+						<% if (branches[i].users[j].relationWithOrigin == 'AHEAD' || branches[i].users[j].relationWithOrigin == 'FORK') { %>
+
+							<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+
+							<% if (!echoTitle) { %><h1>Made new commits</h1><p><% } %>
+							<% echoTitle = true %>
+
+							<span class="user userYellow"><%= branches[0].users[j].username %> (<% if (branches[i].users[j].relationWithOrigin == 'AHEAD') { %>+<% } else { %>&plusmn;<% } %><%= branches[0].users[j].distanceFromOrigin %>)</span>
 
 						<% } %>
-					</p>
+
+					<% } %>
+
 					<% if (echoTitle) { %></p><% } %>
 
 					<% echoTitle = false; %>
-						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
-							<% if (branches[i].users[j].relationWithOrigin == 'LOCAL_BRANCH') { %>
-								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
-								<% if (!echoTitle) { %><h1>Up to date</h1><p><% } %>
-								<% echoTitle = true %>
-								<span class="user"><%= branches[0].users[j].username %></span>
-							<% } %>
+					<% for (var j = 0; j < branches[i].users.length; j++) { %>
+
+						<% if (branches[i].users[j].relationWithOrigin == 'LOCAL_BRANCH') { %>
+
+							<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+
+							<% if (!echoTitle) { %><h1>Local branch</h1><p><% } %>
+							<% echoTitle = true %>
+
+							<span class="user"><%= branches[0].users[j].username %></span>
 
 						<% } %>
-					</p>
+
+					<% } %>
+
 					<% if (echoTitle) { %></p><% } %>
 
 					<% echoTitle = false; %>
-						<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
+					<% for (var j = 0; j < branches[i].users.length; j++) { %>
 
-							<% if (branches[i].users[j].relationWithOrigin == 'NOT_CHECKED_OUT') { %>
-								<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
-								<% if (!echoTitle) { %><h1>Not fetched</h1><p><% } %>
-								<% echoTitle = true %>
-								<span class="user"><%= branches[0].users[j].username %></span>
-							<% } %>
+						<% if (branches[i].users[j].relationWithOrigin == 'REMOTE_BRANCH') { %>
+
+							<% if (selectedUsers.length > 0 && selectedUsers.indexOf(branches[i].users[j].username) < 0) continue; %>
+							<% if (!echoTitle) { %><h1>Not fetched</h1><p><% } %>
+							<% echoTitle = true %>
+							<span class="user"><%= branches[0].users[j].username %></span>
 
 						<% } %>
+
+					<% } %>
+
 					<% if (echoTitle) { %></p><% } %>
+
 				</td>
+
 			</tr>
 
-    	<% } %>
+		<% } %>
 
 	</table>
 
-	<% } %>
+<% } %>

@@ -1,48 +1,45 @@
-	<div id="contentDiffHeader">
-		<div>Me</div>
-		<div><span class="userSmall"><%= theirUsername %></span></div>
-	</div>
+<div id="contentDiffHeader">
+	<div>Me</div>
+	<div><span class="userSmall"><%= theirUsername %></span></div>
+</div>
 
-	<table id="contentDiff">
-		<tr>
-			<td class="diffNumberColumn">
-				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].myType != 'PAD' && content[i].myType != 'MODIFIED_PAD') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
-					<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
-				<% } %>
-			</td>
-
-			<td>
-				<div class="diffBox">
-				<% for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].myType == 'INSERT') { %><div class="diffLine diffAdd">
-					<% } else if (content[i].myType == 'PAD') { %><div class="diffLine diffPad">
-					<% } else if (content[i].myType == 'MODIFIED' || content[i].myType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
-					<% } else { %><div class="diffLine"><% } %>
-						<%= content[i].myContent %>&nbsp;
-					</div>
-				<% } %>
+<table id="contentDiff">
+	<tr>
+		<td class="diffNumberColumn">
+			<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
+				<% if (content[i].myType != 'PAD' && content[i].myType != 'MODIFIED_PAD') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
+				<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
+			<% } %>
+		</td>
+		<td>
+			<div class="diffBox">
+			<% for (i = 0; i < content.length; i++) { %>
+				<% if (content[i].myType == 'INSERT') { %><div class="diffLine diffAdd">
+				<% } else if (content[i].myType == 'PAD') { %><div class="diffLine diffPad">
+				<% } else if (content[i].myType == 'MODIFIED' || content[i].myType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
+				<% } else { %><div class="diffLine"><% } %>
+					<%= content[i].myContent %>&nbsp;
 				</div>
-			</td>
-
-			<td class="diffNumberColumn">
-				<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].theirType != 'PAD' && content[i].theirType != 'MODIFIED_PAD') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
-					<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
-				<% } %>
-			</td>
-
-			<td>
-				<div class="diffBox">
-				<% for (i = 0; i < content.length; i++) { %>
-					<% if (content[i].theirType == 'INSERT') { %><div class="diffLine diffAdd">
-					<% } else if (content[i].theirType == 'PAD') { %><div class="diffLine diffPad">
-					<% } else if (content[i].theirType == 'MODIFIED' || content[i].theirType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
-					<% } else { %><div class="diffLine"><% } %>
-						<%= content[i].theirContent %>&nbsp;
-					</div>
-				<% } %>
+			<% } %>
+			</div>
+		</td>
+		<td class="diffNumberColumn">
+			<% var myCount = 1; for (i = 0; i < content.length; i++) { %>
+				<% if (content[i].theirType != 'PAD' && content[i].theirType != 'MODIFIED_PAD') { %><div class="diffNumber"><%= myCount %></div><% myCount++ %>
+				<% } else { %><div class="diffNumber">&nbsp;</div><% } %>
+			<% } %>
+		</td>
+		<td>
+			<div class="diffBox">
+			<% for (i = 0; i < content.length; i++) { %>
+				<% if (content[i].theirType == 'INSERT') { %><div class="diffLine diffAdd">
+				<% } else if (content[i].theirType == 'PAD') { %><div class="diffLine diffPad">
+				<% } else if (content[i].theirType == 'MODIFIED' || content[i].theirType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
+				<% } else { %><div class="diffLine"><% } %>
+					<%= content[i].theirContent %>&nbsp;
 				</div>
-			</td>
-		</tr>
-	</table>
+			<% } %>
+			</div>
+		</td>
+	</tr>
+</table>

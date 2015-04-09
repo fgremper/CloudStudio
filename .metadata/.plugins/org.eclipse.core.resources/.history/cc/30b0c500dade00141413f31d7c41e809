@@ -340,7 +340,7 @@ public class DatabaseConnection {
 			
 			// What is the relationship between the origin and the user for a certain branch
 			if (commit == null) {
-				relation = "REMOTE_BRANCH";
+				relation = "NOT_CHECKED_OUT";
 			}
 			else if (origincommit == null) {
 				relation = "LOCAL_BRANCH";

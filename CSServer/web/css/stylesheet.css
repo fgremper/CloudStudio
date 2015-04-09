@@ -1,556 +1,9 @@
-
 html, body {
     margin: 0;
-}
-textarea, input { outline: none; }
-
-
-
-
-
-
-/* 
- */
-/*
-#view {
-    margin: 0 20px;
-}*/
-
-/* header */
-/*
-#header {
-    background-color: #f6f6f6;
-    border-bottom: 1px solid #b0b0b0;
-    height: 40px;
-    line-height: 40px;
-    padding: 0 20px;
-    font-size: 16px;
-    color: #9c9c9c;
-}
-#headerLogin {
-    float: right;
-    font-weight: normal;
-    text-transform: none;
-    font-size: 14px;
-}
-#headerLogin strong {
-    color: #707070;
-    font-weight: normal;
-}
-
-#manageUsers {
-    padding: 2px 3px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-#manageUsers:hover {
-    background-color: #9c9c9c;
-    color: #f6f6f6;
-}
-
-#headerLogo {
-    padding: 2px 3px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-#headerLogo:hover {
-    background-color: #9c9c9c;
-    color: #f6f6f6;
-}
-
-*/
-/* nagivation bar */
-
-/*
-#navigationBar {
-    border-bottom: 1px solid #d0d0d0;
-    line-height: 70px;
-    height: 70px;
-    padding: 0 20px;
-    background-color: #fdfdfd;
-    color: #a0a0a0;
-    font-size: 16px;
-    margin-bottom: 20px;
-}
-
-#navigationBar .clickable {
-    color: #386fcf;
-    padding: 2px 3px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-#navigationBar .clickable:hover {
-    color: #fdfdfd;
-    padding: 2px 3px;
-    background-color: #386fcf;
-}
-
-#navigationBar strong {
-    color: #404040;
-    font-weight: normal;
-    padding: 2px 3px;
-}
-
-#refresh {
-    float: right;
-    margin-top: 19px;
-    padding: 8px 12px;
-    border: 1px solid #c0c0c0;
-    color: #c0c0c0;
-    line-height: 14px;
-    font-size: 14px;
-    cursor: pointer;
-}
-
-#refresh:hover {
-    border: 1px solid #386fcf;
-    background-color: #386fcf;
-    color: #fdfdfd;
-}
-*/
-
-/* diff */
-
-#diffTable {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d0d0d0;
-    padding: 0;
-    border-spacing: 0;
-}
-
-#diffTable td {
-    padding: 0;
-    border-left: 1px solid #d0d0d0;
-}
-
-#diffTable .diffHeader {
-    line-height: 40px;
-    height: 40px;
-    border-bottom: 1px solid #d0d0d0;
-    padding: 2px;
-    color: #808080;
-    font-size: 16px;
-    text-align: center;
-    border-left: 0;
-}
-
-
-#diffTable .diffHeader.diffNumberColumn {
-    border-left: 1px solid #d0d0d0;
-}
-
-#diffTable .diffNumberColumn {
-    width: 26px;
-}
-
-#diffTable .diffNumber {
-    width: 26px;
-    text-align: right;
-    font-family: "Courier New";
-    font-size: 14px;
-    line-height: 14px;
-    padding: 2px 2px;
-    color: #a0a0a0;
-    box-sizing: border-box;
-    text-align: right;
-}
-
-#diffTable .diffBox {
-    overflow-x: scroll;
-    white-space: nowrap;
-}
-
-#diffTable .diffLine {
-    font-family: "Courier New";
-    font-size: 14px;
-    line-height: 14px;
-    padding: 2px 4px;
-    color: #202020;
-    white-space: nowrap;
-}
-
-#diffTable .diffAdd {
-    background-color: #e0ffdd;
-}
-
-#diffTable .diffPad {
-    background-color: #fbfbfb;
-}
-
-#diffTable .diffModify {
-    background-color: #ddedff;
-}
-
-#diffTable .diffConflict {
-    background-color: #ffdddd;
-}
-
-
-/* repository table */
-/*
-
-#repositoryTable {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d0d0d0;
-    padding: 0;
-    border-spacing: 0;
-}
-
-#repositoryTable tr.clickable {
-    cursor: pointer;
-    background-color: #fdfdfd;
-}
-
-#repositoryTable tr.clickable:hover {
-    background-color: #ffffff;
-}
-
-#repositoryTable td {
-    border-bottom: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 90px;
-    padding: 5px 10px;
-    color: #202020;
-    line-height: 20px;
-    font-size: 14px;
-}
-
-#repositoryTable th {
-    padding: 5px 10px;
-    border-bottom: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 40px;
-    color: #808080;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 20px;
-}
-
-#repositoryTable td, #repositoryTable th {
-    width: 250px;
-}
-#repositoryTable td:last-child, #repositoryTable th:last-child {
-    width: 100%;
-}
-
-#createRepository {
-    float: right;
-    margin-top: 20px;
-    padding: 8px 12px;
-    border: 1px solid #c0c0c0;
-    color: #c0c0c0;
-    line-height: 14px;
-    font-size: 14px;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-#createRepository:hover {
-    border: 1px solid #386fcf;
-    background-color: #386fcf;
-    color: #fdfdfd;
-}
-
-
-
-
-/* branch */
-/*
-#branchTable {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d0d0d0;
-    padding: 0;
-    border-spacing: 0;
-}
-
-#branchTable tr.clickable {
-    cursor: pointer;
-    background-color: #fdfdfd;
-}
-
-#branchTable tr.clickable:hover {
-    background-color: #ffffff;
-}
-
-#branchTable td {
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 60px;
-    padding: 5px 10px;
-    color: #202020;
-    line-height: 20px;
-    font-size: 14px;
-}
-
-#branchTable th {
-    padding: 5px 10px;
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 40px;
-    color: #808080;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 20px;
-}
-
-#branchTable td, #branchTable th {
-    width: 150px;
-}
-#branchTable td:last-child, #branchTable th:last-child {
-    width: 100%;
-}
-#branchTable td, #branchTable th {
-    text-align: center;
-}
-#branchTable td:first-child, #branchTable th:first-child {
-    text-align: left;
-    width: 300px;
-}
-#branchTable .branchEqual {
-    background-color: #e0ffdd;
-}
-#branchTable .branchInFront {
-    background-color: #ffffdd;
-}
-#branchTable .branchBehind {
-    background-color: #ffe0dd;
-}
-
-
-/* file */
-/*
-
-#fileTable {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d0d0d0;
-    padding: 0;
-    border-spacing: 0;
-}
-
-#fileTable tr.static {
-    background-color: #ffffff;
-}
-
-#fileTable td {
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 30px;
-    padding: 5px 10px;
-    color: #202020;
-    line-height: 20px;
-    font-size: 14px;
-}
-
-#fileTable th {
-    padding: 5px 10px;
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 40px;
-    color: #808080;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 20px;
-}
-
-#fileTable td, #fileTable th {
-    width: 150px;
-}
-#fileTable td:last-child, #fileTable th:last-child {
-    width: 100%;
-}
-#fileTable td, #fileTable th {
-    text-align: center;
-}
-#fileTable td:first-child, #fileTable th:first-child {
-    text-align: left;
-    width: 300px;
-}
-#fileTable .fileAndUser {
-    cursor: pointer;
-    background-color: #fdfdfd;
-}
-#fileTable .fileAndUser:hover {
-    background-color: #ffffff;
-}
-#fileTable .fileEqual {
-    background-color: #e0ffdd;
-}
-#fileTable .fileConflict {
-    background-color: #ffffdd;
-}
-#fileTable .fileLineConflict {
-    background-color: #ffdddd;
-}
-
-
-/* users */
-/*
-#userTable {
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    border: 1px solid #d0d0d0;
-    padding: 0;
-    border-spacing: 0;
-}
-
-#userTable tr.static {
-    background-color: #fdfdfd;
-}
-
-#userTable td {
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 30px;
-    padding: 5px 10px;
-    color: #202020;
-    line-height: 20px;
-    font-size: 14px;
-}
-
-#userTable th {
-    padding: 5px 10px;
-    border-bottom: 1px solid #d0d0d0;
-    border-left: 1px solid #d0d0d0;
-    vertical-align: middle;
-    text-align: left;
-    height: 40px;
-    color: #808080;
-    font-size: 14px;
-    font-weight: normal;
-    line-height: 20px;
-}
-
-#userTable td, #userTable th {
-    width: 150px;
-}
-#userTable td:last-child, #userTable th:last-child {
-    width: 100%;
-}
-#userTable td, #userTable th {
-    text-align: center;
-}
-#userTable td:first-child, #userTable th:first-child {
-    text-align: left;
-    width: 300px;
-}
-
-
-/* 33% */
-/*
-#invisibleTable {
-    width: 1000px;
-    table-layout: fixed;
-    border-collapse: collapse;
-    padding: 0;
-    margin-bottom: 20px;
-}
-
-#invisibleTable td {
-    padding-right: 20px;
-    color: #808080;
-    vertical-align: top;
-}
-
-#invisibleTable td:last-child {
-    padding-right: 0;
-}
-
-#invisibleTable label {
-    font-size: 16px;
-}
-
-#invisibleTable input {
-    margin-right: 5px;
-}
-
-
-#invisibleTable select {
-    width: 100%;
-    font-size: 14px;
-}
-
-/* utility */
-/*
-span.ellipsis {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    display: block;
-}
-
-span.blue {
-    color: #386fcf;
-    font-size: 16px;
-    padding: 2px 3px;
-    border-radius: 3px;
-}
-
-span.blue:hover {
-    color: #ffffff;
-    background-color: #386fcf;
-}
-
-span.modify {
-    padding: 0px 3px;
-    border: 1px solid rgba(0, 0, 0, 0.25);
-    color: rgba(0, 0, 0, 0.25);
-    border-radius: 3px;
-    font-size: 12px;
-    line-height: 20px;
-    text-transform: uppercase;
-    cursor: pointer;
-    display: inline-block;
-    margin-left: 3px;
-}
-
-span.modify:hover {
-    background-color: #386fcf;
-    border: 1px solid #386fcf;
-    color: #ffffff;
-}
-/*
-span.user {
-    padding: 5px 10px;
-    background-color: rgba(0, 0, 0, 0.08);
-    color: #202020;
-    border-radius: 50px;
-    display: inline-block;
-    margin: 4px 4px 4px 0;
-}
-
-*/
-
-
-
-
-/* redesign */
-
-body {
     background-color: #fcfcfc;
 }
+
+textarea, input { outline: none; }
 
 /* error overlay */
 
@@ -636,6 +89,7 @@ body {
     background-repeat: no-repeat;
     padding-left: 62px;
 }
+
 /* content */
 
 #content {
@@ -717,7 +171,6 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    //background: url('/img/splash.jpg') no-repeat;
     background-color: #c0e2fa;
     background-position: center center;
     background-size: cover;
@@ -915,6 +368,7 @@ body {
     margin-top: 4px;
     margin-bottom: 3px;
 }
+
 /* filter box */
 
 #filterBox {
@@ -1100,7 +554,6 @@ body {
 }
 
 #fileList .fileFolderName {
-    //color: #808080;
     height: 37px;
     line-height: 37px;
     cursor: pointer;
@@ -1118,19 +571,19 @@ body {
 }
 
 #fileList .fileFolderNameYellow {
-    //color: rgba(220, 160, 0, 1);
     background-image: url('/img/folder_yellow.png');
 }
 
 #fileList .fileFolderNameRed {
-    //color: rgba(200, 0, 20, 1);
     background-image: url('/img/folder_red.png');
 }
 
-
-#fileList .fileFolderContent {
-    //display: none;
-}
+/*
+    this will have all folders closed by default in file view
+    #fileList .fileFolderContent {
+        display: none;
+    }
+*/
 
 #fileList .fileFile {
     padding: 10px;
@@ -1143,11 +596,6 @@ body {
     border-top: 1px solid #e0e0e0;
 }
 
-/* thisdoesntworkhahah TODO */
-#fileList > div:first-child {
-    border-top: 0;
-}
-
 #fileList .fileFileName {
     display: table-cell;
     width: 400px;
@@ -1158,16 +606,13 @@ body {
     background-size: 30px 30px;
     background-position: 10px center;
     background-repeat: no-repeat;
-    //color: #808080;
 }
 
 #fileList .fileFileNameYellow {
-    //color: rgba(220, 160, 0, 1);
     background-image: url('/img/file_yellow.png');
 }
 
 #fileList .fileFileNameNameRed {
-    //color: rgba(200, 0, 20, 1);
     background-image: url('/img/file_red.png');
 }
 
@@ -1179,7 +624,6 @@ body {
 }
 
 /* content awareness */
-
 
 #contentDiffContainer {
     margin: 10px 20px 20px 20px;
@@ -1202,20 +646,6 @@ body {
     border-left: 1px solid #b0b0b0;
 }
 
-/*
-#contentDiff .diffHeader {
-    line-height: 40px;
-    height: 40px;
-    border-bottom: 1px solid #b0b0b0;
-    padding: 2px;
-    color: #808080;
-    font-size: 16px;
-    text-align: center;
-    border-left: 0;
-}
-*/
-
-
 #contentDiffHeader {
     width: 100%;
     display: table;
@@ -1236,7 +666,6 @@ body {
     color: #808080;
     height: 40px;
 }
-
 
 #contentDiff .diffHeader.diffNumberColumn {
     border-left: 1px solid #b0b0b0;
@@ -1289,8 +718,6 @@ body {
     background-color: rgba(255, 0, 0, 0.4);
 }
 
-
-
 /* branch list */
 
 #userListContainer {
@@ -1337,8 +764,6 @@ body {
 #userList tr.userListItem td {
     padding: 2px 20px;
 }
-
-
 
 /* user labels */
 
@@ -1395,8 +820,8 @@ span.userClickableRed:hover {
     background-color: rgba(255, 0, 20, 0.5);
     text-decoration: line-through;
 }
-/* input */
 
+/* general */
 
 input[type=text], input[type=password] {
     background-image: linear-gradient(#eeeeee 1%, #ffffff 15%);
@@ -1439,6 +864,7 @@ input:-moz-placeholder { font-weight: 300; }
     line-height: 20px;
     margin: 20px;
 }
+
 #view h2 {
     margin-top: 27px;
 }

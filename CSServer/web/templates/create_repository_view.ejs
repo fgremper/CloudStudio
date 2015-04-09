@@ -2,22 +2,30 @@
 	<div id="navigationBarLocation">Location: <span class="loadRepositoryView clickable">Repository Overview</span> &mdash; <strong>Create Repository</strong></div>
 	<div id="navigationBarLogin">Logged in as <strong><%= login.username %></strong></div>
 </div>
+
 <div id="titleBar">
 	Create Repository
 </div>
+
 <div id="view">
 
-				<p>Repository Alias:<br>
-				<input id="repositoryAlias" type="text"></p>
+	<p>
+		Repository Alias:<br>
+		<input id="repositoryAlias" type="text">
+	</p>
 
-				<p>
-				Description:<br>
+	<p>
+		Description:<br>
+		<input id="repositoryDescription" type="text">
+	</p>
 
-				<input id="repositoryDescription" type="text"></p>
+	<p>
+		URL to Repository:
+		<input id="repositoryUrl" type="text">
+	</p>
 
-				<p>
-				URL to Repository:
-				<input id="repositoryUrl" type="text"></p>
-				<div id="submitCreateRepository" class="button">Create repository</div>
+	<div id="submitCreateRepository" class="button">
+		Create repository
+	</div>
 
 </div>
