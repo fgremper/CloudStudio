@@ -53,7 +53,6 @@ public class ContentConflictGitReader {
 	 */
 	public ContentConflictGitReader(String repositoryAlias, String branch, String filename, String myUsername, String compareToBranch, String theirUsername, boolean showUncommitted) {
 
-		log.debug("Reading conflicts for: " + filename);
 		DatabaseConnection db = new DatabaseConnection();
 		try {
 			
@@ -171,8 +170,6 @@ public class ContentConflictGitReader {
 	 * 
 	 */
 	public JSONArray diff() throws Exception {
-
-		log.debug("Doing diff...");
 		
 		// If there has been a jgit error, the ancestorSha is null
 		// Just so we don't display anything at all, set the ancestor sha to an empty file
@@ -199,7 +196,6 @@ public class ContentConflictGitReader {
 	 * 
 	 */
 	public Integer countConflicts() throws Exception {
-		log.debug("Counting conflicts for...");
 		if (mySha != null && theirSha != null && ancestorSha != null) {
 			return SideBySideThreeWayDiff.countConflicts(fileStorageDirectory + File.separator + mySha, fileStorageDirectory + File.separator + ancestorSha, fileStorageDirectory + File.separator + theirSha);
 		}

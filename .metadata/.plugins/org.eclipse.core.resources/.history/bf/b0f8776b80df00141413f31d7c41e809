@@ -45,22 +45,14 @@ public class SideBySideThreeWayDiff {
 		// Compile pattern: a merge conflict occurs if all 3 files or only the base file differs
 		Pattern pattern = Pattern.compile("^(====|====2)$");
 
-		log.debug("Running diff: " + fileName1 + " " + fileName2 + " " + fileName3);
-		 return 1;
-		 /*
 		// Run diff3
-		//Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
-		Process p = Runtime.getRuntime().exec("diff3 " + fileName1 + " " + fileName2 + " " + fileName3);
-		
-		log.debug("Before");
+		Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
 		p.waitFor();
-		log.debug("After");
+
 		// Read the output
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line;
 		while ((line = reader.readLine()) != null) {
-			
-			log.debug("Line: " + line);
 
 			// If we match the pattern, there's a conflicting merge block
 			Matcher m = pattern.matcher(line);
@@ -70,7 +62,7 @@ public class SideBySideThreeWayDiff {
 		}
 		
 		// Return counter
-		return count;*/
+		return count;
 		
 	}
 

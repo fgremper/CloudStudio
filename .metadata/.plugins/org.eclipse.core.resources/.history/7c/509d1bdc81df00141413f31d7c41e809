@@ -46,11 +46,9 @@ public class SideBySideThreeWayDiff {
 		Pattern pattern = Pattern.compile("^(====|====2)$");
 
 		log.debug("Running diff: " + fileName1 + " " + fileName2 + " " + fileName3);
-		 return 1;
-		 /*
+		
 		// Run diff3
-		//Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
-		Process p = Runtime.getRuntime().exec("diff3 " + fileName1 + " " + fileName2 + " " + fileName3);
+		Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
 		
 		log.debug("Before");
 		p.waitFor();
@@ -70,7 +68,7 @@ public class SideBySideThreeWayDiff {
 		}
 		
 		// Return counter
-		return count;*/
+		return count;
 		
 	}
 

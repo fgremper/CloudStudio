@@ -5,8 +5,7 @@
 #### TODO
 
 
-* who is responsible for package conflicts!
-
+>> 
 * click around and test :) all satisfactory? :>
 * gui explanation at the bottom (or question mark somewhere) -> external help?
 * thursday: write this vs. old cloudstudio part before meeting on fri and discuss it then
@@ -119,6 +118,7 @@
 * error msgs 
 * go over once more and do the comments right
 * correct url parsing for everything
+* who is responsible for package conflicts!
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
