@@ -553,29 +553,48 @@ textarea, input { outline: none; }
     box-sizing: border-box;
 }
 
-#fileList .fileFolderName {
-    height: 37px;
-    line-height: 37px;
+#fileList .fileFolderHeader {
     cursor: pointer;
-    border-top: 1px solid #e0e0e0;
     transition: background-color 0.3s;
+    font-weight: 400;
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    border-top: 1px solid #e0e0e0;
+    min-height: 37px;
+}
+
+#fileList .fileFolderHeader:hover {
+    background-color: #f0f0f0;
+}
+
+#fileList .fileFolderHeaderName {
+    display: table-cell;
+    width: 400px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 0;
+    border-spacing: 0;
     background-image: url('/img/folder.png');
     background-size: 30px 30px;
     background-position: 10px center;
     background-repeat: no-repeat;
-    font-weight: 400;
 }
 
-#fileList .fileFolderName:hover {
-    background-color: #f0f0f0;
-}
-
-#fileList .fileFolderNameYellow {
+#fileList .fileFolderHeaderNameYellow {
     background-image: url('/img/folder_yellow.png');
 }
 
-#fileList .fileFolderNameRed {
+#fileList .fileFolderHeaderNameRed {
     background-image: url('/img/folder_red.png');
+}
+
+#fileList .fileFolderHeaderConflicts {
+    display: table-cell;
+    vertical-align: middle;
+    box-sizing: border-box;
+    padding: 0 20px;
+    font-weight: 300;
 }
 
 /*
@@ -586,7 +605,6 @@ textarea, input { outline: none; }
 */
 
 #fileList .fileFile {
-    padding: 10px;
     display: table;
     width: 100%;
     table-layout: fixed;
@@ -612,7 +630,7 @@ textarea, input { outline: none; }
     background-image: url('/img/file_yellow.png');
 }
 
-#fileList .fileFileNameNameRed {
+#fileList .fileFileNameRed {
     background-image: url('/img/file_red.png');
 }
 

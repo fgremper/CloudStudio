@@ -89,7 +89,7 @@ public class ApiHttpHandler implements HttpHandler {
 					response = db.getRepositories(sessionUsername).toString();
 				}
 				else {
-					throw new Exception("No valid session ID given");
+					throw new Exception("No session ID given");
 				}
 				
 			}
@@ -402,14 +402,9 @@ public class ApiHttpHandler implements HttpHandler {
 				String newPassword = (String) params.get("newPassword");
 
 				// Execute database action
-				if (sessionUsername != null) {
-					db.startTransaction();
-					db.changePassword(sessionUsername, newPassword);
-					db.commitTransaction();
-				}
-				else {
-					throw new Exception("No valid session ID given");
-				}
+				db.startTransaction();
+				db.changePassword(sessionUsername, newPassword);
+				db.commitTransaction();
 				
 				// Set response
 				response = "{}";

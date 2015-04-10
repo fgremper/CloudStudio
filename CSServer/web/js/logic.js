@@ -755,6 +755,7 @@ function loadFileViewTable(repositoryAlias, branch) {
         type: 'GET',
         data: { repositoryAlias: repositoryAlias, branch: branch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, compareToBranch: selection.compareToBranch },
         success: function(data) {
+
             console.log("Get file awareness. Success: " + JSON.stringify(data));
 
             // Filter users
@@ -769,6 +770,9 @@ function loadFileViewTable(repositoryAlias, branch) {
             // Setup path conflicts, which tells you what conflict type a folder has
             var pathConflicts = {};
 
+            // Which user is at which severity for a folder
+            var pathUserConflicts = {};
+
             // For all files
             for (var i = 0; i < data.files.length; i++) { 
 
@@ -780,12 +784,21 @@ function loadFileViewTable(repositoryAlias, branch) {
                     var filenamePath = filenameSplit.slice(0, j + 1).join('/');
 
                     if (pathConflicts[filenamePath] == undefined) pathConflicts[filenamePath] = "NO_CONFLICT";
+                    if (pathUserConflicts[filenamePath] == undefined) pathUserConflicts[filenamePath] = {};
 
                     // For all users, if the current conflict is more severe than the maximum severity on this path, set it to this severity
                     for (var k = 0; k < data.files[i].users.length; k++) {
+
                         var conflictType = data.files[i].users[k].type;
+
                         if (conflictType == "CONTENT_CONFLICT") pathConflicts[filenamePath] = "CONTENT_CONFLICT";
                         else if (conflictType == "FILE_CONFLICT" && pathConflicts[filenamePath] != "CONTENT_CONFLICT") pathConflicts[filenamePath] = "FILE_CONFLICT";
+
+                        if (pathUserConflicts[filenamePath][data.files[i].users[k].username] == undefined) pathUserConflicts[filenamePath][data.files[i].users[k].username] = "NO_CONFLICT";
+
+                        if (conflictType == "CONTENT_CONFLICT") pathUserConflicts[filenamePath][data.files[i].users[k].username] = "CONTENT_CONFLICT";
+                        else if (conflictType == "FILE_CONFLICT" && pathUserConflicts[filenamePath][data.files[i].users[k].username] != "CONTENT_CONFLICT") pathUserConflicts[filenamePath][data.files[i].users[k].username] = "FILE_CONFLICT";
+
                     }
 
                 }
@@ -793,7 +806,8 @@ function loadFileViewTable(repositoryAlias, branch) {
             }
 
             // Render
-            renderFileViewTable({ login: login, repositoryAlias: repositoryAlias, branch: branch, files: data.files, pathConflicts: pathConflicts, severityFilter: selection.severityFilter });
+            renderFileViewTable({ login: login, repositoryAlias: repositoryAlias, branch: branch, compareToBranch: selection.compareToBranch, files: data.files, pathConflicts: pathConflicts, pathUserConflicts: pathUserConflicts, severityFilter: selection.severityFilter });
+        
         },
         error: function (data) {
             displayErrorFromApiFail('File Level Awareness', data);
@@ -810,7 +824,7 @@ function renderFileViewTable(data) {
         loadContentView(navigation.repositoryAlias, navigation.branch, $(this).data('filename'), $(this).data('username'), $(this).data('comparetobranch'));
     });
 
-    $('.fileFolderName').click(function () {
+    $('.fileFolderHeader').click(function () {
         $(this).parent().find('> .fileFolderContent').slideToggle();
     });
 

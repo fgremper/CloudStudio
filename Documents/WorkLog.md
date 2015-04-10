@@ -4,10 +4,6 @@
 
 #### TODO
 
->>* clean up webinterface code
->>* error msgs 
->> go over once more and do the comments right
->> correct url parsing for everything
 
 * who is responsible for package conflicts!
 
@@ -119,6 +115,10 @@
 * run tests without server running (short circuit without http handler)
 * add 3 new parameters to doc and debug that config read works
 * changepw, setrepositoryinformation to api ref
+* clean up webinterface code
+* error msgs 
+* go over once more and do the comments right
+* correct url parsing for everything
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 
