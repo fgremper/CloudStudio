@@ -39,8 +39,6 @@ public class SideBySideThreeWayDiff {
 	 */
 	public static int countConflicts(String fileName1, String fileName2, String fileName3) throws Exception {
 		
-		if (fileName1.equals("../../filestorage/cfb5379e8399d3df989670ca653cddeb58bc8339")) return 0;
-		
 		// Count
 		int count = 0;
 
@@ -56,7 +54,6 @@ public class SideBySideThreeWayDiff {
 		log.debug("Before");
 		p.waitFor();
 		log.debug("After");
-		
 		// Read the output
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line;

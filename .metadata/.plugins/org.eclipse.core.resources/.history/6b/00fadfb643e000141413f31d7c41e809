@@ -1,0 +1,14 @@
+package ch.ethz.fgremper.cloudstudio.testing.client;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class ClientMainTest {
+
+	@Test
+	public void test() {
+		fail("Not yet implemented");
+	}
+
+}
