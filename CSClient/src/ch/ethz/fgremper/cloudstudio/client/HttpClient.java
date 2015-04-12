@@ -37,7 +37,8 @@ public class HttpClient {
 	public String login(String serverUrl, String username, String password) throws Exception {
 
 		// URL
-		String url = serverUrl + "/api/login?username=" + URLEncoder.encode(username, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8");
+		String url = serverUrl + "/api/login?";
+		String data = "username=" + URLEncoder.encode(username, "UTF-8") + "&password=" + URLEncoder.encode(password, "UTF-8");
 		
 		// Send request to server
 		log.debug("Sending login request to server...");
@@ -47,6 +48,12 @@ public class HttpClient {
 		con.setConnectTimeout(15000);
 		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+		// Write content
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(data);
+		out.close();
 		
 		// Response code
 		int responseCode = con.getResponseCode();

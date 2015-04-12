@@ -28,7 +28,7 @@ public class ParameterFilter extends Filter {
 
     @Override
     public void doFilter(HttpExchange exchange, Chain chain) throws IOException {
-        parseGetParameters(exchange);
+    	parseGetParameters(exchange);
         if (exchange.getRequestHeaders().get("Content-Type") != null && exchange.getRequestHeaders().get("Content-Type").size() > 0 && !exchange.getRequestHeaders().get("Content-Type").get(0).equals("application/json")) {
         	parsePostParameters(exchange);
         }

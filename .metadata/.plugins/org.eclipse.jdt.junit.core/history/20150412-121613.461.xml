@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="HttpClientTest" project="CSTesting" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="1.539">
+    <testcase name="authTest" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="1.539"/>
+  </testsuite>
+</testrun>

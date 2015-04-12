@@ -1,0 +1,120 @@
+package ch.ethz.fgremper.cloudstudio.testing.server;
+
+import static org.junit.Assert.*;
+
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.InetSocketAddress;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.util.concurrent.Executors;
+
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+import org.junit.Test;
+
+import ch.ethz.fgremper.cloudstudio.client.HttpClient;
+import ch.ethz.fgremper.cloudstudio.common.ParameterFilter;
+import ch.ethz.fgremper.cloudstudio.server.ApiHttpHandler;
+import ch.ethz.fgremper.cloudstudio.server.WebInterfaceHttpHandler;
+import ch.ethz.fgremper.cloudstudio.testing.helper.TestGitHelper;
+
+import com.sun.net.httpserver.HttpContext;
+import com.sun.net.httpserver.HttpServer;
+
+public class ApiHttpHandlerTest {
+
+	public String sendPostRequest(String path, String data) throws Exception {
+
+		//byte[] postData = data.getBytes(Charset.forName( "UTF-8" ));
+		//int postDataLength = postData.length;
+		/*
+		URL obj = new URL("http://127.0.0.1:7331/" + path);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		con.setReadTimeout(10000);
+		con.setConnectTimeout(15000);
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+		
+		
+		//con.setRequestProperty("Content-Length", Integer.toString(postDataLength));
+
+		// Write content
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(data);
+		out.close();
+		
+		// Response code
+		int responseCode = con.getResponseCode();
+		assertEquals(HttpURLConnection.HTTP_OK, responseCode);
+		
+
+		String response = IOUtils.toString(con.getInputStream(), "UTF-8");
+		System.out.println("Response text: " + response);
+		
+		return response;*/
+		
+
+		// URL
+		String url = "http://127.0.0.1:7331/api/" + path;
+
+		// Send local git state to server
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+		//con.setReadTimeout(10000);
+		//con.setConnectTimeout(15000);
+		con.setRequestMethod("POST");
+		//con.setRequestProperty("Content-Type", "application/json");
+		
+		// Write content
+		con.setDoOutput(true);
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream());
+		out.write(data);
+		out.close();
+
+		// Response code
+		int responseCode = con.getResponseCode();
+		//log.debug("Response code: " + responseCode);
+
+		// Not successful?
+		//if (responseCode == HttpURLConnection.HTTP_OK) {
+
+			// Response text
+			String response = IOUtils.toString(con.getInputStream(), "UTF-8");
+			//log.debug("Response text: " + response);
+			
+			
+		//}
+		
+		return response;
+			
+	}
+	
+	@Test
+	public void test() throws Exception {
+
+		// Setup test state
+		TestGitHelper.setupTest();
+		
+		// Setup HTTP server
+		HttpServer server = HttpServer.create(new InetSocketAddress(7331), 0);
+		HttpContext context = server.createContext("/api", new ApiHttpHandler());
+		context.getFilters().add(new ParameterFilter());
+		server.createContext(File.separator, new WebInterfaceHttpHandler());
+		server.setExecutor(Executors.newCachedThreadPool());
+		server.start();
+
+		HttpClient httpClient = new HttpClient();
+		String sessionId = httpClient.login("http://127.0.0.1:7331", "John", "johnpw");
+		
+		sendPostRequest("createRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&repositoryUrl=haha&repositoryDescription=haha2");
+		
+		server.stop(0);
+
+	}
+
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest.setPostRequest(...)&apos; to &apos;sendPostRequest&apos;&#x0A;- Original project: &apos;CSTesting&apos;&#x0A;- Original element: &apos;ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest.setPostRequest(...)&apos;&#x0A;- Renamed element: &apos;ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest.sendPostRequest(...)&apos;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;setPostRequest&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;ch.ethz.fgremper.cloudstudio.testing.server{ApiHttpHandlerTest.java[ApiHttpHandlerTest~setPostRequest~QString;~QString;" name="sendPostRequest" references="true" stamp="1428835811954" version="1.0"/>
+</session>

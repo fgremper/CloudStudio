@@ -1,0 +1,25 @@
+package ch.ethz.fgremper.cloudstudio.testing.server;
+
+import static org.junit.Assert.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.Test;
+
+import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
+
+public class DatabaseConnectionTest {
+
+	@Test
+	public void test() throws Exception {
+		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
+		db.resetDatabase();
+		db.addUser("John", "burgers");
+		JSONObject users = db.getUsers();
+		JSONArray userList = users.getJSONArray("users");
+		assertEquals(userList.length(), 1);
+		db.makeUserAdmin("John");
+	}
+
+}
