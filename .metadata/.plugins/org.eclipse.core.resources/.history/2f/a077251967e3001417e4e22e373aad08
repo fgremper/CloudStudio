@@ -1,0 +1,5 @@
+package ch.ethz.fgremper.cloudstudio.common;
+
+public class CommandLine {
+
+}

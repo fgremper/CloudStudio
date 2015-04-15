@@ -285,6 +285,7 @@ branch                | Branch from which your files are compared
 compareToBranch       | Branch to which files of other users your files are compared to
 showUncommitted       | If true, also take into account changes that have not been locally committed yet.
 showConflicts         | If true, for all files with a FILE_CONFLICT, additionally run a content conflict analysis. If false, just compare the files by their hash.
+viewAsOrigin          | Instead of showing from your perspective, show from the perspective of the origin ("true" or "false")
 
 #### Example
 
@@ -296,7 +297,8 @@ curl "http://cloudstudio:7330/api/fileAwareness?
   branch=master&
   compareToBranch=master&
   showUncommitted=false&
-  showConflicts=true"
+  showConflicts=true&
+  viewAsOrigin=false"
 ```
 
 ###### Response
@@ -372,6 +374,7 @@ branch                | Your branch
 theirUsername         | Branch you want to compare to
 compareToBranch       | User you want to compare to
 showUncommitted       | If true, also take into account changes that have not been locally committed yet.
+viewAsOrigin          | Instead of showing from your perspective, show from the perspective of the origin ("true" or "false")
 
 #### Example
 
@@ -384,7 +387,8 @@ curl "http://cloudstudio:7330/api/contentAwareness?
   branch=master&
   compareToBranch=master&
   theirUsername=David
-  showUncommitted=false"
+  showUncommitted=false&
+  viewAsOrigin=false"
 ```
 
 ###### Response
@@ -440,6 +444,7 @@ branch                | Your branch
 theirUsername         | Branch you want to compare to
 compareToBranch       | User you want to compare to
 showUncommitted       | If true, also take into account changes that have not been locally committed yet.
+viewAsOrigin          | Instead of showing from your perspective, show from the perspective of the origin ("true" or "false")
 
 #### Example
 
@@ -452,7 +457,8 @@ curl "http://cloudstudio:7330/api/contentAwareness?
   branch=master&
   compareToBranch=master&
   theirUsername=Isabelle&
-  showUncommitted=false"
+  showUncommitted=false&
+  viewAsOrigin=false"
 ```
 
 ###### Response

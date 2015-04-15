@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;ch.ethz.fgremper.cloudstudio.common.CommandLine.java&apos; to &apos;ProcessWithTimeout.java&apos;&#x0A;- Original project: &apos;CSCommon&apos;&#x0A;- Original element: &apos;ch.ethz.fgremper.cloudstudio.common.CommandLine.java&apos;&#x0A;- Renamed element: &apos;ch.ethz.fgremper.cloudstudio.common.ProcessWithTimeout.java&apos;" description="Rename compilation unit &apos;CommandLine.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;ch.ethz.fgremper.cloudstudio.common{CommandLine.java" name="ProcessWithTimeout.java" references="false" stamp="1429099494622" version="1.0"/>
+</session>

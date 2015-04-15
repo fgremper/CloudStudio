@@ -147,9 +147,15 @@ public class ApiHttpHandler implements HttpHandler {
 				String compareToBranch = (String) params.get("compareToBranch");
 				boolean showConflicts = ((String) params.get("showConflicts")).equalsIgnoreCase("true");
 				boolean showUncommitted = ((String) params.get("showUncommitted")).equalsIgnoreCase("true");
+				boolean viewAsOrigin = ((String) params.get("viewAsOrigin")).equalsIgnoreCase("true");
 				
 				// Need to be admin or have repository access
 				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
+					
+					// View as origin?
+					if (viewAsOrigin) sessionUsername = "origin";
+					System.out.println("USER: " + sessionUsername);
+					
 					JSONObject responseObject = db.getFileLevelAwareness(repositoryAlias, sessionUsername, branch, compareToBranch, showUncommitted, showConflicts);
 					
 					// If we show conflicts, go through all of the items and check the ones with file conflicts for line conflicts
@@ -211,10 +217,15 @@ public class ApiHttpHandler implements HttpHandler {
 				String theirUsername = (String) params.get("theirUsername");
 				String filename = (String) params.get("filename");
 				boolean showUncommitted = ((String) params.get("showUncommitted")).equalsIgnoreCase("true");
+				boolean viewAsOrigin = ((String) params.get("viewAsOrigin")).equalsIgnoreCase("true");
 				
 				// Need to be admin or have repository access
 				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					
+
+					// View as origin?
+					if (viewAsOrigin) sessionUsername = "origin";
+					System.out.println("USER: " + sessionUsername);
+
 					// Get file SHAs
 					String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);
 					String theirSha = db.getFileSha(repositoryAlias, theirUsername, compareToBranch, filename, showUncommitted);
@@ -260,10 +271,15 @@ public class ApiHttpHandler implements HttpHandler {
 				String theirUsername = (String) params.get("theirUsername");
 				String filename = (String) params.get("filename");
 				boolean showUncommitted = ((String) params.get("showUncommitted")).equalsIgnoreCase("true");
+				boolean viewAsOrigin = ((String) params.get("viewAsOrigin")).equalsIgnoreCase("true");
 				
 				// Need to be admin or have repository access
 				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					
+
+					// View as origin?
+					if (viewAsOrigin) sessionUsername = "origin";
+					System.out.println("USER: " + sessionUsername);
+
 					// Get content conflicts
 		            ContentConflictGitReader gitReader = new ContentConflictGitReader(repositoryAlias, branch, filename, sessionUsername, compareToBranch, theirUsername, showUncommitted);
 					

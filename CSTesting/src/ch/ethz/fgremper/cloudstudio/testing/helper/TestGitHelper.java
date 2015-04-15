@@ -10,6 +10,7 @@ import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 
 import ch.ethz.fgremper.cloudstudio.client.ClientMain;
+import ch.ethz.fgremper.cloudstudio.common.ProcessWithTimeout;
 import ch.ethz.fgremper.cloudstudio.common.RepositoryReader;
 import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
 import ch.ethz.fgremper.cloudstudio.server.OriginUpdater;
@@ -22,6 +23,7 @@ public class TestGitHelper {
 	}
 	
 	public static void createOrigin() throws Exception {
+		
 		System.out.println("[TestGitHelper] Creating origin");
 
 		String user = "origin";
@@ -47,6 +49,7 @@ public class TestGitHelper {
 
 		// delete file
 		new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/default.txt").delete();
+	
 	}
 	
 	public static void createUser(String user) throws Exception {
@@ -119,7 +122,8 @@ public class TestGitHelper {
 	public static void executeCommand(String consoleInput) throws Exception {
 		System.out.println("[TestGitHelper] Executing: " + consoleInput);
 		Process p = Runtime.getRuntime().exec(consoleInput);
-		p.waitFor();
+		ProcessWithTimeout processWithTimeout = new ProcessWithTimeout(p);
+		processWithTimeout.waitForProcess(5000);
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 
@@ -133,15 +137,13 @@ public class TestGitHelper {
 		clearSandpit();
 		
 		createOrigin();
-
-
+		
 		createUser("John");
 		cloneOrigin("John");
 		createUser("David");
 		cloneOrigin("David");
 		createUser("Isabelle");
 		cloneOrigin("Isabelle");
-		
 		
 		DatabaseConnection db = new DatabaseConnection();
 		db.getConnection();
@@ -162,6 +164,7 @@ public class TestGitHelper {
 		db.commitTransaction();
 		
 		db.closeConnection();
+		
 	}
 	
 	public static void runPlugins() throws Exception {

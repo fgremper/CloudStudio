@@ -43,7 +43,7 @@ SELECT filename, mysha, theirusername, theirfilename, theirsha FROM (
 
 ) AS t
 
-WHERE theirusername <> "origin"
+# WHERE theirusername <> "origin"
 
 # WHERE (t.mysha IS NULL AND t.theirsha IS NOT NULL) OR (t.mysha IS NOT NULL AND t.theirsha IS NULL) OR (t.mysha IS NOT NULL AND t.theirsha IS NOT NULL AND t.mysha <> t.theirsha) # complicated cause comparison with null always returns null
 ORDER BY t.filename, t.theirusername;

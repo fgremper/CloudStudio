@@ -88,7 +88,7 @@ public class ContentConflictGitReader {
 				String repositoryOriginDirectory = originStorageDirectory + File.separator + repositoryAlias + "." + db.getRepositoryCloneCount(repositoryAlias);
 
 				// Open the repository in JGit
-				log.info("Reading: " + repositoryOriginDirectory);
+				log.debug("Reading: " + repositoryOriginDirectory);
 				FileRepositoryBuilder builder = new FileRepositoryBuilder();
 				builder.setGitDir(new File(repositoryOriginDirectory + File.separator + ".git"));
 				builder.setMustExist(true);
@@ -100,14 +100,14 @@ public class ContentConflictGitReader {
 				if (repository.getDirectory() == null) {
 					throw new Exception("Not a git repository: " + repositoryOriginDirectory);
 				}
-		        log.info("Opened in JGit: " + repository.getDirectory());
+		        log.debug("Opened in JGit: " + repository.getDirectory());
 		
 		        // Walk
 				ObjectId id = repository.resolve(mergeBaseCommitId);
-				log.info("Id: " + id);
+				log.debug("Id: " + id);
 				RevWalk walk = new RevWalk(repository);
 				RevCommit commit = walk.parseCommit(id);
-				log.info("Commit: " + commit);
+				log.debug("Commit: " + commit);
 		        RevTree tree = commit.getTree();
 		        
 		        // Get a TreeWalk to walk through all the files of the commit
@@ -199,7 +199,6 @@ public class ContentConflictGitReader {
 	 * 
 	 */
 	public Integer countConflicts() throws Exception {
-		log.debug("Counting conflicts for...");
 		if (mySha != null && theirSha != null && ancestorSha != null) {
 			return SideBySideThreeWayDiff.countConflicts(fileStorageDirectory + File.separator + mySha, fileStorageDirectory + File.separator + ancestorSha, fileStorageDirectory + File.separator + theirSha);
 		}

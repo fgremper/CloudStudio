@@ -15,6 +15,8 @@ import org.apache.logging.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import ch.ethz.fgremper.cloudstudio.common.ProcessWithTimeout;
+
 /**
  * 
  * Utility class to provide side-by-side comparison of three files
@@ -39,8 +41,6 @@ public class SideBySideThreeWayDiff {
 	 */
 	public static int countConflicts(String fileName1, String fileName2, String fileName3) throws Exception {
 		
-		if (fileName1.equals("../../filestorage/cfb5379e8399d3df989670ca653cddeb58bc8339")) return 0;
-		
 		// Count
 		int count = 0;
 
@@ -51,18 +51,13 @@ public class SideBySideThreeWayDiff {
 		
 		// Run diff3
 		Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
-		//Process p = Runtime.getRuntime().exec("diff3 " + fileName1 + " " + fileName2 + " " + fileName3);
-		
-		log.debug("Before");
-		p.waitFor();
-		log.debug("After");
-		
+		ProcessWithTimeout processWithTimeout = new ProcessWithTimeout(p);
+		processWithTimeout.waitForProcess(1000);
+
 		// Read the output
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		String line;
 		while ((line = reader.readLine()) != null) {
-			
-			log.debug("Line: " + line);
 
 			// If we match the pattern, there's a conflicting merge block
 			Matcher m = pattern.matcher(line);
@@ -106,7 +101,8 @@ public class SideBySideThreeWayDiff {
 
 		// Run diff3
 		Process p = Runtime.getRuntime().exec(new String[]{"diff3", fileName1, fileName2, fileName3});
-		p.waitFor();
+		ProcessWithTimeout processWithTimeout = new ProcessWithTimeout(p);
+		processWithTimeout.waitForProcess(1000);
 
 		// Read the output
 		BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));

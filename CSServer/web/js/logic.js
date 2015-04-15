@@ -12,6 +12,7 @@ selection.selectedUsers = [];
 selection.showConflicts = true;
 selection.showUncommitted = false;
 selection.severityFilter = 'ALL';
+selection.viewAsOrigin = false;
 
 
 
@@ -21,6 +22,7 @@ selection.severityFilter = 'ALL';
 
 // Send an API request
 function sendApiRequest(requestObject) {
+    $('#updatingOverlay').addClass('updatingOverlayShown');
     requestObject.data.sessionId = login.sessionId;
     $.ajax({
         url: API_PREFIX + requestObject.name,
@@ -28,8 +30,14 @@ function sendApiRequest(requestObject) {
         dataType: 'json',
         contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
         data: requestObject.data,
-        success: requestObject.success,
-        error: requestObject.error
+        success: function(data) {
+            $('#updatingOverlay').removeClass('updatingOverlayShown');
+            requestObject.success(data);
+        },
+        error: function(data) {
+            $('#updatingOverlay').removeClass('updatingOverlayShown');
+            requestObject.error(data);
+        }
     });
 }
 
@@ -681,7 +689,7 @@ function loadFileView(repositoryAlias, branch) {
             navigation.branch = branch;
 
             // Render
-            renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, repositoryBranches: data.repositoryBranches, compareToBranch: selection.compareToBranch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, severityFilter: selection.severityFilter });
+            renderFileView({ login: login, repositoryAlias: repositoryAlias, branch: branch, repositoryUsers: data.repositoryUsers, selectedUsers: selection.selectedUsers, repositoryBranches: data.repositoryBranches, compareToBranch: selection.compareToBranch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, severityFilter: selection.severityFilter, viewAsOrigin: selection.viewAsOrigin });
         },
         error: function (data) {
             displayErrorFromApiFail('File Level Awareness', data);
@@ -740,8 +748,12 @@ function renderFileView(data) {
 
         loadFileViewTable(navigation.repositoryAlias, navigation.branch);
     });
-    
-    
+    $('#viewAsOrigin').change(function () {
+        selection.viewAsOrigin = $('#viewAsOrigin').is(':checked');
+
+        loadFileViewTable(navigation.repositoryAlias, navigation.branch);
+    });
+
     $('select').chosen();
 
     loadFileViewTable(navigation.repositoryAlias, navigation.branch);
@@ -753,7 +765,7 @@ function loadFileViewTable(repositoryAlias, branch) {
     sendApiRequest({
         name: 'fileAwareness',
         type: 'GET',
-        data: { repositoryAlias: repositoryAlias, branch: branch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, compareToBranch: selection.compareToBranch },
+        data: { repositoryAlias: repositoryAlias, branch: branch, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, compareToBranch: selection.compareToBranch, viewAsOrigin: selection.viewAsOrigin },
         success: function(data) {
 
             console.log("Get file awareness. Success: " + JSON.stringify(data));
@@ -850,7 +862,7 @@ function loadContentView(repositoryAlias, branch, filename, username, compareToB
     navigation.repositoryAlias = repositoryAlias;
     navigation.branch = branch;
     selection.compareToBranch = compareToBranch;
-    renderContentView({ repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts });
+    renderContentView({ repositoryAlias: repositoryAlias, branch: branch, filename: filename, username: username, showUncommitted: selection.showUncommitted, showConflicts: selection.showConflicts, viewAsOrigin: selection.viewAsOrigin });
 }
 
 function renderContentView(data) {
@@ -880,7 +892,11 @@ console.log('RENDER');
 
         loadContentViewDiff(navigation.repositoryAlias, navigation.branch, navigation.filename, navigation.username, selection.compareToBranch);
     });
-    
+    $('#viewAsOrigin').change(function () {
+        selection.viewAsOrigin = $('#viewAsOrigin').is(':checked');
+
+        loadContentViewDiff(navigation.repositoryAlias, navigation.branch, navigation.filename, navigation.username, selection.compareToBranch);
+    });
 
     loadContentViewDiff(navigation.repositoryAlias, navigation.branch, navigation.filename, navigation.username, selection.compareToBranch);
 
@@ -891,7 +907,7 @@ function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, c
         sendApiRequest({
             name: 'contentConflicts',
             type: 'GET',
-            data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: selection.showUncommitted, compareToBranch: selection.compareToBranch },
+            data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: selection.showUncommitted, compareToBranch: selection.compareToBranch, viewAsOrigin: selection.viewAsOrigin },
             success: function(data) {
                 console.log("Get content awareness. Success: " + JSON.stringify(data));
                 renderContentViewDiff3({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername });
@@ -905,7 +921,7 @@ function loadContentViewDiff(repositoryAlias, branch, filename, theirUsername, c
         sendApiRequest({
             name: 'contentAwareness',
             type: 'GET',
-            data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: selection.showUncommitted, compareToBranch: selection.compareToBranch },
+            data: { repositoryAlias: repositoryAlias, branch: branch, filename: filename, theirUsername: theirUsername, showUncommitted: selection.showUncommitted, compareToBranch: selection.compareToBranch, viewAsOrigin: selection.viewAsOrigin },
             success: function(data) {
                 console.log("Get content awareness. Success: " + JSON.stringify(data));
                 renderContentViewDiff({ content: data.content, filename: filename, repositoryAlias: repositoryAlias, branch: branch, theirUsername: theirUsername });

@@ -5,11 +5,21 @@
 #### TODO
 
 
->> 
-* click around and test :) all satisfactory? :>
-* gui explanation at the bottom (or question mark somewhere) -> external help?
-* thursday: write this vs. old cloudstudio part before meeting on fri and discuss it then
-* tests for coverage
+>> * click around and test :) all satisfactory? :>
+>> * stuff seems to work
+>>* thursday: write this vs. old cloudstudio part before meeting on fri and discuss it then
+
+
+>>* have an "updating" overlay to show that we are requesting something and not done yet
+* view as origin
+* there was one bug that I couldn't seem to reproduce after that one time -> workaround: process.waitFor needs a timeout!
+
+
+
+
+* tests for coverage -> finish!
+* gui explanation at the bottom (or question mark somewhere) -> external help? just write the thesis >_>
+
 
 #### Done
 

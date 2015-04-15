@@ -974,3 +974,26 @@ span.userOwnerBig {
 #branchListContainer .emptyView, #fileListContainer .emptyView, #contentDiffContainer .emptyView {
     padding-top: 10px;
 }
+
+#updatingOverlay {
+    z-index: 10000;
+    top: -30px;
+    left: 50%;
+    margin-left: -100px;
+    width: 200px;
+    height: 30px;
+    position: absolute;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    background-color: #888888;
+    color: #ffffff;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 30px;
+    border-radius: 0 0 5px 5px;
+    transition: top 0.5s;
+}
+
+#updatingOverlay.updatingOverlayShown {
+    top: 0;
+}
