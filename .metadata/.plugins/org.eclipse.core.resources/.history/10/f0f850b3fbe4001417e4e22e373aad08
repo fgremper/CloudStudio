@@ -18,7 +18,7 @@
     <passwordSalt>heyoiamthesaltwhatisupwithyou</passwordSalt>
     
     <originUpdateInterval>10</originUpdateInterval>
-    <enableOriginUpdate>true</enableOriginUpdate>
+    <enableOriginUpdate>false</enableOriginUpdate>
     <createAdminUser>true</createAdminUser>
     <useDatabasePool>false</useDatabasePool>
     <giveCreatorPrivilegesOnSignUp>true</giveCreatorPrivilegesOnSignUp>

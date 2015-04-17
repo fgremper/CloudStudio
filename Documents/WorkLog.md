@@ -4,22 +4,8 @@
 
 #### TODO
 
-
->> * click around and test :) all satisfactory? :>
->> * stuff seems to work
->>* thursday: write this vs. old cloudstudio part before meeting on fri and discuss it then
-
-
->>* have an "updating" overlay to show that we are requesting something and not done yet
-* view as origin
-* there was one bug that I couldn't seem to reproduce after that one time -> workaround: process.waitFor needs a timeout!
-
-
-
-
 * tests for coverage -> finish!
 * gui explanation at the bottom (or question mark somewhere) -> external help? just write the thesis >_>
-
 
 #### Done
 
@@ -129,6 +115,12 @@
 * go over once more and do the comments right
 * correct url parsing for everything
 * who is responsible for package conflicts!
+* click around and test
+* write this vs. old cloudstudio part before meeting on fri and discuss it then
+* have an "updating" overlay to show that we are requesting something and server hasn't replied yet
+* view as origin feature
+* add view as origin to the api doc
+* there was one bug that I couldn't seem to reproduce after that one time -> workaround: process.waitFor needs a timeout!
 
 ('TODO' as well as 'Done' is incomplete, because I forget to write stuff down here ~~a lot~~ sometimes, sorry! Trying to do it, though!)
 

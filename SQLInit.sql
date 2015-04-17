@@ -69,7 +69,7 @@ CREATE TABLE files
 	branch VARCHAR(255),
 	commit VARCHAR(255),
 	committed VARCHAR(11),
-	PRIMARY KEY (repositoryalias, username, filename, committed),
+	PRIMARY KEY (repositoryalias, username, filename, branch, committed),
 	FOREIGN KEY (username) REFERENCES users (username) ON DELETE CASCADE,
 	FOREIGN KEY (repositoryalias) REFERENCES repositories (repositoryalias) ON DELETE CASCADE
 );
