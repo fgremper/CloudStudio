@@ -147,6 +147,8 @@ public class SideBySideThreeWayDiff {
 			Matcher m = pattern.matcher(line);
 			if (m.matches()) {
 				
+				log.debug("diff3 output: " + line);
+				
 				// Which file?
 				int fileNum = Integer.parseInt(m.group(1)) - 1;
 				
@@ -169,10 +171,9 @@ public class SideBySideThreeWayDiff {
 					// For all files, process the block information, meaning set type to modified, pad
 					// or modifiedpad where necessary and inserting empty lines to the content where
 					// necessary
-					
-					boolean isConflict = (conflictType == -1 || conflictType == 1);
-							
 					for (int i = 0; i < 3; i++) {
+						
+						boolean thisChanged = (conflictType == i || conflictType == -1);
 						
 						// Change block?
 						if (blockType.get(i).equals("c")) {
@@ -180,13 +181,13 @@ public class SideBySideThreeWayDiff {
 							
 							// Go through all the lines and set their type to modified
 							for (int j = blockStart.get(i); j <= blockEnd.get(i); j++) {
-								fileContentType.get(i).set(j + fileOffset.get(i), isConflict ? "CONFLICT" : "MODIFIED");
+								fileContentType.get(i).set(j + fileOffset.get(i), thisChanged ? "MODIFIED" : "NOT_MODIFIED");
 								length--;
 							}
 							
 							// Still some difference to the max length, so we insert some padding
 							while (length > 0) {
-								fileContentType.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, isConflict ? "CONFLICT_PAD" : "MODIFIED_PAD");
+								fileContentType.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, thisChanged ? "MODIFIED_PAD" : "NOT_MODIFIED_PAD");
 								fileContent.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "");
 								fileOffset.set(i, fileOffset.get(i) + 1);
 								length--;
@@ -197,7 +198,7 @@ public class SideBySideThreeWayDiff {
 						else if (blockType.get(i).equals("a")) {
 							int length = maxLength;
 							while (length > 0) {
-								fileContentType.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, isConflict ? "CONFLICT_PAD" : "PAD");
+								fileContentType.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "PAD");
 								fileContent.get(i).add(blockEnd.get(i) + fileOffset.get(i) + 1, "");
 								fileOffset.set(i, fileOffset.get(i) + 1);
 								length--;

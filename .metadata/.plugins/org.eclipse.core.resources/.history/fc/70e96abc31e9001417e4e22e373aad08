@@ -6,7 +6,7 @@
     <repositories>
         <repository>
             <alias>DemoTest</alias>
-            <localPath>/Users/novocaine/Documents/masterthesis/demo/DemoTestMartin</localPath>
+            <localPath>/Users/novocaine/Documents/masterthesis/demo/DemoTestMaster</localPath>
         </repository>
     </repositories>
     <resubmitInterval>20</resubmitInterval> <!-- in seconds; if 0 it only submits once -->
