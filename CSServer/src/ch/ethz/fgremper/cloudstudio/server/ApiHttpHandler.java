@@ -224,7 +224,6 @@ public class ApiHttpHandler implements HttpHandler {
 
 					// View as origin?
 					if (viewAsOrigin) sessionUsername = "origin";
-					System.out.println("USER: " + sessionUsername);
 
 					// Get file SHAs
 					String mySha = db.getFileSha(repositoryAlias, sessionUsername, branch, filename, showUncommitted);

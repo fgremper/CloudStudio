@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="ApiHttpHandlerTest" project="CSTesting" tests="3" started="3" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="2.361">
+    <testcase name="testCreateAndDeleteRepository" classname="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="1.328"/>
+    <testcase name="testRepositories" classname="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="0.639"/>
+    <testcase name="testAwarenessViews" classname="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="0.394"/>
+  </testsuite>
+</testrun>
