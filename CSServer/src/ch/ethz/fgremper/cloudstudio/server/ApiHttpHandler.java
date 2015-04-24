@@ -114,7 +114,7 @@ public class ApiHttpHandler implements HttpHandler {
 				String repositoryAlias = (String) params.get("repositoryAlias");
 				
 				if (db.isUserAdmin(sessionUsername) || db.doesUserHaveRepositoryAccess(sessionUsername, repositoryAlias) || db.isUserRepositoryOwner(sessionUsername, repositoryAlias)) {
-					response = db.getRepositoryInformation(repositoryAlias);
+					response = db.getRepositoryInformation(repositoryAlias).toString();
 				}
 				else {
 					throw new Exception("No repository access");

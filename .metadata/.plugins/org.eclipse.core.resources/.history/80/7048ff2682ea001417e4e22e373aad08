@@ -1,0 +1,83 @@
+package ch.ethz.fgremper.cloudstudio.testing.server;
+
+import static org.junit.Assert.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.Test;
+
+import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
+import ch.ethz.fgremper.cloudstudio.server.ServerConfig;
+
+public class DatabaseConnectionTest {
+
+	@Test
+	public void testUser() throws Exception {
+		DatabaseConnection db = new DatabaseConnection();
+		try {
+			db.getConnection();
+			db.resetDatabase();
+			db.addUser("John", "burgers");
+			JSONObject users = db.getUsers();
+			JSONArray userList = users.getJSONArray("users");
+			assertEquals(1, userList.length());
+			assertEquals(false, userList.getJSONObject(0).getBoolean("isAdmin"));
+			assertEquals(ServerConfig.getInstance().giveCreatorPrivilegesOnSignUp, userList.getJSONObject(0).getBoolean("isCreator"));
+			db.makeUserAdmin("John");
+			users = db.getUsers();
+			userList = users.getJSONArray("users");
+			assertEquals(1, userList.length());
+			assertEquals(true, userList.getJSONObject(0).getBoolean("isAdmin"));
+			db.revokeUserAdmin("John");
+			users = db.getUsers();
+			userList = users.getJSONArray("users");
+			assertEquals(1, userList.length());
+			assertEquals(false, userList.getJSONObject(0).getBoolean("isAdmin"));
+			db.makeUserCreator("John");
+			users = db.getUsers();
+			userList = users.getJSONArray("users");
+			assertEquals(1, userList.length());
+			assertEquals(true, userList.getJSONObject(0).getBoolean("isCreator"));
+			db.revokeUserCreator("John");
+			users = db.getUsers();
+			userList = users.getJSONArray("users");
+			assertEquals(1, userList.length());
+			assertEquals(false, userList.getJSONObject(0).getBoolean("isCreator"));
+		}
+		finally {
+			db.closeConnection();
+		}
+	}
+
+	/*
+	 * 
+getRepositories
+getRepositoryInformation
+updateRepositoryInformation
+	 */
+	@Test
+	public void testRepository() throws Exception {
+		DatabaseConnection db = new DatabaseConnection();
+		try {
+			db.getConnection();
+			db.resetDatabase();
+			db.addUser("John", "johnpw");
+			db.addUser("David", "davidpw");
+			JSONObject repositories = db.getRepositories("John");
+			assertEquals(0, repositories.getJSONArray("repositories").length());
+			
+			db.createRepository("TestRepository", "TestURL", "John", "TestDescription");
+			assertEquals(1, repositories.getJSONArray("repositories").length());
+			assertEquals(true, db.isUserRepositoryOwner("John", "TestRepository"));
+			assertEquals(false, db.isUserRepositoryOwner("David", "TestRepository"));
+			
+			db.modifyRepositoryOwner("TestRepository", "David");
+			assertEquals(false, db.isUserRepositoryOwner("John", "TestRepository"));
+			assertEquals(true, db.isUserRepositoryOwner("David", "TestRepository"));
+		}
+		finally {
+			db.closeConnection();
+		}
+	}
+
+}

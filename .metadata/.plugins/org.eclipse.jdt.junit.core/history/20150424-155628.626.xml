@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CSTesting" project="CSTesting" tests="21" started="21" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="0.882">
+    <testcase name="testUser" classname="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="0.835"/>
+    <testcase name="testRepository" classname="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="0.047"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.common.RepositoryReaderTest" time="0.749">
+    <testcase name="testEmptyRepository" classname="ch.ethz.fgremper.cloudstudio.testing.common.RepositoryReaderTest" time="0.749"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.556">
+    <testcase name="testBadDataGitState" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.211"/>
+    <testcase name="testServerDownGitState" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.002"/>
+    <testcase name="testCorrectData" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.174"/>
+    <testcase name="testBadDataLogin" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.166"/>
+    <testcase name="testServerDownLogin" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.002"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.ClientMainTest" time="1.197">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.client.ClientMainTest" time="1.197"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.BranchLevelAwarenessTest" time="2.28">
+    <testcase name="testRelationWithOrigin" classname="ch.ethz.fgremper.cloudstudio.testing.combination.BranchLevelAwarenessTest" time="1.483"/>
+    <testcase name="testBranch" classname="ch.ethz.fgremper.cloudstudio.testing.combination.BranchLevelAwarenessTest" time="0.797"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.ClientConfigReaderTest" time="0.003">
+    <testcase name="testAllInfo" classname="ch.ethz.fgremper.cloudstudio.testing.client.ClientConfigReaderTest" time="0.003"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.FileLevelAwarenessTest" time="1.803">
+    <testcase name="testBranchCompare" classname="ch.ethz.fgremper.cloudstudio.testing.combination.FileLevelAwarenessTest" time="1.05"/>
+    <testcase name="testBranchInternal" classname="ch.ethz.fgremper.cloudstudio.testing.combination.FileLevelAwarenessTest" time="0.753"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.setup.TestThreeUsersInitialize" time="0.803">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.setup.TestThreeUsersInitialize" time="0.803"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.setup.TestViewAsOrigin" time="0.289">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.setup.TestViewAsOrigin" time="0.289"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="1.706">
+    <testcase name="testCorrectConflictDetection" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.574"/>
+    <testcase name="testCorrectFileContentAndConflictCount" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.818"/>
+    <testcase name="testNoCommonAncestor" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.314"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="0.161">
+    <testcase name="testCreateAndDeleteRepository" classname="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="0.161"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.WebInterfaceHttpHandlerTest" time="0.005">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.server.WebInterfaceHttpHandlerTest" time="0.005"/>
+  </testsuite>
+</testrun>

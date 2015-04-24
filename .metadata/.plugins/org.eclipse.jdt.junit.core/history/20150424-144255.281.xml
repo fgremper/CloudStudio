@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CSTesting" project="CSTesting" tests="18" started="18" failures="0" errors="0" ignored="0">
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="1.132">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="1.132"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.common.RepositoryReaderTest" time="0.533">
+    <testcase name="testEmptyRepository" classname="ch.ethz.fgremper.cloudstudio.testing.common.RepositoryReaderTest" time="0.533"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.513">
+    <testcase name="testBadDataGitState" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.197"/>
+    <testcase name="testCorrectData" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.168"/>
+    <testcase name="testBadDataLogin" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.148"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.ClientMainTest" time="0.199">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.client.ClientMainTest" time="0.199"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.BranchLevelAwarenessTest" time="1.946">
+    <testcase name="testRelationWithOrigin" classname="ch.ethz.fgremper.cloudstudio.testing.combination.BranchLevelAwarenessTest" time="1.129"/>
+    <testcase name="testBranch" classname="ch.ethz.fgremper.cloudstudio.testing.combination.BranchLevelAwarenessTest" time="0.817"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.ClientConfigReaderTest" time="0.004">
+    <testcase name="testAllInfo" classname="ch.ethz.fgremper.cloudstudio.testing.client.ClientConfigReaderTest" time="0.004"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.FileLevelAwarenessTest" time="1.788">
+    <testcase name="testBranchCompare" classname="ch.ethz.fgremper.cloudstudio.testing.combination.FileLevelAwarenessTest" time="1.035"/>
+    <testcase name="testBranchInternal" classname="ch.ethz.fgremper.cloudstudio.testing.combination.FileLevelAwarenessTest" time="0.753"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.setup.TestThreeUsersInitialize" time="0.8">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.setup.TestThreeUsersInitialize" time="0.8"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.setup.TestViewAsOrigin" time="0.263">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.setup.TestViewAsOrigin" time="0.263"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="1.722">
+    <testcase name="testCorrectConflictDetection" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.566"/>
+    <testcase name="testCorrectFileContentAndConflictCount" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.856"/>
+    <testcase name="testNoCommonAncestor" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.3"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="0.177">
+    <testcase name="testCreateAndDeleteRepository" classname="ch.ethz.fgremper.cloudstudio.testing.server.ApiHttpHandlerTest" time="0.177"/>
+  </testsuite>
+  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.WebInterfaceHttpHandlerTest" time="0.0">
+    <testcase name="test" classname="ch.ethz.fgremper.cloudstudio.testing.server.WebInterfaceHttpHandlerTest" time="0.0"/>
+  </testsuite>
+</testrun>

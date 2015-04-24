@@ -73,7 +73,7 @@ public class ServerMain {
 		context.getFilters().add(new ParameterFilter());
 		
 		// Web interface handler
-		server.createContext(File.separator, new WebInterfaceHttpHandler());
+		server.createContext("/", new WebInterfaceHttpHandler());
 		
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();

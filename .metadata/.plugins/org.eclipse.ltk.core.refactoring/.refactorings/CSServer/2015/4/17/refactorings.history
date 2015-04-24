@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move element &apos;web&apos; to &apos;CSServer/src/ch.ethz.fgremper.cloudstudio.server&apos;&#x0A;- Original project: &apos;CSServer&apos;&#x0A;- Destination element: &apos;CSServer/src/ch.ethz.fgremper.cloudstudio.server&apos;&#x0A;- Original element: &apos;web&apos;&#x0A;- Update references to refactored element" description="Move folder" destination="/src&lt;ch.ethz.fgremper.cloudstudio.server" element1="web" files="0" flags="589830" folders="1" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1429882935583" units="0" version="1.0"/>
+</session>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-	<serverPort>7330</serverPort>
+	<serverPort>7331</serverPort>
 	
     <dbDriverClass>com.mysql.jdbc.Driver</dbDriverClass>
     <dbJdbcUrl>jdbc:mysql://localhost/cloudstudio</dbJdbcUrl>

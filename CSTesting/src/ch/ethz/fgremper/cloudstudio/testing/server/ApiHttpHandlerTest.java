@@ -80,7 +80,6 @@ public class ApiHttpHandlerTest {
 		HttpServer server = HttpServer.create(new InetSocketAddress(7331), 0);
 		HttpContext context = server.createContext("/api", new ApiHttpHandler());
 		context.getFilters().add(new ParameterFilter());
-		server.createContext(File.separator, new WebInterfaceHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 

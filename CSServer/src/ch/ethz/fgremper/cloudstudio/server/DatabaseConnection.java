@@ -578,7 +578,7 @@ public class DatabaseConnection {
 	 * @param repositoryAlias
 	 * 
 	 */
-	public String getRepositoryInformation(String repositoryAlias) throws Exception {
+	public JSONObject getRepositoryInformation(String repositoryAlias) throws Exception {
 
 		ResultSet rs;
 		
@@ -644,7 +644,7 @@ public class DatabaseConnection {
 		responseObject.put("repositoryOwner", repositoryOwner);
 		responseObject.put("repositoryDescription", repositoryDescription);
 		responseObject.put("repositoryUrl", repositoryUrl);
-		return responseObject.toString();
+		return responseObject;
 		
 	}
 

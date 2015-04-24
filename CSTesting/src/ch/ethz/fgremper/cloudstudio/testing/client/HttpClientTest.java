@@ -23,7 +23,7 @@ import ch.ethz.fgremper.cloudstudio.testing.helper.TestGitHelper;
 public class HttpClientTest {
 
 	@Test
-	public void test() throws Exception {
+	public void testCorrectData() throws Exception {
 		
 		// Setup test state
 		TestGitHelper.setupTest();
@@ -32,7 +32,7 @@ public class HttpClientTest {
 		HttpServer server = HttpServer.create(new InetSocketAddress(7331), 0);
 		HttpContext context = server.createContext("/api", new ApiHttpHandler());
 		context.getFilters().add(new ParameterFilter());
-		server.createContext(File.separator, new WebInterfaceHttpHandler());
+		server.createContext("/", new WebInterfaceHttpHandler());
 		server.setExecutor(Executors.newCachedThreadPool());
 		server.start();
 
@@ -47,6 +47,77 @@ public class HttpClientTest {
 		// Shutdown server
 		server.stop(0);
 		
+	}
+
+	@Test(expected=Exception.class)
+	public void testBadDataLogin() throws Exception {
+		HttpServer server = HttpServer.create(new InetSocketAddress(7331), 0);
+		try {
+			// Setup test state
+			TestGitHelper.setupTest();
+			
+			// Setup HTTP server
+			HttpContext context = server.createContext("/api", new ApiHttpHandler());
+			context.getFilters().add(new ParameterFilter());
+			server.createContext("/", new WebInterfaceHttpHandler());
+			server.setExecutor(Executors.newCachedThreadPool());
+			server.start();
+	
+			// Login
+			HttpClient httpClient = new HttpClient();
+			httpClient.login("http://127.0.0.1:7331", "John", "wrongpassword");
+			
+			// Set Git state
+			//httpClient.sendGitState("http://127.0.0.1:7331", "invalidsession", "TestRepository", "{files:[],commitHistory:[],branches:[]}");
+		}
+		finally {
+			System.out.println("SHUTDOWN");
+			// Shutdown server
+			server.stop(0);
+		}
+		
+	}
+
+	@Test(expected=Exception.class)
+	public void testBadDataGitState() throws Exception {
+		HttpServer server = HttpServer.create(new InetSocketAddress(7331), 0);
+		try {
+			// Setup test state
+			TestGitHelper.setupTest();
+			
+			// Setup HTTP server
+			HttpContext context = server.createContext("/api", new ApiHttpHandler());
+			context.getFilters().add(new ParameterFilter());
+			server.createContext("/", new WebInterfaceHttpHandler());
+			server.setExecutor(Executors.newCachedThreadPool());
+			server.start();
+
+			HttpClient httpClient = new HttpClient();
+			httpClient.sendGitState("http://127.0.0.1:7331", "invalidsession", "TestRepository", "{files:[],commitHistory:[],branches:[]}");
+		}
+		finally {
+			System.out.println("SHUTDOWN");
+			// Shutdown server
+			server.stop(0);
+		}
+		
+	}
+
+
+	@Test(expected=Exception.class)
+	public void testServerDownLogin() throws Exception {
+			// Login
+			HttpClient httpClient = new HttpClient();
+			httpClient.login("http://127.0.0.1:7331", "John", "wrongpassword");
+			
+	}
+
+	@Test(expected=Exception.class)
+	public void testServerDownGitState() throws Exception {
+
+			HttpClient httpClient = new HttpClient();
+			httpClient.sendGitState("http://127.0.0.1:7331", "invalidsession", "TestRepository", "{files:[],commitHistory:[],branches:[]}");
+
 	}
 
 }

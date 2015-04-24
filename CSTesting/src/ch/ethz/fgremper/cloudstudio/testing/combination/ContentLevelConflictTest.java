@@ -199,8 +199,8 @@ public class ContentLevelConflictTest {
         assertEquals((Integer) 1, gitReader.countConflicts());
         diffLineArray = gitReader.diff();
         assertEquals(5, diffLineArray.length());
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(2).getString("myType"));
-        assertEquals("MODIFIED", diffLineArray.getJSONObject(2).getString("theirType"));
+        assertEquals("CONFLICT", diffLineArray.getJSONObject(2).getString("myType"));
+        assertEquals("CONFLICT", diffLineArray.getJSONObject(2).getString("theirType"));
 
         
 

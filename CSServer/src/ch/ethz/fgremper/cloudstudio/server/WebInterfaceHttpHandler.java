@@ -3,10 +3,13 @@ package ch.ethz.fgremper.cloudstudio.server;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -46,16 +49,24 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 			
 			String requestedFile = uri.getPath().substring(webInterfacePrefix.length());
 			
-			// don't allow paths with ".." in them
+			// Don't allow paths with ".." in them
 			if (requestedFile.contains("..")) return;
 			
 			if (!requestedFile.startsWith("css/") && !requestedFile.startsWith("js/") && !requestedFile.startsWith("templates/") && !requestedFile.startsWith("img/")) requestedFile = "index.html";
 			log.info("Looking for: " + requestedFile);
 			
-			File file = new File(pathToWebInterfaceFiles + requestedFile).getCanonicalFile();
-
+			// Load resource
+			URL resource = WebInterfaceHttpHandler.class.getResource(pathToWebInterfaceFiles + requestedFile);
+			File file = null;
+			try {
+				file = new File(resource.toURI());
+			}
+			catch (Exception e) {
+				// Do nothing
+			}
+			
 			// Does the file exist?
-			if (file.isFile()) {
+			if (resource != null && file != null) {
 				
 				// Set content type
 				String mime = "text/html"; 
@@ -68,6 +79,7 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				
 				// Read and send file
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
+				
 				OutputStream os = exchange.getResponseBody();
 				FileInputStream fs = new FileInputStream(file);
 				final byte[] buffer = new byte[0x10000];
