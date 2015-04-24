@@ -65,7 +65,7 @@ sessionId             | Your session ID
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/repositories?
+curl "http://cloudstudio:7330/api/repositories?\
   sessionId=YOUR_SESSION_ID"
 ```
 
@@ -98,7 +98,7 @@ curl "http://cloudstudio:7330/api/repositories?
 
 Method: GET
 
-Retrieves a list of user and branches for a given repository. Also returns a the last time the origin has been updated.
+Retrieves a list of user and branches for a given repository. Also returns time of the last origin information update.
 
 #### Parameters
 
@@ -111,8 +111,8 @@ repositoryAlias       | Repository alias
 
 ###### Request
 ```bash
-curl "http://localhost:7330/api/repositoryInformation?
-  sessionId=YOUR_SESSION_ID&
+curl "http://localhost:7330/api/repositoryInformation?\
+  sessionId=YOUR_SESSION_ID&\
   repositoryAlias=BankAccountDemo"
 ```
 
@@ -210,8 +210,8 @@ repositoryAlias       | Repository alias
 
 ###### Request
 ```bash
-curl "http://localhost:7330/api/branchAwareness?
-  sessionId=YOUR_SESSION_ID&
+curl "http://localhost:7330/api/branchAwareness?\
+  sessionId=YOUR_SESSION_ID&\
   repositoryAlias=BankAccountDemo"
 ```
 
@@ -273,7 +273,7 @@ NO_CONFLICT                | The two files being compared are identical.
 FILE_CONFLICT              | The two files being compared are different.
 CONTENT_CONFLICT           | After further analysing conflicting files, by doing a three-way diff with a suitable common ancestor of both files, a merge conflict occurs.
 
-Non-existing files are treated as empty files for these purposes.
+Non-existing files are treated as empty files for this purpose.
 
 #### Parameters
 
@@ -291,13 +291,13 @@ viewAsOrigin          | Instead of showing from your perspective, show from the 
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/fileAwareness?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=BankAccountDemo&
-  branch=master&
-  compareToBranch=master&
-  showUncommitted=false&
-  showConflicts=true&
+curl "http://cloudstudio:7330/api/fileAwareness?\
+  sessionId=YOUR_SESSION_ID&\
+  repositoryAlias=BankAccountDemo&\
+  branch=master&\
+  compareToBranch=master&\
+  showUncommitted=false&\
+  showConflicts=true&\
   viewAsOrigin=false"
 ```
 
@@ -428,8 +428,10 @@ Type                  | Description
 --------------------- | ------------------------------------------
 UNCHANGED             | No changes have been made to this line.
 MODIFIED              | This line has been modified.
-PAD                   | Padding for the lines to line up nicely.
-MODIFIED_PAD          | Padding for two modified blocks to line up nicely.
+MODIFIED_PAD          | Padding for modified blocks to line up nicely.
+CONFLICT              | This line is conflicting
+CONFLICT_PAD          | Padding for conflict blocks to line up nicely.
+PAD                   | Padding for the blocks to line up nicely.
 
 By definition, a conflict occurs when all three lines have been modified or only the common ancestor has been modified.
 
@@ -450,21 +452,46 @@ viewAsOrigin          | Instead of showing from your perspective, show from the 
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/contentAwareness?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=BankAccountDemo&
-  filename=src/java/Main.java&
-  branch=master&
-  compareToBranch=master&
-  theirUsername=Isabelle&
-  showUncommitted=false&
+curl "http://cloudstudio:7330/api/contentAwareness?\
+  sessionId=YOUR_SESSION_ID&\
+  repositoryAlias=BankAccountDemo&\
+  filename=src/java/Main.java&\
+  branch=master&\
+  compareToBranch=master&\
+  theirUsername=Isabelle&\
+  showUncommitted=false&\
   viewAsOrigin=false"
 ```
 
 ###### Response
 ```json
 {  
-   TODO
+   "content":[  
+      {  
+         "myType": "UNCHANGED",
+         "myContent": "First line.",
+         "theirType": "UNCHANGED",
+         "theirContent": "First line.",
+         "baseType": "UNCHANGED",
+         "baseContent": "First line."
+      },
+      {  
+         "myType": "MODIFIED",
+         "myContent": "Only I changed this, no worries.",
+         "theirType": "MODIFIED",
+         "theirContent": "Second line.",
+         "baseType": "MODIFIED",
+         "baseContent": "Second line."
+      },
+      {  
+         "myType": "CONFLICT",
+         "myContent": "I made a change.",
+         "theirType": "CONFLICT",
+         "theirContent": "Third line.",
+         "baseType": "CONFLICT",
+         "baseContent": "Me too! Whoops."
+      }
+   ]
 }
 ```
 
@@ -488,7 +515,7 @@ sessionId             | Your session ID
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/users?
+curl "http://cloudstudio:7330/api/users?\
   sessionId=YOUR_SESSION_ID"
 ```
 
@@ -766,7 +793,7 @@ curl "http://cloudstudio:7330/api/deleteUser" \
 
 Method: POST
 
-Changes a users password.
+Changes a user's password.
 
 #### Parameters
 
@@ -946,7 +973,52 @@ repositoryAlias       | Repository alias
 ```bash
 curl "http://cloudstudio:7330/api/localState?sessionId=YOUR_SESSION_ID&repositoryAlias=HelloWorld"
   -H "Content-Type: application/json"
-  -d "TODO"
+  -d "$JSON_STRING"
+```
+
+With the $JSON_STRING being:
+
+```json
+{  
+   "files": [  
+      {  
+         "filename": "README",
+         "branch": "master",
+         "content": "This is the read-me file.",
+         "committed": "committed",
+         "commit": "65fcfcd7860bf95fd1dce7c01bcd886bcdf4e675"
+      },
+      {  
+         "filename": "README",
+         "branch": "master",
+         "content": "I made some uncommitted changed to the read-me file.",
+         "committed": "uncommitted",
+         "commit": "65fcfcd7860bf95fd1dce7c01bcd886bcdf4e675"
+      }
+   ],
+   "commitHistory": [
+      {  
+         "commit": "73e68dd8ae12bdf7dfce4a29cd0a6cb6ce99aca8",
+         "downstreamCommits":[  
+            {  
+               "distance": 0,
+               "commit": "73e68dd8ae12bdf7dfce4a29cd0a6cb6ce99aca8"
+            },
+            {  
+               "distance": 1,
+               "commit": "fdaa47da4ab7f22fc06373c407c48326e70db199"
+            }
+         ]
+      }
+   ],
+   "branches": [
+      {  
+         "commit": "73e68dd8ae12bdf7dfce4a29cd0a6cb6ce99aca8",
+         "active": true,
+         "branch": "master"
+      }
+   ]
+}
 ```
 
 ###### Response

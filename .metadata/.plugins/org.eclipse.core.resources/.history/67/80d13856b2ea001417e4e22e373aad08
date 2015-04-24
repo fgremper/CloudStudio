@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
-    <username>John</username>
-    <password>johnpw</password>
+    <username>Fabian</username>
+    <password>1234</password>
     <serverUrl>http://127.0.0.1:7330</serverUrl> <!-- don't put a dash at the end -->
     <repositories>
         <repository>

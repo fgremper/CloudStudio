@@ -24,8 +24,7 @@ import com.sun.net.httpserver.HttpServer;
 /**
  * 
  * Class test for ApiHttpHandler
- * 
- * @author Fabian Gremper
+ * @author novocaine
  *
  */
 public class ApiHttpHandlerTest {

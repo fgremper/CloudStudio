@@ -1,0 +1,14 @@
+Steps required to run the test framework:
+
+1) in TestSettings.java, set
+   * SANDPIT_DIRECTORY_PATH to a directory where the test repositories are set up
+
+2) In configJohn.xml, change
+   * localPath to the sandpit directory, plus "/John"
+
+3) In serverConfig, change the
+   * dbJdbcUrl to your database URL
+   * dbUser to your database user
+   * dbPassword to your database password
+   * fileStorageDirectory to your location where file contents are stored
+   * originStorageDirectory to your location where origins are cloned into
