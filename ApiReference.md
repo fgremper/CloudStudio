@@ -429,7 +429,7 @@ Type                  | Description
 UNCHANGED             | No changes have been made to this line.
 MODIFIED              | This line has been modified.
 MODIFIED_PAD          | Padding for modified blocks to line up nicely.
-CONFLICT              | This line is conflicting
+CONFLICT              | This line is conflicting.
 CONFLICT_PAD          | Padding for conflict blocks to line up nicely.
 PAD                   | Padding for the blocks to line up nicely.
 
@@ -971,8 +971,8 @@ repositoryAlias       | Repository alias
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/localState?sessionId=YOUR_SESSION_ID&repositoryAlias=HelloWorld"
-  -H "Content-Type: application/json"
+curl "http://cloudstudio:7330/api/localState?sessionId=YOUR_SESSION_ID&repositoryAlias=HelloWorld" \
+  -H "Content-Type: application/json" \
   -d "$JSON_STRING"
 ```
 
