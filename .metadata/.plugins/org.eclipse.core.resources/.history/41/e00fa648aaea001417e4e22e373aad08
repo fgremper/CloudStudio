@@ -1,0 +1,33 @@
+package ch.ethz.fgremper.cloudstudio.testing.common;
+
+import static org.junit.Assert.*;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.json.JSONObject;
+import org.junit.Test;
+
+import ch.ethz.fgremper.cloudstudio.common.RepositoryReader;
+import ch.ethz.fgremper.cloudstudio.testing.helper.TestGitHelper;
+import ch.ethz.fgremper.cloudstudio.testing.helper.TestSettings;
+
+public class RepositoryReaderTest {
+
+	@Test
+	public void testEmptyRepository() throws Exception {
+/*
+		TestGitHelper.setupTest();
+		
+		RepositoryReader repositoryReader = new RepositoryReader(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "John");
+
+		JSONObject updateObject = repositoryReader.getUpdateObject();
+		
+		System.out.println(updateObject.toString());
+		*/
+		// TODO assert
+		
+	}
+
+}

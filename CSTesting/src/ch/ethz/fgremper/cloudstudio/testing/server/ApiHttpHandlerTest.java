@@ -1,15 +1,11 @@
 package ch.ethz.fgremper.cloudstudio.testing.server;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import java.io.DataOutputStream;
-import java.io.File;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.InetSocketAddress;
 import java.net.URL;
-import java.net.URLEncoder;
-import java.nio.charset.Charset;
 import java.util.concurrent.Executors;
 
 import org.apache.commons.io.IOUtils;
@@ -20,14 +16,24 @@ import ch.ethz.fgremper.cloudstudio.client.HttpClient;
 import ch.ethz.fgremper.cloudstudio.common.ParameterFilter;
 import ch.ethz.fgremper.cloudstudio.server.ApiHttpHandler;
 import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
-import ch.ethz.fgremper.cloudstudio.server.WebInterfaceHttpHandler;
 import ch.ethz.fgremper.cloudstudio.testing.helper.TestGitHelper;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 
+/**
+ * 
+ * Class test for ApiHttpHandler
+ * @author novocaine
+ *
+ */
 public class ApiHttpHandlerTest {
 
+	/**
+	 * 
+	 * Helper function to send a POST request
+	 *
+	 */
 	public String sendPostRequest(String path, String data, int expectedResponseCode) throws Exception {
 
 		// URL
@@ -63,8 +69,12 @@ public class ApiHttpHandlerTest {
 		return response;
 			
 	}
-	
 
+	/**
+	 * 
+	 * Helper function to send a GET request
+	 *
+	 */
 	public String sendGetRequest(String path, String data, int expectedResponseCode) throws Exception {
 
 		// URL
@@ -94,7 +104,11 @@ public class ApiHttpHandlerTest {
 			
 	}
 	
-	
+	/**
+	 * 
+	 * Helper function to start the server
+	 *
+	 */
 	private HttpServer startServer() throws Exception {
 
 		HttpServer server = HttpServer.create(new InetSocketAddress(7331), 0);
@@ -106,178 +120,205 @@ public class ApiHttpHandlerTest {
 		return server;
 	}
 
+	/**
+	 * 
+	 * Test repository related APIs
+	 * More detailed tests directly on the database level in DatabaseConnectionTest
+	 *
+	 */
 	@Test
 	public void testRepositories() throws Exception {
+		
 		HttpServer server = null;
 		DatabaseConnection db = new DatabaseConnection();
+		
 		try {
 			
-		// Get database connection
-		db.getConnection();
-		
-		// Setup test state
-		TestGitHelper.setupTest();
-		
-		db.makeUserCreator("John");
-		
-		// Setup HTTP server
-		server = startServer();
-
-		HttpClient httpClient = new HttpClient();
-		String sessionId = httpClient.login("http://127.0.0.1:7331", "Admin", "1234");
-		
-		assertEquals(1, db.getAllRepositories().length());
-		
-		// Create repository
-		sendPostRequest("createRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&repositoryUrl=HelloUrl&repositoryDescription=HelloDescription", HttpURLConnection.HTTP_OK);
-		
-		assertEquals(2, db.getAllRepositories().length());
-		
-		String response = sendGetRequest("repositories", "sessionId=" + sessionId, HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals(2, new JSONObject(response).getJSONArray("repositories").length());
-		
-		response = sendGetRequest("repositoryInformation", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld", HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals("HelloDescription", new JSONObject(response).getString("repositoryDescription"));
-		assertEquals("HelloUrl", new JSONObject(response).getString("repositoryUrl"));
-		
-		sendPostRequest("setRepositoryInformation", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&repositoryUrl=NewUrl&repositoryDescription=NewDescription", HttpURLConnection.HTTP_OK);
-		
-		response = sendGetRequest("repositoryInformation", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld", HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals("NewDescription", new JSONObject(response).getString("repositoryDescription"));
-		assertEquals("NewUrl", new JSONObject(response).getString("repositoryUrl"));
-		
-		sendPostRequest("modifyRepositoryOwner", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&username=John", HttpURLConnection.HTTP_OK);
-		assertEquals(true, db.isUserRepositoryOwner("John", "HelloWorld"));
-		
-		assertEquals(false, db.doesUserHaveRepositoryAccess("David", "HelloWorld"));
-		sendPostRequest("addUserToRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&username=David", HttpURLConnection.HTTP_OK);
-		assertEquals(true, db.doesUserHaveRepositoryAccess("David", "HelloWorld"));
-		sendPostRequest("removeUserFromRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&username=David", HttpURLConnection.HTTP_OK);
-		assertEquals(false, db.doesUserHaveRepositoryAccess("David", "HelloWorld"));
-		
-		
-		
-		// Delete repository
-		sendPostRequest("deleteRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld", HttpURLConnection.HTTP_OK);
-
-		assertEquals(1, db.getAllRepositories().length());
-		
+			// Get database connection
+			db.getConnection();
+			
+			// Setup test state
+			TestGitHelper.setupTest();
+			
+			db.makeUserCreator("John");
+			
+			// Setup HTTP server
+			server = startServer();
+	
+			HttpClient httpClient = new HttpClient();
+			String sessionId = httpClient.login("http://127.0.0.1:7331", "Admin", "1234");
+			
+			assertEquals(1, db.getAllRepositories().length());
+			
+			// Test create repository
+			sendPostRequest("createRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&repositoryUrl=HelloUrl&repositoryDescription=HelloDescription", HttpURLConnection.HTTP_OK);
+			assertEquals(2, db.getAllRepositories().length());
+			
+			// Test get repositories
+			String response = sendGetRequest("repositories", "sessionId=" + sessionId, HttpURLConnection.HTTP_OK);
+			System.out.println("Response: " + response);
+			assertEquals(2, new JSONObject(response).getJSONArray("repositories").length());
+			
+			// Test get repository information
+			response = sendGetRequest("repositoryInformation", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld", HttpURLConnection.HTTP_OK);
+			System.out.println("Response: " + response);
+			assertEquals("HelloDescription", new JSONObject(response).getString("repositoryDescription"));
+			assertEquals("HelloUrl", new JSONObject(response).getString("repositoryUrl"));
+			
+			// Test set repository information
+			sendPostRequest("setRepositoryInformation", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&repositoryUrl=NewUrl&repositoryDescription=NewDescription", HttpURLConnection.HTTP_OK);
+			response = sendGetRequest("repositoryInformation", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld", HttpURLConnection.HTTP_OK);
+			System.out.println("Response: " + response);
+			assertEquals("NewDescription", new JSONObject(response).getString("repositoryDescription"));
+			assertEquals("NewUrl", new JSONObject(response).getString("repositoryUrl"));
+			
+			// Test modify repository owner
+			sendPostRequest("modifyRepositoryOwner", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&username=John", HttpURLConnection.HTTP_OK);
+			assertEquals(true, db.isUserRepositoryOwner("John", "HelloWorld"));
+			
+			// Test add and remote users to repositories
+			assertEquals(false, db.doesUserHaveRepositoryAccess("David", "HelloWorld"));
+			sendPostRequest("addUserToRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&username=David", HttpURLConnection.HTTP_OK);
+			assertEquals(true, db.doesUserHaveRepositoryAccess("David", "HelloWorld"));
+			sendPostRequest("removeUserFromRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld&username=David", HttpURLConnection.HTTP_OK);
+			assertEquals(false, db.doesUserHaveRepositoryAccess("David", "HelloWorld"));
+			
+			// Test delete repository
+			sendPostRequest("deleteRepository", "sessionId=" + sessionId + "&repositoryAlias=HelloWorld", HttpURLConnection.HTTP_OK);
+			assertEquals(1, db.getAllRepositories().length());
 
 		}
 		finally {
+			
 			db.closeConnection();
 			if (server != null) server.stop(0);
+			
 		}
 
 	}
 
+	/**
+	 * 
+	 * Test awareness related APIs
+	 * More detailed tests directly on the database level in DatabaseConnectionTest
+	 *
+	 */
 	@Test
 	public void testAwarenessViews() throws Exception {
+		
 		HttpServer server = null;
 		DatabaseConnection db = new DatabaseConnection();
+		
 		try {
+				
+			// Get database connection
+			db.getConnection();
 			
-		// Get database connection
-		db.getConnection();
-		
-		// Setup test state
-		TestGitHelper.setupTest();
-		TestGitHelper.writeContentToFile("David", "default.txt", "edited line");
-		TestGitHelper.runPlugins();
-		
-		// Setup HTTP server
-		server = startServer();
-
-		HttpClient httpClient = new HttpClient();
-		String sessionId = httpClient.login("http://127.0.0.1:7331", "John", "johnpw");
-		
-		assertEquals(1, db.getAllRepositories().length());
-		
-		// Create repository
-		String response = sendGetRequest("branchAwareness", "sessionId=" + sessionId + "&repositoryAlias=TestRepository", HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals(1, new JSONObject(response).getJSONArray("branches").length());
-		assertEquals("master", new JSONObject(response).getJSONArray("branches").getJSONObject(0).getString("branch"));
-		
-		response = sendGetRequest("fileAwareness", "sessionId=" + sessionId + "&repositoryAlias=TestRepository&branch=master&compareToBranch=master&showConflicts=true&showUncommitted=false&viewAsOrigin=false", HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals(1, new JSONObject(response).getJSONArray("files").length());
-		assertEquals("default.txt", new JSONObject(response).getJSONArray("files").getJSONObject(0).getString("filename"));
-		
-
-		response = sendGetRequest("contentAwareness", "sessionId=" + sessionId + "&repositoryAlias=TestRepository&branch=master&compareToBranch=master&showUncommitted=true&viewAsOrigin=false&theirUsername=David&filename=default.txt", HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals(1, new JSONObject(response).getJSONArray("content").length());
-
-		response = sendGetRequest("contentConflicts", "sessionId=" + sessionId + "&repositoryAlias=TestRepository&branch=master&compareToBranch=master&showUncommitted=false&viewAsOrigin=false&theirUsername=David&filename=default.txt", HttpURLConnection.HTTP_OK);
-		System.out.println("Response: " + response);
-		assertEquals(1, new JSONObject(response).getJSONArray("content").length());
-		
-		
+			// Setup test state
+			TestGitHelper.setupTest();
+			TestGitHelper.writeContentToFile("David", "default.txt", "edited line");
+			TestGitHelper.runPlugins();
+			
+			// Setup HTTP server
+			server = startServer();
+	
+			HttpClient httpClient = new HttpClient();
+			String sessionId = httpClient.login("http://127.0.0.1:7331", "John", "johnpw");
+			
+			assertEquals(1, db.getAllRepositories().length());
+			
+			// Branch awareness API test
+			String response = sendGetRequest("branchAwareness", "sessionId=" + sessionId + "&repositoryAlias=TestRepository", HttpURLConnection.HTTP_OK);
+			assertEquals(1, new JSONObject(response).getJSONArray("branches").length());
+			assertEquals("master", new JSONObject(response).getJSONArray("branches").getJSONObject(0).getString("branch"));
+			
+			// File awareness API test
+			response = sendGetRequest("fileAwareness", "sessionId=" + sessionId + "&repositoryAlias=TestRepository&branch=master&compareToBranch=master&showConflicts=true&showUncommitted=false&viewAsOrigin=false", HttpURLConnection.HTTP_OK);
+			assertEquals(1, new JSONObject(response).getJSONArray("files").length());
+			assertEquals("default.txt", new JSONObject(response).getJSONArray("files").getJSONObject(0).getString("filename"));
+			
+			// Content awareness API test
+			response = sendGetRequest("contentAwareness", "sessionId=" + sessionId + "&repositoryAlias=TestRepository&branch=master&compareToBranch=master&showUncommitted=true&viewAsOrigin=false&theirUsername=David&filename=default.txt", HttpURLConnection.HTTP_OK);
+			assertEquals(1, new JSONObject(response).getJSONArray("content").length());
+	
+			// Content conflict API test
+			response = sendGetRequest("contentConflicts", "sessionId=" + sessionId + "&repositoryAlias=TestRepository&branch=master&compareToBranch=master&showUncommitted=false&viewAsOrigin=false&theirUsername=David&filename=default.txt", HttpURLConnection.HTTP_OK);
+			assertEquals(1, new JSONObject(response).getJSONArray("content").length());
+			
 		}
 		finally {
+			
 			db.closeConnection();
 			if (server != null) server.stop(0);
+			
 		}
 
 	}
 
+	/**
+	 * 
+	 * Test user related APIs
+	 * More detailed tests directly on the database level in DatabaseConnectionTest
+	 *
+	 */
 	@Test
 	public void testUsers() throws Exception {
+		
 		HttpServer server = null;
 		DatabaseConnection db = new DatabaseConnection();
+		
 		try {
 			
-		// Get database connection
-		db.getConnection();
-		
-		// Setup test state
-		TestGitHelper.setupTest();
-		TestGitHelper.runPlugins();
-		
-		// Setup HTTP server
-		server = startServer();
-
-		HttpClient httpClient = new HttpClient();
-		String sessionId = httpClient.login("http://127.0.0.1:7331", "Admin", "1234");
-
-		assertEquals(1, db.getAllRepositories().length());
-		
-		// Create repository
-		sendPostRequest("createUser", "username=Michael&password=michaelpw", HttpURLConnection.HTTP_OK);
-		assertEquals("Michael", db.getUsernameForCorrectLogin("Michael", "michaelpw"));
-		
-		String response = sendGetRequest("users", "sessionId=" + sessionId, HttpURLConnection.HTTP_OK);
-		assertEquals(5, new JSONObject(response).getJSONArray("users").length());
-		System.out.println("Response: " + response);
-		
-		sendPostRequest("giveAdminPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
-		assertEquals(true, db.isUserAdmin("Michael"));
-		sendPostRequest("giveCreatorPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
-		assertEquals(true, db.isUserCreator("Michael"));
-		
-		sendPostRequest("revokeAdminPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
-		assertEquals(false, db.isUserAdmin("Michael"));
-		sendPostRequest("revokeCreatorPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
-		assertEquals(false, db.isUserCreator("Michael"));
-		
-
-		String michaelSessionId = httpClient.login("http://127.0.0.1:7331", "Michael", "michaelpw");
-		
-		sendPostRequest("changePassword", "sessionId=" + michaelSessionId + "&newPassword=newpw", HttpURLConnection.HTTP_OK);
-		assertEquals("Michael", db.getUsernameForCorrectLogin("Michael", "newpw"));
-		
-
-		sendPostRequest("deleteUser", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
-		assertEquals(null, db.getUsernameForCorrectLogin("Michael", "newpw"));
+			// Get database connection
+			db.getConnection();
+			
+			// Setup test state
+			TestGitHelper.setupTest();
+			TestGitHelper.runPlugins();
+			
+			// Setup HTTP server
+			server = startServer();
+	
+			HttpClient httpClient = new HttpClient();
+			String sessionId = httpClient.login("http://127.0.0.1:7331", "Admin", "1234");
+	
+			assertEquals(1, db.getAllRepositories().length());
+			
+			// Test create user
+			sendPostRequest("createUser", "username=Michael&password=michaelpw", HttpURLConnection.HTTP_OK);
+			assertEquals("Michael", db.getUsernameForCorrectLogin("Michael", "michaelpw"));
+			
+			// Test retrieve users
+			String response = sendGetRequest("users", "sessionId=" + sessionId, HttpURLConnection.HTTP_OK);
+			assertEquals(5, new JSONObject(response).getJSONArray("users").length());
+			
+			// Test give admin and creator privileges
+			sendPostRequest("giveAdminPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
+			assertEquals(true, db.isUserAdmin("Michael"));
+			sendPostRequest("giveCreatorPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
+			assertEquals(true, db.isUserCreator("Michael"));
+			
+			// Test revoke admin and creator privileges
+			sendPostRequest("revokeAdminPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
+			assertEquals(false, db.isUserAdmin("Michael"));
+			sendPostRequest("revokeCreatorPrivileges", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
+			assertEquals(false, db.isUserCreator("Michael"));
+			
+			// Test change password
+			String michaelSessionId = httpClient.login("http://127.0.0.1:7331", "Michael", "michaelpw");
+			sendPostRequest("changePassword", "sessionId=" + michaelSessionId + "&newPassword=newpw", HttpURLConnection.HTTP_OK);
+			assertEquals("Michael", db.getUsernameForCorrectLogin("Michael", "newpw"));
+			
+			// Test delete user
+			sendPostRequest("deleteUser", "sessionId=" + sessionId + "&username=Michael", HttpURLConnection.HTTP_OK);
+			assertEquals(null, db.getUsernameForCorrectLogin("Michael", "newpw"));
 		
 		}
 		finally {
+			
 			db.closeConnection();
 			if (server != null) server.stop(0);
+			
 		}
 
 	}

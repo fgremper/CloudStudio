@@ -1,6 +1,5 @@
 package ch.ethz.fgremper.cloudstudio.server;
 
-import java.io.File;
 import java.net.InetSocketAddress;
 import java.util.concurrent.Executors;
 

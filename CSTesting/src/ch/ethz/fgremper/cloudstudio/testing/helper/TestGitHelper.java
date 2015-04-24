@@ -7,21 +7,35 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
-import org.json.JSONObject;
 
-import ch.ethz.fgremper.cloudstudio.client.ClientMain;
 import ch.ethz.fgremper.cloudstudio.common.ProcessWithTimeout;
 import ch.ethz.fgremper.cloudstudio.common.RepositoryReader;
 import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
 import ch.ethz.fgremper.cloudstudio.server.OriginUpdater;
-import ch.ethz.fgremper.cloudstudio.server.PeriodicalAllOriginUpdater;
 
+/**
+ * 
+ * Helps setting up the test environment and do actions with our test characters
+ * 
+ * @author Fabian Gremper
+ *
+ */
 public class TestGitHelper {
 
+	/**
+	 * 
+	 * Clear sandpit
+	 *
+	 */
 	public static void clearSandpit() throws Exception {
 		FileUtils.cleanDirectory(new File(TestSettings.SANDPIT_DIRECTORY_PATH)); 
 	}
 	
+	/**
+	 * 
+	 * Create origin
+	 *
+	 */
 	public static void createOrigin() throws Exception {
 		
 		System.out.println("[TestGitHelper] Creating origin");
@@ -52,21 +66,41 @@ public class TestGitHelper {
 	
 	}
 	
+	/**
+	 * 
+	 * Create user
+	 *
+	 */
 	public static void createUser(String user) throws Exception {
 		System.out.println("[TestGitHelper] Creating user directory: " + user);
 		File userDir = new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 		userDir.mkdir();	
 	}
 	
+	/**
+	 * 
+	 * Clone origin for user
+	 *
+	 */
 	public static void cloneOrigin(String user) throws Exception {
 		System.out.println("[TestGitHelper] Clone from origin for user " + user);
 		executeCommand("git clone " + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "origin " + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user);
 	}
 	
+	/**
+	 * 
+	 * Create folder
+	 *
+	 */
 	public static void createFolder(String user, String folder) {
 		new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + File.separator + folder).mkdir();
 	}
 	
+	/**
+	 * 
+	 * Write random string to file
+	 *
+	 */
 	public static void createOrModifyFile(String user, String filename) throws Exception {
 		String content = randomString();
 		System.out.println("[TestGitHelper] Creating file for user '" + user + "': " + filename);
@@ -74,51 +108,101 @@ public class TestGitHelper {
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " add " + filename);
 	}
 
+	/**
+	 * 
+	 * Write content to file
+	 *
+	 */
 	public static void writeContentToFile(String user, String filename, String content) throws Exception {
 		System.out.println("[TestGitHelper] Creating file for user '" + user + "': " + filename);
 		FileUtils.writeStringToFile(new File(TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + File.separator + filename), content);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " add " + filename);
 	}
 	
+	/**
+	 * 
+	 * Delete a file
+	 *
+	 */
 	public static void deleteFile(String user, String filename) throws Exception {
 		System.out.println("[TestGitHelper] Deleting file for user '" + user + "': " + filename);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " rm -f " + filename);
 	}
 
+	/**
+	 * 
+	 * Do a git commit
+	 *
+	 */
 	public static void commit(String user) throws Exception {
 		System.out.println("[TestGitHelper] Committing user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " commit -a -m " + user);
 	}
 
+	/**
+	 * 
+	 * Checkout a branch in git
+	 *
+	 */
 	public static void checkoutBranch(String user, String branchName) throws Exception {
 		System.out.println("[TestGitHelper] Committing user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " checkout " + branchName);
 	}
 
+	/**
+	 * 
+	 * Create a new branch in git
+	 *
+	 */
 	public static void createBranch(String user, String branchName) throws Exception {
 		System.out.println("[TestGitHelper] Committing user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " branch " + branchName);
 	}
 
+	/**
+	 * 
+	 * Pull from origin
+	 *
+	 */
 	public static void pull(String user) throws Exception {
 		System.out.println("[TestGitHelper] Pulling as user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " pull --all");
 	}
 
+	/**
+	 * 
+	 * Push to origin
+	 *
+	 */
 	public static void push(String user) throws Exception {
 		System.out.println("[TestGitHelper] Pushing as user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " push --all");
 	}
 
+	/**
+	 * 
+	 * Merge in branch
+	 *
+	 */
 	public static void merge(String user, String branch) throws Exception {
 		System.out.println("[TestGitHelper] Merging as user " + user);
 		executeCommand("git --git-dir=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + "/.git" + " --work-tree=" + TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + user + " merge " + branch);
 	}
 	
+	/**
+	 * 
+	 * Returns a random string
+	 *
+	 */
 	public static String randomString() {
 		return Long.toHexString(Double.doubleToLongBits(Math.random()));
 	}
 
+	/**
+	 * 
+	 * Execute a command on the command line
+	 *
+	 */
 	public static void executeCommand(String consoleInput) throws Exception {
 		System.out.println("[TestGitHelper] Executing: " + consoleInput);
 		Process p = Runtime.getRuntime().exec(consoleInput);
@@ -132,6 +216,12 @@ public class TestGitHelper {
 			System.out.println("[TestGitHelper] Console: " + line);
 		}
 	}
+	
+	/**
+	 * 
+	 * Setup a scenario that is used as a base for most tests
+	 *
+	 */
 	public static void setupTest() throws Exception {
 		
 		clearSandpit();
@@ -167,6 +257,11 @@ public class TestGitHelper {
 		
 	}
 	
+	/**
+	 * 
+	 * Simulate running all plugins to submit information to CloudStudio
+	 * 
+	 */
 	public static void runPlugins() throws Exception {
 		
 		List<String> users = new LinkedList<String>();
@@ -189,4 +284,5 @@ public class TestGitHelper {
 		OriginUpdater.update("TestRepository", TestSettings.SANDPIT_DIRECTORY_PATH + File.separator + "origin");
 
 	}
+	
 }

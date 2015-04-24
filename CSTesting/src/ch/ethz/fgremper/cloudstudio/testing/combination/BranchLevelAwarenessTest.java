@@ -1,7 +1,6 @@
 package ch.ethz.fgremper.cloudstudio.testing.combination;
 
-import static org.junit.Assert.*;
-import junit.framework.Assert;
+import static org.junit.Assert.assertEquals;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,9 +9,20 @@ import org.junit.Test;
 import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
 import ch.ethz.fgremper.cloudstudio.testing.helper.TestGitHelper;
 
+/**
+ * 
+ * Combination test for branch awareness for a given scenario
+ * 
+ * @author Fabian Gremper
+ *
+ */
 public class BranchLevelAwarenessTest {
 
-
+	/**
+	 * 
+	 * Helper function to find an item in a JSONObject
+	 * 
+	 */
 	public JSONObject findItem(JSONArray array, String key, String value) throws Exception {
 		for (int i = 0; i < array.length(); i++) {
 			if (array.getJSONObject(i).getString(key).equals(value)) return array.getJSONObject(i);
@@ -20,10 +30,11 @@ public class BranchLevelAwarenessTest {
 		return null;
 	}
 
-	
-	
-	
-	
+	/**
+	 * 
+	 * Test the relationship with origin feature
+	 *
+	 */
 	@Test
 	public void testRelationWithOrigin() throws Exception {
 		
@@ -46,6 +57,7 @@ public class BranchLevelAwarenessTest {
 		assertEquals(1, branchesArray.length());
 		branchObject = branchesArray.getJSONObject(0);
 
+		// Setup all equal
 		assertEquals(3, branchObject.getJSONArray("activeUsers").length());
 		assertEquals(3, branchObject.getJSONArray("users").length());
 		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "John").getString("relationWithOrigin"));
@@ -128,11 +140,17 @@ public class BranchLevelAwarenessTest {
 		assertEquals("EQUAL", findItem(branchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
 		db.closeConnection();
+		
 	}
 	
 
+	/**
+	 * 
+	 * Tests for setting up new branches
+	 *
+	 */
 	@Test
-	public void testBranch() throws Exception {
+	public void testNewBranches() throws Exception {
 		
 		// Database connection
 		DatabaseConnection db = new DatabaseConnection();
@@ -196,7 +214,6 @@ public class BranchLevelAwarenessTest {
 		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
 		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
-
 		// Setup new commit
 		TestGitHelper.createOrModifyFile("John", "default.txt");
 		TestGitHelper.commit("John");
@@ -215,7 +232,6 @@ public class BranchLevelAwarenessTest {
 		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
 		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
-
 		// Setup new commit
 		TestGitHelper.pull("David");
 		TestGitHelper.runPlugins();
@@ -233,22 +249,8 @@ public class BranchLevelAwarenessTest {
 		assertEquals("EQUAL", findItem(newBranchObject.getJSONArray("users"), "username", "David").getString("relationWithOrigin"));
 		assertEquals("REMOTE_BRANCH", findItem(newBranchObject.getJSONArray("users"), "username", "Isabelle").getString("relationWithOrigin"));
 
-		
-		
-		
-		
-		
-		
-		
-		//System.out.println("master: " + masterBranchObject.toString());
-		//System.out.println("new: " + newBranchObject.toString());
-
 		db.closeConnection();
+		
 	}
-	
-	
-	
-	
-	
 
 }

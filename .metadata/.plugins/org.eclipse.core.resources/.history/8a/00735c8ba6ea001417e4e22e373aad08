@@ -1,0 +1,285 @@
+package ch.ethz.fgremper.cloudstudio.testing.combination;
+
+import static org.junit.Assert.*;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.Test;
+
+import ch.ethz.fgremper.cloudstudio.server.ContentConflictGitReader;
+import ch.ethz.fgremper.cloudstudio.server.DatabaseConnection;
+import ch.ethz.fgremper.cloudstudio.testing.helper.TestGitHelper;
+
+/**
+ * 
+ * Combination test for content awareness for a given scenario
+ * 
+ * @author Fabian Gremper
+ *
+ */
+public class ContentLevelAwarenessTest {
+
+	/**
+	 * 
+	 * Helper function to find an item in a JSONObject
+	 * 
+	 */
+	public JSONObject findItem(JSONArray array, String key, String value) throws Exception {
+		for (int i = 0; i < array.length(); i++) {
+			if (array.getJSONObject(i).getString(key).equals(value)) return array.getJSONObject(i);
+		}
+		return null;
+	}
+
+	/**
+	 * 
+	 * Test if file content comparison and conflict count is correct in an ongoing scenario
+	 *
+	 */
+	@Test
+	public void testCorrectFileContentAndConflictCount()  throws Exception {
+
+		// Database connection
+		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
+
+		// Objects
+		ContentConflictGitReader gitReader;
+		JSONArray diffLineArray;
+		
+		// Setup default state
+		TestGitHelper.setupTest();
+		TestGitHelper.runPlugins();
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", false);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+        
+        
+        
+        
+        
+        
+        
+        TestGitHelper.writeContentToFile("John", "default.txt", "john content");
+        TestGitHelper.runPlugins();
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", false);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+        
+        
+        
+
+        TestGitHelper.commit("John");
+        TestGitHelper.runPlugins();
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", false);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+        
+        
+        
+        
+
+        
+        
+        
+        TestGitHelper.writeContentToFile("David", "default.txt", "david content");
+        TestGitHelper.runPlugins();
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        assertEquals((Integer) 1, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("david content", diffLineArray.getJSONObject(0).getString("theirContent"));
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", false);
+		
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+        
+        
+        
+
+        TestGitHelper.commit("David");
+        TestGitHelper.runPlugins();
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        assertEquals((Integer) 1, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("david content", diffLineArray.getJSONObject(0).getString("theirContent"));
+
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", false);
+		
+        assertEquals((Integer) 1, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("default content", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("david content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+        
+        
+        
+        
+		db.closeConnection();
+
+	}
+	
+	/**
+	 * 
+	 * Test if the file three-way comparison is correct
+	 *
+	 */
+	@Test
+	public void testCorrectConflictDetection()  throws Exception {
+
+		// Database connection
+		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
+
+		// Objects
+		ContentConflictGitReader gitReader;
+		JSONArray diffLineArray;
+		
+		// Setup default state
+		TestGitHelper.setupTest();
+
+		// Setup files
+		TestGitHelper.writeContentToFile("John", "default.txt", "one\ntwo\nthree\nfour\nfive");
+		TestGitHelper.commit("John");
+		TestGitHelper.push("John");
+		TestGitHelper.pull("David");
+		TestGitHelper.writeContentToFile("John", "default.txt", "one\ntwo\nCHANGED BY JOHN\nfour\nfive");
+		TestGitHelper.writeContentToFile("David", "default.txt", "one\ntwo\nCHANGED BY DAVID\nfour\nfive");
+        TestGitHelper.runPlugins();
+
+        // Get conflicts
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        // Verify
+        assertEquals((Integer) 1, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(5, diffLineArray.length());
+        assertEquals("CONFLICT", diffLineArray.getJSONObject(2).getString("myType"));
+        assertEquals("CONFLICT", diffLineArray.getJSONObject(2).getString("theirType"));
+
+        // Another setup
+		TestGitHelper.writeContentToFile("John", "default.txt", "one\nCHANGED BY JOHN\nthree\nfour\nfive");
+		TestGitHelper.writeContentToFile("David", "default.txt", "one\ntwo\nthree\nCHANGED BY DAVID\nfive");
+        TestGitHelper.runPlugins();
+
+        // Get conflicts
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "default.txt", "John", "master", "David", true);
+		
+        // Verify
+        assertEquals((Integer) 0, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(5, diffLineArray.length());
+        assertEquals("MODIFIED", diffLineArray.getJSONObject(1).getString("myType"));
+        assertEquals("MODIFIED", diffLineArray.getJSONObject(3).getString("theirType"));
+
+		db.closeConnection();
+
+	}
+	
+	/**
+	 * 
+	 * Test of what happens when there is no common ancestor
+	 * 
+	 */
+	@Test
+	public void testNoCommonAncestor()  throws Exception {
+
+		// Database connection
+		DatabaseConnection db = new DatabaseConnection();
+		db.getConnection();
+
+		// Objects
+		ContentConflictGitReader gitReader;
+		JSONArray diffLineArray;
+		
+		// Setup default state
+		TestGitHelper.setupTest();
+
+		// Setup files
+		TestGitHelper.writeContentToFile("John", "new.txt", "john content");
+		TestGitHelper.commit("John");
+		TestGitHelper.writeContentToFile("David", "new.txt", "david content");
+		TestGitHelper.commit("David");
+		TestGitHelper.runPlugins();
+
+		// Get conflicts
+        gitReader = new ContentConflictGitReader("TestRepository", "master", "new.txt", "John", "master", "David", true);
+
+        // Verify
+        assertEquals((Integer) 1, gitReader.countConflicts());
+        diffLineArray = gitReader.diff();
+        assertEquals(1, diffLineArray.length());
+        assertEquals("john content", diffLineArray.getJSONObject(0).getString("myContent"));
+        assertEquals("", diffLineArray.getJSONObject(0).getString("baseContent"));
+        assertEquals("david content", diffLineArray.getJSONObject(0).getString("theirContent"));
+        
+		db.closeConnection();
+
+	}
+	
+}
