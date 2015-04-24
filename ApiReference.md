@@ -976,7 +976,7 @@ curl "http://cloudstudio:7330/api/localState?sessionId=YOUR_SESSION_ID&repositor
   -d "$JSON_STRING"
 ```
 
-With the $JSON_STRING being:
+With the `$JSON_STRING` being:
 
 ```json
 {  
@@ -996,6 +996,13 @@ With the $JSON_STRING being:
          "commit": "65fcfcd7860bf95fd1dce7c01bcd886bcdf4e675"
       }
    ],
+   "branches": [
+      {  
+         "commit": "73e68dd8ae12bdf7dfce4a29cd0a6cb6ce99aca8",
+         "active": true,
+         "branch": "master"
+      }
+   ],
    "commitHistory": [
       {  
          "commit": "73e68dd8ae12bdf7dfce4a29cd0a6cb6ce99aca8",
@@ -1009,13 +1016,6 @@ With the $JSON_STRING being:
                "commit": "fdaa47da4ab7f22fc06373c407c48326e70db199"
             }
          ]
-      }
-   ],
-   "branches": [
-      {  
-         "commit": "73e68dd8ae12bdf7dfce4a29cd0a6cb6ce99aca8",
-         "active": true,
-         "branch": "master"
       }
    ]
 }
