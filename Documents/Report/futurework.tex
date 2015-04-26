@@ -1,0 +1,25 @@
+%************************************************************************************
+% Authors: Martin Nordio
+% Date: March 2011
+% Root file: report_root.tex
+%************************************************************************************
+
+
+%----------------------------------------------------------------------------
+\chapter{Future Work}\label{futurework}
+%----------------------------------------------------------------------------
+
+The functionality integrated by this thesis can be easily extended. \\
+
+While CloudStudio performed sufficiently in test projects, there are many steps that can be taken to improve its overall performance. To load the file level awareness view with conflict detection, a lot of file comparisons have to be made and files (common ancestors) have to be looked up through JGit. The results of operations like these could be cached to speed up the service. \\
+
+CloudStudio offers an API that opens up the possibility to write all sorts of plugins that benefit from its awareness and conflict detection capabilities. Aside from using it directly through the web interface, future work can include writing plugins that directly display awareness information in a programmers preferred IDE. \\
+
+As of this time, the client sends its entire information to the server every periodical update. It was a conscious decision not to send incremental one-way updates from the client to preserve stability of the system. However, it is conceivable to implement a delta update function where client and server negotiate what information has to be sent in order to lower the bandwidth requirements. \\
+
+Git treats every commit as a snapshot, and as such is unaware of file renaming. It does however use heuristics to calculate the likelihood of a file rename given the similarity of two files. CloudStudio has not yet implemented any heuristics to detect file renames and would greatly benefit from doing so. \\
+
+The Chair of Software Engineering at ETH Zurich has been teaching a "Distributed and Outsourced Software Engineering" (DOSE) course for several years to prepare student for new challenges in a distributed development environment. \cite{ref19, ref20} CloudStudio can be used as a means of collaboration and to heighten the sense of awareness in student projects, by both students and the teaching assistants.
+
+
+

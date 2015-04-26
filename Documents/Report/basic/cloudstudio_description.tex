@@ -1,0 +1,78 @@
+\section{Introduction}
+
+\subsection{Motivation}
+
+ Global software development (GSD) is a reality of today's software development. Companies cross the
+ barriers produced by distance, cultural differences, and time zones looking for talented personnel.  
+ To succeed in this journey, a new set of challenging problems have to be solved. 
+ The challenges include developing software requirements specifications~\cite{Meyer85},
+ API design~\cite{NordioMitinMeyerGhezziNittoTamburelli09}, project management, and communication and collaboration
+ challenges~\cite{HerbslebMockusETAL00,NordioETAL11}. 
+
+
+ The effects of GSD have been studied from different angles by researchers in the 
+ field~\cite{Carmel1999, NordioETAL11, EstlerNordioFuriaMeyerSchneider12, HolmstromConchuirAgerfalkFitzgerald06, HerbslebMoitra01}. 
+ Focusing on communication and the effect of time zones,
+ Herbsleb et al.~\cite{HerbslebMockusETAL00} and Espinosa et al.~\cite{EspinosaNingErran07} tried to answer an interesting
+ question: how distribution and time zones affect
+ distributed software development, specially when the teams are distributed 
+ in several countries and continents. 
+Nordio et al.~\cite{NordioETAL11}, we studied the effect of time zones and locations on communication 
+within distributed teams; they performed the study as part of the DOSE~\cite{NordioMitinMeyer2010,NordioDOSE2011} university course.
+Global software development has also been studied from a quality point of view.
+ The goal is to identify whether the quality and productivity of distributed projects is comparable to the one produced
+ in co-located projects. 
+ 
+ Tools in distributed software development play a key role, however, they are rare. An example is Jazz: a tool for distributed 
+ software development that improves 
+ communication and collaboration between developers. Jazz does not support project management, so other tools such as 
+ Microsoft Project have to be used. Environments for software development, known as Integrated Development Environment (IDE), have been 
+ widely developed in the last decade; for example Eclipse and EiffelStudio. While there are tools to support software development 
+ and project management, these tools are not integrated in a common environment, and they do not satisfy all the 
+ requirements of distributed software development.
+ 
+ \subsection{CloudStudio}
+
+The Integrated Development Environment is the software developer's
+central tool. IDEs have undergone considerable advances. While Internet development has
+benefitted from IDEs, the IDE has not benefitted from the Internet; it
+remains an essentially personal tool, requiring every member of a
+project to work on a different copy of the software under development
+and periodically to undergo a painful process of reconciliation.
+
+
+
+CloudStudio~\cite{NordioEstlerFuriaMeyer11}  brings software
+development to the cloud. In recent years ever more human
+activities, from banking to text processing, have been ``moved to the
+cloud''. CloudStudio does the same for software engineering by
+introducing a new paradigm of software development, where all the
+products of a software project are shared in a common web-based
+repository.
+
+
+Moving software development to the cloud is not just a matter of
+following general trends, but a response to critical software
+engineering needs, which current technology does not meet: supporting
+today's distributed developments, which often involve teams spread
+over many locations, and iterative development practices such as pair
+programming and online code reviews; maintaining compatibility between
+software elements developed by different team members;
+% providing the project manager, at every step, with an accurate view
+% of the current project state;
+avoiding potentially catastrophic version incompatibility problems;
+drastically simplifying configuration management.
+
+CloudStudio brings flexibility to several new facets of software
+development, most importantly configuration management (CM): to
+replace the traditional and painful update-modify-commit-reconcile
+cycle, CloudStudio tracks changes at every location in real time and
+displays only the selected users' changes in the integrated editor.
+The compiler and other tools are aware of the current user
+preferences, and target the version of the code coinciding with the
+current view.  CloudStudio also integrates communication tools (a chat
+box and Skype), and includes a fully automated verification component,
+including both static (proof) and dynamic (testing) tools. This array of tightly 
+integrated tools makes CloudStudio an innovative IDE, which
+can improve the quality and speed of projects involving distributed
+teams, and support highly collaborative development practices.

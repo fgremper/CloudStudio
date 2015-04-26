@@ -1,0 +1,282 @@
+%
+%************************************************************************************
+% Authors: Martin Nordio
+% Created: March 2011
+%
+%************************************************************************************
+
+%\documentclass[a4paper,12pt, twoside, english]{book}
+\documentclass[a4paper,12pt, oneside, english]{mythesis}
+
+
+\usepackage{nopageno}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{fancyhdr}
+\usepackage{hyperref}
+\usepackage{xspace}
+\usepackage{todo}
+\usepackage{supertabular}
+\usepackage{url}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath,bm}
+\usepackage{makeidx}
+\usepackage{semantic}
+
+\usepackage{tabularx}
+
+\usepackage{courier}
+
+% for adding languages such as Java, C in listing and don't use verbatim
+\usepackage{listings}
+\usepackage{amsthm}
+
+\usepackage{color}
+\usepackage{enumitem}
+
+\definecolor{verylightgrey}{rgb}{0.95, 0.95, 0.95}
+
+\definecolor{gray}{rgb}{0.4,0.4,0.4}
+\definecolor{darkblue}{rgb}{0.2,0.2,0.8}
+\definecolor{cyan}{rgb}{0.0,0.6,0.6}
+
+\lstset{basicstyle=\scriptsize\ttfamily,breaklines=true}
+\lstset{backgroundcolor=\color{verylightgrey}}
+\lstset{showstringspaces=false}
+
+
+\lstdefinelanguage{XML}
+{
+  morestring=[b]",
+  morestring=[s]{>}{<},
+  morecomment=[s]{<?}{?>},
+  stringstyle=\color{black},
+  identifierstyle=\color{darkblue},
+  keywordstyle=\color{cyan},
+  morekeywords={xmlns,version,type}% list your attributes here
+}
+
+\lstset{% setup listings
+    language=XML,% set programming language
+        framexleftmargin=10pt,
+        framextopmargin=6pt,
+        framexbottommargin=6pt, 
+        frame=tb, framerule=0pt,
+}
+
+
+%\lstset{framextopmargin=50pt}
+
+% Eiffel Identifiers or expressions
+\newcommand{\eid}[1]{\textsl{{\color[HTML]{000000} #1}}}
+% Eiffel Class names
+\newcommand{\ecl}[1]{\textsl{{\color[HTML]{3333FF} #1}}}
+% Eiffel Keywords
+\newcommand{\ekey}[1]{\textbf{{\color[HTML]{333399} #1}}}
+
+
+
+%\graphicspath{{image/}} 
+%\pagestyle{fancyplain}
+
+\pagestyle{headings}
+  
+
+% with this we ensure that the chapter and section 
+% headings are in lowercase 
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}} 
+\renewcommand{\sectionmark}[1]{\markright{\thesection\ #1}} 
+
+\frenchspacing
+
+% George's $$ environment
+\makeatletter
+% ~ gives a \; space in math mode
+\def~{\ifmmode\;\else\penalty\@M\ \fi}
+%  Italic in mathematical formulas
+\def\@setmcodes#1#2#3{{\count0=#1 \count1=#3
+ \loop \global\mathcode\count0=\count1 \ifnum \count0<#2
+ \advance\count0 by1 \advance\count1 by1 \repeat}}
+\DeclareSymbolFont{italic}{OT1}{\rmdefault}{m}{it}
+\let\mathit\undefined
+\DeclareSymbolFontAlphabet{\mathit}{italic} \edef\@tempa{\hexnumber@\symitalic}
+\@setmcodes{`A}{`Z}{"7\@tempa41} \@setmcodes{`a}{`z}{"7\@tempa61} \makeatother
+
+% end George
+
+\newcommand{\keyword}[1]{\hbox{\texttt{#1}}}
+
+% definitions: Hoare triples, Eiffel keywords, etc
+\input{definitions}
+
+%\pagenumbering{none}
+
+
+%\pagestyle{headings}
+
+%\setlength{\hoffset}{1.0cm} 
+%\setlength{\textwidth}{16cm}
+%\setlength{\oddsidemargin}{1.1cm}
+%\setlength{\evensidemargin}{-1.1cm}
+%\setlength{\textheight}{23cm}
+
+%\setlength{\hoffset}{-1.0cm} 
+%\setlength{\textwidth}{16cm}
+%\setlength{\textheight}{23cm}
+
+
+
+
+
+
+
+\title{Your Title }
+
+\author{\bf Your Name   \\
+   \\
+    ETH Zurich, Switzerland \\
+    \texttt{your e-mail}  \ \\
+}
+
+\date{March 2011}
+
+
+
+
+
+\begin{document}
+
+
+
+%\maketitle
+
+
+\input{abstract}
+
+
+\input{acknowledgements}
+
+%\newpage
+
+\tableofcontents
+
+
+
+
+\pagenumbering{arabic}
+
+
+
+
+\input{introduction}
+
+\input{design}
+
+
+\input{implementation}
+
+\input{userguide}
+
+\input{futurework}
+
+\input{conclusions}
+
+
+%\bibliographystyle{abbrv}
+
+%\bibliography{literatur}
+
+% 11->2
+% 7->6
+% 16-10
+
+\begin{thebibliography}{99}
+
+\bibitem{ref1}
+  Martin Nordio, Roman Mitin and Bertrand Meyer. \textbf{Advanced Hands-on Training for Distributed and Outsourced Software Engineering}, In Proceedings of the 32nd ACM/IEEE International Conference on Software Engineering - Volume 1, ACM. 2010.
+
+\bibitem{ref2}
+  E. Carmel. \textbf{Global software teams: collaborating across borders and time zones}. Prentice Hall PTR, Upper Saddle River, NJ, USA, 1999.
+
+\bibitem{ref3}
+  \textbf{Awareness and Merge Conflicts in Distributed Software Development}. H.-Christian Estler, Martin Nordio, Carlo A. Furia, Bertrand Meyer, In Proceedings of the 9th International Conference on Global Software Engineering (ICGSE) (Yuanfang Cai, Jude Fernandez, Wenyun Zhao, eds.), IEEE Computer Society, 2014.
+
+\bibitem{ref4}
+  Y. Brun, R. Holmes, M. Ernst, and D. Notkin. \textbf{Proactive detection of collaboration conflicts}. In ESEC/FSE, pages 168-178. ACM, 2011.
+
+\bibitem{ref5}
+  C. Bird, N. Nagappan, P. Devanbu, H. Gall, and B. Murphy. \textbf{Does distributed development affect software quality? An empirical case study of Windows Vista}. In Proceedings of the 31st International Conference on Software Engineering, ICSE ?09, pages 518-528, Washington, DC, USA, 2009. IEEE Computer Society.
+
+\bibitem{ref6}
+  J. Herbsleb and a. Mockus. \textbf{An empirical study of speed and communication in globally distributed software development}. IEEE Transactions on Software Engineering, 29(6):481-494, June 2003.
+
+\bibitem{ref8}
+  J. A. Espinosa, N. Nan, and E. Carmel. \textbf{Do Gradations of Time Zone Separation Make a Difference in Performance? A First Laboratory Study}. In International Conference on Global Software Engineering (ICGSE 2007), pages 12-22. IEEE, Aug. 2007.
+
+\bibitem{ref9}
+  Martin Nordio, Roman Mitin, Bertrand Meyer, Carlo Ghezzi, Elisabetta Di Nitto and Giordano Tamburelli. \textbf{The Role of Contracts in Distributed Development}. In proceedings of Software Engineering Advances For Offshore and Outsourced Development (SEAFOOD), Lecture Notes in Business Information Processing 35, Springer-Verlag, 2009.
+
+\bibitem{ref10}
+  M. Nordio, H.-C. Estler, B. Meyer, J. Tschannen, C. Ghezzi, and E. D. Nitto. \textbf{How do distribution and time zones affect software development? A case study on communication.} In Proceedings of the IEEE International Conference on Global Software Engineering (ICGSE 2011). IEEE, 2011.
+
+\bibitem{ref12}
+  \textbf{Unifying Configuration Management with Awareness Systems and Merge Conflict Detection}. H.-Christian Estler, Martin Nordio, Carlo A. Furia, Bertrand Meyer, In 22nd Australasian Software Engineering Conference (ASWEC), IEEE, 2013.
+
+\bibitem{ref13}
+  \textbf{Collaborative Debugging}. H.-Christian Estler, Martin Nordio, Carlo A. Furia, Bertrand Meyer, In 8th International Conference on Global Software Engineering (ICGSE), IEEE, 2013.
+
+\bibitem{ref14}
+  J. A. Espinosa, N. Nan, and E. Carmel. \textbf{Do gradations of time zone separation make a difference in performance? A first laboratory study}. In Proceedings of the IEEE International Conference on Global Software Engineering (ICGSE 2007), pages 12-22. IEEE, Aug. 2007.
+
+\bibitem{ref15}
+  H.-C. Estler, M. Nordio, C. A. Furia, B. Meyer, and J. Schneider. \textbf{Agile vs. structured distributed software development: A case study}. In Proceedings of the 7th International Conference on Global Software Engineering. IEEE, 2012.
+
+\bibitem{ref17}
+  \textbf{Analysis of Git and Mercurial}. \newline https://code.google.com/p/support/wiki/DVCSAnalysis
+
+\bibitem{ref18}
+  \textbf{JGit}. http://eclipse.org/jgit/
+
+\bibitem{ref19}
+  Martin Nordio, Carlo Ghezzi, Bertrand Meyer, Elisabetta Di Nitto, Giordano Tamburrelli, Julian Tschannen, Nazareno Aguirre, Vidya Kulkarni. \textbf{Teaching Software Engineering using Globally Distributed Projects: the DOSE course}, In Collaborative Teaching of Globally Distributed Software Development - Community Building Workshop (CTGDSD), ACM, 2011.
+
+\bibitem{ref20}
+  Martin Nordio, Roman Mitin and Bertrand Meyer. \textbf{Advanced Hands-on Training for Distributed and Outsourced Software Engineering}, In Proceedings of the 32nd ACM/IEEE International Conference on Software Engineering - Volume 1, ACM. 2010.
+
+\bibitem{ref21}
+  K. Dullemond and B. van Gameren. \textbf{What distributed software teams need to know and when: An empirical study}. In ICGSE, pages 61-70, 2013.
+
+\bibitem{ref22}
+  A. Sarma, G. Bortis, and A. van der Hoek. \textbf{Towards supporting awareness of indirect conflicts across software configuration management workspaces}. In ASE, pages 94-103. ACM, 2007.
+
+\bibitem{ref23}
+  L. Hattori and M. Lanza. Syde. \textbf{A tool for collaborative software development}. In Proceedings of the 32nd ACM/IEEE International Conference on Software Engineering, pages 235-238. ACM Press, 2010.
+
+\bibitem{ref24}
+  L. Hattori, M. Lanza, and M. D'Ambros. \textbf{A qualitative analysis of preemptive conflict detection}. Technical Report 2011/05, University of Lugano, Sept. 2011.
+
+\bibitem{ref25}
+  Y. Brun, R. Holmes, M. Ernst, and D. Notkin. \textbf{Proactive detection of collaboration conflicts}. ESEC FSE, Szeged, Hungary, 2011.
+
+\bibitem{ref26}
+  J. Biehl, M. Czerwinski, G. Smith, and G. Robertson. \textbf{Fastdash: a visual dashboard for fostering awareness in software teams}. In Proceedings of the SIGCHI conference on Human factors in computing systems, CHI ?07, pages 1313-1322, New York, NY, USA, 2007. ACM.
+
+\bibitem{ref27}
+  S. Hupfer, L.-T. Cheng, S. Ross, and J. Patterson. \textbf{Introducing collaboration into an application development environment}. In Proceedings of the 2004 ACM conference on Computer supported cooperative work, CSCW ?04, pages 21-24. ACM, 2004.
+
+\bibitem{ref28}
+  \textbf{Automatic Version Control System for Distributed Software Development}. Sandra Weber, ETH Zurich, 2012
+  
+\bibitem{ref28}
+  \textbf{EiffelStudio}, https://www.eiffel.com/eiffelstudio/
+  
+\end{thebibliography}
+
+
+\end{document}
+
+
+
