@@ -42,8 +42,8 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 		
 		log.info("Incoming request: " + requestMethod + " " + uri.getPath());
 
-		String webInterfacePrefix = File.separator;
-		String pathToWebInterfaceFiles = "web/";
+		String webInterfacePrefix = "/";
+		String pathToWebInterfaceFiles = "web" + File.separator;
 		
 		if (requestMethod.equalsIgnoreCase("GET")) {
 			
@@ -54,19 +54,12 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 			
 			if (!requestedFile.startsWith("css/") && !requestedFile.startsWith("js/") && !requestedFile.startsWith("templates/") && !requestedFile.startsWith("img/")) requestedFile = "index.html";
 			log.info("Looking for: " + requestedFile);
-			
+
 			// Load resource
-			URL resource = WebInterfaceHttpHandler.class.getResource(pathToWebInterfaceFiles + requestedFile);
-			File file = null;
-			try {
-				file = new File(resource.toURI());
-			}
-			catch (Exception e) {
-				// Do nothing
-			}
-			
+			InputStream resource = WebInterfaceHttpHandler.class.getResourceAsStream(pathToWebInterfaceFiles + requestedFile);
+
 			// Does the file exist?
-			if (resource != null && file != null) {
+			if (resource != null) {
 				
 				// Set content type
 				String mime = "text/html"; 
@@ -79,9 +72,9 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				
 				// Read and send file
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-				
+
 				OutputStream os = exchange.getResponseBody();
-				FileInputStream fs = new FileInputStream(file);
+				InputStream fs = resource;
 				final byte[] buffer = new byte[0x10000];
 				int count = 0;
 				while ((count = fs.read(buffer)) >= 0) {
@@ -91,6 +84,7 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				os.close();
 
 			}
+			
 		}
 
 	}

@@ -24,7 +24,7 @@
 					<% } else if (content[i].myType == 'PAD') { %><div class="diffLine diffPad">
 					<% } else if (content[i].myType == 'MODIFIED' || content[i].myType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
 					<% } else { %><div class="diffLine"><% } %>
-						<%= content[i].myContent %>&nbsp;
+						<span class="pre"><%= content[i].myContent %></span>&nbsp;
 					</div>
 				<% } %>
 				</div>
@@ -42,7 +42,7 @@
 					<% } else if (content[i].theirType == 'PAD') { %><div class="diffLine diffPad">
 					<% } else if (content[i].theirType == 'MODIFIED' || content[i].theirType == 'MODIFIED_PAD') { %><div class="diffLine diffModify">
 					<% } else { %><div class="diffLine"><% } %>
-						<%= content[i].theirContent %>&nbsp;
+						<span class="pre"><%= content[i].theirContent %></span>&nbsp;
 					</div>
 				<% } %>
 				</div>

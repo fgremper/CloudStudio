@@ -62,7 +62,7 @@
 							<% if (!echoTitle) { %><h1>Behind origin</h1><p><% } %>
 							<% echoTitle = true %>
 
-							<span class="user userRed"><%= branches[i].users[j].username %></span>
+							<span class="user userRed"><%= branches[i].users[j].username %> (&minus;<%= branches[i].users[j].distanceFromOrigin %>)</span>
 
 						<% } %>
 
