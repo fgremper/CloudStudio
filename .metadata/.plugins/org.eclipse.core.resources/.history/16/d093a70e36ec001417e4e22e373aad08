@@ -55,7 +55,7 @@ public class OriginUpdater {
 			RepositoryReader repositoryReader = new RepositoryReader(repositoryNewOriginDirectory);
 			JSONObject updateObject = repositoryReader.getUpdateObject();
 			String inputJsonString = updateObject.toString();
-			// log.info("JSON string: " + inputJsonString); // don't log this, because it can be way too long
+			log.info("JSON string: " + inputJsonString);
 			
 			// Inserting into database
 			log.info("Doing database stuff");

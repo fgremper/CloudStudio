@@ -61,7 +61,6 @@ public class PeriodicalAllOriginUpdater implements Runnable {
 		}
 		catch (Exception e) {
 			log.error("Error reading repositories from database...");
-			e.printStackTrace();
 			return;
 		}
 

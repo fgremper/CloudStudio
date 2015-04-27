@@ -14,7 +14,7 @@
 \contentsline {section}{\numberline {2.4}File Level Awareness}{13}{section.2.4}
 \contentsline {subsection}{\numberline {2.4.1}View as Origin}{13}{subsection.2.4.1}
 \contentsline {subsection}{\numberline {2.4.2}View as Yourself}{13}{subsection.2.4.2}
-\contentsline {subsection}{\numberline {2.4.3}Show Conflicts}{13}{subsection.2.4.3}
+\contentsline {subsection}{\numberline {2.4.3}Show Conflicts}{14}{subsection.2.4.3}
 \contentsline {subsection}{\numberline {2.4.4}Compare to Other Branches}{14}{subsection.2.4.4}
 \contentsline {subsection}{\numberline {2.4.5}Filters}{15}{subsection.2.4.5}
 \contentsline {subsection}{\numberline {2.4.6}Grouping}{15}{subsection.2.4.6}
@@ -36,7 +36,7 @@
 \contentsline {subsection}{\numberline {3.8.1}Client Configuration}{24}{subsection.3.8.1}
 \contentsline {subsection}{\numberline {3.8.2}Server Configuration}{25}{subsection.3.8.2}
 \contentsline {section}{\numberline {3.9}Testing and Correctness}{25}{section.3.9}
-\contentsline {section}{\numberline {3.10}Build and Run}{26}{section.3.10}
+\contentsline {section}{\numberline {3.10}Build and Run}{25}{section.3.10}
 \contentsline {chapter}{\numberline {4}User Guide}{28}{chapter.4}
 \contentsline {section}{\numberline {4.1}Setup and Run Client}{28}{section.4.1}
 \contentsline {section}{\numberline {4.2}Using the Web Interface}{29}{section.4.2}

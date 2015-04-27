@@ -43,9 +43,9 @@ Distributed Version Control Systems (DVCS) such as Git and Mercurial have becomi
 
 
 
-Conventional version control provides a means to collaborate on writing programs, even different subtasks, and merge the changes later. Merging changes can however produce conflicts. To avoid big conflicts, we want to provide the programmer with an awareness system to inform programmers at the time of writing if another programmer is currently editing parts of the code that may be conflicting with what they are about to do. \\
+Conventional version control provides a means to collaborate on writing programs, even different subtasks, and merge the changes later. Merging changes can however produce conflicts. To avoid big conflicts, we want to provide the programmer with an awareness system to inform them at the time of writing if another programmer is currently editing parts of the code that may be conflicting with their current work. \\
 
-Researches have found that interruptions due to insufficient awareness occur frequently for teams of non-trivial size. A large and diverse set of information items is very important if they are related to the project a distributed software engineer is currently working on \cite{ref21}, while developers often have different preferences regarding the frequency and detail that awareness information should have \cite{ref3}. 
+Researches have found that interruptions due to insufficient awareness occur frequently for teams of non-trivial size. A large and diverse set of information items has been found to be very important if they are related to the project a distributed software engineer is currently working on \cite{ref21}, while developers often have different preferences regarding the frequency and detail that awareness information should have \cite{ref3}. 
 
 
 
@@ -57,13 +57,13 @@ Researches have found that interruptions due to insufficient awareness occur fre
 
 With the increasing importance on distributed software development, it has become necessary to construct techniques and tools that can assist programmers to make them more productive in such an environment \cite{ref13}. CloudStudio is a collaborative development framework proposed by Nordio et al. \cite{ref12, ref28} where the software configuration management, conflict detection, and awareness systems are unitarily conceived and tightly integrated. \\
 
-This thesis is a proposal at a new software solution, built from ground up, to provide programmers with extensive and relevant awareness information and a mechanism to detect possible conflicts early. I was asked to keep the name CloudStudio for the project. In this section, I will describe some of the aspects that I am trying to improve on with my thesis. For this purpose I will refer to my new version as CloudStudio 2.0, and to the previously existing implementation as CloudStudio 1.0. \\
+This thesis is a proposal at a new software solution, built from ground up, to provide programmers with extensive and relevant awareness information and a mechanism to detect possible conflicts early. I was asked to keep the name CloudStudio for this project. In this section, I will describe some of the differences and aspects that I am trying to improve with my thesis. For this purpose I will refer to my new version as CloudStudio 2.0, and to the previously existing implementation as CloudStudio 1.0. \\
 
-CloudStudio 1.0 is a web-based IDE that allows users to work, collaborate and run code directly in the browser. Behind the curtains, CloudStudio 1.0 sets up a new Git repository for every project that is used for its intrinsic version control.
+CloudStudio 1.0 is a web-based IDE that allows users to work, collaborate and run code directly in the browser. Behind the curtains, CloudStudio 1.0 sets up a new Git repository for every project that is used for its intrinsic version control. \\
 
 The web interface and the functionality of the CloudStudio 1.0 server and deeply intertwined. The system is designed for users to solely work through the web interface and does not provide an API to directly request awareness information from the server, for example to allow inclusion of CloudStudio's awareness features in widely used IDEs, such as EiffelStudio \cite{eiffelstudio} or Eclipse. CloudStudio 2.0 offers an extensive API for this purpose and its web interface communicates directly through this API. \\
 
-More importantly, CloudStudio 1.0 is dependent on a specific Git repository setup that it creates initially when a new CloudStudio project is created. It is not possible to use any of its functionality with pre-existing Git projects that were not specifically set up in CloudStudio in the first place. While it is possible to retrieve a CloudStudio 1.0 project's Git repository from the backend, perform some work directly on the Git repository and push it back to the server, there are many limitations: e.g. you would be required to follow its internal branch naming conventions and all operations or queries have to be done through the web interface. \\
+More importantly, CloudStudio 1.0 is dependent on a specific Git repository setup that it creates initially when a new CloudStudio project is created. It is not possible to use any of its functionality with pre-existing Git projects that were not specifically set up in CloudStudio in the first place. While it is possible to retrieve a CloudStudio 1.0 project's Git repository from the backend, perform some work directly on the Git repository and push it back to the server, there are many limitations: e.g. you would be required to follow its internal branch naming conventions and all awareness queries would still have to be done through the web interface. \\
 
 A big focus of CloudStudio 2.0 is also robustness to possible errors, deviation in repository structures and invalid requests. \\
 
@@ -88,7 +88,7 @@ There are several components that are being implemented in order to achieve this
 \begin{itemize}
 
 \item A CloudStudio client that needs to run on each developer's machine will gather information about the local Git repository and local working tree and sends relevant information to the CloudStudio server periodically.
-\item The CloudStudio server will then use the data from all the users running the plugin, as well as the data from a central remote repository (origin) to detect possible merge conflicts that may occur at some point when two or more parties attempt to push their changes. CloudStudio server will also provide extensive awareness information about who is changing what and the current state in which the users are in relation to each other and to the origin.
+\item The CloudStudio server will then use the data from all the users running the plugin, as well as the data from a central remote repository (origin) to detect possible merge conflicts that may occur at some point when two or more parties attempt to push their changes. CloudStudio server will also provide extensive awareness information about who is changing what and the current state in which the users are in relation to the central remote repository.
 \item The CloudStudio server will then provide a well defined API that allows other programs or tools to retrieve this awareness information.
 \item A web interface will be implemented to access and demonstrate CloudStudio's awareness capabilities.
 
@@ -98,7 +98,7 @@ There are many subgoals to this project:
 
 \begin{itemize}
 
-\item The API should be well defined and well documented. In the future, instead of only the web interface, it is conceivable that CloudStudio's awareness information could be made available directly in the users? IDE through a plugin.
+\item The API should be well defined and well documented. In the future, instead of only the web interface, it is conceivable that CloudStudio's awareness information could be also made available directly in the users' IDE through a plugin.
 \item Awareness information generated by CloudStudio is correct and useful.
 \item CloudStudio acts as a separate layer on top of Git. Its functionality can be added to existing projects without the need to make any changes to the structure of the Git repository.
 \item The implementation of all parts should be robust and stable; errors should be dealt with appropriately.
@@ -119,15 +119,15 @@ Under section 2.1.1 the features of CloudStudio are listed in detail.
 
 
 
-Extensive research in the area of awareness has spawned other tools seek to raise developers' awareness about the changes introduced by others. The granularity of awareness information varies from tool to tool.
+Extensive research in the area of awareness has spawned other tools seeking to raise developers' awareness about the changes introduced by others. The granularity of awareness information varies from tool to tool. \\
 
 Crystal is a publicly-available tool that uses speculative analysis to make concrete advice unobtrusively available to developers, helping them identify, manage, and prevent conflicts. \cite{ref25} \\
 
-Syde is a a tool to reestablish team awareness by sharing change and conflict information across developer?s workspaces \cite{ref23}. It uses the abstract syntax tree (AST) to detect conflicts and apply change awareness on the syntax level and was used to investigate conflict detection in a user study \cite{ref24}. \\
+Syde is a a tool to reestablish team awareness by sharing change and conflict information across developers' workspaces \cite{ref23}. It uses the abstract syntax tree (AST) to detect conflicts and apply change awareness on the syntax level and was used to investigate conflict detection in a user study \cite{ref24}. \\
 
 Palantir is an Eclipse plug-in to address direct and indirect conflicts, which arise due to ongoing changes in one artifact affecting concurrent changes in another artifact \cite{ref22}. \\
 
-FASTDash is an interactive visualization that seeks to improve team activity awareness using a spatial representation of the shared code base that highlights team members? current activities. It provides file-level awareness of the activities in Visual Studio projects \cite{ref26}. \\
+FASTDash is an interactive visualisation tool that seeks to improve team activity awareness using a spatial representation of the shared code base that highlights team members' current activities. It provides file-level awareness of the activities in Visual Studio projects \cite{ref26}. \\
 
 Jazz is an Eclipse plugins that shows simple change awareness by highlighting changed lines, designed to support small, informal teams; anyone can create a team and add or remove members \cite{ref27}. \\
 
