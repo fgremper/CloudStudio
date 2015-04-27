@@ -71,8 +71,6 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				Headers h = exchange.getResponseHeaders();
 				h.set("Content-Type", mime);
 				
-				log.info("Begin sending");
-				
 				// Read and send file
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
 				
@@ -86,8 +84,6 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				fs.close();
 				os.close();
 
-				log.info("End sending");
-				
 			}
 			
 		}

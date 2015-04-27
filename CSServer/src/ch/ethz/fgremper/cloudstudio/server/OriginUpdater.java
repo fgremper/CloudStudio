@@ -39,8 +39,8 @@ public class OriginUpdater {
 
 			// Get directories of old a new origin location
 			int oldCount = db.getRepositoryCloneCount(repositoryAlias);
-			String repositoryNewOriginDirectory = originStorageDirectory + File.separator + repositoryAlias + "." + (oldCount + 1);
-			String repositoryOldOriginDirectory = originStorageDirectory + File.separator + repositoryAlias + "." + oldCount;
+			String repositoryNewOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + (oldCount + 1);
+			String repositoryOldOriginDirectory = originStorageDirectory + "/" + repositoryAlias + "." + oldCount;
 			
 			// Create directory to clone repository in
 			File userDir = new File(repositoryNewOriginDirectory);
