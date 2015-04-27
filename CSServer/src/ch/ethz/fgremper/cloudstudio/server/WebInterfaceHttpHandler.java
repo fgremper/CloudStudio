@@ -54,12 +54,17 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 			
 			if (!requestedFile.startsWith("css/") && !requestedFile.startsWith("js/") && !requestedFile.startsWith("templates/") && !requestedFile.startsWith("img/")) requestedFile = "index.html";
 			log.info("Looking for: " + requestedFile);
-
+			
 			// Load resource
 			InputStream resource = WebInterfaceHttpHandler.class.getResourceAsStream(pathToWebInterfaceFiles + requestedFile);
 
+			
+			log.info("Resource: " + resource);
+			
 			// Does the file exist?
 			if (resource != null) {
+			
+				log.info("Resource exists...");
 				
 				// Set content type
 				String mime = "text/html"; 
@@ -70,9 +75,11 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				Headers h = exchange.getResponseHeaders();
 				h.set("Content-Type", mime);
 				
+				log.info("Begin sending");
+				
 				// Read and send file
 				exchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, 0);
-
+				
 				OutputStream os = exchange.getResponseBody();
 				InputStream fs = resource;
 				final byte[] buffer = new byte[0x10000];
@@ -83,6 +90,8 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 				fs.close();
 				os.close();
 
+				log.info("End sending");
+				
 			}
 			
 		}
