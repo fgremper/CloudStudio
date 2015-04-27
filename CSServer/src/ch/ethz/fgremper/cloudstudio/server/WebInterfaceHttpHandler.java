@@ -43,7 +43,7 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 		log.info("Incoming request: " + requestMethod + " " + uri.getPath());
 
 		String webInterfacePrefix = "/";
-		String pathToWebInterfaceFiles = "web" + File.separator;
+		String pathToWebInterfaceFiles = "web/";
 		
 		if (requestMethod.equalsIgnoreCase("GET")) {
 			
@@ -53,12 +53,14 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 			if (requestedFile.contains("..")) return;
 			
 			if (!requestedFile.startsWith("css/") && !requestedFile.startsWith("js/") && !requestedFile.startsWith("templates/") && !requestedFile.startsWith("img/")) requestedFile = "index.html";
+			
 			log.info("Looking for: " + requestedFile);
+			
+			log.info("Path: " + pathToWebInterfaceFiles + requestedFile);
 			
 			// Load resource
 			InputStream resource = WebInterfaceHttpHandler.class.getResourceAsStream(pathToWebInterfaceFiles + requestedFile);
 
-			
 			log.info("Resource: " + resource);
 			
 			// Does the file exist?
