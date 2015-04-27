@@ -56,12 +56,18 @@ public class WebInterfaceHttpHandler implements HttpHandler {
 			
 			log.info("Looking for: " + requestedFile);
 			
+			log.info("Path: " + pathToWebInterfaceFiles + requestedFile);
+			
 			// Load resource
 			InputStream resource = WebInterfaceHttpHandler.class.getResourceAsStream(pathToWebInterfaceFiles + requestedFile);
 
+			log.info("Resource: " + resource);
+			
 			// Does the file exist?
 			if (resource != null) {
 			
+				log.info("Resource exists...");
+				
 				// Set content type
 				String mime = "text/html"; 
 				if (requestedFile.substring(requestedFile.length() - 3).equals(".js")) mime = "application/javascript";
