@@ -36,6 +36,7 @@
 
 \usepackage{color}
 \usepackage{enumitem}
+\usepackage{pdfpages}
 
 \definecolor{verylightgrey}{rgb}{0.95, 0.95, 0.95}
 
@@ -44,7 +45,8 @@
 \definecolor{cyan}{rgb}{0.0,0.6,0.6}
 
 \lstset{basicstyle=\scriptsize\ttfamily,breaklines=true}
-\lstset{backgroundcolor=\color{verylightgrey}}
+%\lstset{backgroundcolor=\color{verylightgrey}}
+\lstset{frame=lrtb}
 \lstset{showstringspaces=false}
 
 
@@ -62,8 +64,7 @@
 \lstset{% setup listings
     language=XML,% set programming language
         framextopmargin=2pt,
-        framexbottommargin=2pt, 
-        frame=tb, framerule=0pt,
+        framexbottommargin=2pt
 }
 
 
@@ -131,7 +132,6 @@
 
 
 
-
 \title{Your Title }
 
 \author{\bf Your Name   \\
@@ -149,6 +149,7 @@
 \begin{document}
 
 
+\includepdf[pages=-]{titlepage.pdf}
 
 %\maketitle
 
@@ -274,6 +275,8 @@
   
 \end{thebibliography}
 
+
+\includepdf[pages=-]{api.pdf}
 
 \end{document}
 

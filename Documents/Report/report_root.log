@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.21)  27 APR 2015 13:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.21)  29 APR 2015 19:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -439,8 +439,38 @@ Package: enumitem 2011/09/28 v3.5.2 Customized lists
 \enit@inbox=\box35
 \enitdp@description=\count126
 )
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+Package: pdfpages 2013/08/25 v0.4v Insert pages of external PDF documents (AM)
+
+(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count127
+\calc@Bcount=\count128
+\calc@Adimen=\dimen142
+\calc@Bdimen=\dimen143
+\calc@Askip=\skip68
+\calc@Bskip=\skip69
+LaTeX Info: Redefining \setlength on input line 75.
+LaTeX Info: Redefining \addtolength on input line 76.
+\calc@Ccount=\count129
+\calc@Cskip=\skip70
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/eso-pic/eso-pic.sty
+Package: eso-pic 2013/10/06 v2.0d eso-pic (RN)
+)
+(/usr/local/texlive/2014/texmf-dist/tex/latex/pdfpages/pppdftex.def
+File: pppdftex.def 2013/08/25 v0.4v Pdfpages driver for pdfTeX (AM)
+)
+\AM@pagebox=\box36
+\AM@toc@title=\toks40
+\c@AM@survey=\count130
+\AM@templatesizebox=\box37
+)
 \symitalic=\mathgroup11
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 104.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 105.
 
 (./definitions.tex) (./report_root.aux
 
@@ -465,17 +495,17 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 149.
 LaTeX Font Info:    ... okay on input line 149.
  (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count127
-\scratchdimen=\dimen142
-\scratchbox=\box36
-\nofMPsegments=\count128
-\nofMParguments=\count129
-\everyMPshowfont=\toks40
-\MPscratchCnt=\count130
-\MPscratchDim=\dimen143
-\MPnumerator=\count131
-\makeMPintoPDFobject=\count132
-\everyMPtoPDFconversion=\toks41
+\scratchcounter=\count131
+\scratchdimen=\dimen144
+\scratchbox=\box38
+\nofMPsegments=\count132
+\nofMParguments=\count133
+\everyMPshowfont=\toks41
+\MPscratchCnt=\count134
+\MPscratchDim=\dimen145
+\MPnumerator=\count135
+\makeMPintoPDFobject=\count136
+\everyMPtoPDFconversion=\toks42
 ) (/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -491,7 +521,7 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\AtBeginShipoutBox=\box37
+\AtBeginShipoutBox=\box39
 Package hyperref Info: Link coloring OFF on input line 149.
 
 (/usr/local/texlive/2014/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -500,7 +530,7 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count133
+\c@section@level=\count137
 )
 LaTeX Info: Redefining \ref on input line 149.
 LaTeX Info: Redefining \pageref on input line 149.
@@ -510,8 +540,45 @@ LaTeX Info: Redefining \nameref on input line 149.
 \@outlinefile=\write3
 \openout3 = `report_root.out'.
 
-\c@lstlisting=\count134
- (./abstract.tex
+\c@lstlisting=\count138
+
+<titlepage.pdf, id=180, 597.51233pt x 845.0471pt>
+File: titlepage.pdf Graphic file (type pdf)
+ <use titlepage.pdf>
+Package pdftex.def Info: titlepage.pdf used on input line 152.
+(pdftex.def)             Requested size: 597.51086pt x 845.04504pt.
+File: titlepage.pdf Graphic file (type pdf)
+
+<use titlepage.pdf>
+Package pdftex.def Info: titlepage.pdf used on input line 152.
+(pdftex.def)             Requested size: 597.51086pt x 845.04504pt.
+ <titlepage.pdf, id=183, page=1, 597.51233pt x 845.0471pt>
+File: titlepage.pdf Graphic file (type pdf)
+
+<use titlepage.pdf, page 1>
+Package pdftex.def Info: titlepage.pdf, page1 used on input line 152.
+(pdftex.def)             Requested size: 597.51086pt x 845.04504pt.
+File: titlepage.pdf Graphic file (type pdf)
+ <use titlepage.pdf, page 1>
+Package pdftex.def Info: titlepage.pdf, page1 used on input line 152.
+(pdftex.def)             Requested size: 597.53821pt x 845.08372pt.
+File: titlepage.pdf Graphic file (type pdf)
+
+<use titlepage.pdf, page 1>
+Package pdftex.def Info: titlepage.pdf, page1 used on input line 152.
+(pdftex.def)             Requested size: 597.53821pt x 845.08372pt.
+File: titlepage.pdf Graphic file (type pdf)
+ <use titlepage.pdf, page 1>
+Package pdftex.def Info: titlepage.pdf, page1 used on input line 152.
+(pdftex.def)             Requested size: 597.53821pt x 845.08372pt.
+File: titlepage.pdf Graphic file (type pdf)
+
+<use titlepage.pdf, page 1>
+Package pdftex.def Info: titlepage.pdf, page1 used on input line 152.
+(pdftex.def)             Requested size: 597.53821pt x 845.08372pt.
+ [1
+
+ <./titlepage.pdf>] (./abstract.tex
 Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
  []
@@ -521,15 +588,14 @@ Underfull \hbox (badness 10000) in paragraph at lines 13--14
 
  []
 
-) (./acknowledgements.tex [1
-
+) (./acknowledgements.tex [2
 
 {/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
 Underfull \hbox (badness 10000) in paragraph at lines 11--12
 
  []
 
-) [2
+) [3
 
 ] (./report_root.toc
 LaTeX Font Info:    Try loading font information for U+lasy on input line 2.
@@ -551,7 +617,7 @@ LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 2.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 2.
- [3
+ [4
 
 ])
 \tf@toc=\write4
@@ -640,7 +706,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 68--69
 
  []
 
-[4]
+pdfTeX warning (ext4): destination with the same identifier (name{page.4}) has 
+been already used, duplicate ignored
+<to be read again> 
+                   \relax 
+l.71 
+      [4]
 Underfull \hbox (badness 10000) in paragraph at lines 83--84
 
  []
@@ -720,17 +791,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
-./design.tex:57: Dimension too large.
-<argument> \wd \@tempboxa 
-                          
-l.57 ...egraphics[width=1\textwidth]{generalsetup}
-                                                  
-? 
-<generalsetup.png, id=332, 17479.3025pt x 8030.0pt>
-File: generalsetup.png Graphic file (type png)
- <use generalsetup.png>
-Package pdftex.def Info: generalsetup.png used on input line 57.
-(pdftex.def)             Requested size: 390.0pt x 191.14333pt.
+<generalsetup.jpg, id=377, 199.24907pt x 142.2886pt>
+File: generalsetup.jpg Graphic file (type jpg)
+ <use generalsetup.jpg>
+Package pdftex.def Info: generalsetup.jpg used on input line 57.
+(pdftex.def)             Requested size: 390.0pt x 278.5494pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
@@ -755,16 +820,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 90--91
 
  []
 
-[10 <./generalsetup.png (PNG copy)>]
-<commitgraph1.png, id=348, 7141.68124pt x 2601.72pt>
+[10 <./generalsetup.jpg>] <commitgraph1.png, id=391, 7141.68124pt x 2601.72pt>
 File: commitgraph1.png Graphic file (type png)
- <use commitgraph1.png>
+
+<use commitgraph1.png>
 Package pdftex.def Info: commitgraph1.png used on input line 97.
 (pdftex.def)             Requested size: 390.0pt x 142.04301pt.
-
-<commitgraph2.png, id=350, 7141.68124pt x 2278.5125pt>
+ <commitgraph2.png, id=393, 7141.68124pt x 2278.5125pt>
 File: commitgraph2.png Graphic file (type png)
- <use commitgraph2.png>
+
+<use commitgraph2.png>
 Package pdftex.def Info: commitgraph2.png used on input line 105.
 (pdftex.def)             Requested size: 390.0pt x 124.39723pt.
 LaTeX Font Info:    Try loading font information for OT1+pcr on input line 116.
@@ -787,22 +852,22 @@ Underfull \hbox (badness 10000) in paragraph at lines 127--128
 
  []
 
-
+[12]
 Underfull \hbox (badness 10000) in paragraph at lines 138--139
 
  []
 
-[12]
+
 Underfull \hbox (badness 10000) in paragraph at lines 145--146
 
  []
 
-
+[13]
 Underfull \hbox (badness 10000) in paragraph at lines 155--156
 
  []
 
-[13]
+
 Underfull \hbox (badness 10000) in paragraph at lines 161--162
 
  []
@@ -832,12 +897,12 @@ Underfull \hbox (badness 10000) in paragraph at lines 196--197
 
  []
 
-
+[15]
 Underfull \hbox (badness 10000) in paragraph at lines 198--199
 
  []
 
-[15]) (./implementation.tex [16]
+) (./implementation.tex [16]
 Chapter 3.
 
 Underfull \hbox (badness 10000) in paragraph at lines 16--17
@@ -859,7 +924,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 32--33
 
  []
 
-<entities.png, id=383, 9108.0275pt x 5018.75pt>
+<entities.png, id=427, 9108.0275pt x 5018.75pt>
 File: entities.png Graphic file (type png)
  <use entities.png>
 Package pdftex.def Info: entities.png used on input line 36.
@@ -940,7 +1005,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 113--114
 
  []
 
-<gui.png, id=408, 710.655pt x 528.97626pt>
+<gui.png, id=453, 710.655pt x 528.97626pt>
 File: gui.png Graphic file (type png)
  <use gui.png>
 Package pdftex.def Info: gui.png used on input line 117.
@@ -997,7 +1062,7 @@ Overfull \hbox (177.92296pt too wide) in paragraph at lines 185--186
 be \OT1/pcr/m/n/12 application/x-www-form-urlencoded\OT1/cmr/m/n/12 .
  []
 
-<databasegraph.png, id=425, 9390.08125pt x 7026.25pt>
+<databasegraph.png, id=470, 9390.08125pt x 7026.25pt>
 File: databasegraph.png Graphic file (type png)
  <use databasegraph.png>
 Package pdftex.def Info: databasegraph.png used on input line 196.
@@ -1091,18 +1156,390 @@ Underfull \hbox (badness 10000) in paragraph at lines 23--24
 ]) [33] [34
 
 ] [35]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 278.
- [36pdfTeX warning (ext4): destination with the same identifier (name{cite.ref2
-8}) has been already used, duplicate ignored
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=580, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf>
+Package pdftex.def Info: api.pdf used on input line 279.
+(pdftex.def)             Requested size: 597.22978pt x 844.15169pt.
+
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+File: api.pdf Graphic file (type pdf)
+<use api.pdf>
+Package pdftex.def Info: api.pdf used on input line 279.
+(pdftex.def)             Requested size: 597.22978pt x 844.15169pt.
+
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+[36pdfTeX warning (ext4): destination with the same identifier (name{cite.ref28
+}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.278 \end{document}
-                    ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 278.
- (./report_root.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 278.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 278.
+l.279 \includepdf[pages=-]{api.pdf}
+                                   ]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=587, page=1, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 1>
+Package pdftex.def Info: api.pdf, page1 used on input line 279.
+(pdftex.def)             Requested size: 597.22978pt x 844.15169pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 1>
+Package pdftex.def Info: api.pdf, page1 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 1>
+Package pdftex.def Info: api.pdf, page1 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 1>
+Package pdftex.def Info: api.pdf, page1 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 1>
+Package pdftex.def Info: api.pdf, page1 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [37 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=633, page=2, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 2>
+Package pdftex.def Info: api.pdf, page2 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 2>
+Package pdftex.def Info: api.pdf, page2 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 2>
+Package pdftex.def Info: api.pdf, page2 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [38 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=642, page=3, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 3>
+Package pdftex.def Info: api.pdf, page3 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 3>
+Package pdftex.def Info: api.pdf, page3 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 3>
+Package pdftex.def Info: api.pdf, page3 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [39 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=652, page=4, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 4>
+Package pdftex.def Info: api.pdf, page4 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 4>
+Package pdftex.def Info: api.pdf, page4 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 4>
+Package pdftex.def Info: api.pdf, page4 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [40 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=661, page=5, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 5>
+Package pdftex.def Info: api.pdf, page5 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 5>
+Package pdftex.def Info: api.pdf, page5 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 5>
+Package pdftex.def Info: api.pdf, page5 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [41 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=671, page=6, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 6>
+Package pdftex.def Info: api.pdf, page6 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 6>
+Package pdftex.def Info: api.pdf, page6 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 6>
+Package pdftex.def Info: api.pdf, page6 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [42 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=680, page=7, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 7>
+Package pdftex.def Info: api.pdf, page7 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 7>
+Package pdftex.def Info: api.pdf, page7 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 7>
+Package pdftex.def Info: api.pdf, page7 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [43 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=689, page=8, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 8>
+Package pdftex.def Info: api.pdf, page8 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 8>
+Package pdftex.def Info: api.pdf, page8 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 8>
+Package pdftex.def Info: api.pdf, page8 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [44 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=698, page=9, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 9>
+Package pdftex.def Info: api.pdf, page9 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 9>
+Package pdftex.def Info: api.pdf, page9 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 9>
+Package pdftex.def Info: api.pdf, page9 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [45 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=708, page=10, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 10>
+Package pdftex.def Info: api.pdf, page10 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 10>
+Package pdftex.def Info: api.pdf, page10 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 10>
+Package pdftex.def Info: api.pdf, page10 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [46 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=717, page=11, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 11>
+Package pdftex.def Info: api.pdf, page11 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 11>
+Package pdftex.def Info: api.pdf, page11 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 11>
+Package pdftex.def Info: api.pdf, page11 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [47 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=726, page=12, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 12>
+Package pdftex.def Info: api.pdf, page12 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 12>
+Package pdftex.def Info: api.pdf, page12 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 12>
+Package pdftex.def Info: api.pdf, page12 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [48 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=735, page=13, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 13>
+Package pdftex.def Info: api.pdf, page13 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 13>
+Package pdftex.def Info: api.pdf, page13 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 13>
+Package pdftex.def Info: api.pdf, page13 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [49 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=744, page=14, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 14>
+Package pdftex.def Info: api.pdf, page14 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 14>
+Package pdftex.def Info: api.pdf, page14 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 14>
+Package pdftex.def Info: api.pdf, page14 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [50 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=753, page=15, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 15>
+Package pdftex.def Info: api.pdf, page15 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 15>
+Package pdftex.def Info: api.pdf, page15 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 15>
+Package pdftex.def Info: api.pdf, page15 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [51 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=763, page=16, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 16>
+Package pdftex.def Info: api.pdf, page16 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 16>
+Package pdftex.def Info: api.pdf, page16 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 16>
+Package pdftex.def Info: api.pdf, page16 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [52 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=772, page=17, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 17>
+Package pdftex.def Info: api.pdf, page17 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 17>
+Package pdftex.def Info: api.pdf, page17 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 17>
+Package pdftex.def Info: api.pdf, page17 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [53 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=781, page=18, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 18>
+Package pdftex.def Info: api.pdf, page18 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 18>
+Package pdftex.def Info: api.pdf, page18 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 18>
+Package pdftex.def Info: api.pdf, page18 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [54 <./api.pdf>]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=790, page=19, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 19>
+Package pdftex.def Info: api.pdf, page19 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+
+<use api.pdf, page 19>
+Package pdftex.def Info: api.pdf, page19 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 19>
+Package pdftex.def Info: api.pdf, page19 used on input line 279.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
+ [55 <./api.pdf>]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 281.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 281.
+
+(./report_root.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 281.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 281.
 Package rerunfilecheck Info: File `report_root.out' has not changed.
 (rerunfilecheck)             Checksum: 71842235F5FAE29375EA49CBB873E285;2774.
 
@@ -1112,16 +1549,16 @@ LaTeX Warning: There were undefined references.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 278.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 281.
  ) 
 Here is how much of TeX's memory you used:
- 9150 strings out of 493117
- 130590 string characters out of 6135433
- 309715 words of memory out of 5000000
- 12240 multiletter control sequences out of 15000+600000
+ 9921 strings out of 493117
+ 142584 string characters out of 6135433
+ 347116 words of memory out of 5000000
+ 12970 multiletter control sequences out of 15000+600000
  18352 words of font info for 69 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 32i,10n,43p,807b,1130s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,18n,46p,807b,1126s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/te
 xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texl
@@ -1134,10 +1571,10 @@ e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local/texlive/2014/t
 exmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/local/texlive/2014/texmf-dis
 t/fonts/type1/urw/courier/ucrro8a.pfb>
-Output written on report_root.pdf (39 pages, 3607279 bytes).
+Output written on report_root.pdf (59 pages, 3081887 bytes).
 PDF statistics:
- 615 PDF objects out of 1000 (max. 8388607)
- 547 compressed objects within 6 object streams
- 161 named destinations out of 1000 (max. 500000)
- 383 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 878 PDF objects out of 1000 (max. 8388607)
+ 702 compressed objects within 8 object streams
+ 180 named destinations out of 1000 (max. 500000)
+ 513 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -22,7 +22,7 @@ Log into CloudStudio with your username and password. Returns a session ID that 
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 username              | Your username
 password              | Your password
@@ -57,7 +57,7 @@ Retrieves a list of all repositories you have access to.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 
@@ -102,7 +102,7 @@ Retrieves a list of users and branches for a given repository. Also returns the 
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -149,7 +149,7 @@ Updates repository information. You need to be administrator or repository owner
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -185,7 +185,7 @@ Retrieves branch level awareness information for a repository. For every branch,
 
 For every user in branch, a relation to the origin is given. This value can be EQUAL, AHEAD, BEHIND, FORK, LOCAL_BRANCH or REMOTE_BRANCH.
 
-Relationship with origin   | Description
+Relationship With Origin   | Description
 -------------------------- | ------------------------------------------
 EQUAL                      | The latest branch commit is the same for the user and the origin.
 AHEAD                      | The user has made commits and is directly ahead of the origin.
@@ -200,7 +200,7 @@ For every user, the "lastUpdate" field refers to the last time that the client h
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -276,7 +276,7 @@ Non-existing files are treated as empty files for this purpose.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -364,7 +364,7 @@ MODIFIED_PAD          | Padding for modified blocks to line up nicely.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -436,7 +436,7 @@ By definition, a conflict occurs when all three lines have been modified or only
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -506,7 +506,7 @@ Retrieves a list of all users, their privileges and the date they created the ac
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 
@@ -560,7 +560,7 @@ Creates a new repository and sets its owner to yourself. Repository creation rig
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -593,7 +593,7 @@ Deletes a repository. You need to be administrator or the repository owner for t
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -624,7 +624,7 @@ Adds a user to a repository. Must be repository owner or administrator.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -660,7 +660,7 @@ Removes a user from a repository. Must be repository owner or administrator.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -694,7 +694,7 @@ Sets a new repository owner. Must be repository owner or administrator.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -729,10 +729,8 @@ Creates a new user.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
-sessionId             | Your session ID
-repositoryAlias       | Repository alias
 username              | Username
 password              | New password
 
@@ -741,7 +739,6 @@ password              | New password
 ###### Request
 ```bash
 curl "http://cloudstudio:7330/api/createUser" \
-  -d "sessionId=YOUR_SESSION_ID" \
   -d "username=David" \
   -d "password=penguins"
 ```
@@ -764,7 +761,7 @@ Removes a user. Requires administrator privileges.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -796,7 +793,7 @@ Changes a user's password.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 newPassword           | New password
@@ -826,7 +823,7 @@ Give administrator privileges to a user. Requires administrator privileges.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -859,7 +856,7 @@ Revoke a user's administrator privileges. Requires administrator privileges.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -893,7 +890,7 @@ Give repository creation privileges to a user. Requires administrator privileges
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -926,7 +923,7 @@ Revoke a user's repository creation privileges. Requires administrator privilege
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
@@ -961,7 +958,7 @@ For this operation only, repository data needs to be sent as `application/json`.
 
 #### Parameters
 
-Parameter name        | Description
+Parameter Name        | Description
 --------------------- | ------------------------------------------
 sessionId             | Your session ID
 repositoryAlias       | Repository alias
