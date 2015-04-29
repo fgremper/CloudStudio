@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="HttpClientTest" project="CSTesting" tests="5" started="5" failures="0" errors="0" ignored="0">
-  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="2.578">
-    <testcase name="testBadDataGitState" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="2.255"/>
-    <testcase name="testServerDownGitState" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.002"/>
-    <testcase name="testCorrectData" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.163"/>
-    <testcase name="testBadDataLogin" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.156"/>
-    <testcase name="testServerDownLogin" classname="ch.ethz.fgremper.cloudstudio.testing.client.HttpClientTest" time="0.002"/>
-  </testsuite>
-</testrun>

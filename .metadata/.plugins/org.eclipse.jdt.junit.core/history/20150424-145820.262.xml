@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="DatabaseConnectionTest" project="CSTesting" tests="2" started="2" failures="0" errors="0" ignored="0">
-  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="0.99">
-    <testcase name="testUser" classname="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="0.972"/>
-    <testcase name="testRepository" classname="ch.ethz.fgremper.cloudstudio.testing.server.DatabaseConnectionTest" time="0.017"/>
-  </testsuite>
-</testrun>

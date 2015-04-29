@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testrun name="ContentLevelConflictTest" project="CSTesting" tests="3" started="3" failures="0" errors="0" ignored="0">
-  <testsuite name="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="4.676">
-    <testcase name="testCorrectConflictDetection" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="3.427"/>
-    <testcase name="testCorrectFileContentAndConflictCount" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.944"/>
-    <testcase name="testNoCommonAncestor" classname="ch.ethz.fgremper.cloudstudio.testing.combination.ContentLevelConflictTest" time="0.305"/>
-  </testsuite>
-</testrun>

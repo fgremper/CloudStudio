@@ -85,7 +85,7 @@ public class ContentConflictGitReader {
 			
 			if (mergeBaseCommitId != null) {
 
-				String repositoryOriginDirectory = originStorageDirectory + File.separator + repositoryAlias + "." + db.getRepositoryCloneCount(repositoryAlias);
+				String repositoryOriginDirectory = originStorageDirectory + File.separator + DigestUtils.sha1Hex(repositoryAlias).toString() + "." + db.getRepositoryCloneCount(repositoryAlias);
 
 				// Open the repository in JGit
 				log.debug("Reading: " + repositoryOriginDirectory);

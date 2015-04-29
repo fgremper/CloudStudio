@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="jlibdiff.Hunk"/>
-<fullyQualifiedTypeName name="org.apache.commons.io.FileUtils"/>
-<fullyQualifiedTypeName name="org.eclipse.jgit.lib.ObjectId"/>
-<fullyQualifiedTypeName name="java.util.Vector"/>
-<fullyQualifiedTypeName name="JLibDiff.diff3"/>
-<fullyQualifiedTypeName name="jlibdiff.Hunk3"/>
-<fullyQualifiedTypeName name="jlibdiff.Diff3"/>
 <fullyQualifiedTypeName name="JLibDiff.Diff3"/>
 <fullyQualifiedTypeName name="JLibDiff.Hunk3"/>
 <fullyQualifiedTypeName name="java.util.regex.Pattern"/>
@@ -31,7 +24,6 @@
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionEvent"/>
 <fullyQualifiedTypeName name="org.json.JSONException"/>
-<fullyQualifiedTypeName name="sun.net.www.protocol.http.HttpURLConnection"/>
 <fullyQualifiedTypeName name="com.sun.net.httpserver.Filter"/>
 <fullyQualifiedTypeName name="com.sun.net.httpserver.HttpExchange"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
@@ -60,4 +52,12 @@
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="ch.ethz.fgremper.cloudstudio.server.OriginUpdater"/>
 <fullyQualifiedTypeName name="java.sql.DriverManager"/>
+<fullyQualifiedTypeName name="java.nio.charset.Charset"/>
+<fullyQualifiedTypeName name="java.io.DataOutputStream"/>
+<fullyQualifiedTypeName name="ch.ethz.fgremper.cloudstudio.server.DatabaseConnection"/>
+<fullyQualifiedTypeName name="sun.net.www.protocol.http.HttpURLConnection"/>
+<fullyQualifiedTypeName name="ch.ethz.fgremper.cloudstudio.common.ProcessWithTimeout"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.net.URISyntaxException"/>
 </qualifiedTypeNameHistroy>

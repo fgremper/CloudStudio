@@ -13,16 +13,16 @@
 		<item value="true" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="correct" key="selection"/>
+		<item value="Digest" key="selection"/>
 		<list key="findhistory">
-			<item value="correct"/>
-			<item value="joindate"/>
-			<item value="lastupdate"/>
-			<item value="&quot;never&quot;"/>
-			<item value="lastorig"/>
-			<item value="lastorign"/>
-			<item value="substring"/>
-			<item value="list"/>
+			<item value="digest"/>
+			<item value="repositoryNewOriginDirectory"/>
+			<item value="pathToWebInterfaceFiles"/>
+			<item value="looking"/>
+			<item value="changepasswo"/>
+			<item value="createuser"/>
+			<item value="modifyrepos"/>
+			<item value="modifyrepoi"/>
 		</list>
 		<list key="replacehistory">
 			<item value="&quot;UNCHANGED&quot;"/>

@@ -42,7 +42,7 @@ public class OriginUpdater {
 			int oldCount = db.getRepositoryCloneCount(repositoryAlias);
 			String repositoryNewOriginDirectory = originStorageDirectory + File.separator + DigestUtils.sha1Hex(repositoryAlias).toString() + "." + (oldCount + 1);
 			String repositoryOldOriginDirectory = originStorageDirectory + File.separator + DigestUtils.sha1Hex(repositoryAlias).toString() + "." + oldCount;
-
+			content
 			// Create directory to clone repository in
 			File userDir = new File(repositoryNewOriginDirectory);
 			userDir.mkdir();
