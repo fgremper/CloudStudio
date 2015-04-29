@@ -9,7 +9,7 @@ The CloudStudio API exposes an interface to access and manipulate CloudStudio re
 
 Requests to the CloudStudio API have to use either the GET or POST method. GET requests are used for functions that do not change the state of the database. POST requests are used for functions that make changes to the database.
 
-The content type of requests to the CloudStudio API must be `application/x-www-form-urlencoded`. The response has content type `application/json`. This asynchronism allows to provide parameters for both GET and POST requests similarly and still retrieve comprehensive JSON objects, and is used by many widely used APIs (e.g. SoundCloud).
+The content type of requests to the CloudStudio API must be `application/x-www-form-urlencoded`. The response has content type `application/json`. This asynchronism allows us to provide parameters for both GET and POST requests similarly and still retrieve comprehensive JSON objects, and is used by many widely used APIs (e.g. SoundCloud).
 
 
 
@@ -98,7 +98,7 @@ curl "http://cloudstudio:7330/api/repositories?\
 
 Method: GET
 
-Retrieves a list of user and branches for a given repository. Also returns time of the last origin information update.
+Retrieves a list of users and branches for a given repository. Also returns the timestamp of the last origin information update.
 
 #### Parameters
 
@@ -119,7 +119,6 @@ curl "http://localhost:7330/api/repositoryInformation?\
 ###### Response
 ```json
 {  
-
    "repositoryAlias": "BankAccountDemo",
    "repositoryDescription": "Dealing with banks and accounts.",
    "repositoryUrl": "https://github.com/foo/bankaccountdemo",
@@ -184,14 +183,14 @@ Method: GET
 
 Retrieves branch level awareness information for a repository. For every branch, the active users represent the users that have this particular branch checked out currently.
 
-For every user in branch, a relation to the origin is given. This value can be EQUAL, AHEAD, BEHIND, FORK, LOCAL_BRANCH or NOT_CHECKED_OUT.
+For every user in branch, a relation to the origin is given. This value can be EQUAL, AHEAD, BEHIND, FORK, LOCAL_BRANCH or REMOTE_BRANCH.
 
 Relationship with origin   | Description
 -------------------------- | ------------------------------------------
 EQUAL                      | The latest branch commit is the same for the user and the origin.
 AHEAD                      | The user has made commits and is directly ahead of the origin.
 BEHIND                     | New commits have been pushed to the origin and the user is directly behind.
-FORK                       | The user has made commits but new commits have been pushed to the origin in the meantime.
+FORK                       | The user has made commits but other new commits have been pushed to the origin in the meantime.
 LOCAL_BRANCH               | This branch is a local branch for the user.
 REMOTE_BRANCH              | This branch only exists on the remote but not on the user's local repository.
 
@@ -265,7 +264,7 @@ Method: GET
 
 Retrieves file level awareness information for a repository and branch. All your files in a branch are compared to every other users' files in the same or specified branch.
 
-For every user a conflict type is set to either NO_CONFLICT, FILE_CONFLICT, CONTENT_CONFLICT.
+For every user a conflict type is set to either NO_CONFLICT, FILE_CONFLICT or CONTENT_CONFLICT.
 
 Conflict Type              | Description
 -------------------------- | ------------------------------------------
@@ -283,7 +282,7 @@ sessionId             | Your session ID
 repositoryAlias       | Repository alias
 branch                | Branch from which your files are compared
 compareToBranch       | Branch to which files of other users your files are compared to
-showUncommitted       | If true, also take into account changes that have not been locally committed yet.
+showUncommitted       | If true, also takes into account changes that have not yet been locally committed.
 showConflicts         | If true, for all files with a FILE_CONFLICT, additionally run a content conflict analysis. If false, just compare the files by their hash.
 viewAsOrigin          | Instead of showing from your perspective, show from the perspective of the origin ("true" or "false")
 
@@ -360,8 +359,8 @@ Type                  | Description
 UNCHANGED             | No changes have been made to this line.
 INSERT                | This line has been inserted.
 MODIFIED              | This line has been modified.
-PAD                   | Padding for the lines to line up nicely.
-MODIFIED_PAD          | Padding for two modified blocks to line up nicely.
+PAD                   | Padding for unmodified blocks to line up nicely.
+MODIFIED_PAD          | Padding for modified blocks to line up nicely.
 
 #### Parameters
 
@@ -371,23 +370,23 @@ sessionId             | Your session ID
 repositoryAlias       | Repository alias
 filename              | Filename
 branch                | Your branch
-theirUsername         | Branch you want to compare to
-compareToBranch       | User you want to compare to
-showUncommitted       | If true, also take into account changes that have not been locally committed yet.
+theirUsername         | User you want to compare to
+compareToBranch       | Branch you want to compare to
+showUncommitted       | If true, also take into account changes that have not yet been locally committed.
 viewAsOrigin          | Instead of showing from your perspective, show from the perspective of the origin ("true" or "false")
 
 #### Example
 
 ###### Request
 ```bash
-curl "http://cloudstudio:7330/api/contentAwareness?
-  sessionId=YOUR_SESSION_ID&
-  repositoryAlias=BankAccountDemo&
-  filename=README&
-  branch=master&
-  compareToBranch=master&
-  theirUsername=David
-  showUncommitted=false&
+curl "http://cloudstudio:7330/api/contentAwareness?\
+  sessionId=YOUR_SESSION_ID&\
+  repositoryAlias=BankAccountDemo&\
+  filename=README&\
+  branch=master&\
+  compareToBranch=master&\
+  theirUsername=David\
+  showUncommitted=false&\
   viewAsOrigin=false"
 ```
 
@@ -443,8 +442,8 @@ sessionId             | Your session ID
 repositoryAlias       | Repository alias
 filename              | Filename
 branch                | Your branch
-theirUsername         | Branch you want to compare to
-compareToBranch       | User you want to compare to
+theirUsername         | User you want to compare to
+compareToBranch       | Branch you want to compare to
 showUncommitted       | If true, also take into account changes that have not been locally committed yet.
 viewAsOrigin          | Instead of showing from your perspective, show from the perspective of the origin ("true" or "false")
 
