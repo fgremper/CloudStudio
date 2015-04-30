@@ -258,7 +258,7 @@ Under repositories you can list multiple repositories that you want to monitor w
 
 \subsection{Server Configuration}
 
-Figure \ref{fig:serverconfig} shows a sample configuration. Table \ref{fig:serverconfigtable} explains what the individual parameters do. After setting up the configuration file, you need to run \texttt{SQLInit.sql} to initialize the database (MySQL), before starting the server.
+Figure \ref{fig:serverconfig} shows a sample configuration. Table \ref{table:serverconfigtable} explains what the individual parameters do. After setting up the configuration file, you need to run \texttt{SQLInit.sql} to initialize the database (MySQL), before starting the server.
 
 \begin{figure}[h!]
 \begin{lstlisting}
@@ -326,7 +326,20 @@ giveCreatorPrivilegesOnSignUp & Automatically give repository creation privilege
 
 \section{Testing and Correctness}
 
-TODO
+The Eclipse plugin EclEmma \cite{eclemma} was used to create coverage reports and view the line coverage directly in the workbench. EclEmma is a free code coverage tool, based on the JaCoCo \cite{jacoco} library. A high code coverage indicates that the code has been more thoroughly tested and there is a lower chance of software bugs than in a program with low code coverage \cite{codecoverage}. The coverage report created by EclEmma can be seen in Figure \ref{fig:testcoverage}. \\
+
+To verify CloudStudio's correctness, I implemented two different types of JUnit \cite{junit} tests: $class$ $tests$ for client and server verify the correct behaviour for a given class and are named after the class that is being tested, e.g. ApiHttpHandlerTest for ApiHttpHandler; $combination$ $tests$ run longer scenarios of a typical CloudStudio workflow and assert correct behaviour throughout. \\
+
+The CloudStudio client and server use the Apache Log4j \cite{log4j} framework to create log output; it can be customised by editing the log4j.xml file. Log files can as well be used to view and ensure the correct behaviour of the code.
+
+
+\begin{figure}[h!]
+  \centering
+      \includegraphics[width=0.9\textwidth]{coverage}
+  \caption{Test coverage using EclEmma}
+  \label{fig:testcoverage}
+\end{figure}
+
 
 
 \section{Build and Run}

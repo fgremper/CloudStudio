@@ -36,17 +36,17 @@
 \contentsline {subsection}{\numberline {3.8.1}Client Configuration}{24}{subsection.3.8.1}
 \contentsline {subsection}{\numberline {3.8.2}Server Configuration}{25}{subsection.3.8.2}
 \contentsline {section}{\numberline {3.9}Testing and Correctness}{25}{section.3.9}
-\contentsline {section}{\numberline {3.10}Build and Run}{25}{section.3.10}
-\contentsline {chapter}{\numberline {4}User Guide}{28}{chapter.4}
-\contentsline {section}{\numberline {4.1}Setup and Run Client}{28}{section.4.1}
-\contentsline {section}{\numberline {4.2}Using the Web Interface}{29}{section.4.2}
-\contentsline {section}{\numberline {4.3}Login}{29}{section.4.3}
-\contentsline {section}{\numberline {4.4}Repository Overview}{29}{section.4.4}
-\contentsline {section}{\numberline {4.5}Branch Level Awareness}{30}{section.4.5}
-\contentsline {section}{\numberline {4.6}File Level Awareness}{31}{section.4.6}
-\contentsline {section}{\numberline {4.7}Content Awareness}{32}{section.4.7}
-\contentsline {section}{\numberline {4.8}User Management}{32}{section.4.8}
-\contentsline {section}{\numberline {4.9}Create Repository}{33}{section.4.9}
-\contentsline {section}{\numberline {4.10}Edit Repository}{33}{section.4.10}
-\contentsline {chapter}{\numberline {5}Future Work}{34}{chapter.5}
-\contentsline {chapter}{\numberline {6}Conclusions}{36}{chapter.6}
+\contentsline {section}{\numberline {3.10}Build and Run}{26}{section.3.10}
+\contentsline {chapter}{\numberline {4}User Guide}{29}{chapter.4}
+\contentsline {section}{\numberline {4.1}Setup and Run Client}{29}{section.4.1}
+\contentsline {section}{\numberline {4.2}Using the Web Interface}{30}{section.4.2}
+\contentsline {section}{\numberline {4.3}Login}{30}{section.4.3}
+\contentsline {section}{\numberline {4.4}Repository Overview}{30}{section.4.4}
+\contentsline {section}{\numberline {4.5}Branch Level Awareness}{31}{section.4.5}
+\contentsline {section}{\numberline {4.6}File Level Awareness}{32}{section.4.6}
+\contentsline {section}{\numberline {4.7}Content Awareness}{33}{section.4.7}
+\contentsline {section}{\numberline {4.8}User Management}{33}{section.4.8}
+\contentsline {section}{\numberline {4.9}Create Repository}{34}{section.4.9}
+\contentsline {section}{\numberline {4.10}Edit Repository}{34}{section.4.10}
+\contentsline {chapter}{\numberline {5}Future Work}{35}{chapter.5}
+\contentsline {chapter}{\numberline {6}Conclusions}{37}{chapter.6}
