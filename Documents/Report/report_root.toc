@@ -25,18 +25,18 @@
 \contentsline {section}{\numberline {3.2}Architecture}{17}{section.3.2}
 \contentsline {subsection}{\numberline {3.2.1}Architectural Overview}{17}{subsection.3.2.1}
 \contentsline {subsection}{\numberline {3.2.2}Logic}{19}{subsection.3.2.2}
-\contentsline {subsection}{\numberline {3.2.3}Access Control}{19}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.3}Access Control}{20}{subsection.3.2.3}
 \contentsline {subsection}{\numberline {3.2.4}Folder Structure}{20}{subsection.3.2.4}
 \contentsline {section}{\numberline {3.3}Client}{20}{section.3.3}
-\contentsline {section}{\numberline {3.4}Server}{21}{section.3.4}
+\contentsline {section}{\numberline {3.4}Server}{22}{section.3.4}
 \contentsline {section}{\numberline {3.5}Web Interface}{23}{section.3.5}
-\contentsline {section}{\numberline {3.6}API}{23}{section.3.6}
-\contentsline {section}{\numberline {3.7}Database}{23}{section.3.7}
+\contentsline {section}{\numberline {3.6}API}{24}{section.3.6}
+\contentsline {section}{\numberline {3.7}Database}{24}{section.3.7}
 \contentsline {section}{\numberline {3.8}Configuration Management}{24}{section.3.8}
 \contentsline {subsection}{\numberline {3.8.1}Client Configuration}{24}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Server Configuration}{25}{subsection.3.8.2}
-\contentsline {section}{\numberline {3.9}Testing and Correctness}{25}{section.3.9}
-\contentsline {section}{\numberline {3.10}Build and Run}{26}{section.3.10}
+\contentsline {subsection}{\numberline {3.8.2}Server Configuration}{26}{subsection.3.8.2}
+\contentsline {section}{\numberline {3.9}Testing and Correctness}{26}{section.3.9}
+\contentsline {section}{\numberline {3.10}Build and Run}{27}{section.3.10}
 \contentsline {chapter}{\numberline {4}User Guide}{29}{chapter.4}
 \contentsline {section}{\numberline {4.1}Setup and Run Client}{29}{section.4.1}
 \contentsline {section}{\numberline {4.2}Using the Web Interface}{30}{section.4.2}
