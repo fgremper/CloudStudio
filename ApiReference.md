@@ -785,7 +785,7 @@ curl "http://cloudstudio:7330/api/deleteUser" \
 
 
 
-## /api/deleteUser
+## /api/changePassword
 
 Method: POST
 

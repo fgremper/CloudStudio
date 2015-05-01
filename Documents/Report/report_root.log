@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.21)  30 APR 2015 18:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.21)  1 MAY 2015 04:50
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -805,12 +805,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 132--133
 
  []
 
-
-Overfull \hbox (4.2084pt too wide) in paragraph at lines 134--135
-\OT1/cmr/m/n/12 frame-work that shar-ing the changes of de-vel-op-ers work-ing 
-on the same project;
- []
-
 ) (./design.tex [6]
 Chapter 2.
 [7
@@ -1021,11 +1015,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 62--63
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 64--65
-
- []
-
 [19]
 Underfull \hbox (badness 10000) in paragraph at lines 75--76
 
@@ -1067,10 +1056,6 @@ Underfull \hbox (badness 10000) in paragraph at lines 140--141
  []
 
 
-LaTeX Warning: Citation `table:serverclasses' on page 22 undefined on input lin
-e 142.
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 142--143
 
  []
@@ -1095,7 +1080,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
-<databasegraph.png, id=519, 9390.08125pt x 7026.25pt>
+<databasegraph.png, id=520, 9390.08125pt x 7026.25pt>
 File: databasegraph.png Graphic file (type png)
  <use databasegraph.png>
 Package pdftex.def Info: databasegraph.png used on input line 203.
@@ -1105,7 +1090,7 @@ Package pdftex.def Info: databasegraph.png used on input line 203.
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 237--238
+Underfull \hbox (badness 10000) in paragraph at lines 236--237
 
  []
 
@@ -1114,24 +1099,24 @@ Underfull \hbox (badness 10000) in paragraph at lines 237--238
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 261--262
+Underfull \hbox (badness 10000) in paragraph at lines 260--261
 
  []
 
 [25 <./databasegraph.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 336--337
+Underfull \hbox (badness 10000) in paragraph at lines 335--336
 
  []
 
 [26]
-Underfull \hbox (badness 10000) in paragraph at lines 338--339
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 
  []
 
-<coverage.png, id=584, 1002.74625pt x 663.47874pt>
+<coverage.png, id=585, 1002.74625pt x 663.47874pt>
 File: coverage.png Graphic file (type png)
  <use coverage.png>
-Package pdftex.def Info: coverage.png used on input line 345.
+Package pdftex.def Info: coverage.png used on input line 344.
 (pdftex.def)             Requested size: 350.99762pt x 232.24127pt.
 
 
@@ -1141,7 +1126,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Chapter 4.
 [29
 
-] <login.png, id=607, 1272.755pt x 565.11125pt>
+] <login.png, id=608, 1272.755pt x 565.11125pt>
 File: login.png Graphic file (type png)
  <use login.png>
 Package pdftex.def Info: login.png used on input line 55.
@@ -1156,7 +1141,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
  []
 
-<overview.png, id=608, 1272.755pt x 561.09625pt>
+<overview.png, id=609, 1272.755pt x 561.09625pt>
 File: overview.png Graphic file (type png)
  <use overview.png>
 Package pdftex.def Info: overview.png used on input line 74.
@@ -1185,7 +1170,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 91--92
 
  []
 
-<branchlevel.png, id=614, 1272.755pt x 626.34pt>
+<branchlevel.png, id=615, 1272.755pt x 626.34pt>
 File: branchlevel.png Graphic file (type png)
  <use branchlevel.png>
 Package pdftex.def Info: branchlevel.png used on input line 99.
@@ -1214,7 +1199,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--117
 
  []
 
-[32 <./branchlevel.png>] <filelevel.png, id=625, 1272.755pt x 667.49374pt>
+[32 <./branchlevel.png>] <filelevel.png, id=626, 1272.755pt x 667.49374pt>
 File: filelevel.png Graphic file (type png)
 
 <use filelevel.png>
@@ -1225,7 +1210,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--134
 
  []
 
-<contentlevel.png, id=626, 1272.755pt x 649.42625pt>
+<contentlevel.png, id=627, 1272.755pt x 649.42625pt>
 File: contentlevel.png Graphic file (type png)
  <use contentlevel.png>
 Package pdftex.def Info: contentlevel.png used on input line 141.
@@ -1234,7 +1219,7 @@ Package pdftex.def Info: contentlevel.png used on input line 141.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<manageusers.png, id=627, 1272.755pt x 440.64626pt>
+<manageusers.png, id=628, 1272.755pt x 440.64626pt>
 File: manageusers.png Graphic file (type png)
  <use manageusers.png>
 Package pdftex.def Info: manageusers.png used on input line 161.
@@ -1299,18 +1284,32 @@ Underfull \hbox (badness 10000) in paragraph at lines 23--24
 
 ]) [38] [39
 
-] [40] <api.pdf, id=672, 597.23125pt x 844.15375pt>
-File: api.pdf Graphic file (type pdf)
+] [40]
 
-<use api.pdf>
-Package pdftex.def Info: api.pdf used on input line 295.
-(pdftex.def)             Requested size: 597.22978pt x 844.15169pt.
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=673, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf>
 Package pdftex.def Info: api.pdf used on input line 295.
 (pdftex.def)             Requested size: 597.22978pt x 844.15169pt.
- [41]
-<api.pdf, id=679, page=1, 597.23125pt x 844.15375pt>
+
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+File: api.pdf Graphic file (type pdf)
+<use api.pdf>
+Package pdftex.def Info: api.pdf used on input line 295.
+(pdftex.def)             Requested size: 597.22978pt x 844.15169pt.
+
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+[41]
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=680, page=1, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 1>
 Package pdftex.def Info: api.pdf, page1 used on input line 295.
@@ -1333,11 +1332,11 @@ File: api.pdf Graphic file (type pdf)
 <use api.pdf, page 1>
 Package pdftex.def Info: api.pdf, page1 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [42 <./api.pdf
+ [42 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=711, page=2, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=726, page=2, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 2>
 Package pdftex.def Info: api.pdf, page2 used on input line 295.
@@ -1351,11 +1350,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 2>
 Package pdftex.def Info: api.pdf, page2 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [43 <./api.pdf
+ [43 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=716, page=3, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=735, page=3, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 3>
 Package pdftex.def Info: api.pdf, page3 used on input line 295.
@@ -1369,11 +1368,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 3>
 Package pdftex.def Info: api.pdf, page3 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [44 <./api.pdf
+ [44 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=721, page=4, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=744, page=4, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 4>
 Package pdftex.def Info: api.pdf, page4 used on input line 295.
@@ -1387,11 +1386,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 4>
 Package pdftex.def Info: api.pdf, page4 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [45 <./api.pdf
+ [45 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=727, page=5, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=754, page=5, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 5>
 Package pdftex.def Info: api.pdf, page5 used on input line 295.
@@ -1405,11 +1404,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 5>
 Package pdftex.def Info: api.pdf, page5 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [46 <./api.pdf
+ [46 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=732, page=6, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=763, page=6, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 6>
 Package pdftex.def Info: api.pdf, page6 used on input line 295.
@@ -1423,11 +1422,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 6>
 Package pdftex.def Info: api.pdf, page6 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [47 <./api.pdf
+ [47 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=737, page=7, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=772, page=7, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 7>
 Package pdftex.def Info: api.pdf, page7 used on input line 295.
@@ -1441,11 +1440,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 7>
 Package pdftex.def Info: api.pdf, page7 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [48 <./api.pdf
+ [48 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=742, page=8, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=781, page=8, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 8>
 Package pdftex.def Info: api.pdf, page8 used on input line 295.
@@ -1459,11 +1458,11 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 8>
 Package pdftex.def Info: api.pdf, page8 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [49 <./api.pdf
+ [49 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=747, page=9, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=790, page=9, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 9>
 Package pdftex.def Info: api.pdf, page9 used on input line 295.
@@ -1477,11 +1476,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 9>
 Package pdftex.def Info: api.pdf, page9 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [50 <./api.pdf
+ [50 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=752, page=10, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=799, page=10, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 10>
+Package pdftex.def Info: api.pdf, page10 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 10>
@@ -1491,15 +1494,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 10>
 Package pdftex.def Info: api.pdf, page10 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 10>
-Package pdftex.def Info: api.pdf, page10 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [51 <./api.pdf
+ [51 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=758, page=11, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=809, page=11, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 11>
+Package pdftex.def Info: api.pdf, page11 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 11>
@@ -1509,15 +1512,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 11>
 Package pdftex.def Info: api.pdf, page11 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 11>
-Package pdftex.def Info: api.pdf, page11 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [52 <./api.pdf
+ [52 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=763, page=12, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=819, page=12, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 12>
+Package pdftex.def Info: api.pdf, page12 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 12>
@@ -1527,15 +1530,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 12>
 Package pdftex.def Info: api.pdf, page12 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 12>
-Package pdftex.def Info: api.pdf, page12 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [53 <./api.pdf
+ [53 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=768, page=13, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=828, page=13, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 13>
+Package pdftex.def Info: api.pdf, page13 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 13>
@@ -1545,15 +1548,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 13>
 Package pdftex.def Info: api.pdf, page13 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 13>
-Package pdftex.def Info: api.pdf, page13 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [54 <./api.pdf
+ [54 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=773, page=14, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=837, page=14, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 14>
+Package pdftex.def Info: api.pdf, page14 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 14>
@@ -1563,15 +1566,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 14>
 Package pdftex.def Info: api.pdf, page14 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 14>
-Package pdftex.def Info: api.pdf, page14 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [55 <./api.pdf
+ [55 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=778, page=15, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=846, page=15, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 15>
+Package pdftex.def Info: api.pdf, page15 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 15>
@@ -1581,15 +1584,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 15>
 Package pdftex.def Info: api.pdf, page15 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 15>
-Package pdftex.def Info: api.pdf, page15 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [56 <./api.pdf
+ [56 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=783, page=16, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=855, page=16, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 16>
+Package pdftex.def Info: api.pdf, page16 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 16>
@@ -1599,15 +1602,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 16>
 Package pdftex.def Info: api.pdf, page16 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 16>
-Package pdftex.def Info: api.pdf, page16 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [57 <./api.pdf
+ [57 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=789, page=17, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=865, page=17, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 17>
+Package pdftex.def Info: api.pdf, page17 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 17>
@@ -1617,15 +1620,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 17>
 Package pdftex.def Info: api.pdf, page17 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 17>
-Package pdftex.def Info: api.pdf, page17 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [58 <./api.pdf
+ [58 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=794, page=18, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=874, page=18, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 18>
+Package pdftex.def Info: api.pdf, page18 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 18>
@@ -1635,15 +1638,15 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 18>
 Package pdftex.def Info: api.pdf, page18 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 18>
-Package pdftex.def Info: api.pdf, page18 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [59 <./api.pdf
+ [59 <./api.pdf>]
 
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->] <api.pdf, id=799, page=19, 597.23125pt x 844.15375pt>
+pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
+ version <1.6>, but at most version <1.5> allowed
+<api.pdf, id=883, page=19, 597.23125pt x 844.15375pt>
+File: api.pdf Graphic file (type pdf)
+ <use api.pdf, page 19>
+Package pdftex.def Info: api.pdf, page19 used on input line 295.
+(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
 File: api.pdf Graphic file (type pdf)
 
 <use api.pdf, page 19>
@@ -1653,36 +1656,25 @@ File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 19>
 Package pdftex.def Info: api.pdf, page19 used on input line 295.
 (pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
-File: api.pdf Graphic file (type pdf)
- <use api.pdf, page 19>
-Package pdftex.def Info: api.pdf, page19 used on input line 295.
-(pdftex.def)             Requested size: 597.73099pt x 844.86012pt.
- [60 <./api.pdf
-
-pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: invalid o
-ther resource which is no dict (key 'ProcSets', type <array>); ignored.
->]
+ [60 <./api.pdf>]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 297.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 297.
- (./report_root.aux)
+
+(./report_root.aux)
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 297.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 297.
 Package rerunfilecheck Info: File `report_root.out' has not changed.
 (rerunfilecheck)             Checksum: E1753E0F6BE259311EBB2C176BD71068;3281.
-
-
-LaTeX Warning: There were undefined references.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 297.
  ) 
 Here is how much of TeX's memory you used:
- 10735 strings out of 493117
- 155189 string characters out of 6135433
- 360734 words of memory out of 5000000
- 13724 multiletter control sequences out of 15000+600000
+ 10734 strings out of 493117
+ 155168 string characters out of 6135433
+ 361734 words of memory out of 5000000
+ 13723 multiletter control sequences out of 15000+600000
  17210 words of font info for 66 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 40i,18n,72p,806b,1126s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 40i,18n,72p,809b,1126s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><
 /usr/local/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><
@@ -1695,10 +1687,10 @@ cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/loc
 al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local
 /texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/
 texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on report_root.pdf (64 pages, 3775112 bytes).
+Output written on report_root.pdf (64 pages, 3731459 bytes).
 PDF statistics:
- 891 PDF objects out of 1000 (max. 8388607)
- 742 compressed objects within 8 object streams
+ 978 PDF objects out of 1000 (max. 8388607)
+ 789 compressed objects within 8 object streams
  207 named destinations out of 1000 (max. 500000)
  612 words of extra memory for PDF output out of 10000 (max. 10000000)
 

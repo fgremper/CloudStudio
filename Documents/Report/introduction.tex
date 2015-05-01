@@ -61,13 +61,13 @@ This thesis is a proposal at a new software solution, built from ground up, to p
 
 CloudStudio 1.0 is a web-based IDE that allows users to work, collaborate and run code directly in the browser. Behind the curtains, CloudStudio 1.0 sets up a new Git repository for every project that is used for its intrinsic version control. \\
 
-The web interface and the functionality of the CloudStudio 1.0 server and deeply intertwined. The system is designed for users to solely work through the web interface and does not provide an API to directly request awareness information from the server, for example to allow inclusion of CloudStudio's awareness features in widely used IDEs, such as EiffelStudio \cite{ref26} or Eclipse. CloudStudio 2.0 offers an extensive API for this purpose and its web interface communicates directly through this API. \\
+The web interface and the functionality of the CloudStudio 1.0 server are deeply intertwined. The system is designed for users to solely work through the web interface and does not provide an API to directly request awareness information from the server, for example to allow inclusion of CloudStudio's awareness features in widely used IDEs, such as EiffelStudio \cite{ref26} or Eclipse. CloudStudio 2.0 offers an extensive API for this purpose and its web interface communicates directly through this API. \\
 
 More importantly, CloudStudio 1.0 is dependent on a specific Git repository setup that it creates initially when a new CloudStudio project is created. It is not possible to use any of its functionality with pre-existing Git projects that were not specifically set up in CloudStudio in the first place. While it is possible to retrieve a CloudStudio 1.0 project's Git repository from the backend, perform some work directly on the Git repository and push it back to the server, there are many limitations: e.g. you would be required to follow its internal branch naming conventions and all awareness queries would still have to be done through the web interface. \\
 
 A big focus of CloudStudio 2.0 is also robustness to possible errors, deviation in repository structures and invalid requests. \\
 
-With this in mind, CloudStudio 2.0 uses a different approach from its predecessor and has been built from ground up during the course of this master thesis. The next section, as well as section \ref{designfeatures} will cover the details and features of the new implementation. From this point on, CloudStudio will refer to this implementation.
+With this in mind, CloudStudio 2.0 uses a different approach from its predecessor and has been built from ground up during the course of this master's thesis. The next section, as well as section \ref{designfeatures}, will cover the details and features of the new implementation. From this point on, CloudStudio will refer to this implementation.
 
 
 
@@ -121,7 +121,7 @@ Under section 2.1.1 the features of CloudStudio are listed in detail.
 
 Extensive research in the area of awareness has spawned other tools seeking to raise developers' awareness about the changes introduced by others. The granularity of awareness information varies from tool to tool. \\
 
-Crystal is a publicly-available tool that uses speculative analysis to make concrete advice unobtrusively available to developers, helping them identify, manage, and prevent conflicts. \cite{ref25} \\
+Crystal is a publicly-available tool that uses speculative analysis to make concrete advice unobtrusively available to developers, helping them identify, manage, and prevent conflicts \cite{ref25}. \\
 
 Syde is a a tool to reestablish team awareness by sharing change and conflict information across developers' workspaces \cite{ref23}. It uses the abstract syntax tree (AST) to detect conflicts and apply change awareness on the syntax level and was used to investigate conflict detection in a user study \cite{ref24}. \\
 
@@ -131,7 +131,7 @@ FASTDash is an interactive visualisation tool that seeks to improve team activit
 
 Jazz is an Eclipse plugins that shows simple change awareness by highlighting changed lines, designed to support small, informal teams; anyone can create a team and add or remove members \cite{ref27}. \\
 
-And of course, the already mentioned original CloudStudio, a web-based framework that sharing the changes of developers working on the same project; its real-time awareness system allows for dynamic views on the project by selectively including or excluding other developers' changes \cite{ref12}.
+And of course, the already mentioned original CloudStudio, a web-based framework that shares the changes of developers working on the same project; its real-time awareness system allows for dynamic views on the project by selectively including or excluding other developers' changes \cite{ref12}.
 
 
 

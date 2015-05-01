@@ -120,7 +120,7 @@ From this graph we can deduct the following relationships:
 \end{itemize}
 
 
-The same reference pointers that the example shows for the master branch are also given for all other branches in the system and the calculations behave analogous. If a user has a branch pointer for a branch that isn'tt on the origin, the relationship is given as $local$ $branch$; for a branch that only exists on the origin but not in a users local repository, the relationship is $remote$ $branch$. \\
+The same reference pointers that the example shows for the master branch are also given for all other branches in the system and the calculations behave analogous. If a user has a branch pointer for a branch that isn't on the origin, the relationship is given as $local$ $branch$; for a branch that only exists on the origin but not in a user's local repository, the relationship is $remote$ $branch$. \\
 
 This awareness feature only deals with locally committed changes and is a useful measure of how up to date local repositories are in relation to the origin. If a user is a $behind$, they should perform a pull. If they are $ahead$, they should push their changes. If they are in a $fork$, it means they started working on a feature while in the meantime someone else pushed their local changes; this case will necessarily result in a merge. $Forks$ will occur often, as the only way to avoid them is if only one user is making a change at the time. A low distance can indicate that fewer changes have been made, while a high distance can indicate a big amount of changes. \\
 
@@ -135,7 +135,7 @@ A timestamp shows the last time that the user has updated their state via the Cl
 
 \section{File Level Awareness}
 
-As the second step in a usual navigation path through the awareness system, the file level view shows awareness information and possible conflicts for all files in a repository and branch. This is achieved by doing a pair-wise comparison of your version of a file with all the version of all users in this branch. Alternatively you can also choose to view differences from the origin's point of view. \\
+As the second step in a usual navigation path through the awareness system, the file level view shows awareness information and possible conflicts for all files in a repository and branch. This is achieved by doing a pair-wise comparison of your version of a file with all the versions of all users in this branch. Alternatively you can also choose to view differences from the origin's point of view. \\
 
 In its basic form, the file level awareness view compares file checksums to find out whether a file has been modified. If the two file versions that are being compared are not identical, this is presented as a file conflict. It should be noted that non-existing files are treated as empty files for the purpose of this comparison.
 
@@ -158,9 +158,9 @@ For all the files and users that would show up as file conflicts (without this o
 
 \subsection{Compare to Other Branches}
 
-The same functionality can not only be used to show branch internal awareness and conflict information---by specifying a different comparison branch, your (or the origin's) files from your selected branch are compared with all other users' in the specified branch. \\
+The same functionality can not only be used to show branch internal awareness and conflict information---by specifying a different comparison branch, your (or the origin's) files from your selected branch are compared with all other users' in the comparison branch. \\
 
-Let's say you are working on the master branch and someone else is called on a feature branch $iss53$ that will have to be merged into the master branch at a later point in time. \\
+Let's say you are working on the master branch and someone else is working on a feature branch $iss53$ that will have to be merged into the master branch at a later point in time. \\
 
 By selecting branch comparison with $iss53$ from the viewpoint of the master branch, you can see file and content conflicts that will occur when merging your local master branch state with each other user's $iss53$ branch state. Likewise, by comparing with the master branch from $iss53$'s point of view, the comparison will be made between your files from the master branch with all other users' files in the $iss53$ branch. \\
 
@@ -170,15 +170,15 @@ In the same manner, the comparison functions with the "view as origin" option en
 
 You can choose to filter your view by only selecting a subset of the users in a project. If the number of users is really big, this helps narrow down your search and display only information relevant to you. \\
 
-It is also possible to filter files by the severity of conflicts. Selecting "content conflicts" only shows files and users with a conflict type of "content conflicts", "file conflicts" shows both file and content conflicts, an no filter also shows users where the files are identical.
+It is also possible to filter files by the severity of conflicts. Selecting "content conflicts" only shows files and users with a conflict type of "content conflicts"; "file conflicts" shows both file and content conflicts, and no filter also shows users where the files are identical.
 
 \subsection{Grouping}
 
-Folders have a grouping mechanism that add up the containing conflicts. If a user contains at least one content conflict, it will be marked as a folder containing content conflicts and the users responsible for it will be listed. Likewise file conflicts propagate their conflict type up to the containing folders.
+Folders have a grouping mechanism that add up the containing conflicts. If a folder contains at least one content conflict, it will be marked as content conflicting and the users responsible for it will be listed. Likewise file conflicts propagate their conflict type up to the containing folders.
 
 \subsection{Uncommitted vs. Committed Files}
 
-As already mentioned above, you can always select to work either with locally committed files or uncommitted files directly from the active working tree from all users. Working with uncommitted files has the advantage of always have the latest version of all files, while you are running into the risk that these changes may not be final or only experimental and will never make it into an actual commit. Viewing committed files is more safe in this regard, but may not show very recent changes.
+As already mentioned previously, you can always select to work either with locally committed files or uncommitted files directly from the active working tree from all users. Working with uncommitted files has the advantage of always have the latest version of all files, while you are running into the risk that these changes may not be final or only experimental and will never make it into an actual commit. Viewing committed files is more safe in this regard, but may not show very recent changes.
 
 
 

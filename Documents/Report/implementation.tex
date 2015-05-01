@@ -41,7 +41,7 @@ While in \ref{designapproach} the entire system was presented from a global poin
 
 The CloudStudio server primarily knows about users, repositories and sessions. \\
 
-In order to do any sort of data manipulation or awareness requests, a user needs to request a session ID from the server via the $login$ API routine. This session ID will then be sent in every subsequent request to the server to verify a users authentication. A new user can also be created using the $createUser$ API command. \\
+In order to do any sort of data manipulation or awareness requests, a user needs to request a session ID from the server via the $login$ API routine. This session ID will then be sent in every subsequent request to the server to verify a user's authentication. A new user can also be created using the $createUser$ API command. \\
 
 A user has a username, a password (that is hashed before storing it), an admin flag (determines whether a user has administrator privileges) and a creator flag (indicating the ability of a user to create new repositories). \\
 
@@ -49,7 +49,7 @@ Repositories refer to the internal CloudStudio entity of a shared Git repository
 
 For every user and branch in the repository, the information sent by the CloudStudio client is stored individually. On the level of a single repository, this means that every user has one or several branches that contain files, a (partial) commit graph, an active flag (indicating whether a user has currently checked out this branch into his working tree) and a timestamp when the user has last sent information about this branch to the CloudStudio server. \\
 
-Files are represented as an object with a filename, a content SHA checksum and an committed value. The committed value can be one of three values: $committed$ (this exact file is currently part of a local commit), $uncommitted$ (this is the latest version of a file directly from the working directory) or $both$ (the uncommitted and committed files and contents are identical in this branch). \\
+Files are represented as an object with a filename, a content SHA checksum and a $committed$ value. The $committed$ value can be one of three values: $committed$ (this exact file is currently part of a local commit), $uncommitted$ (this is the latest version of a file directly from the working directory) or $both$ (the uncommitted and committed files and contents are identical in this branch). \\
 
 All of the above information is stored in the MySQL database, while the content of the files are stored in the filesystem, named by their SHA. The file object points to its content via the SHA. \\
 
@@ -57,24 +57,24 @@ A special user named "origin" is automatically added to the server and every rep
 
 \subsection{Logic}
 
-One of the key parts to note here is that CloudStudio stores branch and file information for each user and repository separately. Aggregated awareness information is prepared by the server by at the time it is requested by the respective API call. \\
+One of the key parts to note here is that CloudStudio stores branch and file information for each user and repository separately. Aggregated awareness information is prepared by the server at the time it is requested by the respective API call. \\
 
-The server does not directly store a combined commit history but only a partial history for every user. More specifically, for every branch in a repository, the transitive set of parent commit of the current branch commit is stored in a list, internally named $downstream$ $commits$. To find the nearest common ancestor commit to calculate a merge conflict, we can simply go through the list of downstream commits of two users and choose the one with the smallest combined distance from the respective branch commit. \\
+The server does not directly store a combined commit history but only a partial history for every user. More specifically, for every branch in a repository, the transitive set of parent commits of the current branch commit is stored in a list, internally named $downstream$ $commits$. To find the nearest common ancestor commit to calculate a merge conflict, we can simply go through the list of downstream commits of two users and choose the one with the smallest combined distance from the respective branch commit. \\
 
-Every CloudStudio repository can have a central remote Git repository URL attached. CloudStudio needs to fetch its information regularily for two main reasons: \\
+Every CloudStudio repository can have a central remote Git repository URL attached. CloudStudio needs to fetch its information regularily for two main reasons:
 
 \begin{enumerate}
 \item Retrieving the commit graph in order to find the relative position for the branch awareness view.
 \item The CloudStudio client only sends commit data (such as files and their content) for commits that have a local branch reference point to them. For conflict detection, files in the merge-base commit are directly looked up from the origin through JGit. Since we assume that users synchronise their repositories through the specified remote repository, this always works, because the merge-base commit necessarily needs to have been pushed to the origin at some point.
 \end{enumerate}
 
-As much of the logic as possible has been implemented directly as SQL queries, which positively affects the performance. This works especially well for branch and file awareness. For content awareness ancestor, a lot of calculations are performed directly in Java: file content needs to be looked up through JGit and comparison is implemented using the respective diff and diff3 algorithms.
+As much of the logic as possible has been implemented directly as SQL queries, which positively affects the performance. This works especially well for branch and file awareness. For content awareness, a lot of calculations are performed directly in Java: file contents need to be looked up through JGit and comparison is implemented using the respective diff and diff3 algorithms.
 
 \subsection{Access Control}
 
-CloudStudio provides a central login structure, which can be used by many users collaborating on different shared projects. Each repository has a designated owner who has the rights to add or remove people to the project, change its metadata, elect a new owner, or remove the repository all together. \\
+CloudStudio provides a central login structure, which can be used by many users collaborating on different shared projects. Each repository has a designated owner who has the rights to add or remove people to the project, change its metadata, elect a new owner, or remove the repository altogether. \\
 
-Administrators can manage users and their privileges, as well as perform any actions that a repository owner or normal user could. A "creator" flag for each user indicates whether or not they have the privilege the create new repositories on CloudStudio. In the server configuration, you can enable or disable to set this flag by default for new users. In some closed environments, e.g. teachers set up projects for students and add them to the project, it may be preferred that not all users can create new repositories on CloudStudio.
+Administrators can manage users and their privileges, as well as perform any actions that a repository owner or normal user could. A "creator" flag for each user indicates whether or not they have the privilege to create new repositories on CloudStudio. In the server configuration, you can enable or disable to set this flag by default for new users. In some closed environments, e.g. teachers set up projects for students and add them to the project, it may be preferred that not all users can create new repositories on CloudStudio.
 
 
 \subsection{Folder Structure}
@@ -90,7 +90,7 @@ The source files are divided into 4 folders at the root level: $CSClient$ contai
 
 The client is responsible for periodically sending information for all the local Git repositories that are being monitored by CloudStudio. All users in a repository should use the CloudStudio client; however if only a subset of the users use it, awareness information is still prepared by the CloudStudio server. \\
 
-The client is written in Java and uses JGit [18], a Java library to read and manipulate local Git repository information. It periodically retrieves local commit graph structure, branch references and files and their contents, for both uncommitted and committed files, and then sends relevant information to the CloudStudio server. This is done using a single API call $localState$ and the exact details can be found in the API Reference. Table \ref{table:clientclasses} shows the client's Java classes and quickly describes their function. The code for all individual classes is commented throughout. For detailed information, have a look at the source code. \\
+The client is written in Java and uses JGit [18], a Java library to read and manipulate local Git repository information. It periodically retrieves the local commit graph structure, branch references, and files and their contents, for both uncommitted and committed files, and then sends relevant information to the CloudStudio server. This is done using a single API call $localState$ and the exact details can be found in the API Reference. Table \ref{table:clientclasses} shows the client's Java classes and quickly describes their function. The code for all individual classes is commented throughout. For detailed information, have a look at the source code. \\
 
 
 
@@ -115,9 +115,9 @@ RepositoryInfo & Container for repository data. \\ \hline
 \end{table}
 
 
-Configuration of the client is done using an XML file. By default it looks for a file named \texttt{config.xml} in the same folder; alternatively, you can specify a config file location as the first command line parameter when running the client. In order to successfully use the client you need to first create a CloudStudio login and specify it in your configuration file. Configuration management of client and server is explained in detail in section \ref{configmanagement}. \\
+Configuration of the client is done using an XML file. By default it looks for a file named \texttt{config.xml} in the same folder; alternatively, you can specify a config file location as the first command line parameter when running the client. In order to successfully use the client, you need to first create a CloudStudio login and specify it in your configuration file. Configuration management of client and server is explained in detail in section \ref{configmanagement}. \\
 
-To facilitate the users' experience, a graphical user interface (seen in Fig. \ref{fig:gui}), using Swing, keeps you informed using a virtual traffic light, indicating the state of the client, a progress bar to indicate the next time that information is pushed to the server, a force update button and a log view for more detailed information. A green light means everything functioning correctly, yellow indicates that some sort of error has occurred at some point but the system is still functioning (see the log view in the GUI for details), and a red light means that a hard error has occurred that the system could not recover from. At this point, the graphical user interface cannot be used to manipulate the configuration of the client. \\
+To facilitate the users' experience, a graphical user interface (seen in Fig. \ref{fig:gui}), using Swing, keeps you informed using a virtual traffic light, indicating the state of the client, a progress bar to indicate the next time that information is pushed to the server, a force update button and a log view for more detailed information. A green light means everything is functioning correctly, yellow indicates that some sort of error has occurred at some point but the system is still functioning (see the log view in the GUI for details), and a red light means that a hard error has occurred that the system could not recover from. At this point, the graphical user interface cannot be used to manipulate the configuration of the client. \\
 
 \begin{figure}[h!]
   \centering
@@ -137,13 +137,13 @@ To facilitate the users' experience, a graphical user interface (seen in Fig. \r
 
 The CloudStudio server is written in Java and is the core of the system. It reads, stores and processes information necessary for awareness requests and conflict detection. There are two main services running on the CloudStudio server: an HTTP server and a service to periodically update information from the central remote Git repositories used by CloudStudio projects. \\
 
-The HTTP server implements the multi-threaded \texttt{com.sun.httpserver} and two separate request handlers deal with API requests and the web interface on the same port. The class ApiHttpHandler is responsible for calls to URLs prefixed with \texttt{/api/} and provides a public interface for the main CloudStudio server functionality. Any other URLs will be directed to the WebInterfaceHttpHandler, which is mostly just a static web server; the actual web interface runs in JavaScript and uses the API directly. Details about the implementations of the web interface follow in the next section. \\
+The HTTP server implements the multi-threaded \texttt{com.sun.httpserver} and two separate request handlers deal with API requests and web interface requests on the same port. The class ApiHttpHandler is responsible for calls to URLs prefixed with \texttt{/api/} and provides a public interface for the main CloudStudio server functionality. Any other URLs will be directed to the Web\-Inter\-face\-Http\-Hand\-ler, which is mostly just a static web server; the actual web interface runs in JavaScript and uses the API directly. Details about the implementations of the web interface follow in the next section. \\
 
-PeriodicalAllOriginUpdater is the service to periodically update the remote repository information for all CloudStudio projects. Behind the curtains, it clones the given Git repositories and reads and stores them in the same manner as a regular client would. It uses the special user account "origin", which is added to all projects by default. Table \cite{table:serverclasses} shows an overview of the server's Java classes. The code for all individual classes is commented throughout. For detailed information, have a look at the source code. \\
+PeriodicalAllOriginUpdater is the service to periodically update the remote repository information for all CloudStudio projects. Behind the curtains, it clones the given Git repositories and reads and stores them in the same manner as a regular client would. It uses the special user account "origin", which is added to all projects by default. Table \ref{table:serverclasses} shows an overview of the server's Java classes. The code for all individual classes is commented throughout. For detailed information, have a look at the source code. \\
 
 All CloudStudio data is stored in a MySQL database, accessed either directly through the JDBC driver or using the C3P0 database connection pool, depending on the server settings. \\
 
-The server is greatly customizable through a configuration XML file, described in in section \ref{configmanagement}.
+The server is greatly customizable through a configuration XML file, described in section \ref{configmanagement}.
 
 
 \begin{table}
@@ -177,11 +177,11 @@ ParameterFilter & Helper class to parse HTTP GET and POST parameters. \\ \hline
 
 \section{Web Interface}
 
-CloudStudio has a web interface that allows you to view awareness information from the browser. The web interface runs on the same server and port as the API. The logic of the web interface runs in JavaScript and on the client side; an approach that is popular with many web services nowadays. The server serves as a static webserver and awareness data is fetched directly through via the official CloudStudio API. \\
+CloudStudio has a web interface that allows you to view awareness information from the browser. The web interface runs on the same server and port as the API. The logic of the web interface runs in JavaScript and on the client side; an approach that is popular with many web services nowadays. The server serves as a static webserver, and awareness data is fetched directly via the CloudStudio API. \\
 
 The CloudStudio web interface uses EJB, a light-weight templating engine, and jQuery, a fast, small, and feature-rich JavaScript library that makes thinks like HTML document manipulation, event handling, and Ajax much simpler. \\
 
-The web interface was designed in a modern way, that it very user intuitive and easy to understand. The functionality of the web interface is explained in detail in section \ref{webinterfaceguide}.
+The web interface was designed in a modern way that is user intuitive and easy to understand. The functionality of the web interface is explained in detail in section \ref{webinterfaceguide}.
 
 
 
@@ -212,15 +212,14 @@ The back-end for all data stored in the system is a MySQL database. The database
     \scriptsize
     \begin{tabularx}{\textwidth}{ | l | X | }
     \hline
-\textbf{Table} & \textbf{Description} \\ \hline
-USERS & CloudStudio users \\ \hline
-REPOSITORIES & every entry represents a CloudStudio repository \\ \hline
-USERSESSION & every entry represents a session \\ \hline
-USERACCESS & which user has access to a repository (n:n) \\ \hline
-BRANCHES & branches for a user and repository \\ \hline
-FILES & files for a user and repository, branch \\ \hline
-COMMITHISTORY & commithistory for a user and repository \\ \hline
-RepositoryInfo & container for repository data \\ \hline
+\textbf{Table} & \textbf{Functionality} \\ \hline
+USERS & Every entry represents a CloudStudio user \\ \hline
+REPOSITORIES & Every entry represents a CloudStudio repository \\ \hline
+USERSESSION & Every entry represents a session \\ \hline
+USERACCESS & Which user has access to a repository (n:n) \\ \hline
+BRANCHES & Branches for a user and repository \\ \hline
+FILES & Files for a user, repository and branch \\ \hline
+COMMITHISTORY & Commit history for a user and repository \\ \hline
     \end{tabularx}
     
     \centering
@@ -234,7 +233,7 @@ RepositoryInfo & container for repository data \\ \hline
 
 \subsection{Client Configuration}
 
-In order to run the client JAR, you need to have a configuration file called config.xml in the same directory. Alternatively, you can also specify the path to a config file as the first parameter. A sample configuration file looks like can be seen in Fig. \ref{fig:clientconfig}. \\
+In order to run the client JAR, you need to have a configuration file called \texttt{config.xml} in the same directory. Alternatively, you can also specify the path to a config file as the first parameter. A sample configuration file can be seen in Fig. \ref{fig:clientconfig}. \\
 
 \begin{figure}[h!]
 \begin{lstlisting}
@@ -260,7 +259,7 @@ In order to run the client JAR, you need to have a configuration file called con
 
 Specify your $username$ and $password$ that you previously created for CloudStudio using its API or the web interface. Your user must have been added to the repository on CloudStudio. \\
 
-Under repositories you can list multiple repositories that you want to monitor with CloudStudio. The $repositoryAlias$ is the name that a given repository has on CloudStudio and the $localPath$ is the folder where you locally cloned your Git repository into. Specify a time in seconds as the $resubmitInterval$, indicating how often the client sends data to the CloudStudio server.
+Under repositories you can list multiple repositories that you want to monitor with CloudStudio. The $repositoryAlias$ is the name that a given repository has on CloudStudio and the $localPath$ is the folder where you locally cloned your Git repository into. Specify a time interval in seconds as the $resubmitInterval$, indicating how often the client sends data to the CloudStudio server.
 
 
 \subsection{Server Configuration}
@@ -337,7 +336,7 @@ The Eclipse plugin EclEmma \cite{eclemma} was used to create coverage reports an
 
 To verify CloudStudio's correctness, I implemented two different types of JUnit \cite{junit} tests: $class$ $tests$ for client and server verify the correct behaviour for a given class and are named after the class that is being tested, e.g. ApiHttpHandlerTest for ApiHttpHandler; $combination$ $tests$ run longer scenarios of a typical CloudStudio workflow and assert correct behaviour throughout. \\
 
-The CloudStudio client and server use the Apache Log4j \cite{log4j} framework to create log output; it can be customised by editing the log4j.xml file. Log files can as well be used to view and ensure the correct behaviour of the code.
+The CloudStudio client and server use the Apache Log4j \cite{log4j} framework to create log output; it can be customised by editing the \texttt{log4j.xml} file. Log files can as well be used to view and ensure the correct behaviour of the code.
 
 
 \begin{figure}[h!]
@@ -362,7 +361,7 @@ Follow the following steps to build the CloudStudio server and client locally:
 \item \emph{Build JAR} \newline
 In Eclipse, go to $File$ $\rightarrow$ $Export$ $\rightarrow$ $Java$ $\rightarrow$ $Runnable$ $JAR$ $file$.
 Under $Launch$ $configuration$, select ClientMain to build the client JAR. To build the server JAR, select ServerMain. Under $Library$ $handling$, select $Package$ $required$ $libraries$ $into$ $generated$ $JAR$.
-Select the export destionation and click Finish.
+Select the export destination and click Finish.
 \item \emph{Run} \newline
 Run the client:
 \texttt{java -jar CSClient.jar} \newline
