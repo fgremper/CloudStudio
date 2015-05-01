@@ -90,7 +90,7 @@ The source files are divided into 4 folders at the root level: $CSClient$ contai
 
 The client is responsible for periodically sending information for all the local Git repositories that are being monitored by CloudStudio. All users in a repository should use the CloudStudio client; however if only a subset of the users use it, awareness information is still prepared by the CloudStudio server. \\
 
-The client is written in Java and uses JGit [18], a Java library to read and manipulate local Git repository information. It periodically retrieves the local commit graph structure, branch references, and files and their contents, for both uncommitted and committed files, and then sends relevant information to the CloudStudio server. This is done using a single API call $localState$ and the exact details can be found in the API Reference. Table \ref{table:clientclasses} shows the client's Java classes and quickly describes their function. The code for all individual classes is commented throughout. For detailed information, have a look at the source code. \\
+The client is written in Java and uses JGit \cite{ref18}, a Java library to read and manipulate local Git repository information. It periodically retrieves the local commit graph structure, branch references, and files and their contents, for both uncommitted and committed files, and then sends relevant information to the CloudStudio server. This is done using a single API call $localState$ and the exact details can be found in the API Reference. Table \ref{table:clientclasses} shows the client's Java classes and quickly describes their function. The code for all individual classes is commented throughout. For detailed information, have a look at the source code. \\
 
 
 

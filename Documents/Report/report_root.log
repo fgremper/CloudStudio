@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.21)  1 MAY 2015 04:50
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2015.4.21)  1 MAY 2015 15:49
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -829,7 +829,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--54
 
  []
 
-<overallsetup2.png, id=419, 12662.30624pt x 4932.4275pt>
+<overallsetup2.png, id=420, 12662.30624pt x 4932.4275pt>
 File: overallsetup2.png Graphic file (type png)
 
 <use overallsetup2.png>
@@ -1040,7 +1040,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 120--121
 
  []
 
-<gui.png, id=496, 700.6175pt x 519.9425pt>
+<gui.png, id=497, 700.6175pt x 519.9425pt>
 File: gui.png Graphic file (type png)
  <use gui.png>
 Package pdftex.def Info: gui.png used on input line 124.
@@ -1080,7 +1080,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 190--191
 
  []
 
-<databasegraph.png, id=520, 9390.08125pt x 7026.25pt>
+<databasegraph.png, id=522, 9390.08125pt x 7026.25pt>
 File: databasegraph.png Graphic file (type png)
  <use databasegraph.png>
 Package pdftex.def Info: databasegraph.png used on input line 203.
@@ -1113,7 +1113,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 337--338
 
  []
 
-<coverage.png, id=585, 1002.74625pt x 663.47874pt>
+<coverage.png, id=587, 1002.74625pt x 663.47874pt>
 File: coverage.png Graphic file (type png)
  <use coverage.png>
 Package pdftex.def Info: coverage.png used on input line 344.
@@ -1126,7 +1126,7 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 Chapter 4.
 [29
 
-] <login.png, id=608, 1272.755pt x 565.11125pt>
+] <login.png, id=610, 1272.755pt x 565.11125pt>
 File: login.png Graphic file (type png)
  <use login.png>
 Package pdftex.def Info: login.png used on input line 55.
@@ -1141,7 +1141,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 66--67
 
  []
 
-<overview.png, id=609, 1272.755pt x 561.09625pt>
+<overview.png, id=611, 1272.755pt x 561.09625pt>
 File: overview.png Graphic file (type png)
  <use overview.png>
 Package pdftex.def Info: overview.png used on input line 74.
@@ -1170,7 +1170,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 91--92
 
  []
 
-<branchlevel.png, id=615, 1272.755pt x 626.34pt>
+<branchlevel.png, id=617, 1272.755pt x 626.34pt>
 File: branchlevel.png Graphic file (type png)
  <use branchlevel.png>
 Package pdftex.def Info: branchlevel.png used on input line 99.
@@ -1199,7 +1199,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 116--117
 
  []
 
-[32 <./branchlevel.png>] <filelevel.png, id=626, 1272.755pt x 667.49374pt>
+[32 <./branchlevel.png>] <filelevel.png, id=628, 1272.755pt x 667.49374pt>
 File: filelevel.png Graphic file (type png)
 
 <use filelevel.png>
@@ -1210,7 +1210,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--134
 
  []
 
-<contentlevel.png, id=627, 1272.755pt x 649.42625pt>
+<contentlevel.png, id=629, 1272.755pt x 649.42625pt>
 File: contentlevel.png Graphic file (type png)
  <use contentlevel.png>
 Package pdftex.def Info: contentlevel.png used on input line 141.
@@ -1219,7 +1219,7 @@ Package pdftex.def Info: contentlevel.png used on input line 141.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<manageusers.png, id=628, 1272.755pt x 440.64626pt>
+<manageusers.png, id=630, 1272.755pt x 440.64626pt>
 File: manageusers.png Graphic file (type png)
  <use manageusers.png>
 Package pdftex.def Info: manageusers.png used on input line 161.
@@ -1288,7 +1288,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 23--24
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=673, 597.23125pt x 844.15375pt>
+<api.pdf, id=674, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf>
 Package pdftex.def Info: api.pdf used on input line 295.
@@ -1309,7 +1309,7 @@ pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=680, page=1, 597.23125pt x 844.15375pt>
+<api.pdf, id=681, page=1, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 1>
 Package pdftex.def Info: api.pdf, page1 used on input line 295.
@@ -1336,7 +1336,7 @@ Package pdftex.def Info: api.pdf, page1 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=726, page=2, 597.23125pt x 844.15375pt>
+<api.pdf, id=727, page=2, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 2>
 Package pdftex.def Info: api.pdf, page2 used on input line 295.
@@ -1354,7 +1354,7 @@ Package pdftex.def Info: api.pdf, page2 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=735, page=3, 597.23125pt x 844.15375pt>
+<api.pdf, id=736, page=3, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 3>
 Package pdftex.def Info: api.pdf, page3 used on input line 295.
@@ -1372,7 +1372,7 @@ Package pdftex.def Info: api.pdf, page3 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=744, page=4, 597.23125pt x 844.15375pt>
+<api.pdf, id=745, page=4, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 4>
 Package pdftex.def Info: api.pdf, page4 used on input line 295.
@@ -1390,7 +1390,7 @@ Package pdftex.def Info: api.pdf, page4 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=754, page=5, 597.23125pt x 844.15375pt>
+<api.pdf, id=755, page=5, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 5>
 Package pdftex.def Info: api.pdf, page5 used on input line 295.
@@ -1408,7 +1408,7 @@ Package pdftex.def Info: api.pdf, page5 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=763, page=6, 597.23125pt x 844.15375pt>
+<api.pdf, id=764, page=6, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 6>
 Package pdftex.def Info: api.pdf, page6 used on input line 295.
@@ -1426,7 +1426,7 @@ Package pdftex.def Info: api.pdf, page6 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=772, page=7, 597.23125pt x 844.15375pt>
+<api.pdf, id=773, page=7, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 7>
 Package pdftex.def Info: api.pdf, page7 used on input line 295.
@@ -1444,7 +1444,7 @@ Package pdftex.def Info: api.pdf, page7 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=781, page=8, 597.23125pt x 844.15375pt>
+<api.pdf, id=782, page=8, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 8>
 Package pdftex.def Info: api.pdf, page8 used on input line 295.
@@ -1462,7 +1462,7 @@ Package pdftex.def Info: api.pdf, page8 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=790, page=9, 597.23125pt x 844.15375pt>
+<api.pdf, id=791, page=9, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 9>
 Package pdftex.def Info: api.pdf, page9 used on input line 295.
@@ -1480,7 +1480,7 @@ Package pdftex.def Info: api.pdf, page9 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=799, page=10, 597.23125pt x 844.15375pt>
+<api.pdf, id=800, page=10, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 10>
 Package pdftex.def Info: api.pdf, page10 used on input line 295.
@@ -1498,7 +1498,7 @@ Package pdftex.def Info: api.pdf, page10 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=809, page=11, 597.23125pt x 844.15375pt>
+<api.pdf, id=810, page=11, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 11>
 Package pdftex.def Info: api.pdf, page11 used on input line 295.
@@ -1516,7 +1516,7 @@ Package pdftex.def Info: api.pdf, page11 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=819, page=12, 597.23125pt x 844.15375pt>
+<api.pdf, id=820, page=12, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 12>
 Package pdftex.def Info: api.pdf, page12 used on input line 295.
@@ -1534,7 +1534,7 @@ Package pdftex.def Info: api.pdf, page12 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=828, page=13, 597.23125pt x 844.15375pt>
+<api.pdf, id=829, page=13, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 13>
 Package pdftex.def Info: api.pdf, page13 used on input line 295.
@@ -1552,7 +1552,7 @@ Package pdftex.def Info: api.pdf, page13 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=837, page=14, 597.23125pt x 844.15375pt>
+<api.pdf, id=838, page=14, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 14>
 Package pdftex.def Info: api.pdf, page14 used on input line 295.
@@ -1570,7 +1570,7 @@ Package pdftex.def Info: api.pdf, page14 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=846, page=15, 597.23125pt x 844.15375pt>
+<api.pdf, id=847, page=15, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 15>
 Package pdftex.def Info: api.pdf, page15 used on input line 295.
@@ -1588,7 +1588,7 @@ Package pdftex.def Info: api.pdf, page15 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=855, page=16, 597.23125pt x 844.15375pt>
+<api.pdf, id=856, page=16, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 16>
 Package pdftex.def Info: api.pdf, page16 used on input line 295.
@@ -1606,7 +1606,7 @@ Package pdftex.def Info: api.pdf, page16 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=865, page=17, 597.23125pt x 844.15375pt>
+<api.pdf, id=866, page=17, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 17>
 Package pdftex.def Info: api.pdf, page17 used on input line 295.
@@ -1624,7 +1624,7 @@ Package pdftex.def Info: api.pdf, page17 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=874, page=18, 597.23125pt x 844.15375pt>
+<api.pdf, id=875, page=18, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 18>
 Package pdftex.def Info: api.pdf, page18 used on input line 295.
@@ -1642,7 +1642,7 @@ Package pdftex.def Info: api.pdf, page18 used on input line 295.
 
 pdfTeX warning: /usr/texbin/pdflatex (file ./api.pdf): PDF inclusion: found PDF
  version <1.6>, but at most version <1.5> allowed
-<api.pdf, id=883, page=19, 597.23125pt x 844.15375pt>
+<api.pdf, id=884, page=19, 597.23125pt x 844.15375pt>
 File: api.pdf Graphic file (type pdf)
  <use api.pdf, page 19>
 Package pdftex.def Info: api.pdf, page19 used on input line 295.
@@ -1687,10 +1687,10 @@ cal/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/loc
 al/texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmti8.pfb></usr/local
 /texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/
 texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb>
-Output written on report_root.pdf (64 pages, 3731459 bytes).
+Output written on report_root.pdf (64 pages, 3731308 bytes).
 PDF statistics:
- 978 PDF objects out of 1000 (max. 8388607)
- 789 compressed objects within 8 object streams
+ 979 PDF objects out of 1000 (max. 8388607)
+ 790 compressed objects within 8 object streams
  207 named destinations out of 1000 (max. 500000)
  612 words of extra memory for PDF output out of 10000 (max. 10000000)
 
