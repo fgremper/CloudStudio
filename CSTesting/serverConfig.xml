@@ -11,8 +11,10 @@
     <dbMaxStatements>180</dbMaxStatements>
     <fileStorageDirectory>../../filestorage</fileStorageDirectory>
     <originStorageDirectory>../../origins</originStorageDirectory>
-    <passwordSalt>heyoiamthesaltwhatisupwithyou</passwordSalt>
+    <passwordSalt>ob62IORKbi7YjWbONj8rZUmFQchyHCSz</passwordSalt>
     <originUpdateInterval>10</originUpdateInterval>
     <enableOriginUpdater>false</enableOriginUpdater>
     <createAdminUser>false</createAdminUser>
+    <useDatabasePool>false</useDatabasePool>
+    <giveCreatorPrivilegesOnSignUp>true</giveCreatorPrivilegesOnSignUp>
 </config>
